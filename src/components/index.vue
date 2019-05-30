@@ -1,7 +1,6 @@
 <template>
   <div class="inedx">
-
-        4652345646
+        4652方式345646
   </div>
 </template>
 <script>
