@@ -2,20 +2,20 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import school from '@/components/school'
 import schoolDetail from '@/components/schoolDetail'
-import index from '@/components/index'
-import homes from '@/components/homes'
+import schoollisttwo from '@/components/schoollisttwo'
+import homepage from '@/components/homepage'
+import schoolku from '@/components/schoolku'
 Vue.use(Router)
 
 export default new Router({
-    routes:[
-      {
-        path: '/',
-        name: 'index',
-        component: index
-      },{
-        path: '/homes',
-        name: 'homes',
-        component: homes
+    routes:[{
+      path: '/',
+      name: 'homepage',
+      component: homepage
+    },{
+        path: '/schoollisttwo',
+        name: 'schoollisttwo',
+        component: schoollisttwo
       },{
         path: '/school',
         name: 'school',
@@ -25,6 +25,10 @@ export default new Router({
         path: '/schoolDetail',
         name: 'schoolDetail',
         component: schoolDetail
+      },{
+        path: '/schoolku',
+        name: 'schoolku',
+        component: schoolku
       }
     ]
 })

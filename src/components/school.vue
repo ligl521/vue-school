@@ -95,7 +95,7 @@ export default {
     },
     //路由跳转到schoolDetail
     btnSchoolDetailsList(val){
-      this.$router.push({path:"./homes"})
+      this.$router.push({path:"./schoollisttwo",query:{id:val.id}})
     },
     //获取学校List数据(包括学校搜索)
     getschool() {

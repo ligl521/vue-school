@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <el-menu   mode="horizontal"   router>
-      <el-menu-item index="./homes">首页</el-menu-item>
+      <el-menu-item index="./">首页</el-menu-item>
       <el-menu-item index="./school">国际学校库</el-menu-item>
-      <el-menu-item index="3">教育机构库</el-menu-item>
+      <el-menu-item index="./schoolku">教育机构库</el-menu-item>
       <el-menu-item index="4">教育人才库</el-menu-item>
       <el-menu-item index="5">项目数据库</el-menu-item>
       <el-menu-item index="6">数据可视化</el-menu-item>
