@@ -31,27 +31,6 @@
 
 
         </el-row>
-      <!-- <span id="search_res">{{this.no_school}}</span> -->
-      <!-- <div class="schoolList" v-for="school in schoolLists" @click="tiaozhuan(school.id)"> -->
-        <!-- <div class="school_logo_div">
-          <img
-            id="school_logo"
-            :src='school.schoolLogo?"http://data.xinxueshuo.cn"+school.schoolLogo:"http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png"'
-          >
-        </div> -->
-        <!-- 展示学校detail -->
-        <!-- <div class="school_infomation">
-          <span class="schoo l_info">{{school.schoolName}}</span>
-          <span style="display:none">{{school.id}}</span>
-          <span class="school_info">{{school.areas+school.areas02+school.areas03}}</span>
-          <span class="school_info">{{school.course}}</span>
-        </div>
-        <div class="school_right">
-          <span class="school_right_info">{{school.loadTime}}</span>
-          <span class="school_right_info">{{school.schoolSystem}}</span>
-          <span class="school_right_info">{{school.schoolProperties}}</span>
-        </div> -->
-      <!-- </div> -->
     </div>
     <div class="block">
       <span class="demonstration"></span>
@@ -71,7 +50,6 @@
 <script>
 //ajax请求
 import axios from "axios";
-import { lstat } from "fs";
 export default {
   created: function() {
     this.getschool();
@@ -82,7 +60,7 @@ export default {
       input: "",
       schoolLists: [],
       currentPage: 1,
-      pageSize: 20,
+      pageSize: 24,
       pageNum: 1,
       total_school: 0,
       no_school: "",
@@ -98,7 +76,7 @@ export default {
       let urldata = new URLSearchParams();
       urldata.append("keyword", that.input);
       axios
-        .post("http://192.168.0.28:8080/nsi-1.0/school/suggest_search.do", urldata)
+        .post("http://data.xinxueshuo.cn/nsi-1.0/school/suggest_search.do", urldata)
         .then(function(respons) {
           console.log(respons.data.data)
           var arr=[];
@@ -116,9 +94,9 @@ export default {
       this.getschool();
     },
     //路由跳转到schoolDetail
-    // tiaozhuan(val) {
-    //   this.$router.push("./schoolDetail" + "?id=" + val);
-    // },
+    btnSchoolDetailsList(val){
+      this.$router.push({path:"./homes"})
+    },
     //获取学校List数据(包括学校搜索)
     getschool() {
       let that = this;
@@ -135,17 +113,17 @@ export default {
             ? (that.no_school = "未搜索到结果，请重新输入关键字！")
             : (that.no_school = "");
             window.scrollTo(0,0)
-          for (var i=0;i<respons.data.data.list.length;i++) {
-            var str = respons.data.data.list[i].schoolSystem;
-            var arr1 = str.split("；");
-            var arr2 = arr1.slice(0,arr1.length-1);
-            var arr3 = [];
-            for(var j=0; j<arr2.length; j++){
-                arr3.push(arr1[j].slice(0,1))
+            for (var i=0;i<respons.data.data.list.length;i++) {
+              var str = respons.data.data.list[i].schoolSystem;
+              var arr1 = str.split("；");
+              var arr2 = arr1.slice(0,arr1.length-1);
+              var arr3 = [];
+              for(var j=0; j<arr2.length; j++){
+                  arr3.push(arr1[j].slice(0,1))
+              }
+              respons.data.data.list[i].schoolSystem
+              that.schoolLists[i].schoolSystem=arr3.join(",");
             }
-            respons.data.data.list[i].schoolSystem
-            that.schoolLists[i].schoolSystem=arr3.join(",");
-          }
         });
     },
     handleSizeChange(val) {

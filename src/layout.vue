@@ -1,17 +1,19 @@
 <template>
   <div id="app">
-    <helloworld/>
+    <heads/>
     <router-view/>
   </div>
 </template>
 <script>
-import helloworld from './HelloWorld'
+import heads from '@/components/heads'
+// import homes from '@/components/homes'
 export default {
   name: 'App',
   methods:{
   },
   components:{
-    helloworld
+    heads,
+    //homes
   }
 }
 </script>

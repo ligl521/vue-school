@@ -8,7 +8,7 @@
   </div>
 </template>
 <script>
-import helloworld from "./HelloWorld";
+// import helloworld from "./HelloWorld";
 import axios from "axios";
 export default {
   created: function() {
@@ -16,7 +16,7 @@ export default {
   },
   data() {
     return {
-      schoolId:1,
+      schoolId:101376,
       schoolAdd:'',
     };
   },
@@ -25,7 +25,7 @@ export default {
     getschool() {
       let that = this;
       axios
-        .get("http://192.168.0.28:8080/nsi-1.0/new/school/detail?schoolId="+this.schoolId)
+        .get("http://data.xinxueshuo.cn/nsi-1.0/new/school/detail?schoolId="+this.schoolId)
         .then(function(respons) {
           console.log(respons.data);
           that.schoolAdd=respons.data.data.address;
@@ -50,14 +50,13 @@ export default {
         {
           code_arr=full_code_arr.slice(j+1);
         }
-      } 
+      }
       var final_school_code=code_arr.join('');
       return final_school_code;
     },
 
   },
   components: {
-    helloworld
   }
 };
 </script>

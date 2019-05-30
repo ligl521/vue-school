@@ -1,6 +1,6 @@
 <template>
-  <div class="inedx">
-
+  <div class="homes">
+        <div>111</div>
         4652345646
   </div>
 </template>
@@ -9,11 +9,14 @@
 export default {
   components: {
 
+  },
+  created:function() {
+    console.log(131231)
   }
 };
 </script>
 <style>
-  .inedx{
+  .homes{
     background: red;
     height: 200px;
   }

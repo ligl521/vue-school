@@ -1,14 +1,14 @@
 <template>
   <div id="app">
-  <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect" >
-    <el-menu-item index="1"><router-link to='./index'>首页</router-link></el-menu-item>
-    <el-menu-item index="2"><router-link to='./school'>国际学校库</router-link></el-menu-item>
-    <el-menu-item index="3">教育机构库</el-menu-item>
-    <el-menu-item index="4">教育人才库</el-menu-item>
-    <el-menu-item index="5">项目数据库</el-menu-item>
-    <el-menu-item index="6">数据可视化</el-menu-item>
+    <el-menu   mode="horizontal"   router>
+      <el-menu-item index="./homes">首页</el-menu-item>
+      <el-menu-item index="./school">国际学校库</el-menu-item>
+      <el-menu-item index="3">教育机构库</el-menu-item>
+      <el-menu-item index="4">教育人才库</el-menu-item>
+      <el-menu-item index="5">项目数据库</el-menu-item>
+      <el-menu-item index="6">数据可视化</el-menu-item>
       <el-button round class="login_btn" type="text" @click="dialogVisible = true ;get_msg()">登录</el-button><!-- 点击触发登录dialog -->
-     </el-menu>
+    </el-menu>
     <el-dialog :visible.sync="dialogVisible" width="15%" center >
       <el-tabs stretch v-model="activeName" @tab-click="handleClick">
         <!-- 二维码登录 -->
@@ -132,7 +132,7 @@ export default {
 }
 .el-menu--horizontal>.el-menu-item.is-active {
     border-bottom: 2px solid #409EFF;
-    color: #909399; 
+    color: #909399;
 }
 .el-form-item__label {
     text-align: right;
@@ -194,7 +194,7 @@ form {
   height: 350px;
 }
 
-.el-menu.el-menu--horizontal 
+.el-menu.el-menu--horizontal
 {
   background: rgb(33,80,137);
 }
@@ -206,7 +206,7 @@ form {
 .el-menu.el-menu--horizontal {
     border-bottom: none;
     display: flex;
-  
+
 }
 .el-button.is-round {
     background-color: beige;
