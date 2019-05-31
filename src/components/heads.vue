@@ -216,11 +216,6 @@ form {
 .el-menu {
     margin-right: -8px;
 }
-#app{
-  background: #f7f7f8;
-  margin-left: -8px;
-  margin-top: -8px;
-}
 .el-menu--horizontal>.el-menu-item {
     float: left;
     height: 50px;

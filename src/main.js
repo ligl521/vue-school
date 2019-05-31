@@ -3,9 +3,12 @@
 import Vue from 'vue'
 import layout from './layout'
 import router from './router/index.js'
+//element引入
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI);
+//清除全局
+import './assets/css/reset.css'
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

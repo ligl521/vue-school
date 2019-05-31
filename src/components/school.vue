@@ -241,7 +241,6 @@ export default {
 
 }
 .grid-content ul{
-  margin-left: -45px;
   margin-top: 10px;
   line-height: 30px;
   color: #777;
