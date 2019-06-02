@@ -9,6 +9,9 @@ import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI);
 //清除全局
 import './assets/css/reset.css'
+//引入阿里矢量图
+// import './font/iconfont/iconfont.css'
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
