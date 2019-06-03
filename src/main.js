@@ -15,7 +15,7 @@ import VueAwesomeSwiper from 'vue-awesome-swiper'
 Vue.use(VueAwesomeSwiper)
 //echarts
 import echarts from 'echarts'
-Vue.prototype.$echarts = echarts
+Vue.prototype.$echarts = echarts 
 
 
 Vue.config.productionTip = false
