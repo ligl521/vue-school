@@ -9,8 +9,14 @@ import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI);
 //清除全局
 import './assets/css/reset.css'
-//引入阿里矢量图
-// import './font/iconfont/iconfont.css'
+//引入swiper
+require('swiper/dist/css/swiper.css')
+import VueAwesomeSwiper from 'vue-awesome-swiper'
+Vue.use(VueAwesomeSwiper)
+//echarts
+import echarts from 'echarts'
+Vue.prototype.$echarts = echarts
+
 
 Vue.config.productionTip = false
 

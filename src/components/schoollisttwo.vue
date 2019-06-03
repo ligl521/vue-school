@@ -1,54 +1,106 @@
 <template>
   <div class="schlloList">
-      <div class="picture">
-        <img src="../assets/logo.png" />
+      <div class="carousel" v-show="banner">
+        <div class="swiper-container" >
+          <div class="swiper-wrapper">
+            <div class="swiper-slide" v-for="(v,i) in schollDatil" :key="i"><img :src="v"></div>
+          </div>
+        </div>
       </div>
       <div class="schoolSimple">
           <div class="schoolLogo clearfix">
             <ul>
-              <li>清华附中国际学校</li>
-              <li>qinghuadaxingschoolkdfjs</li>
+              <li>{{schollDatil.schoolName}}</li>
+              <li>{{schollDatil.schoolEnglishName}}</li>
             </ul>
             <p><img src="../assets/school.png" /></p>
           </div>
           <div class="schoolXinxi">
             <ul>
-              <li class="clearfix"><p><i class="iconfont  icon-dibudaohanglan-"></i>民办</p><p><i class="iconfont icon-dingwei"></i>北京上客户克里斯多夫接口</p><p><i class="iconfont icon-xuexiao"></i>小学 高中 初中</p></li>
+              <li class="clearfix"><p><i class="iconfont  icon-dibudaohanglan-"></i>{{schollDatil.schoolProperties}}</p><p><i class="iconfont icon-dingwei"></i>{{schollDatil.address}}</p><p><i class="iconfont icon-xuexiao"></i>{{schollDatil.schoolSystem}}</p></li>
               <li class="clearfix"><p><i class="iconfont icon-xuexiao"></i>2014年</p><p><i class="iconfont icon-text_icon"></i>北京上客户克里斯多</p><p><i class="iconfont icon-qianmoney113"></i>小学 高中 初中小学 高中 初中</p></li>
-              <li class="clearfix"><p><p><i class="iconfont icon-zhengzaidingwei"></i>户克里</p><i class="iconfont icon-laoshi1"></i>教师人数：100</p><p><i class="iconfont icon-wodexuesheng"></i>学生人数：400</p></li>
+              <li class="clearfix"><p><p><i class="iconfont icon-zhengzaidingwei"></i>户克里</p><p><i class="iconfont icon-laoshi1"></i>教师人数：{{schollDatil.teacherNum}}</p><p><i class="iconfont icon-wodexuesheng"></i>学生人数：{{schollDatil.students}}</p></li>
             </ul>
           </div>
+      </div>
+      <div class="schlloEchart clearfix">
+        <div class="schlloEchartLeft"><i class="iconfont icon-laoshirenzheng1"></i></div>
+        <div class="schlloChenter">
+          <ul>
+            <li></li>
+            <li>中外教比例</li>
+          </ul>
+        </div>
+        <div class="schlloRight">
+          <ul>
+            <li>
+              <p><i class="iconfont icon-laoshi1"></i></p><p><i class="iconfont icon-wodexuesheng"></i><i class="iconfont icon-wodexuesheng"></i><br/><i class="iconfont icon-wodexuesheng"></i><i class="iconfont icon-wodexuesheng"></i></p>
+            </li>
+            <li> {{schollDatil.teacherStuRatio}}</li>
+            <li>师生比例</li>
+          </ul>
+        </div>
       </div>
       <div class="intoduce">
         <div class="intoduceJeshao">
           <h1>学习详情介绍</h1>
-          <p>
-            看很多风景开始发货快哦都是复活节克里斯朵夫活动时间疯狂的身份看大家是否会尽快送到附近可视电话佛山凤凰网开始发货可就是东方科技大厦附近都是咖啡跨境电商罚款决定是否看大家是否是分开会激发客户反馈就是东方好
-          </p>
-          <h1>学习哦啊意愿学校</h1>
+          <p>{{schollDatil.schoolDesc}}</p>
+          <h2>学习哦啊意愿学校</h2>
           <p>就可视电话罚款决定是否健康的是否是对恢复健康后我无法好可混搭风好舒服未婚夫的设计开发那就肯定是分开就是分开就是看见是否会尽快是否会激发和今生今世看对方会尽快释放</p>
-          <h1>学习哦啊意愿学校</h1>
+          <h2>学习哦啊意愿学校</h2>
           <p>就可视电话罚款决定是否健康的是否是对恢复健康后我无法好可混搭风好舒服未婚夫的设计开发那就肯定是分开就是分开就是看见是否会尽快是否会激发和今生今世看对方会尽快释放</p>
-          <h1>学习哦啊意愿学校</h1>
+          <h2>学习哦啊意愿学校</h2>
           <p>就可视电话罚款决定是否健康的是否是对恢复健康后我无法好可混搭风好舒服未婚夫的设计开发那就肯定是分开就是分开就是看见是否会尽快是否会激发和今生今世看对方会尽快释放</p>
         </div>
       </div>
   </div>
 </template>
 <script>
-
+import Swiper from 'swiper'
+import 'swiper/dist/css/swiper.min.css'
+import axios from "axios";
+// import mEcharts from '../components/Echarts'
 export default {
-  components: {},
+  data() {
+    return {
+      banner:true,
+      schollDatil:{},
+      swiper:[]
+    }
+  },
   methods: {
+    getData(){
+        // let url = "http://data.xinxueshuo.cn/nsi-1.0/new/school/detail.do"
+        let url = "http://192.168.0.28:8080/nsi-1.0/new/school/detail.do"
+        axios.get(url,{
+          params:{
+            schoolId:2
+          }
+        }).then((res)=>{
+          this.schollDatil = res.data.data;
+          this.swiper.push(res.data.data.schoolShowOne);
+          this.swiper.push(res.data.data.schoolShowThird);
+          this.swiper.push(res.data.data.schoolShowTwo);
+          console.log(this.swiper)
+        })
+    },
     btn:function(){
 
     },
     getid:function(){
       console.log(this.$route.query && this.$route.query.id)
-    }
-  }, 
+    },
+
+  },
   created(){
-    this.getid()
+    this.getid(),
+    this.getData()
+  },
+  mounted(){
+    var mySwiper = new Swiper('.swiper-container', {
+      autoplay:true,
+      loop:true
+    })
   }
 };
 </script>
@@ -58,9 +110,15 @@ export default {
     margin: 0 auto;
     border: 1px solid #ccc;
   }
-  .picture{
-    height: 200px;
-    background: #999;
+  .carousel{
+    height: 300px;
+  }
+  .swiper-slide{
+    height: 300px;
+  }
+  .carousel img{
+    width: 100%;
+    height: 100%;
   }
   .schoolLogo{
     margin-top: 75px
@@ -68,19 +126,59 @@ export default {
   .schoolLogo ul{
     float: left;
     margin-left: 95px;
-    margin-top: 75px;
+    margin-top: 30px;
+  }
+  .schlloEchart{
+    margin-left: 95px;
+    margin-right: 95px;
+    height: 350px;
+  }
+  .schlloChenter{
+    float: left;
+    margin-top: 50px;
+    margin-left: 40px;
+  }
+  .schlloChenter ul li:first-of-type{
+    width: 200px;
+    height: 200px;
+    background: skyblue;
+    border-radius: 100%;
+  }
+  .schlloEchartLeft{
+    float: left;
+  }
+  .schlloEchartLeft i{
+    font-size: 50px;
+
+  }
+  .schlloRight{
+    float: left;
+    width: 250px;
+    margin-left: 20px;
+    margin-top: 50px;
+    margin-left: 260px;
+  }
+  .schlloRight p{
+    display:inline-block;
+    margin-right: 20px;
+  }
+  .schlloRight li:first-of-type p:first-of-type i{
+    font-size: 54px;
+  }
+  .schlloRight li:first-of-type p:last-of-type i{
+    font-size: 27px;
   }
   .schoolLogo ul li:first-of-type{
-    font-size: 42px;
+    font-size: 32px;
   }
   .schoolLogo ul li:last-of-type{
-    font-size: 24px;
+    font-size: 18px;
     margin-top: 20px;
   }
   .schoolLogo p{
     float: right;
-    width: 190px;
-    height: 190px;
+    width: 150px;
+    height: 150px;
     margin-right: 75px;
   }
   .schoolLogo p img{
@@ -88,7 +186,7 @@ export default {
     height: 100%;
   }
   .schoolXinxi{
-    font-size: 12px;
+    font-size: 16px;
     margin-left: 95px;
     margin-right: 95px;
   }
@@ -98,10 +196,29 @@ export default {
   }
   .schoolXinxi li p{
     float: left;
-    width: 305px;
+    width: 298px;
+  }
+  .schoolXinxi li p i{
+    font-size: 20px;
+    margin-right: 5px;
   }
   .intoduce{
     margin-left: 95px;
     margin-right: 95px;
+  }
+  .intoduceJeshao{
+    letter-spacing: 1px;
+  }
+  .intoduceJeshao h1{
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  .intoduceJeshao h2{
+    font-size: 16px;
+    margin-top: 26px;
+  }
+  .intoduceJeshao p{
+    line-height: 25px;
+    text-indent: 24px;
   }
 </style>

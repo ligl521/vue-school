@@ -13,11 +13,11 @@
       ></el-autocomplete>
       <el-button id="searchBtn" type="primary" icon="el-icon-search" @click="getschool"></el-button>
     </div>
-    <div class="www">
+    <div class="schoolDetail">
         <el-row :gutter="20" type="flex" style="flex-wrap:wrap">
 
                 <!--<p>{{schoolList}}</p>  -->
-            <el-col :xs="12" :sm="6" :md="4" :lg="3" :xl="3" v-for="(item,index) in schoolLists" :key="index" >
+            <el-col :xs="12" :sm="6" :md="4" :lg="3" :xl="3" v-for="(item,index) in schoolLists" :key="index">
                 <div class="grid-content bg-purple" @click="btnSchoolDetailsList(item)">
                     <div class="logoimg" v-if="item.schoolLogo? true:false"><img :src="schoolLogoUrl+item.schoolLogo"></div>
                     <div class="logoimg" v-if="item.schoolLogo? false:true"><img :src="schoolLogoUrlTwo"></div>
@@ -138,14 +138,14 @@ export default {
   },
   //学校过滤超出显示...
   filters: {
-      ellipsisName (value) {
-        if (!value) return ''
-        if (value.length > 6) {
-          return value.slice(0,9) + '...'
-        }
-        return value
+    ellipsisName (value) {
+      if (!value) return ''
+      if (value.length > 6) {
+        return value.slice(0,9) + '...'
       }
+      return value
     }
+  }
 };
 </script>
 <style>
@@ -180,9 +180,12 @@ export default {
   padding: 12px 25px;
   margin-left: -5px;
 }
+.schoolDetail{
+  width: 98%;
+  margin: 0 auto;
+}
 .schoolList {
   border-radius: 10px;
-  /* border: 1px solid gray; */
   background-color: white;
   display: flex;
   width: 1168px;
@@ -261,4 +264,5 @@ export default {
   width: 100px;
   height: 100px;
 }
+
 </style>
