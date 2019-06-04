@@ -13,13 +13,15 @@
       ></el-autocomplete>
       <el-button id="searchBtn" type="primary" icon="el-icon-search" @click="getschool"></el-button>
     </div>
-    <div class="schoolDetail">
+    <!-- 学校展示列表 -->
+    <div class="toggleBut clearfix" @click="toggleBut"><i class="iconfont icon-qiehuan1"></i></div>
+    <transition name="fade">
+    <div class="schoolDetail" v-if="schoolDetail">
         <el-row :gutter="20" type="flex" style="flex-wrap:wrap">
-
                 <!--<p>{{schoolList}}</p>  -->
             <el-col :xs="12" :sm="6" :md="4" :lg="3" :xl="3" v-for="(item,index) in schoolLists" :key="index">
                 <div class="grid-content bg-purple" @click="btnSchoolDetailsList(item)">
-                    <div class="logoimg" v-if="item.schoolLogo? true:false"><img :src="schoolLogoUrl+item.schoolLogo"></div>
+                    <div class="logoimg" v-if="item.schoolLogo? true:false"><img :src="item.schoolLogo"></div>
                     <div class="logoimg" v-if="item.schoolLogo? false:true"><img :src="schoolLogoUrlTwo"></div>
                     <ul>
                         <li class="schoolName">{{item.schoolName | ellipsisName}}</li>
@@ -28,10 +30,35 @@
                     </ul>
                 </div>
             </el-col>
-
-
         </el-row>
     </div>
+    </transition>
+    <!-- 学校展示列表two -->
+     <transition name="fafa">
+      <div class="www" v-if="!schoolDetail">
+        <span id="search_res">{{this.no_school}}</span>
+        <div class="schoolList" v-for="(school,i) in schoolLists" :key="i" @click="btnSchoolDetailsList(school)">
+          <div class="school_logo_div">
+            <img
+              id="school_logo"
+              :src='school.schoolLogo?school.schoolLogo:"http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png"'
+            >
+          </div>
+          <!-- 展示学校detail -->
+          <div class="school_infomation">
+            <span class="schoo l_info">{{school.schoolName}}</span>
+            <span style="display:none">{{school.id}}</span>
+            <span class="school_info">{{school.areas+school.areas02+school.areas03}}</span>
+            <span class="school_info">{{school.course}}</span>
+          </div>
+          <div class="school_right">
+            <span class="school_right_info">{{school.loadTime}}</span>
+            <span class="school_right_info">{{school.schoolSystem}}</span>
+            <span class="school_right_info">{{school.schoolProperties}}</span>
+          </div>
+        </div>
+      </div>
+    </transition>
     <div class="block">
       <span class="demonstration"></span>
       <!-- 分页组件 -->
@@ -57,6 +84,7 @@ export default {
 
   data() {
     return {
+      schoolDetail:true,
       input: "",
       schoolLists: [],
       currentPage: 1,
@@ -95,7 +123,7 @@ export default {
     },
     //路由跳转到schoolDetail
     btnSchoolDetailsList(val){
-      this.$router.push({path:"./schoollisttwo",query:{id:val.id}})
+      this.$router.push({path:"./schoolDetail",query:{id:val.id}})
     },
     //获取学校List数据(包括学校搜索)
     getschool() {
@@ -104,7 +132,7 @@ export default {
       urldata.append("pageNum", that.pageNum);
       urldata.append("pageSize", that.pageSize);
       urldata.append("searchKey", that.input);
-      axios.post("http://data.xinxueshuo.cn/nsi-1.0/school/list.do", urldata)
+      axios.post("http://192.168.0.28:8080/nsi-1.0/school/list.do", urldata)
         .then(function(respons) {
           that.schoolLists = respons.data.data.list;
           that.total_school = respons.data.data.total;
@@ -135,6 +163,10 @@ export default {
       this.getschool();
       // window.scrollTo(0,0)
     },
+    //切换学校列表
+    toggleBut:function() {
+      this.schoolDetail=!this.schoolDetail
+    }
   },
   //学校过滤超出显示...
   filters: {
@@ -264,5 +296,50 @@ export default {
   width: 100px;
   height: 100px;
 }
-
+.schoolList {
+  border-radius: 10px;
+  border: 1px solid gray;
+  background-color: white;
+  display: flex;
+  width: 1168px;
+  margin: auto;
+  height: 150px;
+  align-items: center;
+  margin-top: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.schoolList:hover {
+  box-shadow: 0px 0px 1px 1px rgb(169, 169, 169);
+}
+.toggleBut i{
+  font-size: 50px;
+  float: right;
+  margin-right: 50px;
+}
+.toggleBut i:hover{
+  color: skyblue;
+  margin-right: 50px;
+}
+/* .fade-enter,.fade-leave-to{
+  opacity: 0;
+}
+.fade-enter-to,.fade-leave{
+    opacity: 1;
+}
+.fade-enter-active,.fade-leave-active{
+    transition: all 3s;
+} */
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.5s
+}
+.fade-enter, .fade-leave-active {
+  opacity: 0
+}
+.fafa-enter-active, .fafa-leave-active {
+  transition: opacity 1s
+}
+.fafa-enter, .fafa-leave-active {
+  opacity: 0
+}
 </style>
