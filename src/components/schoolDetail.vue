@@ -6,7 +6,7 @@
             <div class="swiper-slide" v-for="(v,i) in swiper" :key="i">
               <img :src="v">
             </div>
-             <!-- <div class="swiper-slide">
+             <div class="swiper-slide">
               <img src="../assets/logo.png">
             </div>
             <div class="swiper-slide">
@@ -14,7 +14,7 @@
             </div>
             <div class="swiper-slide">
               <img src="../assets/logo.png">
-            </div> -->
+            </div>
           </div>
         </div>
       </div>
