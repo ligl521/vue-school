@@ -77,6 +77,7 @@
 <script>
 //ajax请求
 import axios from "axios";
+import {getSchoolLibrary} from "@/api/api"
 export default {
   created: function() {
     this.getschool();
@@ -94,7 +95,6 @@ export default {
       no_school: "",
       schools: [],
       timeout: null,
-      schoolLogoUrl:"http://data.xinxueshuo.cn/",
       schoolLogoUrlTwo:"http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png",
     };
   },
@@ -127,32 +127,32 @@ export default {
     },
     //获取学校List数据(包括学校搜索)
     getschool() {
-      let that = this;
-      let urldata = new URLSearchParams();
-      urldata.append("pageNum", that.pageNum);
-      urldata.append("pageSize", that.pageSize);
-      urldata.append("searchKey", that.input);
-      axios.post("http://192.168.0.28:8080/nsi-1.0/school/list.do", urldata)
-        .then(function(respons) {
-          that.schoolLists = respons.data.data.list;
-          that.total_school = respons.data.data.total;
-          //判断有无搜索结果
-          that.total_school == 0
-            ? (that.no_school = "未搜索到结果，请重新输入关键字！")
-            : (that.no_school = "");
-            window.scrollTo(0,0)
-            for (var i=0;i<respons.data.data.list.length;i++) {
-              var str = respons.data.data.list[i].schoolSystem;
-              var arr1 = str.split("；");
-              var arr2 = arr1.slice(0,arr1.length-1);
-              var arr3 = [];
-              for(var j=0; j<arr2.length; j++){
-                  arr3.push(arr1[j].slice(0,1))
-              }
-              respons.data.data.list[i].schoolSystem
-              that.schoolLists[i].schoolSystem=arr3.join(",");
-            }
-        });
+      getSchoolLibrary({
+        pageNum:this.pageNum,
+        pageSize:this.pageSize,
+        searchKey:this.input
+      }).then((respons)=>{
+        let that = this;
+        console.log(respons.data)
+        that.schoolLists = respons.data.list;
+        that.total_school = respons.data.total;
+        //判断有无搜索结果
+        that.total_school == 0
+          ? (that.no_school = "未搜索到结果，请重新输入关键字！")
+          : (that.no_school = "");
+          window.scrollTo(0,0)
+        for (var i=0;i<respons.data.list.length;i++) {
+          var str = respons.data.list[i].schoolSystem;
+          var arr1 = str.split("；");
+          var arr2 = arr1.slice(0,arr1.length-1);
+          var arr3 = [];
+          for(var j=0; j<arr2.length; j++){
+              arr3.push(arr1[j].slice(0,1))
+          }
+          respons.data.list[i].schoolSystem
+          that.schoolLists[i].schoolSystem=arr3.join(",");
+        }
+      })
     },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);

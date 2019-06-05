@@ -2,6 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import layout from './layout'
+import axios from 'axios'
 import router from './router/index.js'
 //element引入
 import ElementUI from 'element-ui';
@@ -15,7 +16,10 @@ import VueAwesomeSwiper from 'vue-awesome-swiper'
 Vue.use(VueAwesomeSwiper)
 //echarts
 import echarts from 'echarts'
-Vue.prototype.$echarts = echarts 
+Vue.prototype.$echarts = echarts
+ //环境地址
+ Vue.prototype.axios = axios
+axios.defaults.baseURL = "http://192.168.0.28:8080/nsi-1.0"
 
 
 Vue.config.productionTip = false

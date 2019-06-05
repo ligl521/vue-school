@@ -1,36 +1,48 @@
 <template>
   <div class="schlloList">
-      <div class="carousel" v-show="banner">
-        <div class="swiper-container" >
+      <div class="carousel">
+        <div class="swiper-container">
           <div class="swiper-wrapper">
-            <div class="swiper-slide" v-for="(v,i) in swiper" :key="i">
+              <div class="swiper-slide" v-for="(v,i) in schoolSwiper" :key="i">
+                <img :src="v.img">
+              </div>
+              <!-- :style="{backgroundImage: 'url(' + item + ')'}" -->
+              <!-- <div class="swiper-slide"  >111</div>
+              <div class="swiper-slide"  >222</div>
+              <div class="swiper-slide"  >333</div> -->
+          </div>
+          <!-- 如果需要分页器 -->
+          <div class="swiper-pagination"></div>
+          <!-- 如果需要导航按钮 -->
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
+          <!-- 如果需要滚动条 -->
+          <div class="swiper-scrollbar"></div>
+      </div>
+
+
+        <!-- <div class="swiper-container" >
+          <div class="swiper-wrapper">
+            <div class="swiper-slide" v-for="(v,i) in schoolSwiper" :key="i">
               <img :src="v">
             </div>
-             <div class="swiper-slide">
-              <img src="../assets/logo.png">
-            </div>
-            <div class="swiper-slide">
-              <img src="../assets/logo.png">
-            </div>
-            <div class="swiper-slide">
-              <img src="../assets/logo.png">
-            </div>
           </div>
-        </div>
+        </div> -->
       </div>
       <div class="schoolSimple">
           <div class="schoolLogo clearfix">
+            <p><img src="../assets/school.png" /></p>
             <ul>
               <li>{{schollDatil.schoolName}}</li>
               <li>{{schollDatil.schoolEnglishName}}</li>
+              <li>{{schollDatil.schoolProperties}}</li>
             </ul>
-            <p><img src="../assets/school.png" /></p>
           </div>
-          <div class="schoolXinxi">
+          <div class="schoolTranslate">
             <ul>
               <li class="clearfix"><p><i class="iconfont  icon-dibudaohanglan-"></i>{{schollDatil.schoolProperties}}</p><p><i class="iconfont icon-dingwei"></i>{{schollDatil.address}}</p><p><i class="iconfont icon-xuexiao"></i>{{schollDatil.schoolSystem}}</p></li>
-              <li class="clearfix"><p><i class="iconfont icon-shijian"></i>{{schollDatil.foundingTime}}年</p><p><i class="iconfont icon-text_icon"></i>{{schollDatil.course}}</p><p><i class="iconfont icon-qianmoney113"></i>{{schollDatil.schoolSystem}}</p></li>
-              <li class="clearfix"><p><p><i class="iconfont icon-zhengzaidingwei"></i>{{schollDatil.coveredArea}}亩</p><p><i class="iconfont icon-laoshi1"></i>教师人数：{{schollDatil.teacherNum}}</p><p><i class="iconfont icon-wodexuesheng"></i>学生人数：{{schollDatil.students}}</p></li>
+              <li class="clearfix"><p><i class="iconfont icon-shijian"></i>{{schollDatil.foundingTime}}年</p><p><i class="iconfont icon-zhengzaidingwei"></i>{{schollDatil.coveredArea}}亩</p><p><i class="iconfont icon-qianmoney113"></i>{{schollDatil.schoolSystem}}</p></li>
+              <li class="clearfix"><p><p><i class="iconfont icon-text_icon"></i>{{schollDatil.course}}</p><p><i class="iconfont icon-laoshi1"></i>教师人数：{{schollDatil.teacherNum}}</p><p><i class="iconfont icon-wodexuesheng"></i>学生人数：{{schollDatil.students}}</p></li>
             </ul>
           </div>
       </div>
@@ -65,33 +77,51 @@
 </template>
 <script>
 import Swiper from 'swiper'
-import 'swiper/dist/css/swiper.min.css'
+import 'swiper/dist/css/swiper.min.css';
+// import '../../node_modules/swiper/dist/js/swiper.min.js'
+// import '../../node_modules/swiper/dist/css/swiper.min.css'
 import axios from "axios";
+import {getSchoolDeatail} from '@/api/api'
 // import mEcharts from '../components/Echarts'
 export default {
   data() {
     return {
       banner:true,
       schollDatil:{},
-      swiper:[]
+      schoolSwiper:[]
     }
   },
   methods: {
     getData(){
-        // let url = "http://data.xinxueshuo.cn/nsi-1.0/new/school/detail.do"
-        let url = "http://192.168.0.28:8080/nsi-1.0/new/school/detail.do"
-        axios.get(url,{
-          params:{
-            schoolId:100053
-          }
-        }).then((res)=>{
+      getSchoolDeatail({
+        schoolId:100053
+      }).then((res)=>{
+        this.schollDatil = res.data;
+        var one = res.data.schoolShowOne;
+        this.schoolSwiper = [{img:one},{img:res.data.schoolShowThird},{img:res.data.schoolShowTwo}]
+        console.log(this.schoolSwiper);
+        // var mySwiper = new Swiper('.swiper-container', {
+        //   autoplay:true,
+        //   loop:true
+        // });
+          var mySwiper = new Swiper('.swiper-container',{
+            pagination: {
+              el: '.swiper-pagination',
+            },
+            observer:true,
+            autoplay:true,
+            // observeParents:true,
+            // loop:true
+          })
 
-          this.schollDatil = res.data.data;
-          this.swiper.push(res.data.data.schoolShowOne);
-          this.swiper.push(res.data.data.schoolShowThird);
-          this.swiper.push(res.data.data.schoolShowTwo);
-          console.log(this.swiper)
-        })
+        /* eslint-disable no-new */
+        //  var mySwiper = new Swiper('.swiper-container', {})
+
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+      // let url = "http://data.xinxueshuo.cn/nsi-1.0/new/school/detail.do"
     },
     drawLine(){
         // 基于准备好的dom，初始化echarts实例
@@ -149,11 +179,22 @@ export default {
     this.getData()
   },
   mounted(){
-    var mySwiper = new Swiper('.swiper-container', {
-      autoplay:true,
-      loop:true
-    });
+    // var mySwiper = new Swiper('.swiper-container',{
+    //   pagination: {
+    //     el: '.swiper-pagination',
+    //   },
+    //   observer:true,
+    //   autoplay:true,
+    //   loop:true
+    // })
     this.drawLine()
+  },
+  updata(){
+    // var mySwiper = new Swiper('.swiper-container', {
+    //   autoplay:true,
+    //   loop:true
+    // });
+    // this.drawLine()
   }
 };
 </script>
@@ -163,24 +204,46 @@ export default {
     margin: 0 auto;
     border: 1px solid #ccc;
   }
-  .carousel{
-    height: 300px;
-  }
+/* bannner */
   .swiper-slide{
-    height: 300px;
+    height: 400px;
   }
   .carousel img{
     width: 100%;
     height: 100%;
   }
   .schoolLogo{
-    margin-top: 75px
+    margin-top: 75px;
+    width: 90%;
   }
   .schoolLogo ul{
     float: left;
-    margin-left: 95px;
+    margin-left: 15px;
     margin-top: 30px;
   }
+   .schoolLogo ul li:first-of-type{
+    font-size: 32px;
+  }
+  .schoolLogo ul li:nth-of-type(2){
+    font-size: 20px;
+    margin-top: 20px;
+  }
+  .schoolLogo ul li:last-of-type{
+    font-size: 18px;
+    margin-top: 20px;
+  }
+  .schoolLogo p{
+    float: left;
+    width: 150px;
+    height: 150px;
+    margin-left: 85px;
+  }
+  .schoolLogo p img{
+    width: 100%;
+    height: 100%;
+  }
+
+  /* echats */
   .schlloEchart{
     margin-left: 95px;
     margin-right: 95px;
@@ -190,9 +253,6 @@ export default {
     float: left;
     margin-top: 50px;
     margin-left: 40px;
-  }
-  .schlloChenter ul li:first-of-type{
-
   }
   .schlloEchartLeft{
     float: left;
@@ -218,40 +278,28 @@ export default {
   .schlloRight li:first-of-type p:last-of-type i{
     font-size: 27px;
   }
-  .schoolLogo ul li:first-of-type{
-    font-size: 32px;
-  }
-  .schoolLogo ul li:last-of-type{
+
+
+  /* 学校信息 */
+  .schoolTranslate{
     font-size: 18px;
-    margin-top: 20px;
-  }
-  .schoolLogo p{
-    float: right;
-    width: 150px;
-    height: 150px;
-    margin-right: 75px;
-  }
-  .schoolLogo p img{
-    width: 100%;
-    height: 100%;
-  }
-  .schoolXinxi{
-    font-size: 16px;
     margin-left: 95px;
     margin-right: 95px;
+    margin-top: 20px;
   }
-  .schoolXinxi li{
+  .schoolTranslate li{
     border-bottom: 1px solid #ccc;
-    line-height: 30px;
+    line-height: 60px;
   }
-  .schoolXinxi li p{
+  .schoolTranslate li p{
     float: left;
     width: 298px;
   }
-  .schoolXinxi li p i{
+  .schoolTranslate li p i{
     font-size: 20px;
     margin-right: 5px;
   }
+  /* 详情介绍 */
   .intoduce{
     margin-left: 95px;
     margin-right: 95px;
