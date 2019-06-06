@@ -180,7 +180,7 @@ export default {
   }
 };
 </script>
-<style>
+<style scoped>
 #search_res {
   display: flex;
   justify-content: center;

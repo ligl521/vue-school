@@ -19,8 +19,10 @@ import echarts from 'echarts'
 Vue.prototype.$echarts = echarts
  //环境地址
  Vue.prototype.axios = axios
+    //测试环境
 axios.defaults.baseURL = "http://192.168.0.28:8080/nsi-1.0"
-
+    //生产环境
+// axios.defaults.baseURL = "http://data.xinxueshuo.cn/nsi-1.0/"
 
 Vue.config.productionTip = false
 

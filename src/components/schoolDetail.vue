@@ -1,5 +1,5 @@
 <template>
-  <div class="schlloList">
+  <div class="schoolList">
       <div class="carousel">
         <div class="swiper-container">
           <div class="swiper-wrapper">
@@ -19,8 +19,6 @@
           <!-- 如果需要滚动条 -->
           <div class="swiper-scrollbar"></div>
       </div>
-
-
         <!-- <div class="swiper-container" >
           <div class="swiper-wrapper">
             <div class="swiper-slide" v-for="(v,i) in schoolSwiper" :key="i">
@@ -30,23 +28,66 @@
         </div> -->
       </div>
       <div class="schoolSimple">
-          <div class="schoolLogo clearfix">
-            <p><img src="../assets/school.png" /></p>
-            <ul>
-              <li>{{schollDatil.schoolName}}</li>
-              <li>{{schollDatil.schoolEnglishName}}</li>
-              <li>{{schollDatil.schoolProperties}}</li>
+        <div class="schoolId clearfix"><p>NO.{{schoolId}}</p></div>
+        <div class="schoolLogo clearfix">
+          <p class="schoolLogoLeft"><img src="../assets/school.png" /></p>
+          <ul>
+            <li>{{schollDatil.schoolName}}</li>
+            <li>{{schollDatil.schoolEnglishName}}</li>
+            <li>类型：{{schollDatil.schoolProperties}}</li>
+          </ul>
+          <div class="schoolLogoRight">
+            <h1>认证：<span>12345</span><span>12345</span><span>12345</span></h1>
+            <p>运营状态：{{schollDatil.operationState}}</p>
+            <P>地址：{{schollDatil.address}}</P>
+          </div>
+        </div>
+        <div class="schoolTranslate">
+          <h1 class="schoolTranslateH1">基本信息</h1>
+          <div class="schoolTranslateBox">
+            <ul class="schoolTranslateHeader clearfix">
+              <li class="clearfix"><p><i class="iconfont icon-shijian"></i>建校时间：{{schollDatil.foundingTime}}年</p><p><i class="iconfont icon-guanwang"></i>{{schollDatil.website}}</p></li>
+              <li class="clearfix"><p>学制：<span>小学</span><span>初中</span><span>高中</span></p><p>学费：<span>150000</span><span>150000</span><span>150000</span></p></li>
             </ul>
           </div>
-          <div class="schoolTranslate">
-            <ul>
+          <h1 class="schoolTranslateH1">课程学生</h1>
+          <div class="schoolTranslateCenter clearfix">
+            <ul class="clearfix">
+              <li class="clearfix"><p><i class="iconfont icon-shijian"></i>{{schollDatil.foundingTime}}年</p><p><i class="iconfont icon-dili"></i>{{schollDatil.coveredArea}}亩</p><p><i class="iconfont icon-jine"></i>{{schollDatil.schoolSystem}}</p></li>
               <li class="clearfix"><p><i class="iconfont  icon-dibudaohanglan-"></i>{{schollDatil.schoolProperties}}</p><p><i class="iconfont icon-dingwei"></i>{{schollDatil.address}}</p><p><i class="iconfont icon-xuexiao"></i>{{schollDatil.schoolSystem}}</p></li>
-              <li class="clearfix"><p><i class="iconfont icon-shijian"></i>{{schollDatil.foundingTime}}年</p><p><i class="iconfont icon-zhengzaidingwei"></i>{{schollDatil.coveredArea}}亩</p><p><i class="iconfont icon-qianmoney113"></i>{{schollDatil.schoolSystem}}</p></li>
-              <li class="clearfix"><p><p><i class="iconfont icon-text_icon"></i>{{schollDatil.course}}</p><p><i class="iconfont icon-laoshi1"></i>教师人数：{{schollDatil.teacherNum}}</p><p><i class="iconfont icon-wodexuesheng"></i>学生人数：{{schollDatil.students}}</p></li>
+              <li class="clearfix"><p><i class="iconfont icon-text_icon"></i>11{{schollDatil.course | ellipsisCurriculum}}</p><p><i class="iconfont icon-laoshi1"></i>教师人数：{{schollDatil.teacherNum}}</p><p><i class="iconfont icon-wodexuesheng"></i>学生人数：{{schollDatil.students}}</p></li>
+              <li class="clearfix"><p><i class="iconfont icon-fenchengbili"></i>中外教比例：{{schollDatil.teacherNum}}-{{schollDatil.foreignTeacherNum}}</p><p><i class="iconfont icon-jiaoshi"></i>师生比例：{{schollDatil.teacherStuRatio}}</p><p><i class="iconfont icon-dianhua"></i>{{schollDatil.telephone}}</p></li>
             </ul>
           </div>
+          <h1 class="schoolTranslateH1">师资力量   </h1>
+          <div class="schoolTranslateCenter clearfix">
+            <ul class="clearfix">
+              <li class="clearfix"><p><i class="iconfont icon-text_icon"></i>11{{schollDatil.course | ellipsisCurriculum}}</p><p><i class="iconfont icon-laoshi1"></i>教师人数：{{schollDatil.teacherNum}}</p><p><i class="iconfont icon-wodexuesheng"></i>学生人数：{{schollDatil.students}}</p></li>
+              <li class="clearfix"><p><i class="iconfont icon-fenchengbili"></i>中外教比例：{{schollDatil.teacherNum}}-{{schollDatil.foreignTeacherNum}}</p><p><i class="iconfont icon-jiaoshi"></i>师生比例：{{schollDatil.teacherStuRatio}}</p></li>
+            </ul>
+          </div>
+          <h1 class="schoolTranslateH1">建设投资</h1>
+          <div class="schoolTranslateCenter clearfix">
+            <ul class="clearfix">
+              <li class="clearfix"><p><i class="iconfont icon-shijian"></i>{{schollDatil.foundingTime}}年</p><p><i class="iconfont icon-dili"></i>{{schollDatil.coveredArea}}亩</p><p><i class="iconfont icon-jine"></i>{{schollDatil.schoolSystem}}</p></li>
+              <li class="clearfix"><p><i class="iconfont  icon-dibudaohanglan-"></i>{{schollDatil.schoolProperties}}</p><p><i class="iconfont icon-dingwei"></i>{{schollDatil.address}}</p><p><i class="iconfont icon-xuexiao"></i>{{schollDatil.schoolSystem}}</p></li>
+              <li class="clearfix"><p><i class="iconfont icon-text_icon"></i>11{{schollDatil.course | ellipsisCurriculum}}</p><p><i class="iconfont icon-laoshi1"></i>教师人数：{{schollDatil.teacherNum}}</p><p><i class="iconfont icon-wodexuesheng"></i>学生人数：{{schollDatil.students}}</p></li>
+              <li class="clearfix"><p><i class="iconfont icon-fenchengbili"></i>中外教比例：{{schollDatil.teacherNum}}-{{schollDatil.foreignTeacherNum}}</p><p><i class="iconfont icon-jiaoshi"></i>师生比例：{{schollDatil.teacherStuRatio}}</p><p><i class="iconfont icon-dianhua"></i>{{schollDatil.telephone}}</p></li>
+            </ul>
+          </div>
+          <h1 class="schoolTranslateH1">学校详情介绍</h1>
+          <div class="schoolTranslateCenter clearfix">
+            <ul class="clearfix">
+              <li class="clearfix"><p><i class="iconfont icon-shijian"></i>{{schollDatil.foundingTime}}年</p><p><i class="iconfont icon-dili"></i>{{schollDatil.coveredArea}}亩</p><p><i class="iconfont icon-jine"></i>{{schollDatil.schoolSystem}}</p></li>
+              <li class="clearfix"><p><i class="iconfont  icon-dibudaohanglan-"></i>{{schollDatil.schoolProperties}}</p><p><i class="iconfont icon-dingwei"></i>{{schollDatil.address}}</p><p><i class="iconfont icon-xuexiao"></i>{{schollDatil.schoolSystem}}</p></li>
+              <li class="clearfix"><p><i class="iconfont icon-text_icon"></i>11{{schollDatil.course | ellipsisCurriculum}}</p><p><i class="iconfont icon-laoshi1"></i>教师人数：{{schollDatil.teacherNum}}</p><p><i class="iconfont icon-wodexuesheng"></i>学生人数：{{schollDatil.students}}</p></li>
+              <li class="clearfix"><p><i class="iconfont icon-fenchengbili"></i>中外教比例：{{schollDatil.teacherNum}}-{{schollDatil.foreignTeacherNum}}</p><p><i class="iconfont icon-jiaoshi"></i>师生比例：{{schollDatil.teacherStuRatio}}</p><p><i class="iconfont icon-dianhua"></i>{{schollDatil.telephone}}</p></li>
+            </ul>
+          </div>
+        </div>
+
       </div>
-      <div class="schlloEchart clearfix">
+      <!-- <div class="schlloEchart clearfix">
         <div class="schlloEchartLeft"><i class="iconfont icon-laoshirenzheng1"></i></div>
         <div class="schlloChenter">
           <ul>
@@ -65,12 +106,13 @@
             <li>师生比例</li>
           </ul>
         </div>
-      </div>
+      </div> -->
       <div class="intoduce">
         <div class="intoduceJeshao">
-          <h1>学习详情介绍</h1>
-          <p>{{schollDatil.remark}}</p>
+          <h1>硬件设施</h1>
           <p>{{schollDatil.hardware}}</p>
+          <h1>学校详情介绍</h1>
+          <p>{{schollDatil.remark}}</p>
         </div>
       </div>
   </div>
@@ -88,7 +130,9 @@ export default {
     return {
       banner:true,
       schollDatil:{},
-      schoolSwiper:[]
+      schoolSwiper:[],
+      schoolAuthentication:[],
+      schoolId:""
     }
   },
   methods: {
@@ -98,24 +142,18 @@ export default {
       }).then((res)=>{
         this.schollDatil = res.data;
         var one = res.data.schoolShowOne;
-        this.schoolSwiper = [{img:one},{img:res.data.schoolShowThird},{img:res.data.schoolShowTwo}]
-        console.log(this.schoolSwiper);
-        // var mySwiper = new Swiper('.swiper-container', {
-        //   autoplay:true,
-        //   loop:true
-        // });
-          var mySwiper = new Swiper('.swiper-container',{
-            pagination: {
-              el: '.swiper-pagination',
-            },
-            observer:true,
-            autoplay:true,
-            // observeParents:true,
-            // loop:true
-          })
-
-        /* eslint-disable no-new */
-        //  var mySwiper = new Swiper('.swiper-container', {})
+        this.schoolSwiper = [{img:one},{img:res.data.schoolShowThird},{img:res.data.schoolShowTwo}];
+        //swiper
+        var mySwiper = new Swiper('.swiper-container',{
+          pagination: {
+            el: '.swiper-pagination',
+          },
+          observer:true,
+          autoplay:true,
+        })
+        var authentication = res.data.authentication
+        authentication.
+        console.log(authentication)
 
       })
       .catch(function (error) {
@@ -170,39 +208,33 @@ export default {
 
     },
     getid:function(){
-      console.log(this.$route.query && this.$route.query.id)
+      this.schoolId = this.$route.query && this.$route.query.id;
     },
-
   },
   created(){
     this.getid(),
     this.getData()
   },
-  mounted(){
-    // var mySwiper = new Swiper('.swiper-container',{
-    //   pagination: {
-    //     el: '.swiper-pagination',
-    //   },
-    //   observer:true,
-    //   autoplay:true,
-    //   loop:true
-    // })
-    this.drawLine()
-  },
-  updata(){
-    // var mySwiper = new Swiper('.swiper-container', {
-    //   autoplay:true,
-    //   loop:true
-    // });
-    // this.drawLine()
+  //学校过滤超出显示...
+  filters: {
+    ellipsisCurriculum (value) {
+      if (!value) return ''
+      if (value.length > 6) {
+        return value.slice(0,9) + '...'
+      }
+      return value
+    }
   }
 };
 </script>
 <style scoped>
-  .schlloList{
+  .schoolList{
     width: 1110px;
     margin: 0 auto;
     border: 1px solid #ccc;
+    padding-bottom: 30px;
+    margin-bottom: 100px;
+    margin-top: 20px;
   }
 /* bannner */
   .swiper-slide{
@@ -212,14 +244,25 @@ export default {
     width: 100%;
     height: 100%;
   }
+  .schoolId p{
+    float: right;
+    font-size: 18px;
+    border: 2px solid #777;
+    padding: 5px 10px;
+    margin-top: 15px;
+    margin-right: 15px;
+    border-radius: 10px;
+    color: #777;
+  }
   .schoolLogo{
-    margin-top: 75px;
-    width: 90%;
+    margin-top: 30px;
+    margin-left: 100px;
+    margin-right: 100px;
   }
   .schoolLogo ul{
     float: left;
-    margin-left: 15px;
-    margin-top: 30px;
+    margin-left: 20px;
+    margin-top: 10px;
   }
    .schoolLogo ul li:first-of-type{
     font-size: 32px;
@@ -232,17 +275,39 @@ export default {
     font-size: 18px;
     margin-top: 20px;
   }
-  .schoolLogo p{
+  .schoolLogoLeft{
     float: left;
     width: 150px;
     height: 150px;
-    margin-left: 85px;
+    margin-left: 0px;
   }
-  .schoolLogo p img{
+  .schoolLogoLeft img{
     width: 100%;
     height: 100%;
   }
+   .schoolLogo ul h1{
+     float: left;
+     margin-left: 30px;
+     font-size: 20px;
+   }
+   .schoolLogoRight{
+     float: left;
+     margin-left: 80px;
+     margin-top: 15px;
+     font-size: 18px;
+   }
+   .schoolLogoRight span{
+     display: inline-block;
+     padding: 5px;
+     border-radius: 5px;
+     background: #777;
+     color: #ffffff;
+     margin-right: 5px;
+   }
+   .schoolLogoRight p{
+     margin-top: 20px;
 
+   }
   /* echats */
   .schlloEchart{
     margin-left: 95px;
@@ -283,26 +348,71 @@ export default {
   /* 学校信息 */
   .schoolTranslate{
     font-size: 18px;
-    margin-left: 95px;
-    margin-right: 95px;
-    margin-top: 20px;
+    margin-left: 100px;
+    margin-right: 100px;
+
+  }
+  .schoolTranslate ul{
+    padding-top: 20px;
+    padding-bottom: 20px;
   }
   .schoolTranslate li{
-    border-bottom: 1px solid #ccc;
-    line-height: 60px;
+    line-height: 50px;
   }
   .schoolTranslate li p{
-    float: left;
-    width: 298px;
   }
   .schoolTranslate li p i{
     font-size: 20px;
     margin-right: 5px;
   }
+  .schoolTranslateH1{
+    margin-top: 20px;
+    text-align: center;
+    background: #214f89;
+    color: #eee;
+    padding: 10px;
+    font-size: 24px;
+  }
+  .schoolTranslateBox{
+    background: #f9f9f9;
+  }
+  .schoolTranslateHeader{
+    width: 80%;
+    margin: 0 auto;
+    background: #f9f9f9;
+  }
+  .schoolTranslateHeader p{
+    width: 360px;
+  }
+  .schoolTranslateHeader li{
+    float: left;
+  }
+  .schoolTranslateHeader p span{
+    display: inline-block;
+    width: 80px;
+    text-align: center;
+  }
+  .schoolTranslateCenter{
+    background: #f9f9f9;
+  }
+  .schoolTranslateCenter ul{
+    width: 90%;
+    margin: 0 auto;
+  }
+  .schoolTranslateCenter p{
+    float: left;
+    width: 270px;
+  }
+
+
+
+
+
   /* 详情介绍 */
   .intoduce{
     margin-left: 95px;
     margin-right: 95px;
+    margin-top: 30px;
   }
   .intoduceJeshao{
     letter-spacing: 1px;
@@ -310,6 +420,8 @@ export default {
   .intoduceJeshao h1{
     font-size: 20px;
     margin-bottom: 10px;
+    margin-top: 20px;
+    font-weight: 600;
   }
   .intoduceJeshao h2{
     font-size: 16px;
@@ -318,7 +430,7 @@ export default {
   .intoduceJeshao p{
     line-height: 25px;
     text-indent: 24px;
-    width: 90%;
-    margin: 0 auto;
+    letter-spacing:1.5px;
+    font-size: 18px;
   }
 </style>
