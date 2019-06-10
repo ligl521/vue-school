@@ -17,6 +17,8 @@ Vue.use(VueAwesomeSwiper)
 //echarts
 import echarts from 'echarts'
 Vue.prototype.$echarts = echarts
+//vuex
+import store from './store' //引入store
  //环境地址
  Vue.prototype.axios = axios
     //测试环境
@@ -30,6 +32,7 @@ Vue.config.productionTip = false
 new Vue({
     el: '#app',
     router,
+    store, //使用store
     components: { layout },
     template: '<layout/>'
 })

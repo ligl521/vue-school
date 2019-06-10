@@ -97,7 +97,7 @@ export default {
   }
 }
 </script>
-<style>
+<style scoped>
 .el-dialog--center .el-dialog__body {
     /* padding: 43px; */
     padding-top: 40px;

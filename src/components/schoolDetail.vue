@@ -75,44 +75,43 @@
               <li class="clearfix"><p><i class="iconfont icon-fenchengbili"></i>中外教比例：{{schollDatil.teacherNum}}-{{schollDatil.foreignTeacherNum}}</p><p><i class="iconfont icon-jiaoshi"></i>师生比例：{{schollDatil.teacherStuRatio}}</p><p><i class="iconfont icon-dianhua"></i>{{schollDatil.telephone}}</p></li>
             </ul>
           </div>
-          <h1 class="schoolTranslateH1">学校详情介绍</h1>
-          <div class="schoolTranslateCenter clearfix">
-            <ul class="clearfix">
-              <li class="clearfix"><p><i class="iconfont icon-shijian"></i>{{schollDatil.foundingTime}}年</p><p><i class="iconfont icon-dili"></i>{{schollDatil.coveredArea}}亩</p><p><i class="iconfont icon-jine"></i>{{schollDatil.schoolSystem}}</p></li>
-              <li class="clearfix"><p><i class="iconfont  icon-dibudaohanglan-"></i>{{schollDatil.schoolProperties}}</p><p><i class="iconfont icon-dingwei"></i>{{schollDatil.address}}</p><p><i class="iconfont icon-xuexiao"></i>{{schollDatil.schoolSystem}}</p></li>
-              <li class="clearfix"><p><i class="iconfont icon-text_icon"></i>11{{schollDatil.course | ellipsisCurriculum}}</p><p><i class="iconfont icon-laoshi1"></i>教师人数：{{schollDatil.teacherNum}}</p><p><i class="iconfont icon-wodexuesheng"></i>学生人数：{{schollDatil.students}}</p></li>
-              <li class="clearfix"><p><i class="iconfont icon-fenchengbili"></i>中外教比例：{{schollDatil.teacherNum}}-{{schollDatil.foreignTeacherNum}}</p><p><i class="iconfont icon-jiaoshi"></i>师生比例：{{schollDatil.teacherStuRatio}}</p><p><i class="iconfont icon-dianhua"></i>{{schollDatil.telephone}}</p></li>
-            </ul>
-          </div>
         </div>
-
       </div>
-      <!-- <div class="schlloEchart clearfix">
-        <div class="schlloEchartLeft"><i class="iconfont icon-laoshirenzheng1"></i></div>
-        <div class="schlloChenter">
-          <ul>
-            <li>
-                <div  id="myChart" style="width: 300px; height: 300px"></div>
-            </li>
-            <li>中外教比例</li>
-          </ul>
-        </div>
-        <div class="schlloRight">
-          <ul>
-            <li>
-              <p><i class="iconfont icon-laoshi1"></i></p><p><i class="iconfont icon-wodexuesheng"></i><i class="iconfont icon-wodexuesheng"></i><br/><i class="iconfont icon-wodexuesheng"></i><i class="iconfont icon-wodexuesheng"></i></p>
-            </li>
-            <li> {{schollDatil.teacherStuRatio}}</li>
-            <li>师生比例</li>
-          </ul>
-        </div>
-      </div> -->
       <div class="intoduce">
+        <h1 class="schoolTranslateH1">学校详细介绍</h1>
         <div class="intoduceJeshao">
           <h1>硬件设施</h1>
           <p>{{schollDatil.hardware}}</p>
           <h1>学校详情介绍</h1>
           <p>{{schollDatil.remark}}</p>
+        </div>
+      </div>
+      <div class="detailOrder clearfix">
+        <div class="deailOrderLeft">
+          <h1>预约开发项目</h1>
+          <ul class="clearfix">
+            <li class="clearfix">
+              <p><input type="text" placeholder="学生中文姓名" /></p>
+              <p>
+                <select>
+                  <option>在读年级</option>
+                  <option>初中</option>
+                  <option>高中</option>
+                  <option>小学</option>
+                </select>
+              </p>
+            </li>
+            <li class="clearfix">
+              <p><input type="text" placeholder="手机电话" /></p>
+              <p><span><input type="radio">男</span><span><input type="radio">女</span></p>
+            </li>
+            <li><button>提交</button></li>
+          </ul>
+        </div>
+        <div class="deailOrderRight">
+          <h1>访校批注</h1>
+          <div class="deailAnnotation" contenteditable="true"></div>
+          <p><button>提交</button></p>
         </div>
       </div>
   </div>
@@ -308,42 +307,6 @@ export default {
      margin-top: 20px;
 
    }
-  /* echats */
-  .schlloEchart{
-    margin-left: 95px;
-    margin-right: 95px;
-    height: 400px;
-  }
-  .schlloChenter{
-    float: left;
-    margin-top: 50px;
-    margin-left: 40px;
-  }
-  .schlloEchartLeft{
-    float: left;
-  }
-  .schlloEchartLeft i{
-    font-size: 50px;
-
-  }
-  .schlloRight{
-    float: left;
-    width: 250px;
-    margin-left: 20px;
-    margin-top: 50px;
-    margin-left: 260px;
-  }
-  .schlloRight p{
-    display:inline-block;
-    margin-right: 20px;
-  }
-  .schlloRight li:first-of-type p:first-of-type i{
-    font-size: 54px;
-  }
-  .schlloRight li:first-of-type p:last-of-type i{
-    font-size: 27px;
-  }
-
 
   /* 学校信息 */
   .schoolTranslate{
@@ -405,16 +368,16 @@ export default {
   }
 
 
-
-
-
   /* 详情介绍 */
   .intoduce{
-    margin-left: 95px;
-    margin-right: 95px;
+    margin-left: 100px;
+    margin-right: 100px;
     margin-top: 30px;
+    background: #f9f9f9;
   }
   .intoduceJeshao{
+    width: 90%;
+    margin: 0 auto;
     letter-spacing: 1px;
   }
   .intoduceJeshao h1{
@@ -433,4 +396,75 @@ export default {
     letter-spacing:1.5px;
     font-size: 18px;
   }
+  .detailOrder{
+    border-top: 2px solid #cccccc;
+    margin-top: 50px;
+  }
+      /* 预约 */
+.deailOrderLeft{
+  margin-top: 20px;
+  margin-left: 100px;
+  float: left;
+  background: #f7f7f7;
+  width: 50%;
+}
+.detailOrder h1{
+  background: #214f89;
+  color: #eee;
+  padding: 10px;
+  font-size: 18px;
+  text-align: center;
+}
+.deailOrderLeft li{
+  margin-top: 10px;
+}
+.deailOrderLeft p{
+  float: left;
+  font-size: 18px;
+}
+.deailOrderLeft p input[type="text"]{
+  height: 30px;
+  padding-left: 10px;
+}
+.deailOrderLeft p select{
+  height: 35px;
+  width: 176px;
+  padding-left: 10px;
+}
+.deailOrderLeft p:first-of-type{
+  width: 280px;
+  margin-left: 40px;
+}
+.deailOrderLeft li:last-of-type{
+  text-align: center;
+}
+.deailOrderLeft span{
+  margin-right: 30px;
+}
+.deailOrderLeft button{
+  font-size: 16px;
+  padding: 5px 80px;
+  margin: 0 auto;
+}
+.deailOrderRight{
+   margin-top: 20px;
+  margin-right: 100px;
+  float: left;
+  width: 30%;
+  margin-left: 20px;
+  background: #f7f7f7;
+}
+.deailAnnotation{
+  height: 90px;
+  border: 1px solid #cccccc;
+}
+.deailAnnotation:focus{outline:none;}
+.deailOrderRight p{
+  text-align: center;
+}
+.deailOrderRight button{
+  font-size: 16px;
+  padding: 5px 60px;
+  margin-top: 10px;
+}
 </style>

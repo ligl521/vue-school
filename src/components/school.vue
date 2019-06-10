@@ -14,7 +14,10 @@
       <el-button id="searchBtn" type="primary" icon="el-icon-search" @click="getschool"></el-button>
     </div>
     <!-- 学校展示列表 -->
-    <div class="toggleBut clearfix" @click="toggleBut"><i class="iconfont icon-qiehuan1"></i></div>
+    <div class="toggleBut clearfix">
+      <i class="iconfont icon-zongpailie" :class="chageIcon?'blackTwo':'black'" @click="toggleButTransverse"></i>
+      <i class="iconfont icon-hengpailie" :class="chageIcon?'black':'blackTwo'" @click="toggleButLongitudinal"></i>
+    </div>
     <transition name="fade">
     <div class="schoolDetail" v-if="schoolDetail">
         <el-row :gutter="20" type="flex" style="flex-wrap:wrap">
@@ -95,6 +98,7 @@ export default {
       no_school: "",
       schools: [],
       timeout: null,
+      chageIcon:false,
       schoolLogoUrlTwo:"http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png",
     };
   },
@@ -164,8 +168,13 @@ export default {
       // window.scrollTo(0,0)
     },
     //切换学校列表
-    toggleBut:function() {
-      this.schoolDetail=!this.schoolDetail
+    toggleButTransverse:function() {
+      this.schoolDetail=false;
+      this.chageIcon = true;
+    },
+    toggleButLongitudinal:function() {
+      this.schoolDetail=true;
+      this.chageIcon = false;
     }
   },
   //学校过滤超出显示...
@@ -194,7 +203,6 @@ export default {
 #searchBar {
   margin-top: 25px;
   text-align: center;
-  margin-left: 75px;
 }
 #schoolInput {
   position: relative;
@@ -255,11 +263,11 @@ export default {
   text-align: center;
   margin-top: 50px;
 }
- li{
-    list-style: none;
-}
 .el-col {
     border-radius: 4px;
+}
+.el-autocomplete {
+    width: 400px;
 }
 .grid-content{
   border-radius: 4px;
@@ -270,6 +278,12 @@ export default {
   height: 280px;
   border: 1px solid #ccc;
   background: #fff;
+}
+.black{
+  color: #000;
+}
+.blackTwo{
+  color: skyblue;
 }
 .grid-content:hover{
   box-shadow: 0px 0px 15px #ccc ;
