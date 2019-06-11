@@ -16,7 +16,7 @@
     <!-- 学校展示列表 -->
     <div class="toggleBut clearfix">
       <i class="iconfont icon-zongpailie" :class="chageIcon?'blackTwo':'black'" @click="toggleButTransverse"></i>
-      <i class="iconfont icon-hengpailie" :class="chageIcon?'black':'blackTwo'" @click="toggleButLongitudinal"></i>
+      <i class="iconfont icon-gengduo" :class="chageIcon?'black':'blackTwo'" @click="toggleButLongitudinal"></i>
     </div>
     <transition name="fade">
     <div class="schoolDetail" v-if="schoolDetail">
@@ -283,7 +283,7 @@ export default {
   color: #000;
 }
 .blackTwo{
-  color: skyblue;
+  color: #ccc;
 }
 .grid-content:hover{
   box-shadow: 0px 0px 15px #ccc ;
@@ -327,13 +327,12 @@ export default {
   box-shadow: 0px 0px 1px 1px rgb(169, 169, 169);
 }
 .toggleBut i{
-  font-size: 50px;
+  font-size: 40px;
   float: right;
-  margin-right: 50px;
+  margin-right: 40px;
 }
 .toggleBut i:hover{
-  color: skyblue;
-  margin-right: 50px;
+  color: #ccc;
 }
 /* .fade-enter,.fade-leave-to{
   opacity: 0;

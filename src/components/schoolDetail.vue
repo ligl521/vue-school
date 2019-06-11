@@ -88,10 +88,13 @@
       </div>
       <div class="detailOrder clearfix">
         <div class="deailOrderLeft">
-          <h1>预约开发项目</h1>
+          <h1>预约开放时间</h1>
           <ul class="clearfix">
             <li class="clearfix">
-              <p><input type="text" placeholder="学生中文姓名" /></p>
+              <p><el-input v-model="inputName" placeholder="学生中文姓名"></el-input></p>
+              <p><el-input v-model="inputTelephone" placeholder="手机电话"></el-input></p>
+              <!-- <p><input type="text" placeholder="手机电话" /></p>
+              <p><input type="text" placeholder="学生中文姓名" /></p> -->
               <p>
                 <select>
                   <option>在读年级</option>
@@ -100,18 +103,26 @@
                   <option>小学</option>
                 </select>
               </p>
+              <p><el-radio v-model="radio" label="1">男</el-radio><el-radio v-model="radio" label="2">女</el-radio></p>
             </li>
-            <li class="clearfix">
-              <p><input type="text" placeholder="手机电话" /></p>
-              <p><span><input type="radio">男</span><span><input type="radio">女</span></p>
-            </li>
-            <li><button>提交</button></li>
+            <li><el-button type="info">提交</el-button></li>
           </ul>
         </div>
         <div class="deailOrderRight">
           <h1>访校批注</h1>
-          <div class="deailAnnotation" contenteditable="true"></div>
-          <p><button>提交</button></p>
+          <div class="deailAnnotation">
+            <el-input
+              type="textarea"
+              placeholder="请输入内容"
+              v-model="textarea"
+              maxlength="500"
+              show-word-limit
+              :rows="5"
+            >
+            </el-input>
+          </div>
+          <!-- <div class="deailAnnotation" contenteditable="true"></div> -->
+          <p><el-button type="info">提交</el-button></p>
         </div>
       </div>
   </div>
@@ -131,7 +142,11 @@ export default {
       schollDatil:{},
       schoolSwiper:[],
       schoolAuthentication:[],
-      schoolId:""
+      schoolId:"",
+      textarea:"",//批注
+      radio: '1',
+      inputTelephone:"",//手机
+      inputName:"" //姓名
     }
   },
   methods: {
@@ -150,8 +165,7 @@ export default {
           observer:true,
           autoplay:true,
         })
-        var authentication = res.data.authentication
-        authentication.
+        var authentication = res.data.authentication;
         console.log(authentication)
 
       })
@@ -404,9 +418,9 @@ export default {
 .deailOrderLeft{
   margin-top: 20px;
   margin-left: 100px;
-  float: left;
   background: #f7f7f7;
-  width: 50%;
+  margin-right: 100px;
+  padding-bottom: 30px;
 }
 .detailOrder h1{
   background: #214f89;
@@ -416,11 +430,12 @@ export default {
   text-align: center;
 }
 .deailOrderLeft li{
-  margin-top: 10px;
+  margin-top: 30px;
 }
 .deailOrderLeft p{
   float: left;
   font-size: 18px;
+  margin-left: 50px;
 }
 .deailOrderLeft p input[type="text"]{
   height: 30px;
@@ -431,10 +446,6 @@ export default {
   width: 176px;
   padding-left: 10px;
 }
-.deailOrderLeft p:first-of-type{
-  width: 280px;
-  margin-left: 40px;
-}
 .deailOrderLeft li:last-of-type{
   text-align: center;
 }
@@ -443,20 +454,20 @@ export default {
 }
 .deailOrderLeft button{
   font-size: 16px;
-  padding: 5px 80px;
+  padding: 10px 80px;
   margin: 0 auto;
 }
 .deailOrderRight{
-   margin-top: 20px;
+  margin-top: 20px;
   margin-right: 100px;
-  float: left;
-  width: 30%;
-  margin-left: 20px;
+  margin-left: 100px;
   background: #f7f7f7;
+  padding-bottom: 30px;
 }
 .deailAnnotation{
-  height: 90px;
-  border: 1px solid #cccccc;
+  margin-top: 30px;
+  margin-right: 30px;
+  margin-left: 30px;
 }
 .deailAnnotation:focus{outline:none;}
 .deailOrderRight p{
@@ -464,7 +475,7 @@ export default {
 }
 .deailOrderRight button{
   font-size: 16px;
-  padding: 5px 60px;
-  margin-top: 10px;
+  padding: 10px 60px;
+  margin-top: 20px;
 }
 </style>
