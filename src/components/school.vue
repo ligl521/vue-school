@@ -327,7 +327,7 @@ export default {
   box-shadow: 0px 0px 1px 1px rgb(169, 169, 169);
 }
 .toggleBut i{
-  font-size: 40px;
+  font-size: 35px;
   float: right;
   margin-right: 40px;
 }

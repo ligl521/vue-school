@@ -96,12 +96,20 @@
               <!-- <p><input type="text" placeholder="手机电话" /></p>
               <p><input type="text" placeholder="学生中文姓名" /></p> -->
               <p>
-                <select>
+                <!-- <select>
                   <option>在读年级</option>
                   <option>初中</option>
                   <option>高中</option>
                   <option>小学</option>
-                </select>
+                </select> -->
+                <el-select v-model="value" placeholder="在读年级">
+                  <el-option
+                    v-for="item in options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                  </el-option>
+                </el-select>
               </p>
               <p><el-radio v-model="radio" label="1">男</el-radio><el-radio v-model="radio" label="2">女</el-radio></p>
             </li>
@@ -146,7 +154,23 @@ export default {
       textarea:"",//批注
       radio: '1',
       inputTelephone:"",//手机
-      inputName:"" //姓名
+      inputName:"", //姓名
+      options: [{
+        value: '选项1',
+        label: '黄金糕'
+      }, {
+        value: '选项2',
+        label: '双皮奶'
+      }, {
+        value: '选项3',
+        label: '蚵仔煎'
+      }, {
+        value: '选项4',
+        label: '龙须面'
+      }, {
+        value: '选项5',
+        label: '北京烤鸭'
+      }],
     }
   },
   methods: {
@@ -173,49 +197,6 @@ export default {
         console.log(error);
       });
       // let url = "http://data.xinxueshuo.cn/nsi-1.0/new/school/detail.do"
-    },
-    drawLine(){
-        // 基于准备好的dom，初始化echarts实例
-        let myChart = this.$echarts.init(document.getElementById('myChart'))
-        // 绘制图表
-        myChart.setOption({
-            title : {
-            // text: '某站点用户访问来源',
-            // subtext: '纯属虚构',
-            x:'center'
-        },
-        tooltip : {
-            trigger: 'item',
-            formatter: "{a} <br/>{b} : {c} ({d}%)"
-        },
-        // legend: {
-            // orient: 'vertical',
-            // left: 'left',
-            // data: ['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
-        // },
-        series : [
-          {
-            name: '访问来源',
-            type: 'pie',
-            radius : '55%',
-            center: ['50%', '60%'],
-            data:[
-                {value:335, name:'直接访问'},
-                {value:310, name:'邮件营销'},
-                {value:234, name:'联盟广告'},
-                {value:135, name:'视频广告'},
-                {value:1548, name:'搜索引擎'}
-            ],
-            itemStyle: {
-                emphasis: {
-                    shadowBlur: 10,
-                    shadowOffsetX: 0,
-                    shadowColor: 'rgba(0, 0, 0, 0.5)'
-                }
-            }
-          }
-        ]
-      });
     },
     btn:function(){
 
@@ -386,8 +367,9 @@ export default {
   .intoduce{
     margin-left: 100px;
     margin-right: 100px;
-    margin-top: 30px;
+    margin-top: 20px;
     background: #f9f9f9;
+    padding-bottom: 20px;
   }
   .intoduceJeshao{
     width: 90%;
@@ -402,7 +384,7 @@ export default {
   }
   .intoduceJeshao h2{
     font-size: 16px;
-    margin-top: 26px;
+    margin-top: 30px;
   }
   .intoduceJeshao p{
     line-height: 25px;
@@ -412,7 +394,7 @@ export default {
   }
   .detailOrder{
     border-top: 2px solid #cccccc;
-    margin-top: 50px;
+    margin-top: 30px;
   }
       /* 预约 */
 .deailOrderLeft{
@@ -431,11 +413,13 @@ export default {
 }
 .deailOrderLeft li{
   margin-top: 30px;
+  line-height: 40px;
+
 }
 .deailOrderLeft p{
   float: left;
   font-size: 18px;
-  margin-left: 50px;
+  margin-left: 40px;
 }
 .deailOrderLeft p input[type="text"]{
   height: 30px;
@@ -475,7 +459,7 @@ export default {
 }
 .deailOrderRight button{
   font-size: 16px;
-  padding: 10px 60px;
+  padding: 10px 80px;
   margin-top: 20px;
 }
 </style>
