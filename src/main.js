@@ -7,7 +7,8 @@ import router from './router/index.js'
 //element引入
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
-Vue.use(ElementUI);
+import Vuex from 'vuex'
+Vue.use(ElementUI,Vuex);
 //清除全局
 import './assets/css/reset.css'
 //引入swiper
@@ -18,7 +19,7 @@ Vue.use(VueAwesomeSwiper)
 import echarts from 'echarts'
 Vue.prototype.$echarts = echarts
 //vuex
-import store from './store' //引入store
+import store from './store/store' //引入store
  //环境地址
  Vue.prototype.axios = axios
     //测试环境

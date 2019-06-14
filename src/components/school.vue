@@ -99,6 +99,8 @@ export default {
       schools: [],
       timeout: null,
       chageIcon:false,
+      lodingshow:true,
+      lodinghide:false,
       schoolLogoUrlTwo:"http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png",
     };
   },
@@ -131,6 +133,7 @@ export default {
     },
     //获取学校List数据(包括学校搜索)
     getschool() {
+      // this.$store.commit('lodingshow',this.lodingshow)
       getSchoolLibrary({
         pageNum:this.pageNum,
         pageSize:this.pageSize,
@@ -156,6 +159,7 @@ export default {
           respons.data.list[i].schoolSystem
           that.schoolLists[i].schoolSystem=arr3.join(",");
         }
+        // this.$store.commit('lodinghide',this.lodinghide)
       })
     },
     handleSizeChange(val) {

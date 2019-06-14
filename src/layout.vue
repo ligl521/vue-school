@@ -1,18 +1,25 @@
 <template>
   <div id="app">
     <heads/>
+    <loding v-if="loding"/>
     <router-view/>
   </div>
 </template>
 <script>
 import heads from '@/components/heads'
-// import homes from '@/components/homes'
+import loding from '@/components/loding'
 export default {
   name: 'App',
+  data(){
+    return{
+      loding:this.$store.state.loding
+    }
+  },
   methods:{
+
   },
   components:{
-    heads,
+    heads,loding
     //homes
   }
 }
