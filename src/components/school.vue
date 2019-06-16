@@ -1,5 +1,7 @@
 <template>
   <div id="container">
+    <loding v-if="this.$store.state.loding"/>
+
     <div id="searchBar">
       <!-- 搜索学校 -->
       <el-autocomplete
@@ -81,6 +83,8 @@
 //ajax请求
 import axios from "axios";
 import {getSchoolLibrary} from "@/api/api"
+import loding from '@/components/loding'
+
 export default {
   created: function() {
     this.getschool();
@@ -103,6 +107,9 @@ export default {
       lodinghide:false,
       schoolLogoUrlTwo:"http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png",
     };
+  },
+  components:{
+    loding
   },
   beforeCreate(){
     this.$store.commit('loding',true)
@@ -135,8 +142,7 @@ export default {
       this.$router.push({path:"./schoolDetail",query:{id:val.id}})
     },
     //获取学校List数据(包括学校搜索)
-    getschool() {
-      
+    getschool() { 
       getSchoolLibrary({
         pageNum:this.pageNum,
         pageSize:this.pageSize,
