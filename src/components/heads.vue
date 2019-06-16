@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div class="heads">
     <el-menu   mode="horizontal"   router>
       <el-menu-item index="./">首页</el-menu-item>
       <el-menu-item index="./school">国际学校库</el-menu-item>
@@ -23,9 +23,9 @@
             <el-form-item>
               <el-button type="primary" @click="send_msg()">登录</el-button>
               <span>
-                <el-button type="text">注册账号</el-button><!-- 注册账号 --><!-- 注册账号 --><!-- 注册账号 --><!-- 注册账号 --><!-- 注册账号 -->
-                <el-button type="text">忘记密码</el-button><!-- 忘记密码 --><!-- 忘记密码 --><!-- 忘记密码 --><!-- 忘记密码 --><!-- 忘记密码 -->
-                <el-button type="text">遇到问题?</el-button><!--遇到问题 --><!-- 遇到问题 --><!-- 遇到问题 --><!-- 遇到问题 --><!-- 遇到问题 -->
+                <el-button type="text">注册账号</el-button><!-- 注册账号 -->
+                <el-button type="text">忘记密码</el-button><!-- 忘记密码 -->
+                <el-button type="text">遇到问题?</el-button><!--遇到问题 -->
               </span>
             </el-form-item>
         </el-form>

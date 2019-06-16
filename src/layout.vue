@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <heads/>
-    <loding v-if="loding"/>
+    <loding v-if="this.$store.state.loding"/>
     <router-view/>
   </div>
 </template>
@@ -12,7 +12,7 @@ export default {
   name: 'App',
   data(){
     return{
-      loding:this.$store.state.loding
+      
     }
   },
   methods:{

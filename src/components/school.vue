@@ -23,7 +23,7 @@
         <el-row :gutter="20" type="flex" style="flex-wrap:wrap">
                 <!--<p>{{schoolList}}</p>  -->
             <el-col :xs="12" :sm="6" :md="4" :lg="3" :xl="3" v-for="(item,index) in schoolLists" :key="index">
-                <div class="grid-content bg-purple" @click="btnSchoolDetailsList(item)">
+                <div class="grid-content bg-purple" @mousedown="btnSchoolDetailsListdown" @click="btnSchoolDetailsList(item)">
                     <div class="logoimg" v-if="item.schoolLogo? true:false"><img :src="item.schoolLogo"></div>
                     <div class="logoimg" v-if="item.schoolLogo? false:true"><img :src="schoolLogoUrlTwo"></div>
                     <ul>
@@ -104,6 +104,9 @@ export default {
       schoolLogoUrlTwo:"http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png",
     };
   },
+  beforeCreate(){
+    this.$store.commit('loding',true)
+  }, 
   methods: {
     querySearch(queryString, cb) {
       let that = this;
@@ -133,12 +136,13 @@ export default {
     },
     //获取学校List数据(包括学校搜索)
     getschool() {
-      // this.$store.commit('lodingshow',this.lodingshow)
+      
       getSchoolLibrary({
         pageNum:this.pageNum,
         pageSize:this.pageSize,
         searchKey:this.input
       }).then((respons)=>{
+        this.$store.commit('loding',false)
         let that = this;
         console.log(respons.data)
         that.schoolLists = respons.data.list;
@@ -159,7 +163,7 @@ export default {
           respons.data.list[i].schoolSystem
           that.schoolLists[i].schoolSystem=arr3.join(",");
         }
-        // this.$store.commit('lodinghide',this.lodinghide)
+        
       })
     },
     handleSizeChange(val) {
@@ -179,6 +183,9 @@ export default {
     toggleButLongitudinal:function() {
       this.schoolDetail=true;
       this.chageIcon = false;
+    },
+    btnSchoolDetailsListdown:function(a,b){
+      
     }
   },
   //学校过滤超出显示...
