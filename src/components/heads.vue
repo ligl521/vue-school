@@ -1,6 +1,7 @@
 <template>
   <div class="heads">
-    <el-menu   mode="horizontal"   router>
+    <el-menu   mode="horizontal" default-active="1" class="el-menu-demo"
+        background-color="#214f89" text-color="#fff" active-text-color="#fff"  router>
       <el-menu-item index="./">首页</el-menu-item>
       <el-menu-item index="./school">国际学校库</el-menu-item>
       <el-menu-item index="./schoolku">教育机构库</el-menu-item>
@@ -99,7 +100,6 @@ export default {
 </script>
 <style scoped>
 .el-dialog--center .el-dialog__body {
-    /* padding: 43px; */
     padding-top: 40px;
     padding-left: 30px;
     padding-right: 35px;
@@ -162,7 +162,6 @@ form {
     justify-content: center;
 }
 .el-dialog--center .el-dialog__body {
-    /* padding: 43px; */
     padding-top: 40px;
     padding-left: 30px;
     padding-right: 35px;
@@ -224,5 +223,8 @@ form {
     border-bottom: 2px solid transparent;
     color: #909399;
     color: #ffffff;
+}
+ul.el-menu-demo.el-menu--horizontal.el-menu {
+    padding-bottom: 2px;
 }
 </style>

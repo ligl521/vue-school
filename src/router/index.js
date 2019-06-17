@@ -4,6 +4,7 @@ import school from '@/components/school'
 import schoolDetail from '@/components/schoolDetail'
 import homepage from '@/components/homepage'
 import schoolku from '@/components/schoolku'
+import schoolDetail02 from '@/components/schoolDetail02'
 Vue.use(Router)
 
 export default new Router({
@@ -24,6 +25,13 @@ export default new Router({
         path: '/schoolku',
         name: 'schoolku',
         component: schoolku
+      },
+
+
+      {
+        path: '/schoolDetail02',
+        name: 'schoolDetail02',
+        component: schoolDetail02
       }
     ]
 })

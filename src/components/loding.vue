@@ -8,7 +8,7 @@ export default {
   name: 'App',
 }
 </script>
-<style>
+<style scoped>
     .loding{
         position: fixed;
         z-index: 1000;

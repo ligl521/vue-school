@@ -22,6 +22,6 @@ export default {
 
 <style>
   .el-menu-demo.el-menu--horizontal.el-menu li:hover{
-    background: #fff !important;
+    /* background: #fff !important; */
   }
 </style>

@@ -3,30 +3,26 @@
       <div class="carousel">
         <div class="swiper-container">
           <div class="swiper-wrapper">
-              <!-- <div class="swiper-slide" v-for="(v,i) in schoolSwiper" :key="i">
-                <img :src="v.img">
-              </div> -->
-               <div class="swiper-slide">
+
+              <div class="swiper-slide">
                 <img src="../assets/one.png">
               </div>
-                 <div class="swiper-slide">
-                <img src="../assets/school.png">
+              <div class="swiper-slide">
+                <img src="../assets/two.png">
               </div>
-                 <div class="swiper-slide">
-                <img src="../assets/school.png">
+              <div class="swiper-slide">
+                <img src="../assets/san.png">
               </div>
               <!-- :style="{backgroundImage: 'url(' + item + ')'}" -->
               <!-- <div class="swiper-slide"  >111</div>
               <div class="swiper-slide"  >222</div>
               <div class="swiper-slide"  >333</div> -->
           </div>
-          <!-- 如果需要分页器 -->
-          <div class="swiper-pagination"></div>
+
           <!-- 如果需要导航按钮 -->
           <div class="swiper-button-prev"></div>
           <div class="swiper-button-next"></div>
-          <!-- 如果需要滚动条 -->
-          <div class="swiper-scrollbar"></div>
+
       </div>
         <!-- <div class="swiper-container" >
           <div class="swiper-wrapper">
@@ -37,64 +33,70 @@
         </div> -->
       </div>
       <div class="schoolSimple">
-        <div class="schoolId clearfix"><p>NO.{{schoolId}}</p></div>
+        <div class="schoolId clearfix"><p>NO.123543{{schoolId}}</p></div>
         <div class="schoolLogo clearfix">
           <p class="schoolLogoLeft"><img src="../assets/school.png" /></p>
           <ul>
-            <li>{{schollDatil.schoolName}}</li>
-            <li>{{schollDatil.schoolEnglishName}}</li>
-            <li>类型：{{schollDatil.schoolProperties}}</li>
+            <li>北京哈罗英国学校{{schollDatil.schoolName}}</li>
+            <li>Harrow International{{schollDatil.schoolEnglishName}}</li>
+            <li>类型：外籍{{schollDatil.schoolProperties}}</li>
           </ul>
           <div class="schoolLogoRight">
-            <h1>认证：<span>12345</span><span>12345</span><span>12345</span></h1>
-            <p>运营状态：{{schollDatil.operationState}}</p>
-            <P>地址：{{schollDatil.address}}</P>
+            <h1>认证：<span>CIE</span><span>Edexcel</span><span>NEASC</span></h1>
+            <p>运营状态：运营中{{schollDatil.operationState}}</p>
+            <P>地址：北京 朝阳区 崔各庄乡何各庄村287号{{schollDatil.address}}</P>
           </div>
         </div>
         <div class="schoolTranslate">
           <h1 class="schoolTranslateH1">基本信息</h1>
           <div class="schoolTranslateBox">
             <ul class="schoolTranslateHeader clearfix">
-              <li class="clearfix"><p><i class="iconfont icon-shijian"></i>建校时间：{{schollDatil.foundingTime}}年</p><p><i class="iconfont icon-guanwang"></i>{{schollDatil.website}}</p></li>
+              <li class="clearfix"><p><i class="iconfont icon-shijian"></i>建校时间：2005{{schollDatil.foundingTime}}年</p><p><i class="iconfont icon-guanwang"></i>www.harrowbeijing.cn{{schollDatil.website}}</p></li>
               <li class="clearfix"><p>学制：<span>小学</span><span>初中</span><span>高中</span></p><p>学费：<span>150000</span><span>150000</span><span>150000</span></p></li>
             </ul>
+          </div>
+          <div class="intoduce">
+            <h1 class="schoolTranslateH1">学校详细介绍</h1>
+            <div class="intoduceJeshao">
+              <h1>硬件设施</h1>
+              <p>{{schollDatil.hardware}}学校位于何各庄的校园设备先进，拥有冷暖空调、三个运动场、多功能体育馆、健身中心、两个游泳池、一个多功能剧场、两个戏剧排练室、十三个个设备齐全的科学实验室、六个大音乐教室及多个小排练教室和一个拥有两万册藏书的图书馆。</p>
+              <h1>学校详情介绍</h1>
+              <p>{{schollDatil.remark}}     长期以来，我校始终坚持"以育人为中心，以学生为主体"的教育思想和办学传统，努力构建教书、管理、服务、环境四位一体的育人体系，通过开设"大学预科班"、"高中理科试验班"、"马约翰体育班"、"一条龙试验班"和"美术特长班"等特长班，不断强化素质教育，为学生的个性发展提供广阔空间，形成了鲜明开放的办学特色，创建了良好的学风、校风，办学质量和教育水平不断提高。自1983年至今，已有2000多名毕业生进入清华、北大，先后有150多人次获得北京市金帆奖、银帆奖，在教学、科研、管理、人才培养等方面取得了丰硕的成果，为祖国建设和社会发展培养了大批人才。</p>
+
+                <p>如今，清华附中已成为教育部直属大学附中、北京市重点中学、国家级体育传统项目学校、中国数学奥林匹克委员会"中学生数学奥林匹克培训基地"。先后被国家教委和北京市评为"德育先进校"、"北京市校园环境示范校"、"北京市首批示范性普通高中"。学校各种教学设施设备齐全，师资队伍不断壮大，生源质量全面提高，对外交流广泛频繁，不断焕发出勃勃生机。</p>
+
+                <p>在2015年，清华附中继续履行名校责任，配合北京市继续开展优质高中部分招生计划分配到初中校工作并且启动了优质高中资源市级统筹项目，为此清华附中新建将台路校区和奥森校区，两校区都属于清华附中由清华附中直接管理。清华附中朝阳学校副校长朱建宏担任奥森校区和将台路校区执行校长，清华附中杜毓贞副校长一同协调与督导学校工作，清华附中英语高级教师张姝敏老师担任教育教学副校长。教师团队由清华附中统一安排，主要学科的特级与骨干教师由本部派有经验的老教师担任。新教师按清华附中本部统一的标准招聘，和本部教师享受同等待遇，统一分派教学任务。特别是奥森校区和首都体育学院合作，零起点联合培养学生的体育艺术特长，让学生全面、个性发展。将台路校区和清华大学美术学院联合培养，毕业时经过艺术素养测试合格，高考考入有外培计划的市属高校后，可以申请转入该校的外培计划。新校区的建立为清华附中的发展开拓了更大的舞台，为更多学生提供更优质的教育，助力清华附中新百年教育梦的实现!</p>
+
+            </div>
           </div>
           <h1 class="schoolTranslateH1">课程学生</h1>
           <div class="schoolTranslateCenter clearfix">
             <ul class="clearfix">
-              <li class="clearfix"><p><i class="iconfont icon-shijian"></i>{{schollDatil.foundingTime}}年</p><p><i class="iconfont icon-dili"></i>{{schollDatil.coveredArea}}亩</p><p><i class="iconfont icon-jine"></i>{{schollDatil.schoolSystem}}</p></li>
-              <li class="clearfix"><p><i class="iconfont  icon-dibudaohanglan-"></i>{{schollDatil.schoolProperties}}</p><p><i class="iconfont icon-dingwei"></i>{{schollDatil.address}}</p><p><i class="iconfont icon-xuexiao"></i>{{schollDatil.schoolSystem}}</p></li>
-              <li class="clearfix"><p><i class="iconfont icon-text_icon"></i>11{{schollDatil.course | ellipsisCurriculum}}</p><p><i class="iconfont icon-laoshi1"></i>教师人数：{{schollDatil.teacherNum}}</p><p><i class="iconfont icon-wodexuesheng"></i>学生人数：{{schollDatil.students}}</p></li>
-              <li class="clearfix"><p><i class="iconfont icon-fenchengbili"></i>中外教比例：{{schollDatil.teacherNum}}-{{schollDatil.foreignTeacherNum}}</p><p><i class="iconfont icon-jiaoshi"></i>师生比例：{{schollDatil.teacherStuRatio}}</p><p><i class="iconfont icon-dianhua"></i>{{schollDatil.telephone}}</p></li>
+              <li class="clearfix"><p><i class="iconfont icon-shijian"></i>2005{{schollDatil.foundingTime}}年</p><p><i class="iconfont icon-dili"></i>{{schollDatil.coveredArea}}300亩</p><p><i class="iconfont icon-jine"></i>小学 初中 高中{{schollDatil.schoolSystem}}</p></li>
+              <li class="clearfix"><p><i class="iconfont  icon-dibudaohanglan-"></i>民办{{schollDatil.schoolProperties}}</p><p><i class="iconfont icon-dingwei"></i>北京 朝阳区 各庄村{{schollDatil.address}}</p><p><i class="iconfont icon-xuexiao"></i>小学 初中 高中{{schollDatil.schoolSystem}}</p></li>
+              <li class="clearfix"><p><i class="iconfont icon-text_icon"></i>双语国际课；高中AP课程{{schollDatil.course}}</p><p><i class="iconfont icon-laoshi1"></i>教师人数：300{{schollDatil.teacherNum}}</p><p><i class="iconfont icon-wodexuesheng"></i>学生人数：2000{{schollDatil.students}}</p></li>
+              <li class="clearfix"><p><i class="iconfont icon-fenchengbili"></i>中外教比例：{{schollDatil.teacherNum}}1-3{{schollDatil.foreignTeacherNum}}</p><p><i class="iconfont icon-jiaoshi"></i>师生比例：1:4{{schollDatil.teacherStuRatio}}</p><p><i class="iconfont icon-dianhua"></i>18353077779{{schollDatil.telephone}}</p></li>
             </ul>
           </div>
           <h1 class="schoolTranslateH1">师资力量   </h1>
           <div class="schoolTranslateCenter clearfix">
             <ul class="clearfix">
-              <li class="clearfix"><p><i class="iconfont icon-text_icon"></i>11{{schollDatil.course | ellipsisCurriculum}}</p><p><i class="iconfont icon-laoshi1"></i>教师人数：{{schollDatil.teacherNum}}</p><p><i class="iconfont icon-wodexuesheng"></i>学生人数：{{schollDatil.students}}</p></li>
-              <li class="clearfix"><p><i class="iconfont icon-fenchengbili"></i>中外教比例：{{schollDatil.teacherNum}}-{{schollDatil.foreignTeacherNum}}</p><p><i class="iconfont icon-jiaoshi"></i>师生比例：{{schollDatil.teacherStuRatio}}</p></li>
+             <li class="clearfix"><p><i class="iconfont icon-shijian"></i>2005{{schollDatil.foundingTime}}年</p><p><i class="iconfont icon-dili"></i>{{schollDatil.coveredArea}}300亩</p><p><i class="iconfont icon-jine"></i>小学 初中 高中{{schollDatil.schoolSystem}}</p></li>
+              <li class="clearfix"><p><i class="iconfont  icon-dibudaohanglan-"></i>民办{{schollDatil.schoolProperties}}</p><p><i class="iconfont icon-dingwei"></i>北京 朝阳区 各庄村{{schollDatil.address}}</p><p><i class="iconfont icon-xuexiao"></i>小学 初中 高中{{schollDatil.schoolSystem}}</p></li>
             </ul>
           </div>
           <h1 class="schoolTranslateH1">建设投资</h1>
           <div class="schoolTranslateCenter clearfix">
             <ul class="clearfix">
-              <li class="clearfix"><p><i class="iconfont icon-shijian"></i>{{schollDatil.foundingTime}}年</p><p><i class="iconfont icon-dili"></i>{{schollDatil.coveredArea}}亩</p><p><i class="iconfont icon-jine"></i>{{schollDatil.schoolSystem}}</p></li>
-              <li class="clearfix"><p><i class="iconfont  icon-dibudaohanglan-"></i>{{schollDatil.schoolProperties}}</p><p><i class="iconfont icon-dingwei"></i>{{schollDatil.address}}</p><p><i class="iconfont icon-xuexiao"></i>{{schollDatil.schoolSystem}}</p></li>
-              <li class="clearfix"><p><i class="iconfont icon-text_icon"></i>11{{schollDatil.course | ellipsisCurriculum}}</p><p><i class="iconfont icon-laoshi1"></i>教师人数：{{schollDatil.teacherNum}}</p><p><i class="iconfont icon-wodexuesheng"></i>学生人数：{{schollDatil.students}}</p></li>
-              <li class="clearfix"><p><i class="iconfont icon-fenchengbili"></i>中外教比例：{{schollDatil.teacherNum}}-{{schollDatil.foreignTeacherNum}}</p><p><i class="iconfont icon-jiaoshi"></i>师生比例：{{schollDatil.teacherStuRatio}}</p><p><i class="iconfont icon-dianhua"></i>{{schollDatil.telephone}}</p></li>
+             <li class="clearfix"><p><i class="iconfont icon-shijian"></i>2005{{schollDatil.foundingTime}}年</p><p><i class="iconfont icon-dili"></i>{{schollDatil.coveredArea}}300亩</p><p><i class="iconfont icon-jine"></i>小学 初中 高中{{schollDatil.schoolSystem}}</p></li>
+              <li class="clearfix"><p><i class="iconfont  icon-dibudaohanglan-"></i>民办{{schollDatil.schoolProperties}}</p><p><i class="iconfont icon-dingwei"></i>北京 朝阳区 各庄村{{schollDatil.address}}</p><p><i class="iconfont icon-xuexiao"></i>小学 初中 高中{{schollDatil.schoolSystem}}</p></li>
+              <li class="clearfix"><p><i class="iconfont icon-text_icon"></i>双语国际课；高中AP课程{{schollDatil.course}}</p><p><i class="iconfont icon-laoshi1"></i>教师人数：300{{schollDatil.teacherNum}}</p><p><i class="iconfont icon-wodexuesheng"></i>学生人数：2000{{schollDatil.students}}</p></li>
+              <li class="clearfix"><p><i class="iconfont icon-fenchengbili"></i>中外教比例：{{schollDatil.teacherNum}}1-3{{schollDatil.foreignTeacherNum}}</p><p><i class="iconfont icon-jiaoshi"></i>师生比例：1:4{{schollDatil.teacherStuRatio}}</p><p><i class="iconfont icon-dianhua"></i>18353077779{{schollDatil.telephone}}</p></li>
             </ul>
           </div>
         </div>
       </div>
-      <div class="intoduce">
-        <h1 class="schoolTranslateH1">学校详细介绍</h1>
-        <div class="intoduceJeshao">
-          <h1>硬件设施</h1>
-          <p>{{schollDatil.hardware}}</p>
-          <h1>学校详情介绍</h1>
-          <p>{{schollDatil.remark}}</p>
-        </div>
-      </div>
+
       <div class="detailOrder clearfix">
         <div class="deailOrderLeft">
           <h1>预约开放时间</h1>
@@ -105,12 +107,6 @@
               <!-- <p><input type="text" placeholder="手机电话" /></p>
               <p><input type="text" placeholder="学生中文姓名" /></p> -->
               <p>
-                <!-- <select>
-                  <option>在读年级</option>
-                  <option>初中</option>
-                  <option>高中</option>
-                  <option>小学</option>
-                </select> -->
                 <el-select v-model="value" placeholder="在读年级">
                   <el-option
                     v-for="item in options"
@@ -147,14 +143,11 @@
 <script>
 import Swiper from 'swiper'
 import 'swiper/dist/css/swiper.min.css';
-// import '../../node_modules/swiper/dist/js/swiper.min.js'
-// import '../../node_modules/swiper/dist/css/swiper.min.css'
 import axios from "axios";
-import {getSchoolDeatail} from '@/api/api'
-// import mEcharts from '../components/Echarts'
 export default {
   data() {
     return {
+      value:"",
       banner:true,
       schollDatil:{},
       schoolSwiper:[],
@@ -165,70 +158,36 @@ export default {
       inputTelephone:"",//手机
       inputName:"", //姓名
       options: [{
-        value: '选项1',
-        label: '黄金糕'
-      }, {
-        value: '选项2',
-        label: '双皮奶'
-      }, {
-        value: '选项3',
-        label: '蚵仔煎'
-      }, {
-        value: '选项4',
-        label: '龙须面'
-      }, {
-        value: '选项5',
-        label: '北京烤鸭'
+          value: '选项1',
+          label: '黄金糕'
+        }, {
+          value: '选项2',
+          label: '双皮奶'
+        }, {
+          value: '选项3',
+          label: '蚵仔煎'
+        }, {
+          value: '选项4',
+          label: '龙须面'
+        }, {
+          value: '选项5',
+          label: '北京烤鸭'
       }],
     }
   },
   methods: {
-    getData(){
-      getSchoolDeatail({
-        schoolId:100053
-      }).then((res)=>{
-        this.schollDatil = res.data;
-        var one = res.data.schoolShowOne;
-        this.schoolSwiper = [{img:one},{img:res.data.schoolShowThird},{img:res.data.schoolShowTwo}];
-        //swiper
-        var mySwiper = new Swiper('.swiper-container',{
-          pagination: {
-            el: '.swiper-pagination',
-          },
-          observer:true,
-          autoplay:true,
-        })
-        var authentication = res.data.authentication;
-        console.log(authentication)
-
+    mounted(){
+      var mySwiper = new Swiper('.swiper-container', {
+        autoplay:true,
+        loop:true
       })
-      .catch(function (error) {
-        console.log(error);
-      });
-      // let url = "http://data.xinxueshuo.cn/nsi-1.0/new/school/detail.do"
     },
-    btn:function(){
+    created(){
 
     },
-    getid:function(){
-      this.schoolId = this.$route.query && this.$route.query.id;
-    },
-  },
-  created(){
-    this.getid(),
-    this.getData()
-  },
-  //学校过滤超出显示...
-  filters: {
-    ellipsisCurriculum (value) {
-      if (!value) return ''
-      if (value.length > 6) {
-        return value.slice(0,9) + '...'
-      }
-      return value
-    }
+
   }
-};
+}
 </script>
 <style scoped>
   .schoolList{
@@ -238,6 +197,7 @@ export default {
     padding-bottom: 30px;
     margin-bottom: 100px;
     margin-top: 20px;
+    color: #26343f;
   }
 /* bannner */
   .swiper-slide{
@@ -275,7 +235,7 @@ export default {
     margin-top: 20px;
   }
   .schoolLogo ul li:last-of-type{
-    font-size: 18px;
+    font-size: 16px;
     margin-top: 20px;
   }
   .schoolLogoLeft{
@@ -297,7 +257,7 @@ export default {
      float: left;
      margin-left: 80px;
      margin-top: 15px;
-     font-size: 18px;
+     font-size: 16px;
    }
    .schoolLogoRight span{
      display: inline-block;
@@ -314,7 +274,7 @@ export default {
 
   /* 学校信息 */
   .schoolTranslate{
-    font-size: 18px;
+    font-size: 16px;
     margin-left: 100px;
     margin-right: 100px;
 
@@ -334,11 +294,13 @@ export default {
   }
   .schoolTranslateH1{
     margin-top: 20px;
-    text-align: center;
-    background: #214f89;
-    color: #eee;
+    /* text-align: center; */
+    /* background: #214f89; */
+    /* color: #eee; */
+    background: #f9f9f9;
     padding: 10px;
     font-size: 24px;
+    font-weight: 400;
   }
   .schoolTranslateBox{
     background: #f9f9f9;
@@ -374,8 +336,6 @@ export default {
 
   /* 详情介绍 */
   .intoduce{
-    margin-left: 100px;
-    margin-right: 100px;
     margin-top: 20px;
     background: #f9f9f9;
     padding-bottom: 20px;
@@ -389,7 +349,6 @@ export default {
     font-size: 20px;
     margin-bottom: 10px;
     margin-top: 20px;
-    font-weight: 600;
   }
   .intoduceJeshao h2{
     font-size: 16px;
@@ -397,9 +356,9 @@ export default {
   }
   .intoduceJeshao p{
     line-height: 25px;
-    text-indent: 24px;
-    letter-spacing:1.5px;
-    font-size: 18px;
+    text-indent: 30px;
+    letter-spacing:2px;
+    font-size: 16px;
   }
   .detailOrder{
     border-top: 2px solid #cccccc;
@@ -414,11 +373,12 @@ export default {
   padding-bottom: 30px;
 }
 .detailOrder h1{
-  background: #214f89;
-  color: #eee;
+  /* background: #214f89; */
+  /* color: #eee; */
   padding: 10px;
   font-size: 18px;
-  text-align: center;
+  font-weight: 550;
+  /* text-align: center; */
 }
 .deailOrderLeft li{
   margin-top: 30px;
