@@ -213,7 +213,6 @@ form {
     padding: 8px 25px;
 }
 .el-menu {
-    margin-right: -8px;
 }
 .el-menu--horizontal>.el-menu-item {
     float: left;

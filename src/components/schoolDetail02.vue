@@ -1,9 +1,10 @@
 <template>
+<div>
   <div class="schoolList">
+      <!-- //swiper -->
       <div class="carousel">
         <div class="swiper-container">
           <div class="swiper-wrapper">
-
               <div class="swiper-slide">
                 <img src="../assets/one.png">
               </div>
@@ -13,25 +14,13 @@
               <div class="swiper-slide">
                 <img src="../assets/san.png">
               </div>
-              <!-- :style="{backgroundImage: 'url(' + item + ')'}" -->
-              <!-- <div class="swiper-slide"  >111</div>
-              <div class="swiper-slide"  >222</div>
-              <div class="swiper-slide"  >333</div> -->
           </div>
-
           <!-- 如果需要导航按钮 -->
           <div class="swiper-button-prev"></div>
           <div class="swiper-button-next"></div>
-
+        </div>
       </div>
-        <!-- <div class="swiper-container" >
-          <div class="swiper-wrapper">
-            <div class="swiper-slide" v-for="(v,i) in schoolSwiper" :key="i">
-              <img :src="v">
-            </div>
-          </div>
-        </div> -->
-      </div>
+      <!-- //logo以及学校说明 -->
       <div class="schoolSimple">
         <div class="schoolId clearfix"><p>NO.123543{{schoolId}}</p></div>
         <div class="schoolLogo clearfix">
@@ -96,7 +85,7 @@
           </div>
         </div>
       </div>
-
+      <!-- //底部 学校批注 -->
       <div class="detailOrder clearfix">
         <div class="deailOrderLeft">
           <h1>预约开放时间</h1>
@@ -139,11 +128,14 @@
         </div>
       </div>
   </div>
+  <schoolBottom></schoolBottom>
+</div>
 </template>
 <script>
 import Swiper from 'swiper'
 import 'swiper/dist/css/swiper.min.css';
 import axios from "axios";
+import schoolBottom from './schoolBottom.vue'
 export default {
   data() {
     return {
@@ -176,17 +168,27 @@ export default {
     }
   },
   methods: {
-    mounted(){
-      var mySwiper = new Swiper('.swiper-container', {
-        autoplay:true,
-        loop:true
-      })
-    },
-    created(){
 
-    },
+  },
+  components:{
+    schoolBottom
+  },
+  mounted(){
+    var mySwiper = new Swiper('.swiper-container', {
+      autoplay:{
+        disableOnInteraction: false, //用户操作后是否禁止自动循环
+        delay: 4000 //自自动循环时间
+      },
+      loop:true,
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+    })
+  },
+  created(){
 
-  }
+  },
 }
 </script>
 <style scoped>
@@ -203,6 +205,23 @@ export default {
   .swiper-slide{
     height: 400px;
   }
+/* .swiper-button-next{
+	background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M27%2C22L5%2C44l-4.2-4.2L18.6%2C22L0.8%2C4.2L5%2C0z'%20fill%3D'%23777'%2F%3E%3C%2Fsvg%3E");
+
+}
+.swiper-button-prev{
+  background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M0%2C22L22%2C0l4.2%2C4.2L8.4%2C22l17.8%2C17.8L22%2C44L0%2C22z'%20fill%3D'%23777'%2F%3E%3C%2Fsvg%3E");
+  background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M0%2C22L22%2C0l4.2%2C4.2L8.4%2C22l17.8%2C17.8L22%2C44L0%2C22z'%20fill%3D'%23777'%2F%3E%3C%2Fsvg%3E");
+} */
+.swiper-button-next{
+  background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M27%2C22L5%2C44l-4.2-4.2L18.6%2C22L0.8%2C4.2L5%2C0z'%20fill%3D'%23214f89'%2F%3E%3C%2Fsvg%3E")
+}
+.swiper-button-prev{
+	background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M0%2C22L22%2C0l4.2%2C4.2L8.4%2C22l17.8%2C17.8L22%2C44L0%2C22z'%20fill%3D'%23214f89'%2F%3E%3C%2Fsvg%3E");
+}
+
+
+
   .carousel img{
     width: 100%;
     height: 100%;
