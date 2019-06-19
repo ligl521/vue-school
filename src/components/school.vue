@@ -45,24 +45,24 @@
      <transition name="fafa">
       <div class="www" v-if="!schoolDetail">
         <span id="search_res">{{this.no_school}}</span>
-        <div class="schoolList" v-for="(school,i) in schoolLists" :key="i" @click="btnSchoolDetailsList(school)">
+        <div class="schoolList" v-for="(item,i) in schoolLists" :key="i" @mousedown="mousedownH($event)" @mouseup="mouseupH($event,item)">
           <div class="school_logo_div">
             <img
               id="school_logo"
-              :src='school.schoolLogo?school.schoolLogo:"http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png"'
+              :src='item.schoolLogo?item.schoolLogo:"http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png"'
             >
           </div>
           <!-- 展示学校detail -->
           <div class="school_infomation">
-            <span class="schoo l_info">{{school.schoolName}}</span>
-            <span style="display:none">{{school.id}}</span>
-            <span class="school_info">{{school.areas+school.areas02+school.areas03}}</span>
-            <span class="school_info">{{school.course}}</span>
+            <span class="schoo l_info">{{item.schoolName}}</span>
+            <span style="display:none">{{item.id}}</span>
+            <span class="school_info">{{item.areas+item.areas02+item.areas03}}</span>
+            <span class="school_info">{{item.course}}</span>
           </div>
           <div class="school_right">
-            <span class="school_right_info">{{school.loadTime}}</span>
-            <span class="school_right_info">{{school.schoolSystem}}</span>
-            <span class="school_right_info">{{school.schoolProperties}}</span>
+            <span class="school_right_info">{{item.loadTime}}</span>
+            <span class="school_right_info">{{item.schoolSystem}}</span>
+            <span class="school_right_info">{{item.schoolProperties}}</span>
           </div>
         </div>
       </div>
@@ -79,6 +79,7 @@
         :total="total_school"
       ></el-pagination>
     </div>
+    <schoolFooter/>
   </div>
 </template>
 
@@ -87,7 +88,7 @@
 import axios from "axios";
 import {getSchoolLibrary} from "@/api/api"
 import loding from '@/components/loding'
-
+import schoolFooter from './schoolFooter'
 export default {
   created: function() {
     this.getschool();
@@ -203,7 +204,10 @@ export default {
       this.schoolDetail=true;
       this.chageIcon = false;
     },
-    
+
+  },
+  components:{
+    schoolFooter
   },
   //学校过滤超出显示...
   filters: {

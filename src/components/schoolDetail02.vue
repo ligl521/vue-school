@@ -128,14 +128,14 @@
         </div>
       </div>
   </div>
-  <schoolBottom></schoolBottom>
+  <schoolFooter></schoolFooter>
 </div>
 </template>
 <script>
 import Swiper from 'swiper'
 import 'swiper/dist/css/swiper.min.css';
 import axios from "axios";
-import schoolBottom from './schoolBottom.vue'
+import schoolFooter from './schoolFooter.vue'
 export default {
   data() {
     return {
@@ -171,7 +171,7 @@ export default {
 
   },
   components:{
-    schoolBottom
+    schoolFooter
   },
   mounted(){
     var mySwiper = new Swiper('.swiper-container', {

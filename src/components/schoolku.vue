@@ -9,18 +9,18 @@
           <el-menu-item index="4">11111</el-menu-item>
         </el-menu>
 
-        <schoolBottom />
+        <schoolFooter />
     </div>
 </template>
 
 <script>
-import schoolBottom from './schoolBottom'
+import schoolFooter from './schoolFooter'
 export default {
   created() {
 
   },
   components:{
-    schoolBottom
+    schoolFooter
   }
 }
 </script>

@@ -52,45 +52,8 @@
               </div>
           </div>
       </div>
-
     </div>
-
-
-
-
-
-
-      <!-- <div class="row clearfix">
-        <div class="footerLeft">
-          <h1>关于新学说</h1>
-          <p>新学说(NewSchool Insight)是由国际学校资深专家共同打造的国际学校服务平台。 旗下有新学说传媒和新学说国际教育研究院两大品牌。为国际学校提供行业最新资讯，会议组织， 海外考察；研究报告，行业数据库；学校投建，运营管理，品牌管理，人才培养等专业咨询服务。 more..</p>
-        </div>
-        <div class="footerCenter">
-          <h1>联系我们</h1>
-          <ul>
-            <li>中国办公室：北京市朝阳区曙光西里  时间国际A座1501</li>
-            <li>电话：010-52468286</li>
-            <li>手机：15010927730</li>
-            <li>邮箱：info@xinxueshuo.cn</li>
-            <li>美国办公室：德克萨斯州 奥斯丁市</li>
-            <li>邮箱：dbarrutia@xinxueshuo.cn</li>
-          </ul>
-        </div>
-        <div class="footerRight">
-          <div class="footerRightWei">
-            <h1>微信公众号</h1>
-            <p><img src="http://data.xinxueshuo.cn/nsi/assets/img/www.png"></p>
-            <p>微信关注我们</p>
-          </div>
-          <div class="footerRightGuan">
-            <h1>微信公众号</h1>
-            <p><img src="http://data.xinxueshuo.cn/nsi/assets/img/www.png"></p>
-            <p>微信关注我们</p>
-          </div>
-        </div>
-      </div>
-      <div>Copyright © 2017 | 数据来源 <a href="http://www.xinxueshuo.cn/">新学说</a> All rights reserved.</div> -->
-    </div>
+  </div>
 </template>
 
 <script>
@@ -105,6 +68,7 @@ export default {
   background: rgb(33, 79, 137);
   color: #DFD1D1;
   font-size: 16px;
+  margin-top: 100px;
 }
 #hovea{
   color: beige;

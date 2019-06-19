@@ -1,15 +1,17 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
-import axios from 'axios'
-import router from './router/index.js'
+import layout from './layout'
 //element引入
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
-import Vuex from 'vuex'
-Vue.use(ElementUI,Vuex);
 
-import layout from './layout'
+import router from './router/index.js'
+import store from './store/store' //引入store
+
+//vuex
+import Vuex from 'vuex'
+import axios from 'axios'
 //清除全局
 import './assets/css/reset.css'
 //引入swiper
@@ -20,14 +22,14 @@ Vue.use(VueAwesomeSwiper)
 import echarts from 'echarts'
 Vue.prototype.$echarts = echarts
 //vuex
-import store from './store/store' //引入store
- //环境地址
- Vue.prototype.axios = axios
-    //测试环境
-// axios.defaults.baseURL = "http://192.168.0.28:8080/nsi-1.0"
-    //生产环境
-axios.defaults.baseURL = "http://data.xinxueshuo.cn/nsi-1.0/"
+//环境地址
+Vue.prototype.axios = axios
+//测试环境
+axios.defaults.baseURL = "http://192.168.0.28:8080/nsi-1.0"
+//生产环境
+// axios.defaults.baseURL = "http://data.xinxueshuo.cn/nsi-1.0/"
 
+Vue.use(ElementUI,Vuex);
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

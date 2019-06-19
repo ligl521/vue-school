@@ -47,7 +47,9 @@ exports.cssLoaders = function (options) {
     if (options.extract) {
       return ExtractTextPlugin.extract({
         use: loaders,
-        fallback: 'vue-style-loader'
+        fallback: 'vue-style-loader',
+        // 背景图片丢失：写改css中的路径(添加)
+        // publicPath: '../../'
       })
     } else {
       return ['vue-style-loader'].concat(loaders)
