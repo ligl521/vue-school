@@ -175,28 +175,19 @@ export default {
         this.schoolInquiruList = res.data.list;
       })
     },
-    loadAll() {
-      return [
-        { "value": "三全鲜食（北新泾店）", "address": "长宁区新渔路144号" },
-        { "value": "Hot honey 首尔炸鸡（仙霞路）", "address": "上海市长宁区淞虹路661号" },
-        { "value": "新旺角茶餐厅", "address": "上海市普陀区真北路988号创邑金沙谷6号楼113" },
-      ];
-    },
     querySearchAsync(queryString, cb) {
       getSchoolHomeSearch({
-        keyword:"北京"
+        keyword:this.state
       }).then((res)=>{
-        console.log(res)
+        var arr = [];
+        for(var i=0;i<res.data.length;i++){
+          var a1 = {};
+          a1.value = res.data[i];
+          arr.push(a1)
+        }
+        cb(arr);
+        console.log(arr)
       })
-      var restaurants = this.restaurants;
-      var results = queryString ? restaurants.filter(this.createStateFilter(queryString)) : restaurants;
-      cb(results);
-
-    },
-    createStateFilter(queryString) {
-      return (state) => {
-        return (state.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
-      };
     },
     handleSelect(item) {
       console.log(item);
@@ -204,7 +195,6 @@ export default {
   },
   mounted() {
     this.getData();
-    this.restaurants = this.loadAll();
   },
   components:{
     schoolFooter

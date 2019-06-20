@@ -18,7 +18,6 @@ export default {
   },
   components:{
     heads
-    //homes
   }
 }
 </script>

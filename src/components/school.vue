@@ -113,9 +113,6 @@ export default {
       schoolLogoUrlTwo:"http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png",
     };
   },
-  components:{
-    loding
-  },
   beforeCreate(){
     this.$store.commit('loding',true)
   },
@@ -209,6 +206,7 @@ export default {
 
   },
   components:{
+    loding,
     schoolFooter
   },
   //学校过滤超出显示...
