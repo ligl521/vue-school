@@ -9,11 +9,11 @@ import schoolHome from '@/components/schoolHome'
 Vue.use(Router)
 
 export default new Router({
-    routes:[{
-      path: '/',
-      name: 'homepage',
-      component: homepage
-    },{
+    routes: [{
+        path: '/',
+        name: 'schoolHome',
+        component: schoolHome
+      }, {
         path: '/school',
         name: 'school',
         component: school
@@ -26,11 +26,6 @@ export default new Router({
         path: '/schoolku',
         name: 'schoolku',
         component: schoolku
-      },
-      {
-        path: '/schoolHome',
-        name: 'schoolHome',
-        component: schoolHome
       },
       {
         path: '/schoolDetail02',

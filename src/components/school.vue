@@ -121,6 +121,8 @@ export default {
   },
   methods: {
     querySearch(queryString, cb) {
+      // aleat(1111)
+      console.log(1111)
       let that = this;
       let urldata = new URLSearchParams();
       urldata.append("keyword", that.input);

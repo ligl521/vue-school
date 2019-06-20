@@ -3,10 +3,10 @@
       <div class="carousel">
         <div class="swiper-container">
           <div class="swiper-wrapper">
-              <!-- <div class="swiper-slide" v-for="(v,i) in schoolSwiper" :key="i">
+              <div class="swiper-slide" v-for="(v,i) in schoolSwiper" :key="i">
                 <img :src="v.img">
-              </div> -->
-               <div class="swiper-slide">
+              </div>
+               <!-- <div class="swiper-slide">
                 <img src="../assets/one.png">
               </div>
                  <div class="swiper-slide">
@@ -14,11 +14,7 @@
               </div>
                  <div class="swiper-slide">
                 <img src="../assets/school.png">
-              </div>
-              <!-- :style="{backgroundImage: 'url(' + item + ')'}" -->
-              <!-- <div class="swiper-slide"  >111</div>
-              <div class="swiper-slide"  >222</div>
-              <div class="swiper-slide"  >333</div> -->
+              </div> -->
           </div>
           <!-- 如果需要分页器 -->
           <div class="swiper-pagination"></div>
