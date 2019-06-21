@@ -171,7 +171,7 @@ export default {
         pageNum:1,
         pageSize:6
       }).then((res)=>{
-        console.log(res.data.list)
+        // console.log(res.data.list)
         this.schoolInquiruList = res.data.list;
       })
     },
@@ -186,11 +186,15 @@ export default {
           arr.push(a1)
         }
         cb(arr);
-        console.log(arr)
+        // console.log(arr)
       })
     },
     handleSelect(item) {
-      console.log(item);
+      this.$router.push({name: 'school',params: {item: item}});
+      this.$nextTick(function () {
+        this.bus.$emit("em",item);
+      })
+      // console.log(item);
     }
   },
   mounted() {

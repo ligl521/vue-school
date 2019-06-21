@@ -18,10 +18,9 @@ import './assets/css/reset.css'
 require('swiper/dist/css/swiper.css')
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 Vue.use(VueAwesomeSwiper)
-//echarts
-import echarts from 'echarts'
-Vue.prototype.$echarts = echarts
-//vuex
+//bus总线
+import VueBus from 'vue-bus';
+Vue.prototype.bus = new Vue();
 //环境地址
 Vue.prototype.axios = axios
 //测试环境
@@ -29,7 +28,7 @@ Vue.prototype.axios = axios
 //生产环境
 axios.defaults.baseURL = "http://data.xinxueshuo.cn/nsi-1.0/"
 
-Vue.use(ElementUI,Vuex);
+Vue.use(ElementUI, Vuex, VueBus);
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

@@ -10,7 +10,7 @@ const store = new Vuex.Store({
     mutations:{
         loding(a,b){
             this.state.loding = b
-            console.log(b)
+            // console.log(b)
         }
     }
 }) // 这里你可能已经有其他 module

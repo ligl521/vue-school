@@ -89,15 +89,12 @@ import axios from "axios";
 import {getSchoolLibrary} from "@/api/api"
 import loding from '@/components/loding'
 import schoolFooter from './schoolFooter'
+import { isUndefined } from 'util';
 export default {
-  created: function() {
-    this.getschool();
-  },
-
   data() {
     return {
       schoolDetail:true,
-      input: "",
+      input:'',
       schoolLists: [],
       currentPage: 1,
       pageSize: 24,
@@ -115,6 +112,20 @@ export default {
   },
   beforeCreate(){
     this.$store.commit('loding',true)
+  },
+   created() {
+      let that = this;
+      // that.input = sessionStorage.getItem("input");
+      alert("that.$route.params.item.value"+that.$route.params.item.value)
+      if (that.$route.params.item.value != zundefined) {
+        alert("undefined!")
+      }else{
+        alert("no undefined!")
+      }
+      // if (that.$route.params.item.value) {
+      //   sessionStorage.setItem("input", that.$route.params.item.value);
+      // }
+      that.getschool()
   },
   methods: {
     querySearch(queryString, cb) {
@@ -161,9 +172,9 @@ export default {
         pageSize:this.pageSize,
         searchKey:this.input
       }).then((respons)=>{
+        console.log(respons)
         this.$store.commit('loding',false)
         let that = this;
-        console.log(respons.data)
         that.schoolLists = respons.data.list;
         that.total_school = respons.data.total;
         //判断有无搜索结果
@@ -182,16 +193,17 @@ export default {
           respons.data.list[i].schoolSystem
           that.schoolLists[i].schoolSystem=arr3.join(",");
         }
-
       })
     },
+
+
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
     },
     //分页
     handleCurrentChange(val) {
       this.pageNum = val;
-      this.getschool();
+      this.getschool(this.input);
       // window.scrollTo(0,0)
     },
     //切换学校列表
@@ -208,6 +220,14 @@ export default {
   components:{
     loding,
     schoolFooter
+  },
+
+  mounted() {
+
+  },
+
+  beforeDestroy() {
+    // this.bus.$off('em',this.em);
   },
   //学校过滤超出显示...
   filters: {
