@@ -11,8 +11,8 @@
         placeholder="请输入学校关键字"
         :trigger-on-focus="false"
         @select="handleSelect"
-        @keyup.enter.native="getschool"
       ></el-autocomplete>
+        <!-- @keyup.enter.native="getschool" -->
       <el-button id="searchBtn" type="primary" icon="el-icon-search" @click="getschool"></el-button>
     </div>
     <!-- 切换按钮 -->
@@ -114,30 +114,29 @@ export default {
     this.$store.commit('loding',true)
   },
    created() {
-      let that = this;
+     sessionStorage.getItem('iptVal');
+     this.input=this.$route.params.item;
+     sessionStorage.setItem('inpVal',this.input);
+     this.handleSelect();
       // that.input = sessionStorage.getItem("input");
-      alert("that.$route.params.item.value"+that.$route.params.item.value)
-      if (that.$route.params.item.value != zundefined) {
-        alert("undefined!")
-      }else{
-        alert("no undefined!")
-      }
+      // alert("that.$route.params.item.value"+that.$route.params.item.value)
+      // if (that.$route.params.item.value != zundefined) {
+      //   alert("undefined!")
+      // }else{
+      //   alert("no undefined!")
+      // }
       // if (that.$route.params.item.value) {
       //   sessionStorage.setItem("input", that.$route.params.item.value);
       // }
-      that.getschool()
   },
   methods: {
     querySearch(queryString, cb) {
-      // aleat(1111)
-      console.log(1111)
       let that = this;
       let urldata = new URLSearchParams();
       urldata.append("keyword", that.input);
       axios
         .post("http://data.xinxueshuo.cn/nsi-1.0/school/suggest_search.do", urldata)
         .then(function(respons) {
-          console.log(respons.data.data)
           var arr=[];
           for (var i = 0; i < respons.data.data.length; i++){
             let a1 = {}; //创建对象
@@ -149,7 +148,7 @@ export default {
     },
     //搜索提示的点击操作
     handleSelect(item) {
-      console.log(item);
+      console.log(111)
       this.getschool();
     },
     //路由跳转到schoolDetail
@@ -172,7 +171,6 @@ export default {
         pageSize:this.pageSize,
         searchKey:this.input
       }).then((respons)=>{
-        console.log(respons)
         this.$store.commit('loding',false)
         let that = this;
         that.schoolLists = respons.data.list;
@@ -195,15 +193,13 @@ export default {
         }
       })
     },
-
-
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
     },
     //分页
     handleCurrentChange(val) {
       this.pageNum = val;
-      this.getschool(this.input);
+      this.getschool(sessionStorage.getItem('iptVal'));
       // window.scrollTo(0,0)
     },
     //切换学校列表

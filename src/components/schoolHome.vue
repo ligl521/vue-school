@@ -186,15 +186,13 @@ export default {
           arr.push(a1)
         }
         cb(arr);
-        // console.log(arr)
       })
     },
     handleSelect(item) {
-      this.$router.push({name: 'school',params: {item: item}});
-      this.$nextTick(function () {
-        this.bus.$emit("em",item);
-      })
-      // console.log(item);
+      this.$router.push({name: 'school',params: {item: item.value}});
+      // this.$nextTick(function () {
+      //   this.bus.$emit("em",item);
+      // })
     }
   },
   mounted() {

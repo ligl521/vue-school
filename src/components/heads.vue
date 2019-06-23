@@ -1,11 +1,11 @@
 <template>
   <div class="heads">
-    <el-menu   mode="horizontal" default-active="1" class="el-menu-demo"
+    <el-menu   mode="horizontal" :default-active="$route.path" class="el-menu-demo"
         background-color="#214f89" text-color="#fff" active-text-color="#fff"  router>
-      <el-menu-item index="./">首页</el-menu-item>
-      <el-menu-item index="./school">国际学校库</el-menu-item>
-      <el-menu-item index="./schoolku">教育机构库</el-menu-item>
-      <el-menu-item index="./schoolHome">教育人才库</el-menu-item>
+      <el-menu-item index="/">首页</el-menu-item>
+      <el-menu-item index="/school">国际学校库</el-menu-item>
+      <el-menu-item index="/schoolku">教育机构库</el-menu-item>
+      <el-menu-item index="/schoolHome">教育人才库</el-menu-item>
       <el-menu-item index="5">项目数据库</el-menu-item>
       <el-menu-item index="6">数据可视化</el-menu-item>
       <el-button round class="login_btn" type="text" @click="dialogVisible = true ;get_msg()">登录</el-button><!-- 点击触发登录dialog -->
@@ -58,6 +58,7 @@ export default {
             { min: 0, max: 100, message: '密码不能为空', trigger: 'blur' }
           ]
           },
+          defaultUrl:'./'
       };
     },
   name: 'App',
