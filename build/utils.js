@@ -49,7 +49,7 @@ exports.cssLoaders = function (options) {
         use: loaders,
         fallback: 'vue-style-loader',
         // 背景图片丢失：写改css中的路径(添加)
-        // publicPath: '../../'
+        publicPath: '../../'
       })
     } else {
       return ['vue-style-loader'].concat(loaders)

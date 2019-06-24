@@ -198,7 +198,7 @@ export default {
     },
     queryBtn(){
       // console.log(this.homeJump)
-      this.$router.push({name: 'school',params: {item: this.state}});
+      this.$router.push({path: 'school',query: {item: this.state}});
         console.log(111)
     }
   },

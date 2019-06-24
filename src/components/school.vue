@@ -114,7 +114,7 @@ export default {
     this.$store.commit('loding',true)
   },
    created() {
-     this.input=this.$route.params.item;
+     this.input=this.$route.query.item;
      console.log()
       sessionStorage.setItem('inpVal',this.input);
      if(typeof(this.input) == undefined){
