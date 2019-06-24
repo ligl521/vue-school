@@ -115,11 +115,11 @@ export default {
   },
    created() {
      this.input=this.$route.query.item;
-     console.log()
-      sessionStorage.setItem('inpVal',this.input);
-     if(typeof(this.input) == undefined){
-       sessionStorage.getItem('iptVal');
-     }
+    //  console.log()
+    //   sessionStorage.setItem('inpVal',this.input);
+    //  if(typeof(this.input) == undefined){
+    //    sessionStorage.getItem('iptVal');
+    //  }
      this.handleSelect();
       // that.input = sessionStorage.getItem("input");
       // alert("that.$route.params.item.value"+that.$route.params.item.value)
@@ -172,7 +172,7 @@ export default {
       getSchoolLibrary({
         pageNum:this.pageNum,
         pageSize:this.pageSize,
-        searchKey:this.input
+        searchKey:this.input,
       }).then((respons)=>{
         this.$store.commit('loding',false)
         let that = this;
@@ -191,7 +191,7 @@ export default {
           for(var j=0; j<arr2.length; j++){
               arr3.push(arr1[j].slice(0,1))
           }
-          respons.data.list[i].schoolSystem
+          respons.data.list[i].schoolSystems
           that.schoolLists[i].schoolSystem=arr3.join(",");
         }
       })

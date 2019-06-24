@@ -191,7 +191,7 @@ export default {
     },
     handleSelect(item) {
       this.homeJump = item.value
-      this.$router.push({name: 'school',params: {item: this.homeJump}});
+      this.$router.push({name: 'school',query: {item: this.homeJump}});
       // this.$nextTick(function () {
       //   this.bus.$emit("em",item);
       // })
