@@ -7,24 +7,24 @@
       <div class="homeToolbar clearfix">
         <div class="toolbarLeft clearfix">
           <ul>
-            <li><i class="iconfont icon-shijian"></i></li>
+            <li><i class="iconfont icon-jianzhu"></i></li>
             <li>国际学校库</li>
           </ul>
           <ul>
-            <li><i class="iconfont icon-shijian"></i></li>
-            <li>国际学校库</li>
+            <li><i class="iconfont icon-jixinrenshu"></i></li>
+            <li>教育机构库</li>
           </ul>
           <ul>
-            <li><i class="iconfont icon-shijian"></i></li>
-            <li>国际学校库</li>
+            <li><i class="iconfont icon-rencai"></i></li>
+            <li>教育人才库</li>
           </ul>
           <ul>
-            <li><i class="iconfont icon-shijian"></i></li>
-            <li>国际学校库</li>
+            <li><i class="iconfont icon-xiangmu"></i></li>
+            <li>项目数据库</li>
           </ul>
           <ul>
-            <li><i class="iconfont icon-shijian"></i></li>
-            <li>国际学校库</li>
+            <li><i class="iconfont icon-keshihua-"></i></li>
+            <li>数据可视化</li>
           </ul>
         </div>
         <div class="toolbarRight">
@@ -37,7 +37,7 @@
               @select="handleSelect"
             ></el-autocomplete>
             </li>
-            <li><el-button type="info">查询信息</el-button></li>
+            <li><el-button type="info" @click="queryBtn">查询信息</el-button></li>
           </ul>
         </div>
       </div>
@@ -50,84 +50,84 @@
           <div>
             <p><i class="iconfont icon-shijian"></i></p>
             <ul>
-              <li>北京哈喽学校</li>
+              <li>北京哈罗学校</li>
               <li>课程：美国课程</li>
             </ul>
           </div>
           <div>
             <p><i class="iconfont icon-shijian"></i></p>
             <ul>
-              <li>北京哈喽学校</li>
+              <li>北京哈罗学校</li>
               <li>课程：美国课程</li>
             </ul>
           </div>
           <div>
             <p><i class="iconfont icon-shijian"></i></p>
             <ul>
-              <li>北京哈喽学校</li>
+              <li>北京哈罗学校</li>
               <li>课程：美国课程</li>
             </ul>
           </div>
           <div>
             <p><i class="iconfont icon-shijian"></i></p>
             <ul>
-              <li>北京哈喽学校</li>
+              <li>北京哈罗学校</li>
               <li>课程：美国课程</li>
             </ul>
           </div>
           <div>
             <p><i class="iconfont icon-shijian"></i></p>
             <ul>
-              <li>北京哈喽学校</li>
+              <li>北京哈罗学校</li>
               <li>课程：美国课程</li>
             </ul>
           </div>
           <div>
             <p><i class="iconfont icon-shijian"></i></p>
             <ul>
-              <li>北京哈喽学校</li>
+              <li>北京哈罗学校</li>
               <li>课程：美国课程</li>
             </ul>
           </div>
           <div>
             <p><i class="iconfont icon-shijian"></i></p>
             <ul>
-              <li>北京哈喽学校</li>
+              <li>北京哈罗学校</li>
               <li>课程：美国课程</li>
             </ul>
           </div>
           <div>
             <p><i class="iconfont icon-shijian"></i></p>
             <ul>
-              <li>北京哈喽学校</li>
+              <li>北京哈罗学校</li>
               <li>课程：美国课程</li>
             </ul>
           </div>
           <div>
             <p><i class="iconfont icon-shijian"></i></p>
             <ul>
-              <li>北京哈喽学校</li>
+              <li>北京哈罗学校</li>
               <li>课程：美国课程</li>
             </ul>
           </div>
           <div>
             <p><i class="iconfont icon-shijian"></i></p>
             <ul>
-              <li>北京哈喽学校</li>
+              <li>北京哈罗学校</li>
               <li>课程：美国课程</li>
             </ul>
           </div>
           <div>
             <p><i class="iconfont icon-shijian"></i></p>
             <ul>
-              <li>北京哈喽学校</li>
+              <li>北京哈罗学校</li>
               <li>课程：美国课程</li>
             </ul>
           </div>
           <div>
             <p><i class="iconfont icon-shijian"></i></p>
             <ul>
-              <li>北京哈喽学校</li>
+              <li>北京哈罗学校</li>
               <li>课程：美国课程</li>
             </ul>
           </div>
@@ -162,6 +162,7 @@ export default {
   data() {
     return {
       state:"",
+      homeJump:"",
       schoolInquiruList:[],
     }
   },
@@ -189,10 +190,16 @@ export default {
       })
     },
     handleSelect(item) {
-      this.$router.push({name: 'school',params: {item: item.value}});
+      this.homeJump = item.value
+      this.$router.push({name: 'school',params: {item: this.homeJump}});
       // this.$nextTick(function () {
       //   this.bus.$emit("em",item);
       // })
+    },
+    queryBtn(){
+      // console.log(this.homeJump)
+      this.$router.push({name: 'school',params: {item: this.state}});
+        console.log(111)
     }
   },
   mounted() {

@@ -114,9 +114,12 @@ export default {
     this.$store.commit('loding',true)
   },
    created() {
-     sessionStorage.getItem('iptVal');
      this.input=this.$route.params.item;
-     sessionStorage.setItem('inpVal',this.input);
+     console.log()
+      sessionStorage.setItem('inpVal',this.input);
+     if(typeof(this.input) == undefined){
+       sessionStorage.getItem('iptVal');
+     }
      this.handleSelect();
       // that.input = sessionStorage.getItem("input");
       // alert("that.$route.params.item.value"+that.$route.params.item.value)
