@@ -6,26 +6,26 @@
     <div class="schoolHome">
       <div class="homeToolbar clearfix">
         <div class="toolbarLeft clearfix">
-          <ul>
+          <router-link tag="ul" to="/">
             <li><i class="iconfont icon-jianzhu"></i></li>
             <li>国际学校库</li>
-          </ul>
-          <ul>
+          </router-link>
+          <router-link tag="ul" to="./school">
             <li><i class="iconfont icon-jixinrenshu"></i></li>
             <li>教育机构库</li>
-          </ul>
-          <ul>
+          </router-link>
+          <router-link tag="ul" to="./school">
             <li><i class="iconfont icon-rencai"></i></li>
             <li>教育人才库</li>
-          </ul>
-          <ul>
+          </router-link>
+          <router-link tag="ul" to="./school">
             <li><i class="iconfont icon-xiangmu"></i></li>
             <li>项目数据库</li>
-          </ul>
-          <ul>
+          </router-link>
+          <router-link tag="ul" to="./school">
             <li><i class="iconfont icon-keshihua-"></i></li>
             <li>数据可视化</li>
-          </ul>
+          </router-link>
         </div>
         <div class="toolbarRight">
           <ul>
@@ -43,91 +43,17 @@
       </div>
       <div class="schoolHomeCenter">
         <div class="homeCenterToobar clearfix">
-          <p><span id="btnpath">北京</span><span>上海</span><span>深圳</span><span>深圳</span><span>深圳</span><span>深圳</span></p>
-          <el-button type="info">更多</el-button>
+         <p><span  v-for="(v,i) in arr" :key="i" @click="son(v,i)" :class="i==index?'btnpath':''">{{v}}</span></p>
+         <el-button type="info">更多</el-button>
         </div>
         <div class="homeList clearfix">
-          <div>
-            <p><i class="iconfont icon-shijian"></i></p>
+          <div v-for="(v,i) in schoolLists" :key="i" @click="homeListBtn">
+            <p>
+              <img v-if="v.schoolLogo? true:false" :src="v.coverImage">
+              <img v-if="v.schoolLogo? false:true" :src="schoolLogoUrlTwo">
+            </p>
             <ul>
-              <li>北京哈罗学校</li>
-              <li>课程：美国课程</li>
-            </ul>
-          </div>
-          <div>
-            <p><i class="iconfont icon-shijian"></i></p>
-            <ul>
-              <li>北京哈罗学校</li>
-              <li>课程：美国课程</li>
-            </ul>
-          </div>
-          <div>
-            <p><i class="iconfont icon-shijian"></i></p>
-            <ul>
-              <li>北京哈罗学校</li>
-              <li>课程：美国课程</li>
-            </ul>
-          </div>
-          <div>
-            <p><i class="iconfont icon-shijian"></i></p>
-            <ul>
-              <li>北京哈罗学校</li>
-              <li>课程：美国课程</li>
-            </ul>
-          </div>
-          <div>
-            <p><i class="iconfont icon-shijian"></i></p>
-            <ul>
-              <li>北京哈罗学校</li>
-              <li>课程：美国课程</li>
-            </ul>
-          </div>
-          <div>
-            <p><i class="iconfont icon-shijian"></i></p>
-            <ul>
-              <li>北京哈罗学校</li>
-              <li>课程：美国课程</li>
-            </ul>
-          </div>
-          <div>
-            <p><i class="iconfont icon-shijian"></i></p>
-            <ul>
-              <li>北京哈罗学校</li>
-              <li>课程：美国课程</li>
-            </ul>
-          </div>
-          <div>
-            <p><i class="iconfont icon-shijian"></i></p>
-            <ul>
-              <li>北京哈罗学校</li>
-              <li>课程：美国课程</li>
-            </ul>
-          </div>
-          <div>
-            <p><i class="iconfont icon-shijian"></i></p>
-            <ul>
-              <li>北京哈罗学校</li>
-              <li>课程：美国课程</li>
-            </ul>
-          </div>
-          <div>
-            <p><i class="iconfont icon-shijian"></i></p>
-            <ul>
-              <li>北京哈罗学校</li>
-              <li>课程：美国课程</li>
-            </ul>
-          </div>
-          <div>
-            <p><i class="iconfont icon-shijian"></i></p>
-            <ul>
-              <li>北京哈罗学校</li>
-              <li>课程：美国课程</li>
-            </ul>
-          </div>
-          <div>
-            <p><i class="iconfont icon-shijian"></i></p>
-            <ul>
-              <li>北京哈罗学校</li>
+              <li>{{v.schoolName | ellipsisName}}</li>
               <li>课程：美国课程</li>
             </ul>
           </div>
@@ -139,7 +65,7 @@
           <div class="homeInquiryLeft" v-for="(v,i) in schoolInquiruList" :key="i">
             <p><img :src="v.coverImage"></p>
             <ul>
-              <li>{{v.title}}</li>
+              <li><a :href="v.articleUrl">{{v.title}}</a></li>
               <li>{{v.summary}}</li>
               <!-- <li v-html="v.articleContent"></li> -->
             </ul>
@@ -156,7 +82,7 @@
 import schoolFooter from './schoolFooter'
 import axios from 'axios'
 import {getSchoolHomeInquiry} from '@/api/api'
-import {getSchoolLibrary} from '@/api/api'
+import {getSchoolCity} from '@/api/api'
 import {getSchoolHomeSearch} from '@/api/api'
 export default {
   data() {
@@ -164,10 +90,28 @@ export default {
       state:"",
       homeJump:"",
       schoolInquiruList:[],
+      arr:["北京","深圳","上海","广州"],
+      index:0,
+      schoolLists:[],
+      SchoolCitypageNum:1,
+      SchoolCitySearchKey:"北京",
+      schoolLogoUrlOne:"http://data.xinxueshuo.cn/",
+      schoolLogoUrlTwo:"http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png",
     }
   },
   methods: {
+    //请求数据
     getData(){
+      //学校列表
+      getSchoolCity({
+        pageNum:this.SchoolCitypageNum,
+        pageSize:12,
+        searchKey:this.SchoolCitySearchKey
+      }).then((res)=>{
+        console.log(res.data.list)
+        this.schoolLists = res.data.list
+      })
+      //行业动态
       getSchoolHomeInquiry({
         pageNum:1,
         pageSize:6
@@ -176,6 +120,7 @@ export default {
         this.schoolInquiruList = res.data.list;
       })
     },
+    //渲染element搜索列表
     querySearchAsync(queryString, cb) {
       getSchoolHomeSearch({
         keyword:this.state
@@ -189,6 +134,7 @@ export default {
         cb(arr);
       })
     },
+    //点击select选项跳转
     handleSelect(item) {
       this.homeJump = item.value
       this.$router.push({name: 'school',query: {item: this.homeJump}});
@@ -196,10 +142,23 @@ export default {
       //   this.bus.$emit("em",item);
       // })
     },
+    //el点击按钮查询信息
     queryBtn(){
       // console.log(this.homeJump)
       this.$router.push({path: 'school',query: {item: this.state}});
         console.log(111)
+    },
+    //城市切换按钮
+    son(v,i){
+      console.log(v)
+      this.index = i;
+      this.SchoolCitypageNum = i+1;
+      this.SchoolCitySearchKey = v;
+      this.getData();
+    },
+    //点击学校进入详情页
+    homeListBtn(){
+      this.$router.push("/schoolDetail02")
     }
   },
   mounted() {
@@ -207,6 +166,16 @@ export default {
   },
   components:{
     schoolFooter
+  },
+  //学校过滤超出显示...
+  filters: {
+    ellipsisName (value) {
+      if (!value) return ''
+      if (value.length > 7) {
+        return value.slice(0,9) + '...'
+      }
+      return value
+    }
   }
 }
 </script>
@@ -243,6 +212,9 @@ export default {
     float: left;
     border-radius: 5px;
     margin: 30px;
+  }
+  .toolbarLeft ul:hover{
+    box-shadow:0 0 3px #999 inset;
   }
   .toolbarLeft ul li:first-of-type{
      height: 90px;
@@ -293,12 +265,16 @@ export default {
   .homeCenterToobar p{
     float: left;
   }
-  #btnpath{
-    color: red;
-  }
   .homeCenterToobar p span{
     padding: 0 10px;
     color: #777;
+  }
+  .homeCenterToobar p .btnpath{
+    color: red;
+  }
+  .homeCenterToobar p span:hover{
+    color: red;
+    cursor:pointer;
   }
   .homeCenterToobar button.el-button.el-button--info{
     float: right;
@@ -318,14 +294,14 @@ export default {
   .homeList>div p{
     float: left;
     /* background: red; */
-    width: 50px;
-    height: 50px;
+    width: 70px;
+    height: 70px;
     margin-left: 20px;
-    margin-top: 20px;
+    margin-top: 10px;
   }
-  .homeList>div i{
-    font-size: 55px;
-
+  .homeList>div p img{
+    width: 100%;
+    height: 100%;
   }
   .homeList>div ul{
     float: left;
@@ -343,13 +319,13 @@ export default {
   .homeInquiry h1{
     margin-left: 2.5%;
     font-size: 32px;
-    margin-top: 20px;
+    margin-top: 25px;
   }
   .homeInquiryBox{
     margin-top: 10px;
     margin-left:50px;
     margin-right: 30px;
-    margin-bottom: 10px;
+    margin-bottom: 30px;
     /* border-bottom: 2px solid #cccccc; */
   }
   .homeInquiryBox>div{

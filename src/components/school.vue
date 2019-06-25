@@ -29,7 +29,7 @@
         <el-row :gutter="20" type="flex" style="flex-wrap:wrap">
             <el-col :xs="12" :sm="6" :md="4" :lg="3" :xl="3" v-for="(item,index) in schoolLists" :key="index">
                 <div class="grid-content bg-purple" @mousedown="mousedownH($event)" @mouseup="mouseupH($event,item)">
-                    <div class="logoimg" v-if="item.schoolLogo? true:false"><img :src="item.schoolLogo"></div>
+                    <div class="logoimg" v-if="item.schoolLogo? true:false"><img :src="schoolLogoUrlOne+item.schoolLogo"></div>
                     <div class="logoimg" v-if="item.schoolLogo? false:true"><img :src="schoolLogoUrlTwo"></div>
                     <ul>
                         <li class="schoolName">{{item.schoolName | ellipsisName}}</li>
@@ -107,13 +107,14 @@ export default {
       lodingshow:true,
       lodinghide:false,
       isclick : true,
+      schoolLogoUrlOne:"http://data.xinxueshuo.cn/",
       schoolLogoUrlTwo:"http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png",
     };
   },
   beforeCreate(){
     this.$store.commit('loding',true)
   },
-   created() {
+  created() {
      this.input=this.$route.query.item;
     //  console.log()
     //   sessionStorage.setItem('inpVal',this.input);
@@ -167,8 +168,8 @@ export default {
     // btnSchoolDetailsList(val){
     //   this.$router.push({path:"./schoolDetail",query:{id:val.id}})
     // },
-    //获取学校List数据(包括学校搜索)
     getschool() {
+    //获取学校List数据(包括学校搜索)
       getSchoolLibrary({
         pageNum:this.pageNum,
         pageSize:this.pageSize,
