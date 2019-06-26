@@ -159,7 +159,7 @@ export default {
       textarea:"",//批注
       radio: '1',
       inputTelephone:"",//手机
-      inputName:"", //姓名
+      inputName:"",   //姓名
       options: [{
         value: '选项1',
         label: '黄金糕'
@@ -321,8 +321,6 @@ export default {
   }
   .schoolTranslate li{
     line-height: 50px;
-  }
-  .schoolTranslate li p{
   }
   .schoolTranslate li p i{
     font-size: 20px;

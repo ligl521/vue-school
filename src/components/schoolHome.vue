@@ -1,7 +1,8 @@
 <template>
   <div>
     <div class="homeBanner">
-      <img src="../assets/one.png">
+      <!-- <img src="../assets/one.png"> -->
+      <img src="../assets/timg1.jpg" class="img-responsive" alt="Responsive image">
     </div>
     <div class="schoolHome">
       <div class="homeToolbar clearfix">
@@ -90,7 +91,7 @@ export default {
       state:"",
       homeJump:"",
       schoolInquiruList:[],
-      arr:["北京","深圳","上海","广州"],
+      arr:["北京","上海","广州","深圳","沈阳","成都","杭州","郑州","重庆"],
       index:0,
       schoolLists:[],
       SchoolCitypageNum:1,
@@ -152,7 +153,6 @@ export default {
     son(v,i){
       console.log(v)
       this.index = i;
-      this.SchoolCitypageNum = i+1;
       this.SchoolCitySearchKey = v;
       this.getData();
     },
@@ -188,11 +188,11 @@ export default {
   /* bannenr */
   .homeBanner{
     width: 100%;
-    height: 400px;
+    /* height: 400px; */
   }
   .homeBanner img{
-    width: 100%;
-    height: 100%;
+     width: 100%;
+    /* height: 50%; */
   }
 
 
@@ -266,14 +266,16 @@ export default {
     float: left;
   }
   .homeCenterToobar p span{
-    padding: 0 10px;
+    margin: 0 10px;
     color: #777;
   }
   .homeCenterToobar p .btnpath{
-    color: red;
+    color: rgb(33, 79, 137);
+    border-bottom: 3px solid;
+    padding-bottom: 15px;
   }
   .homeCenterToobar p span:hover{
-    color: red;
+    color: rgb(33, 79, 137);
     cursor:pointer;
   }
   .homeCenterToobar button.el-button.el-button--info{
@@ -336,9 +338,6 @@ export default {
     /* margin-left: 30px; */
     /* margin-top: 30px; */
     /* margin-bottom: 30px; */
-  }
-  .homeInquiryBox>div:last-of-type{
-    /* margin-left: 75px; */
   }
   .homeInquiryBox p{
     float: left;

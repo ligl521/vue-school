@@ -100,6 +100,14 @@ export default {
 }
 </script>
 <style scoped>
+/* 导航 */
+.heads{
+  position: fixed;
+  top: 0px;
+  width: 100%;
+}
+
+
 .el-dialog--center .el-dialog__body {
     padding-top: 40px;
     padding-left: 30px;

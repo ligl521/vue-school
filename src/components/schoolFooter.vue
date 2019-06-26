@@ -14,7 +14,7 @@
                 </div>
                 <div class="col-xs-12 col-md-4 col-lg-4 text-center">
                     <h4 style="font-size: 20px;">联系我们 </h4>
-                    <h5 style="font-size: 16px;line-height: 1.6;margin: 10px 0;!important;">中国办公室：北京市朝阳区曙光西里&nbsp&nbsp</h5>
+                    <h5 style="font-size: 16px;line-height: 1.6;margin: 10px 0;!important;">中国办公室：北京市朝阳区曙光西里</h5>
                     <h5 style="font-size: 16px;padding-left: 55px;margin: 10px 0;!important;">时间国际A座1501</h5>
                     <h5 style="font-size: 16px;padding-right: 12px;margin: 10px 0;!important;">电话：010-52468286</h5>
                     <h5 style="font-size: 16px;padding-right: 19px;margin: 10px 0;!important;">手机：15010927730</h5>

@@ -10,7 +10,7 @@ export default {
   name: 'App',
   data(){
     return{
-      
+
     }
   },
   methods:{
@@ -22,4 +22,7 @@ export default {
 }
 </script>
 <style>
+  #app{
+    padding-top: 52px;
+  }
 </style>
