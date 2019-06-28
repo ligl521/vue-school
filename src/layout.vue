@@ -23,6 +23,6 @@ export default {
 </script>
 <style>
   #app{
-    padding-top: 52px;
+    margin-top: 52px;
   }
 </style>

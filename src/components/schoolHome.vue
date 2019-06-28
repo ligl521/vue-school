@@ -2,7 +2,7 @@
   <div>
     <div class="homeBanner">
       <!-- <img src="../assets/one.png"> -->
-      <img src="../assets/timg1.jpg" class="img-responsive" alt="Responsive image">
+      <img src="http://nsi.oss-cn-zhangjiakou.aliyuncs.com/nsi-pc/banner01.jpg" class="img-responsive" alt="Responsive image">
     </div>
     <div class="schoolHome">
       <div class="homeToolbar clearfix">
