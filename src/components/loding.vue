@@ -1,8 +1,6 @@
 <template>
   <div id="loding">
-      <div class="loding">
-        <!-- <img src="../assets/lodingTwo.gif" alt=""> -->
-      </div>
+      <div class="loding"><img src="../assets/loding.jpg" alt=""></div>
   </div>
 </template>
 <script>
@@ -13,20 +11,17 @@ export default {
 <style scoped>
     .loding{
         position: fixed;
-        z-index: 1000;
+        z-index: 100;
         left: 0;
         right: 0;
         bottom: 0;
-        top: 52px;
-        background: rgba(0, 0, 0, 0.6);
-        background:url(../assets/lodingTwo.gif) no-repeat 680px 150px ;
-        background-size: 100px;
+        top: 0;
+        background: rgba(0, 0, 0, 0.6)
     }
     img{
-        width: 150px;
-        height: 150px;
+        width: 400px;
+        height: 400px;
         display: block;
-        margin: 50px auto;
-        background: rgba(0, 0, 0, 0.6)
+        margin: 150px auto;
     }
 </style>

@@ -257,7 +257,7 @@ export default {
   }
   .homeCenterToobar{
     width: 95%;
-    margin: 20px auto 10px;
+    margin: 30px auto 10px;
     padding-bottom: 10px;
     border-bottom: 1px solid #cccccc;
     font-size: 24px;
@@ -325,19 +325,14 @@ export default {
   }
   .homeInquiryBox{
     margin-top: 10px;
-    margin-left:50px;
+    margin-left:0px;
     margin-right: 30px;
     margin-bottom: 30px;
     /* border-bottom: 2px solid #cccccc; */
   }
   .homeInquiryBox>div{
-    /* border: 1px solid #cccccc; */
-    width: 520px;
-    /* padding-left: 10px; */
-    /* height: 180px; */
-    /* margin-left: 30px; */
-    /* margin-top: 30px; */
-    /* margin-bottom: 30px; */
+    width: 555px;
+    /* background: #ccc; */
   }
   .homeInquiryBox p{
     float: left;
@@ -348,12 +343,12 @@ export default {
     margin-bottom: 20px;
   }
   .homeInquiryBox p img{
-    width: 200px;
-    height: 100px;
+    width: 250px;
+    height: 120px;
   }
   .homeInquiryBox ul{
     float: left;
-    width: 290px;
+    width: 270px;
     margin-left: 20px;
     margin-top: 20px;
     line-height: 26px;

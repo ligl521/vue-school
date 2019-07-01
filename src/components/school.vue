@@ -1,7 +1,6 @@
 <template>
   <div id="container">
     <loding v-if="this.$store.state.loding"/>
-
     <div id="searchBar">
       <!-- 搜索学校 -->
       <el-autocomplete
@@ -23,7 +22,6 @@
       </p>
     </div>
     <!-- 学校展示列表 -->
-    <transition name="fade">
     <div class="schoolDetail" v-if="schoolDetail">
         <span id="search_res">{{this.no_school}}</span>
         <el-row :gutter="20" type="flex" style="flex-wrap:wrap">
@@ -40,10 +38,8 @@
             </el-col>
         </el-row>
     </div>
-    </transition>
     <!-- 学校展示列表two -->
-     <transition name="fafa">
-      <div class="www" v-if="!schoolDetail">
+      <!-- <div class="www" v-if="!schoolDetail">
         <span id="search_res">{{this.no_school}}</span>
         <div class="schoolList" v-for="(item,i) in schoolLists" :key="i" @mousedown="mousedownH($event)" @mouseup="mouseupH($event,item)">
           <div class="school_logo_div">
@@ -52,7 +48,6 @@
               :src='item.schoolLogo?item.schoolLogo:"http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png"'
             >
           </div>
-          <!-- 展示学校detail -->
           <div class="school_infomation">
             <span class="schoo l_info">{{item.schoolName}}</span>
             <span style="display:none">{{item.id}}</span>
@@ -65,8 +60,36 @@
             <span class="school_right_info">{{item.schoolProperties}}</span>
           </div>
         </div>
+      </div> -->
+      <div class="schoolDetailTwo container">
+          <!-- <div class="listTwoMin" v-for="(item,i) in schoolLists" :key="i">
+            <div class="schoolLogoDiv">
+              <img id="school_logo" :src='item.schoolLogo?item.schoolLogo:"http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png"'>
+              <img src="../assets/school.png">
+            </div>
+            <div class="schoolListInfomation"></div>
+            <div class="schoolTwoRight"></div>
+          </div> -->
+          <div class="row listTwoMin" v-for="(item,i) in schoolLists" :key="i">
+            <div class="col-xs-4 col-sm-3 col-md-2  schoolLogoDiv">
+              <!-- <img id="school_logo" :src='item.schoolLogo?item.schoolLogo:"http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png"'> -->
+              <img src="../assets/school.png">
+            </div>
+            <div class="col-xs-8 col-sm-5 col-md-6 schoolListInfomation">
+                <span class="schoo l_info">{{item.schoolName}}</span>
+                <span style="display:none">{{item.id}}</span>
+                <span class="school_info">{{item.areas+item.areas02+item.areas03}}</span>
+                <span class="school_info">{{item.course}}</span>
+            </div>
+            <div class="col-xs-8 col-sm-4 col-md-4 schoolTwoRight">
+              <div class="">
+                <span class="school_right_info">{{item.loadTime}}</span>
+                <span class="school_right_info">{{item.schoolSystem}}</span>
+                <span class="school_right_info">{{item.schoolProperties}}</span>
+              </div>
+            </div>
+          </div>
       </div>
-    </transition>
     <div class="block">
       <span class="demonstration"></span>
       <!-- 分页组件 -->
@@ -93,7 +116,7 @@ import { isUndefined } from 'util';
 export default {
   data() {
     return {
-      schoolDetail:true,
+      schoolDetail:false,
       input:'',
       schoolLists: [],
       currentPage: 1,
@@ -253,7 +276,7 @@ export default {
   border-radius: 0px;
 }
 #searchBar {
-  margin-top: 25px;
+  padding-top: 25px;
   text-align: center;
 }
 #schoolInput {
@@ -264,23 +287,22 @@ export default {
   margin-left: -200px;
 }
 .school_infomation {
-  float: left !important;
-  margin-left: 20px;
-  width: 820px;
+  line-height: 25px;
+  margin-top: 10px;
 }
 #searchBtn {
   padding: 12px 25px;
   margin-left: -5px;
 }
 .schoolDetail{
-  width: 98%;
+  /* width: 98%; */
   margin: 0 auto;
 }
 .schoolList {
   border-radius: 10px;
   background-color: white;
   display: flex;
-  width: 1168px;
+  width: 80%;
   margin: auto;
   height: 150px;
   align-items: center;
@@ -304,7 +326,8 @@ export default {
   margin-top: 5px;
 }
 .school_right {
-  flex: 1;
+  /* flex: 1; */
+
   text-align: center;
 }
 .school_right_info {
@@ -405,15 +428,6 @@ export default {
 .toggleBut i:hover{
   color: #214f89;
 }
-/* .fade-enter,.fade-leave-to{
-  opacity: 0;
-}
-.fade-enter-to,.fade-leave{
-    opacity: 1;
-}
-.fade-enter-active,.fade-leave-active{
-    transition: all 3s;
-} */
 .fade-enter-active, .fade-leave-active {
   transition: opacity 0.5s
 }
@@ -425,5 +439,43 @@ export default {
 }
 .fafa-enter, .fafa-leave-active {
   opacity: 0
+}
+
+
+
+/* 学校two css*/
+.schoolDetailTwo{
+  width: 70%;
+  /* height: 50px; */
+  margin: 0 auto;
+}
+.listTwoMin{
+  /* background: red; */
+  margin-top: 20px;
+  line-height: px;
+  border-radius: 10px;
+  /* justify-content:flex-start; */
+  border: 1px solid #cccccc;
+}
+.schoolLogoDiv{
+  /* background: #333; */
+}
+.schoolLogoDiv img{
+  width: 100%;
+  height: auto;
+}
+.listTwoMin:hover {
+  box-shadow: 0px 0px 15px #ccc;
+}
+.schoolListInfomation{
+  line-height: 28px;
+  margin-top: 20px;
+  /* background: #111; */
+}
+.schoolTwoRight{
+  line-height: 28px;
+  margin-top: 20px;
+  text-align: center;
+  /* background: #222; */
 }
 </style>
