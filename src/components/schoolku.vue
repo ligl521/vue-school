@@ -8,7 +8,9 @@
           <el-menu-item index="2-3">选项3</el-menu-item>
           <el-menu-item index="4">11111</el-menu-item>
         </el-menu>
-
+        <div class="ches">
+          <p>12233</p>
+        </div>
         <schoolFooter />
     </div>
 </template>
@@ -25,6 +27,17 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="less" scoped>
+  .ches{
+    margin-top: 1rem; 
+    width: 10rem;
+    height: 5rem;
+    font-size: 0.3rem;
+    background: red;
+    .ches p{
+      width: 2rem;
+      height: 2rem;
+      background: skyblue;
+    }
+  }
 </style>

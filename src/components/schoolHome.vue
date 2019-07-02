@@ -1,7 +1,8 @@
 <template>
   <div>
     <div class="homeBanner">
-      <img src="../assets/one.png">
+      <!-- <img src="../assets/one.png"> -->
+      <img src="http://nsi.oss-cn-zhangjiakou.aliyuncs.com/nsi-pc/banner01.jpg" class="img-responsive" alt="Responsive image">
     </div>
     <div class="schoolHome">
       <div class="homeToolbar clearfix">
@@ -90,7 +91,17 @@ export default {
       state: "",
       homeJump: "",
       schoolInquiruList: [],
-      arr: ["北京", "深圳", "上海", "广州"],
+      arr: [
+        "北京",
+        "上海",
+        "广州",
+        "深圳",
+        "沈阳",
+        "成都",
+        "杭州",
+        "郑州",
+        "重庆"
+      ],
       index: 0,
       schoolLists: [],
       SchoolCitypageNum: 1,
@@ -245,6 +256,134 @@ export default {
   width: 200px;
   margin-top: 30px;
 }
+.schoolHome {
+  margin: 0 auto;
+  width: 1200px;
+}
+/* bannenr */
+.homeBanner {
+  width: 100%;
+  /* height: 400px; */
+}
+.homeBanner img {
+  width: 100%;
+  /* height: 50%; */
+}
+
+/* 导航搜索 */
+.homeToolbar {
+  margin-top: 20px;
+}
+.toolbarLeft {
+  float: left;
+  background: #f8f8f8;
+}
+.toolbarLeft ul {
+  width: 120px;
+  height: 120px;
+  border: 1px solid #ccc;
+  float: left;
+  border-radius: 5px;
+  margin: 30px;
+}
+.toolbarLeft ul:hover {
+  box-shadow: 0 0 3px #999 inset;
+}
+.toolbarLeft ul li:first-of-type {
+  height: 90px;
+  text-align: center;
+}
+.toolbarLeft ul li:first-of-type i {
+  line-height: 90px;
+  text-align: center;
+  font-size: 50px;
+}
+.toolbarLeft ul li:last-of-type {
+  text-align: center;
+}
+.toolbarRight {
+  float: left;
+  width: 250px;
+  margin-left: 50px;
+  text-align: center;
+  background: #f8f8f8;
+}
+.toolbarRight li:first-of-type {
+  margin-top: 10px;
+}
+.toolbarRight li:last-of-type {
+  padding-bottom: 30px;
+}
+.toolbarRight button.el-button.el-button--info,
+.toolbarRight input {
+  width: 200px;
+  margin-top: 30px;
+}
+
+/* 学校列表 */
+.schoolHomeCenter {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  /* border: 1px solid #cccccc; */
+  background: #f8f8f8;
+  overflow: hidden;
+}
+.homeCenterToobar {
+  width: 95%;
+  margin: 30px auto 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #cccccc;
+  font-size: 24px;
+}
+.homeCenterToobar p {
+  float: left;
+}
+.homeCenterToobar p span {
+  margin: 0 10px;
+  color: #777;
+}
+.homeCenterToobar p .btnpath {
+  color: rgb(33, 79, 137);
+  border-bottom: 3px solid;
+  padding-bottom: 15px;
+}
+.homeCenterToobar p span:hover {
+  color: rgb(33, 79, 137);
+  cursor: pointer;
+}
+.homeCenterToobar button.el-button.el-button--info {
+  float: right;
+}
+.homeList {
+  width: 95%;
+  margin: 20px auto;
+  /* display: flex; */
+}
+.homeList > div {
+  float: left;
+  border: 1px solid #cccccc;
+  width: 265px;
+  margin: 10px;
+  height: 100px;
+}
+.homeList > div p {
+  float: left;
+  /* background: red; */
+  width: 70px;
+  height: 70px;
+  margin-left: 20px;
+  margin-top: 10px;
+}
+.homeList > div p img {
+  width: 100%;
+  height: 100%;
+}
+.homeList > div ul {
+  float: left;
+  margin-left: 15px;
+  margin-top: 15px;
+  line-height: 30px;
+}
 
 /* 学校列表 */
 .schoolHomeCenter {
@@ -353,6 +492,57 @@ export default {
 .homeInquiryBox ul {
   float: left;
   width: 290px;
+  margin-left: 20px;
+  margin-top: 20px;
+  line-height: 26px;
+}
+.homeInquiryBox ul li:first-of-type {
+  font-size: 18px;
+}
+.homeInquiryBox ul li:last-of-type {
+  color: #777;
+}
+.homeInquiryLeft {
+  float: left;
+  margin-left: 30px;
+}
+
+/* 行业动态 */
+.homeInquiry {
+  background: #f8f8f8;
+  overflow: hidden;
+}
+.homeInquiry h1 {
+  margin-left: 2.5%;
+  font-size: 32px;
+  margin-top: 25px;
+}
+.homeInquiryBox {
+  margin-top: 10px;
+  margin-left: 0px;
+  margin-right: 30px;
+  margin-bottom: 30px;
+  /* border-bottom: 2px solid #cccccc; */
+}
+.homeInquiryBox > div {
+  width: 555px;
+  /* background: #ccc; */
+}
+.homeInquiryBox p {
+  float: left;
+  /* width: 150px;
+    width: 180px; */
+  /* margin-left: 20px; */
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.homeInquiryBox p img {
+  width: 250px;
+  height: 120px;
+}
+.homeInquiryBox ul {
+  float: left;
+  width: 270px;
   margin-left: 20px;
   margin-top: 20px;
   line-height: 26px;

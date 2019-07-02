@@ -11,17 +11,17 @@ export default {
 <style scoped>
     .loding{
         position: fixed;
-        z-index: 1000;
+        z-index: 100;
         left: 0;
         right: 0;
         bottom: 0;
         top: 0;
-        background: rgba(0, 0, 0, 0.5)
+        background: rgba(0, 0, 0, 0.6)
     }
     img{
-        width: 350px;
-        height: 350px;
+        width: 400px;
+        height: 400px;
         display: block;
-        margin: 50px auto;
+        margin: 150px auto;
     }
 </style>

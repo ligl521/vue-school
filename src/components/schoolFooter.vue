@@ -19,7 +19,6 @@
                     <h5 style="font-size: 16px;padding-right: 12px;margin: 10px 0 !important;">电话：010-52468286</h5>
                     <h5 style="font-size: 16px;padding-right: 19px;margin: 10px 0 !important;">手机：15010927730</h5>
                     <h5 style="font-size: 16px;padding-left: 32px;margin: 10px 0 !important;">邮箱：info@xinxueshuo.cn</h5>
-
                     <h5 style="font-size: 16px;padding-right: 23px;margin: 10px 0 !important;">美国办公室：德克萨斯州 奥斯丁市</h5>
                     <h5 style="font-size: 16px;padding-left: 72px;margin: 10px 0 !important;">邮箱：dbarrutia@xinxueshuo.cn</h5>
                 </div>
