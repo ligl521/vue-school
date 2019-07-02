@@ -264,7 +264,7 @@ export default {
   }
 };
 </script>
-<style scoped>
+<style lang="less" scoped>
 #search_res {
   display: flex;
   justify-content: center;

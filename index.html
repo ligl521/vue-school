@@ -19,7 +19,22 @@
     <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
    <!-- <script src="//at.alicdn.com/t/font_1223954_hcexd51lxj5.js"></script> -->
-
-</body>
+    <script>
+      fnResize();
+      window.onresize = function () {
+        fnResize();
+      }
+      function fnResize() {
+        var deviceWidth = document.documentElement.clientWidth || window.innerWidth;
+        if (deviceWidth >= 750) {
+          deviceWidth = 750;
+        }
+        if (deviceWidth <= 320) {
+          deviceWidth = 320;
+        }
+        document.documentElement.style.fontSize = (deviceWidth / 7.5) + 'px';
+      }
+    </script>
+  </body>
 
 </html>
