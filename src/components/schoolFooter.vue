@@ -14,14 +14,13 @@
                 </div>
                 <div class="col-xs-12 col-md-4 col-lg-4 text-center">
                     <h4 style="font-size: 20px;">联系我们 </h4>
-                    <h5 style="font-size: 16px;line-height: 1.6;margin: 10px 0;!important;">中国办公室：北京市朝阳区曙光西里</h5>
-                    <h5 style="font-size: 16px;padding-left: 55px;margin: 10px 0;!important;">时间国际A座1501</h5>
-                    <h5 style="font-size: 16px;padding-right: 12px;margin: 10px 0;!important;">电话：010-52468286</h5>
-                    <h5 style="font-size: 16px;padding-right: 19px;margin: 10px 0;!important;">手机：15010927730</h5>
-                    <h5 style="font-size: 16px;padding-left: 32px;margin: 10px 0;!important;">邮箱：info@xinxueshuo.cn</h5>
-
-                    <h5 style="font-size: 16px;padding-right: 23px;margin: 10px 0;!important;">美国办公室：德克萨斯州 奥斯丁市</h5>
-                    <h5 style="font-size: 16px;padding-left: 72px;margin: 10px 0;!important;">邮箱：dbarrutia@xinxueshuo.cn</h5>
+                    <h5 style="font-size: 16px;line-height: 1.6;margin: 10px 0 !important;">中国办公室：北京市朝阳区曙光西里&nbsp&nbsp</h5>
+                    <h5 style="font-size: 16px;padding-left: 55px;margin: 10px 0 !important;">时间国际A座1501</h5>
+                    <h5 style="font-size: 16px;padding-right: 12px;margin: 10px 0 !important;">电话：010-52468286</h5>
+                    <h5 style="font-size: 16px;padding-right: 19px;margin: 10px 0 !important;">手机：15010927730</h5>
+                    <h5 style="font-size: 16px;padding-left: 32px;margin: 10px 0 !important;">邮箱：info@xinxueshuo.cn</h5>
+                    <h5 style="font-size: 16px;padding-right: 23px;margin: 10px 0 !important;">美国办公室：德克萨斯州 奥斯丁市</h5>
+                    <h5 style="font-size: 16px;padding-left: 72px;margin: 10px 0 !important;">邮箱：dbarrutia@xinxueshuo.cn</h5>
                 </div>
                 <div class="col-xs-12 col-md-2 col-lg-2 text-center">
                     <h4 style="font-size: 20px;padding-bottom:20px;margin: 0px 0;">微信公众号</h4>
@@ -57,27 +56,25 @@
 </template>
 
 <script>
-export default {
-
-  }
+export default {};
 </script>
 
 <style>
-.schoolBottom{
+.schoolBottom {
   height: 310px;
   background: rgb(33, 79, 137);
-  color: #DFD1D1;
+  color: #dfd1d1;
   font-size: 16px;
   margin-top: 100px;
 }
-#hovea{
+#hovea {
   color: beige;
 }
-#hovea:hover{
+#hovea:hover {
   color: #777;
 }
 .copy-txt {
-  color: #7C7C7C;
+  color: #7c7c7c;
   background: #303c42;
   height: 35px;
   line-height: 35px;
