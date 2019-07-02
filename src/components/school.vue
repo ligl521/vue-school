@@ -1,6 +1,6 @@
 <template>
-  <div id="container">
-    <loding v-if="this.$store.state.loding"/>
+  <div id="container" >
+    <!-- <loding v-if="this.$store.state.loding"/> -->
     <div id="searchBar">
       <!-- 搜索学校 -->
       <el-autocomplete
@@ -61,18 +61,9 @@
           </div>
         </div>
       </div> -->
-      <div class="schoolDetailTwo container">
-          <!-- <div class="listTwoMin" v-for="(item,i) in schoolLists" :key="i">
-            <div class="schoolLogoDiv">
-              <img id="school_logo" :src='item.schoolLogo?item.schoolLogo:"http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png"'>
-              <img src="../assets/school.png">
-            </div>
-            <div class="schoolListInfomation"></div>
-            <div class="schoolTwoRight"></div>
-          </div> -->
-          <div class="row listTwoMin" v-for="(item,i) in schoolLists" :key="i">
+          <!-- <div class="row listTwoMin" v-for="(item,i) in schoolLists" :key="i">
             <div class="col-xs-4 col-sm-3 col-md-2  schoolLogoDiv">
-              <!-- <img id="school_logo" :src='item.schoolLogo?item.schoolLogo:"http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png"'> -->
+              <img id="school_logo" :src='item.schoolLogo?item.schoolLogo:"http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png"'>
               <img src="../assets/school.png">
             </div>
             <div class="col-xs-8 col-sm-5 col-md-6 schoolListInfomation">
@@ -88,7 +79,21 @@
                 <span class="school_right_info">{{item.schoolProperties}}</span>
               </div>
             </div>
+          </div> -->
+      <div class="schoolDetailTwo">
+        <div class="detailBox" v-for="(item,i) in schoolLists" :key="i">
+          <div class="detailTwomix">
+            <div class="detailLogo"> <img :src='item.schoolLogo?item.schoolLogo:"http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png"'></div>
+            <div class="datailMinRight">
+              <p class="datailstP">{{item.schoolName}}</p>
+              <ul>
+                <li><p>机构学制</p><p>成立时间</p><p>学校类型</p></li>
+                <li><p>小初稿</p><p>2014-02-03</p><p>民办</p></li>
+              </ul>
+            </div>
           </div>
+          <p class="detailaAddress">{{item.areas+item.areas02+item.areas03}}</p>
+        </div>
       </div>
     <div class="block">
       <span class="demonstration"></span>
@@ -102,7 +107,7 @@
         :total="total_school"
       ></el-pagination>
     </div>
-    <schoolFooter/>
+    <!-- <schoolFooter/> -->
   </div>
 </template>
 
@@ -116,7 +121,7 @@ import { isUndefined } from 'util';
 export default {
   data() {
     return {
-      schoolDetail:false,
+      schoolDetail:true,
       input:'',
       schoolLists: [],
       currentPage: 1,
@@ -207,6 +212,7 @@ export default {
           ? (that.no_school = "未搜索到结果，请重新输入关键字！")
           : (that.no_school = "");
           window.scrollTo(0,0)
+        //截取 幼 小 中 高
         for (var i=0;i<respons.data.list.length;i++) {
           var str = respons.data.list[i].schoolSystem;
           var arr1 = str.split("；");
@@ -215,9 +221,19 @@ export default {
           for(var j=0; j<arr2.length; j++){
               arr3.push(arr1[j].slice(0,1))
           }
-          respons.data.list[i].schoolSystems
+          // respons.data.list[i].schoolSystems
           that.schoolLists[i].schoolSystem=arr3.join(",");
+
         }
+        //截取时间
+        var jiq = []
+        for(var i=0;i<respons.data.list.length;i++){
+          var str = respons.data.list[i].loadTime.substring(0,10);
+          jiq.push(str);
+          respons.data.list[i].loadTime = jiq[i]
+        }
+        console.log(jiq)
+        console.log(respons.data.list[0].loadTime.substring(0,10))
       })
     },
     handleSizeChange(val) {
@@ -265,6 +281,9 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+#container{
+  background: #f5f5f5;
+}
 #search_res {
   display: flex;
   justify-content: center;
@@ -295,7 +314,7 @@ export default {
   margin-left: -5px;
 }
 .schoolDetail{
-  /* width: 98%; */
+  width: 96%;
   margin: 0 auto;
 }
 .schoolList {
@@ -317,10 +336,6 @@ export default {
   background: rgb(33, 80, 137);
   border-color: rgb(33, 80, 137);
 }
-#school_logo {
-  width: 100px;
-  height: 100px;
-}
 .school_info {
   display: block;
   margin-top: 5px;
@@ -340,9 +355,6 @@ export default {
 }
 .el-col {
     border-radius: 4px;
-}
-.el-autocomplete {
-    width: 400px;
 }
 .grid-content{
   border-radius: 4px;
@@ -444,38 +456,101 @@ export default {
 
 
 /* 学校two css*/
-.schoolDetailTwo{
-  width: 70%;
-  /* height: 50px; */
-  margin: 0 auto;
+  .schoolDetailTwo{
+    font-size: 0.18rem;
+    line-height: 0.3rem;
+  }
+  .listTwoMin:hover {
+    box-shadow: 0px 0px 15px #ccc;
+  }
+  .schoolListInfomation{
+    line-height: 28px;
+    margin-top: 20px;
+  }
+  .schoolTwoRight{
+    line-height: 28px;
+    margin-top: 20px;
+    text-align: center;
 }
-.listTwoMin{
-  /* background: red; */
-  margin-top: 20px;
-  line-height: px;
-  border-radius: 10px;
-  /* justify-content:flex-start; */
-  border: 1px solid #cccccc;
+@media screen and (min-width:1200px){
+  .el-autocomplete {
+    width: 20%;
+  }
+  .schoolDetailTwo{
+    width: 80%;
+    margin: 0 auto;
+  }
+  .detailBox{
+    border: 1px solid #ccc;
+    margin-top: 10px;
+    border-radius: 10px;
+  }
+  .detailBox:hover{
+    box-shadow: 0px 0px 15px #ccc;
+  }
+
 }
-.schoolLogoDiv{
-  /* background: #333; */
+@media screen and (min-width:960px) and (max-width:1199px){
+
 }
-.schoolLogoDiv img{
-  width: 100%;
-  height: auto;
+@media screen and (min-width:768px) and (max-width:959px){
+
 }
-.listTwoMin:hover {
-  box-shadow: 0px 0px 15px #ccc;
+@media screen and (min-width:480px) and (max-width:767px){
+
 }
-.schoolListInfomation{
-  line-height: 28px;
-  margin-top: 20px;
-  /* background: #111; */
+@media screen and (max-width:479px) {
+  .schoolDetailTwo{
+    font-size: 12px;
+  }
+  .detailaAddress{
+    display: none;
+  }
 }
-.schoolTwoRight{
-  line-height: 28px;
-  margin-top: 20px;
-  text-align: center;
-  /* background: #222; */
+.detailBox{
+  background: #fff;
+  overflow: hidden;
+  margin-top: 0.2rem;
+  padding: 0.3rem 0 0.2rem 0;
+  line-height: 0.4rem;
+  .detailaAddress{
+    margin-left: 3%;
+  }
+  .detailTwomix{
+    display: flex;
+    justify-content: space-around;
+    .detailLogo{
+      width: 10%;
+      margin-left: 3%;
+      margin-top: 0.05rem;
+      img{
+        width: 1rem;
+      }
+    }
+  }
+  .datailMinRight{
+    width: 75%;
+    margin-left: 2%;
+    .datailstP{
+      color: #214f89;
+      font-size: 0.2rem;
+      margin-left: 0.2rem;
+    }
+    ul{
+      li{
+        display: flex;
+        justify-content: space-around;
+        p{
+          flex: 1;
+          text-align: center;
+        }
+      }
+      li:last-of-type{
+        color:  #214f89;
+      }
+    }
+  }
+
 }
+
 </style>

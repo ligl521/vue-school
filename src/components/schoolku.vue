@@ -10,6 +10,7 @@
         </el-menu>
         <div class="ches">
           <p>12233</p>
+          <h1>111111</h1>
         </div>
         <schoolFooter />
     </div>
@@ -29,15 +30,19 @@ export default {
 
 <style lang="less" scoped>
   .ches{
-    margin-top: 1rem; 
+    margin-top: 1rem;
     width: 10rem;
     height: 5rem;
     font-size: 0.3rem;
-    background: red;
-    .ches p{
-      width: 2rem;
-      height: 2rem;
+    display: flex;
+    background: yellow;
+    p{
+      flex: 2;
       background: skyblue;
+    }
+    h1{
+      flex: 4;
+      background: seagreen;
     }
   }
 </style>
