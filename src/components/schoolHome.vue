@@ -213,7 +213,7 @@ export default {
 }
 .toolbarLeft {
   float: left;
-  background: #f8f8f8;
+  background: #f9f9f9;
 }
 .toolbarLeft ul {
   width: 120px;
@@ -243,7 +243,7 @@ export default {
   width: 250px;
   margin-left: 50px;
   text-align: center;
-  background: #f8f8f8;
+  background: #fcfcfc;
 }
 .toolbarRight li:first-of-type {
   margin-top: 10px;
@@ -276,7 +276,7 @@ export default {
 }
 .toolbarLeft {
   float: left;
-  background: #f8f8f8;
+  background: #fcfcfc;
 }
 .toolbarLeft ul {
   width: 120px;
@@ -306,7 +306,7 @@ export default {
   width: 250px;
   margin-left: 50px;
   text-align: center;
-  background: #f8f8f8;
+  background: #fcfcfc;
 }
 .toolbarRight li:first-of-type {
   margin-top: 10px;
@@ -325,7 +325,7 @@ export default {
   margin-top: 20px;
   margin-bottom: 20px;
   /* border: 1px solid #cccccc; */
-  background: #f8f8f8;
+  background: #fcfcfc;
   overflow: hidden;
 }
 .homeCenterToobar {
@@ -390,7 +390,7 @@ export default {
   margin-top: 20px;
   margin-bottom: 20px;
   /* border: 1px solid #cccccc; */
-  background: #f8f8f8;
+  background: #fcfcfc;
   overflow: hidden;
 }
 .homeCenterToobar {
@@ -450,7 +450,7 @@ export default {
 
 /* 行业动态 */
 .homeInquiry {
-  background: #f8f8f8;
+  background: #fcfcfc;
   overflow: hidden;
 }
 .homeInquiry h1 {
@@ -502,7 +502,7 @@ export default {
 
 /* 行业动态 */
 .homeInquiry {
-  background: #f8f8f8;
+  background: #fcfcfc;
   overflow: hidden;
 }
 .homeInquiry h1 {
