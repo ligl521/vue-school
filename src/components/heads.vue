@@ -5,12 +5,12 @@
       <el-menu-item index="/">首页</el-menu-item>
       <el-menu-item index="/school">国际学校库</el-menu-item>
       <el-menu-item index="/schoolku">教育机构库</el-menu-item>
-      <el-menu-item index="/schoolHome">教育人才库</el-menu-item>
+      <el-menu-item index="4">教育人才库</el-menu-item>
       <el-menu-item index="5">项目数据库</el-menu-item>
       <el-menu-item index="6">数据可视化</el-menu-item>
       <el-button round class="login_btn" type="text" @click="dialogVisible = true ;get_msg()">登录</el-button><!-- 点击触发登录dialog -->
     </el-menu>
-    <el-dialog :visible.sync="dialogVisible" width="15%" center >
+    <el-dialog :visible.sync="dialogVisible" width="17%" center >
       <el-tabs stretch v-model="activeName" @tab-click="handleClick">
         <!-- 二维码登录 -->
         <el-tab-pane label="扫码登录" name="first" >
@@ -86,7 +86,7 @@ export default {
     get_msg(){
      axios({
         method:'post',
-        url:'http://192.168.0.28:8080/nsi-1.0/user/get_qrcode.do',
+        url:'http://data.xinxueshuo.cn/nsi-1.0/user/get_qrcode.do',
       })
       .then(function (response) {
         console.log(response);
@@ -221,8 +221,6 @@ form {
     background-color: beige;
     border-radius: 20px;
     padding: 8px 25px;
-}
-.el-menu {
 }
 .el-menu--horizontal>.el-menu-item {
     float: left;

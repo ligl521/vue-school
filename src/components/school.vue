@@ -10,8 +10,8 @@
         placeholder="请输入学校关键字"
         :trigger-on-focus="false"
         @select="handleSelect"
+        @keyup.enter.native="getschool"
       ></el-autocomplete>
-        <!-- @keyup.enter.native="getschool" -->
       <el-button id="searchBtn" type="primary" icon="el-icon-search" @click="getschool"></el-button>
     </div>
     <!-- 切换按钮 -->
@@ -39,62 +39,21 @@
         </el-row>
     </div>
     <!-- 学校展示列表two -->
-      <!-- <div class="www" v-if="!schoolDetail">
-        <span id="search_res">{{this.no_school}}</span>
-        <div class="schoolList" v-for="(item,i) in schoolLists" :key="i" @mousedown="mousedownH($event)" @mouseup="mouseupH($event,item)">
-          <div class="school_logo_div">
-            <img
-              id="school_logo"
-              :src='item.schoolLogo?item.schoolLogo:"http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png"'
-            >
-          </div>
-          <div class="school_infomation">
-            <span class="schoo l_info">{{item.schoolName}}</span>
-            <span style="display:none">{{item.id}}</span>
-            <span class="school_info">{{item.areas+item.areas02+item.areas03}}</span>
-            <span class="school_info">{{item.course}}</span>
-          </div>
-          <div class="school_right">
-            <span class="school_right_info">{{item.loadTime}}</span>
-            <span class="school_right_info">{{item.schoolSystem}}</span>
-            <span class="school_right_info">{{item.schoolProperties}}</span>
+    <div class="schoolDetailTwo" v-if="!schoolDetail">
+      <div class="detailBox" v-for="(item,i) in schoolLists" :key="i">
+        <div class="detailTwomix">
+          <div class="detailLogo"> <img :src='item.schoolLogo?item.schoolLogo:"http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png"'></div>
+          <div class="datailMinRight">
+            <p class="datailstP">{{item.schoolName}}</p>
+            <ul>
+              <li><p>机构学制</p><p>成立时间</p><p>学校类型</p></li>
+              <li><p>小初稿</p><p>2014-02-03</p><p>民办</p></li>
+            </ul>
           </div>
         </div>
-      </div> -->
-          <!-- <div class="row listTwoMin" v-for="(item,i) in schoolLists" :key="i">
-            <div class="col-xs-4 col-sm-3 col-md-2  schoolLogoDiv">
-              <img id="school_logo" :src='item.schoolLogo?item.schoolLogo:"http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png"'>
-              <img src="../assets/school.png">
-            </div>
-            <div class="col-xs-8 col-sm-5 col-md-6 schoolListInfomation">
-                <span class="schoo l_info">{{item.schoolName}}</span>
-                <span style="display:none">{{item.id}}</span>
-                <span class="school_info">{{item.areas+item.areas02+item.areas03}}</span>
-                <span class="school_info">{{item.course}}</span>
-            </div>
-            <div class="col-xs-8 col-sm-4 col-md-4 schoolTwoRight">
-              <div class="">
-                <span class="school_right_info">{{item.loadTime}}</span>
-                <span class="school_right_info">{{item.schoolSystem}}</span>
-                <span class="school_right_info">{{item.schoolProperties}}</span>
-              </div>
-            </div>
-          </div> -->
-      <div class="schoolDetailTwo">
-        <div class="detailBox" v-for="(item,i) in schoolLists" :key="i">
-          <div class="detailTwomix">
-            <div class="detailLogo"> <img :src='item.schoolLogo?item.schoolLogo:"http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png"'></div>
-            <div class="datailMinRight">
-              <p class="datailstP">{{item.schoolName}}</p>
-              <ul>
-                <li><p>机构学制</p><p>成立时间</p><p>学校类型</p></li>
-                <li><p>小初稿</p><p>2014-02-03</p><p>民办</p></li>
-              </ul>
-            </div>
-          </div>
-          <p class="detailaAddress">{{item.areas+item.areas02+item.areas03}}</p>
-        </div>
+        <p class="detailaAddress">{{item.areas+item.areas02+item.areas03}}</p>
       </div>
+    </div>
     <div class="block">
       <span class="demonstration"></span>
       <!-- 分页组件 -->
@@ -107,7 +66,7 @@
         :total="total_school"
       ></el-pagination>
     </div>
-    <!-- <schoolFooter/> -->
+    <schoolFooter/>
   </div>
 </template>
 
@@ -281,9 +240,6 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-#container{
-  background: #f5f5f5;
-}
 #search_res {
   display: flex;
   justify-content: center;
@@ -382,7 +338,7 @@ export default {
   color: #777;
 }
 .grid-content ul li:first-of-type{
-  font-size: 16px;
+  font-size: 15px;
   color: #000;
 }
 .logoimg{
@@ -421,10 +377,14 @@ export default {
   float: right;
   margin-right: 25px;
 }
-.toggleBut span{
-  display:inline-block;
-  border-right: 1px solid #cccccc;
-  float: left;
+.toggleBut{
+  span{
+    display:inline-block;
+    float: left;
+  }
+  span:first-child{
+    border-right: 1px solid #cccccc;
+  }
 }
 .toggleBut span:first-child{
   margin-top: 2px;

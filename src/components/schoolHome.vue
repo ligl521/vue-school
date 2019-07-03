@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="homeBanner">
-      <!-- <img src="../assets/one.png"> -->
+      <!-- <img src="../assets/one.png" class="img-responsive" alt="Responsive image"> -->
       <img src="http://nsi.oss-cn-zhangjiakou.aliyuncs.com/nsi-pc/banner01.jpg" class="img-responsive" alt="Responsive image">
     </div>
     <div class="schoolHome">
@@ -66,7 +66,7 @@
           <div class="homeInquiryLeft" v-for="(v,i) in schoolInquiruList" :key="i">
             <p><img :src="v.coverImage"></p>
             <ul>
-              <li><a :href="v.articleUrl">{{v.title}}</a></li>
+              <li><a :href="v.articleUrl" target="_blank">{{v.title}}</a></li>
               <li>{{v.summary}}</li>
               <!-- <li v-html="v.articleContent"></li> -->
             </ul>
@@ -120,7 +120,7 @@ export default {
         pageSize: 12,
         searchKey: this.SchoolCitySearchKey
       }).then(res => {
-        console.log(res.data.list);
+        console.log(res);
         this.schoolLists = res.data.list;
       });
       //行业动态
@@ -200,11 +200,11 @@ export default {
 /* bannenr */
 .homeBanner {
   width: 100%;
-  height: 400px;
+  /* height: 400px; */
 }
 .homeBanner img {
   width: 100%;
-  height: 100%;
+  /* height: 100%; */
 }
 
 /* 导航搜索 */
@@ -474,9 +474,6 @@ export default {
   /* margin-top: 30px; */
   /* margin-bottom: 30px; */
 }
-.homeInquiryBox > div:last-of-type {
-  /* margin-left: 75px; */
-}
 .homeInquiryBox p {
   float: left;
   /* width: 150px;
@@ -484,10 +481,6 @@ export default {
   /* margin-left: 20px; */
   margin-top: 20px;
   margin-bottom: 20px;
-}
-.homeInquiryBox p img {
-  width: 200px;
-  height: 100px;
 }
 .homeInquiryBox ul {
   float: left;
@@ -521,7 +514,7 @@ export default {
   margin-top: 10px;
   margin-left: 0px;
   margin-right: 30px;
-  margin-bottom: 30px;
+  margin-bottom: 15px;
   /* border-bottom: 2px solid #cccccc; */
 }
 .homeInquiryBox > div {
@@ -538,7 +531,7 @@ export default {
 }
 .homeInquiryBox p img {
   width: 250px;
-  height: 120px;
+  height: 140px;
 }
 .homeInquiryBox ul {
   float: left;

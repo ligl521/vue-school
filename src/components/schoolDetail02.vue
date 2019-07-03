@@ -56,7 +56,7 @@
           </div>
         </div> -->
         <div class="schoolTranslate">
-         
+
           <div class="schoolTranslateBox">
             <!-- <ul class="schoolTranslateHeader clearfix">
               <li class="clearfix"><p><i class="iconfont icon-shijian"></i>建校时间：2005{{schollDatil.foundingTime}}年</p><p><i class="iconfont icon-guanwang"></i>www.harrowbeijing.cn{{schollDatil.website}}</p></li>
@@ -172,7 +172,7 @@
             <p>A-Level课程证书被几乎所有英语授课的大学作为招收新生的入学标准。 在中国开设A-Level课程旨在为中国学生提供进入国外大学的有效途径，具体目标为：培养在国内初高中成绩优秀的学生进入世界顶尖大学；培养在国内初高中成绩中等的学生进入世界一流大学；培养在国内初高中成绩一般的学生考取适合自己的大学。</p>
             <p>IBDP课程是国际文凭组织（IBO）在综合各国课程优势的基础上，为具有较强学习动机的16~19岁学生设计的。它致力于培养具有终生学习能力的国际公民，具有和谐均衡的课程体系、严格的评估，是目前影响最大的国际化课程。IB课程是由两年时间来完成的。</p>
           </div>
-          <div class="teachers"> 
+          <div class="teachers">
             <h1 class="schoolTranslateH1">师资队伍</h1>
             <el-row :gutter="0" style="width: 90%; margin: 0 auto;">
                 <el-col :span="6">
@@ -239,14 +239,14 @@
                     </el-row>
                 </div>
               </div>
-              
+
           </div>
           <div class="process">
               <h1 class="schoolTranslateH1">入学流程</h1>
               <div class="processBox">
                   <el-row>
                       <!-- <el-col :span="5">
-                        <p style="margin-top: 70px;" class="title">入学</p> 
+                        <p style="margin-top: 70px;" class="title">入学</p>
                         <p style="margin-top: 15px;" class="title">流程</p>
                       </el-col> -->
                       <el-col :span="18">
