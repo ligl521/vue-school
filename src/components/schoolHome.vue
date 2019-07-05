@@ -2,7 +2,18 @@
   <div>
     <div class="homeBanner">
       <!-- <img src="../assets/one.png" class="img-responsive" alt="Responsive image"> -->
-      <img src="http://nsi.oss-cn-zhangjiakou.aliyuncs.com/nsi-pc/banner01.jpg" class="img-responsive" alt="Responsive image">
+      <!-- <img src="../assets/banner.png" class="img-responsive" alt="Responsive image"> -->
+      <ul class="homeBnnerSearch">
+        <li>
+          <el-autocomplete
+          v-model="state"
+          :fetch-suggestions="querySearchAsync"
+          placeholder="请输入内容"
+          @select="handleSelect"
+        ></el-autocomplete>
+        </li>
+        <li><el-button type="info" @click="queryBtn">查询信息</el-button></li>
+      </ul>
     </div>
     <div class="schoolHome">
       <div class="homeToolbar clearfix">
@@ -29,7 +40,7 @@
           </router-link>
         </div>
         <div class="toolbarRight">
-          <ul>
+          <!-- <ul>
             <li>
               <el-autocomplete
               v-model="state"
@@ -39,7 +50,7 @@
             ></el-autocomplete>
             </li>
             <li><el-button type="info" @click="queryBtn">查询信息</el-button></li>
-          </ul>
+          </ul> -->
         </div>
       </div>
       <div class="schoolHomeCenter">
@@ -213,6 +224,7 @@
     };
 </script>
 
+<<<<<<< HEAD
 <style conped>
     .schoolHome {
         margin: 0 auto;
@@ -613,6 +625,393 @@
     .homeInquiryBox p {
         float: left;
         /* width: 150px;
+=======
+<style lang="less" scoped>
+@media screen and (min-width:1200px){
+  .homeBanner {
+    background: url(../assets/banner.png) no-repeat;
+    background-size: contain;
+    background-size: 100% 550px;
+    width: 100%;
+    height: 550px;
+    overflow: hidden;
+  }
+}
+@media screen and (min-width:960px) and (max-width:1199px){
+  .homeBanner {
+    background: url(../assets/banner.png) no-repeat;
+   background-size: contain;
+    background-size: 100% 480px;
+    width: 100%;
+    height: 480px;
+    overflow: hidden;
+  }
+}
+@media screen and (min-width:768px) and (max-width:959px){
+  .homeBanner {
+    background: url(../assets/banner.png) no-repeat;
+   background-size: contain;
+    background-size: 100% 390px;
+    width: 100%;
+    height: 390px;
+    overflow: hidden;
+  }
+}
+@media screen and (min-width:480px) and (max-width:767px){
+  .homeBanner {
+    background: url(../assets/banner.png) no-repeat;
+   background-size: contain;
+    background-size: 100% 300px;
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+  }
+}
+@media screen and (max-width:479px) {
+  .homeBanner {
+    background: url(../assets/banner.png) no-repeat;
+   background-size: contain;
+    background-size: 100% 200px;
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+  }
+}
+
+
+
+
+.schoolHome {
+  margin: 0 auto;
+  width: 1200px;
+}
+/* bannenr */
+.homeBanner {
+
+}
+.homeBanner img {
+  width: 100%;
+  /* height: 100%; */
+}
+
+/* 导航搜索 */
+.homeToolbar {
+  margin-top: 20px;
+}
+.toolbarLeft {
+  float: left;
+  background: #f9f9f9;
+}
+.toolbarLeft ul {
+  width: 120px;
+  height: 120px;
+  border: 1px solid #ccc;
+  float: left;
+  border-radius: 5px;
+  margin: 30px;
+}
+.toolbarLeft ul:hover {
+  box-shadow: 0 0 3px #999 inset;
+}
+.toolbarLeft ul li:first-of-type {
+  height: 90px;
+  text-align: center;
+}
+.toolbarLeft ul li:first-of-type i {
+  line-height: 90px;
+  text-align: center;
+  font-size: 50px;
+}
+.toolbarLeft ul li:last-of-type {
+  text-align: center;
+}
+.toolbarRight {
+  float: left;
+  width: 250px;
+  margin-left: 50px;
+  text-align: center;
+  background: #fafafa;
+}
+.toolbarRight li:first-of-type {
+  margin-top: 10px;
+}
+.toolbarRight li:last-of-type {
+  padding-bottom: 30px;
+}
+.toolbarRight button.el-button.el-button--info,
+.toolbarRight input {
+  width: 200px;
+  margin-top: 30px;
+}
+.schoolHome {
+  margin: 0 auto;
+  width: 1200px;
+}
+/* bannenr */
+.homeBanner {
+  width: 100%;
+  /* height: 400px; */
+}
+.homeBanner img {
+  width: 100%;
+  /* height: 50%; */
+}
+
+/* 导航搜索 */
+.homeToolbar {
+  margin-top: 20px;
+}
+.toolbarLeft {
+  float: left;
+  background: #fafafa;
+}
+.toolbarLeft ul {
+  width: 120px;
+  height: 120px;
+  border: 1px solid #ccc;
+  float: left;
+  border-radius: 5px;
+  margin: 30px;
+}
+.toolbarLeft ul:hover {
+  box-shadow: 0 0 3px #999 inset;
+}
+.toolbarLeft ul li:first-of-type {
+  height: 90px;
+  text-align: center;
+}
+.toolbarLeft ul li:first-of-type i {
+  line-height: 90px;
+  text-align: center;
+  font-size: 50px;
+}
+.toolbarLeft ul li:last-of-type {
+  text-align: center;
+}
+.toolbarRight {
+  float: left;
+  width: 250px;
+  margin-left: 50px;
+  text-align: center;
+  background: #fafafa;
+}
+.toolbarRight li:first-of-type {
+  margin-top: 10px;
+}
+.toolbarRight li:last-of-type {
+  padding-bottom: 30px;
+}
+.toolbarRight button.el-button.el-button--info,
+.toolbarRight input {
+  width: 200px;
+  margin-top: 30px;
+}
+
+/* 学校列表 */
+.schoolHomeCenter {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  /* border: 1px solid #cccccc; */
+  background: #fafafa;
+  overflow: hidden;
+}
+.homeCenterToobar {
+  width: 95%;
+  margin: 30px auto 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #cccccc;
+  font-size: 24px;
+}
+.homeCenterToobar p {
+  float: left;
+}
+.homeCenterToobar p span {
+  margin: 0 10px;
+  color: #777;
+}
+.homeCenterToobar p .btnpath {
+  color: rgb(33, 79, 137);
+  border-bottom: 3px solid;
+  padding-bottom: 15px;
+}
+.homeCenterToobar p span:hover {
+  color: rgb(33, 79, 137);
+  cursor: pointer;
+}
+.homeCenterToobar button.el-button.el-button--info {
+  float: right;
+}
+.homeList {
+  width: 95%;
+  margin: 20px auto;
+  /* display: flex; */
+}
+.homeList > div {
+  float: left;
+  border: 1px solid #cccccc;
+  width: 265px;
+  margin: 10px;
+  height: 100px;
+}
+.homeList > div p {
+  float: left;
+  /* background: red; */
+  width: 70px;
+  height: 70px;
+  margin-left: 20px;
+  margin-top: 10px;
+}
+.homeList > div p img {
+  width: 100%;
+  height: 100%;
+}
+.homeList > div ul {
+  float: left;
+  margin-left: 15px;
+  margin-top: 15px;
+  line-height: 30px;
+}
+
+/* 学校列表 */
+.schoolHomeCenter {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  /* border: 1px solid #cccccc; */
+  background: #fafafa;
+  overflow: hidden;
+}
+.homeCenterToobar {
+  width: 95%;
+  margin: 20px auto 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #cccccc;
+  font-size: 24px;
+}
+.homeCenterToobar p {
+  float: left;
+}
+.homeCenterToobar p span {
+  padding: 0 10px;
+  color: #777;
+}
+.homeCenterToobar p .btnpath {
+  color: red;
+}
+.homeCenterToobar p span:hover {
+  color: red;
+  cursor: pointer;
+}
+.homeCenterToobar button.el-button.el-button--info {
+  float: right;
+}
+.homeList {
+  width: 95%;
+  margin: 20px auto;
+  /* display: flex; */
+}
+.homeList > div {
+  float: left;
+  border: 1px solid #cccccc;
+  width: 265px;
+  margin: 10px;
+  height: 100px;
+}
+.homeList > div p {
+  float: left;
+  /* background: red; */
+  width: 70px;
+  height: 70px;
+  margin-left: 20px;
+  margin-top: 10px;
+}
+.homeList > div p img {
+  width: 100%;
+  height: 100%;
+}
+.homeList > div ul {
+  float: left;
+  margin-left: 15px;
+  margin-top: 15px;
+  line-height: 30px;
+}
+
+/* 行业动态 */
+.homeInquiry {
+  background: #fafafa;
+  overflow: hidden;
+}
+.homeInquiry h1 {
+  margin-left: 2.5%;
+  font-size: 32px;
+  margin-top: 25px;
+}
+.homeInquiryBox {
+  margin-top: 10px;
+  margin-left: 50px;
+  margin-right: 30px;
+  margin-bottom: 30px;
+  /* border-bottom: 2px solid #cccccc; */
+}
+.homeInquiryBox > div {
+  /* border: 1px solid #cccccc; */
+  width: 520px;
+  /* padding-left: 10px; */
+  /* height: 180px; */
+  /* margin-left: 30px; */
+  /* margin-top: 30px; */
+  /* margin-bottom: 30px; */
+}
+.homeInquiryBox p {
+  float: left;
+  /* width: 150px;
+    width: 180px; */
+  /* margin-left: 20px; */
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.homeInquiryBox ul {
+  float: left;
+  width: 290px;
+  margin-left: 20px;
+  margin-top: 20px;
+  line-height: 26px;
+}
+.homeInquiryBox ul li:first-of-type {
+  font-size: 18px;
+}
+.homeInquiryBox ul li:last-of-type {
+  color: #777;
+}
+.homeInquiryLeft {
+  float: left;
+  margin-left: 30px;
+}
+
+/* 行业动态 */
+.homeInquiry {
+  background: #fafafa;
+  overflow: hidden;
+}
+.homeInquiry h1 {
+  margin-left: 2.5%;
+  font-size: 32px;
+  margin-top: 25px;
+}
+.homeInquiryBox {
+  margin-top: 10px;
+  margin-left: 0px;
+  margin-right: 30px;
+  margin-bottom: 15px;
+  /* border-bottom: 2px solid #cccccc; */
+}
+.homeInquiryBox > div {
+  width: 555px;
+  /* background: #ccc; */
+}
+.homeInquiryBox p {
+  float: left;
+  /* width: 150px;
+>>>>>>> 8dbf62e8de260a52f947e57c8f6d3a3ae4e67afa
     width: 180px; */
         /* margin-left: 20px; */
         margin-top: 20px;
