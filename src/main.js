@@ -18,15 +18,15 @@ import './assets/css/reset.css'
 require('swiper/dist/css/swiper.css')
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 Vue.use(VueAwesomeSwiper)
-//bus总线
+    //bus总线
 import VueBus from 'vue-bus';
 Vue.prototype.bus = new Vue();
 //环境地址
 Vue.prototype.axios = axios
-//测试环境
-// axios.defaults.baseURL = "http://192.168.0.28:8080/nsi-1.0"
-//生产环境
-axios.defaults.baseURL = "http://data.xinxueshuo.cn/nsi-1.0/"
+    //测试环境
+axios.defaults.baseURL = "http://192.168.0.28:8080/nsi-1.0"
+    //生产环境
+    // axios.defaults.baseURL = "http://data.xinxueshuo.cn/nsi-1.0/"
 
 Vue.use(ElementUI, Vuex, VueBus);
 Vue.config.productionTip = false
@@ -36,6 +36,8 @@ new Vue({
     el: '#app',
     router,
     store, //使用store
-    components: { layout },
+    components: {
+        layout
+    },
     template: '<layout/>'
 })

@@ -100,6 +100,14 @@ export default {
 }
 </script>
 <style scoped>
+@media (max-width: 768px) {
+    .heads{
+        display: none;
+    }
+     #app {
+        margin-top: -52px
+    }
+}
 /* 导航 */
 .heads{
   position: fixed;

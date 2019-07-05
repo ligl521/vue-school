@@ -10,27 +10,26 @@ Vue.use(Router)
 
 export default new Router({
     routes: [{
-        path: '/',
-        name: 'schoolHome',
-        component: schoolHome
-      }, {
-        path: '/school',
-        name: 'school',
-        component: school
-      },
-      {
-        path: '/schoolDetail',
-        name: 'schoolDetail',
-        component: schoolDetail
-      },{
-        path: '/schoolku',
-        name: 'schoolku',
-        component: schoolku
-      },
-      {
-        path: '/schoolDetail02',
-        name: 'schoolDetail02',
-        component: schoolDetail02
-      }
+            path: '/',
+            name: 'schoolHome',
+            component: schoolHome
+        }, {
+            path: '/school',
+            name: 'school',
+            component: school
+        },
+        {
+            path: '/schoolDetail',
+            name: 'schoolDetail',
+            component: schoolDetail
+        }, {
+            path: '/schoolku',
+            name: 'schoolku',
+            component: schoolku
+        }, {
+            path: '/schoolDetail02',
+            name: 'schoolDetail02',
+            component: schoolDetail02
+        }
     ]
 })

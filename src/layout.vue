@@ -5,24 +5,24 @@
   </div>
 </template>
 <script>
-import heads from '@/components/heads'
-export default {
-  name: 'App',
-  data(){
-    return{
+    import heads from '@/components/heads'
+    export default {
+        name: 'App',
+        data() {
+            return {
 
+            }
+        },
+        methods: {
+
+        },
+        components: {
+            heads
+        }
     }
-  },
-  methods:{
-
-  },
-  components:{
-    heads
-  }
-}
 </script>
 <style>
-  #app{
-    margin-top: 52px;
-  }
+    #app {
+        margin-top: 52px;
+    }
 </style>
