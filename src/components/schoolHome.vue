@@ -2,7 +2,18 @@
   <div>
     <div class="homeBanner">
       <!-- <img src="../assets/one.png" class="img-responsive" alt="Responsive image"> -->
-      <img src="http://nsi.oss-cn-zhangjiakou.aliyuncs.com/nsi-pc/banner01.jpg" class="img-responsive" alt="Responsive image">
+      <!-- <img src="../assets/banner.png" class="img-responsive" alt="Responsive image"> -->
+      <ul class="homeBnnerSearch">
+        <li>
+          <el-autocomplete
+          v-model="state"
+          :fetch-suggestions="querySearchAsync"
+          placeholder="请输入内容"
+          @select="handleSelect"
+        ></el-autocomplete>
+        </li>
+        <li><el-button type="info" @click="queryBtn">查询信息</el-button></li>
+      </ul>
     </div>
     <div class="schoolHome">
       <div class="homeToolbar clearfix">
@@ -29,7 +40,7 @@
           </router-link>
         </div>
         <div class="toolbarRight">
-          <ul>
+          <!-- <ul>
             <li>
               <el-autocomplete
               v-model="state"
@@ -39,7 +50,7 @@
             ></el-autocomplete>
             </li>
             <li><el-button type="info" @click="queryBtn">查询信息</el-button></li>
-          </ul>
+          </ul> -->
         </div>
       </div>
       <div class="schoolHomeCenter">
@@ -192,15 +203,68 @@ export default {
 };
 </script>
 
-<style conped>
+<style lang="less" scoped>
+@media screen and (min-width:1200px){
+  .homeBanner {
+    background: url(../assets/banner.png) no-repeat;
+    background-size: contain;
+    background-size: 100% 550px;
+    width: 100%;
+    height: 550px;
+    overflow: hidden;
+  }
+}
+@media screen and (min-width:960px) and (max-width:1199px){
+  .homeBanner {
+    background: url(../assets/banner.png) no-repeat;
+   background-size: contain;
+    background-size: 100% 480px;
+    width: 100%;
+    height: 480px;
+    overflow: hidden;
+  }
+}
+@media screen and (min-width:768px) and (max-width:959px){
+  .homeBanner {
+    background: url(../assets/banner.png) no-repeat;
+   background-size: contain;
+    background-size: 100% 390px;
+    width: 100%;
+    height: 390px;
+    overflow: hidden;
+  }
+}
+@media screen and (min-width:480px) and (max-width:767px){
+  .homeBanner {
+    background: url(../assets/banner.png) no-repeat;
+   background-size: contain;
+    background-size: 100% 300px;
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+  }
+}
+@media screen and (max-width:479px) {
+  .homeBanner {
+    background: url(../assets/banner.png) no-repeat;
+   background-size: contain;
+    background-size: 100% 200px;
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+  }
+}
+
+
+
+
 .schoolHome {
   margin: 0 auto;
   width: 1200px;
 }
 /* bannenr */
 .homeBanner {
-  width: 100%;
-  /* height: 400px; */
+
 }
 .homeBanner img {
   width: 100%;
@@ -243,7 +307,7 @@ export default {
   width: 250px;
   margin-left: 50px;
   text-align: center;
-  background: #fcfcfc;
+  background: #fafafa;
 }
 .toolbarRight li:first-of-type {
   margin-top: 10px;
@@ -276,7 +340,7 @@ export default {
 }
 .toolbarLeft {
   float: left;
-  background: #fcfcfc;
+  background: #fafafa;
 }
 .toolbarLeft ul {
   width: 120px;
@@ -306,7 +370,7 @@ export default {
   width: 250px;
   margin-left: 50px;
   text-align: center;
-  background: #fcfcfc;
+  background: #fafafa;
 }
 .toolbarRight li:first-of-type {
   margin-top: 10px;
@@ -325,7 +389,7 @@ export default {
   margin-top: 20px;
   margin-bottom: 20px;
   /* border: 1px solid #cccccc; */
-  background: #fcfcfc;
+  background: #fafafa;
   overflow: hidden;
 }
 .homeCenterToobar {
@@ -390,7 +454,7 @@ export default {
   margin-top: 20px;
   margin-bottom: 20px;
   /* border: 1px solid #cccccc; */
-  background: #fcfcfc;
+  background: #fafafa;
   overflow: hidden;
 }
 .homeCenterToobar {
@@ -450,7 +514,7 @@ export default {
 
 /* 行业动态 */
 .homeInquiry {
-  background: #fcfcfc;
+  background: #fafafa;
   overflow: hidden;
 }
 .homeInquiry h1 {
@@ -502,7 +566,7 @@ export default {
 
 /* 行业动态 */
 .homeInquiry {
-  background: #fcfcfc;
+  background: #fafafa;
   overflow: hidden;
 }
 .homeInquiry h1 {
