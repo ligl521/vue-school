@@ -229,11 +229,15 @@
         }
     };
 </script>
+<<<<<<< HEAD
 <style>
   .homeBnnerSearch input.el-input__inner {
     border: 1px solid #fff;
   }
 </style>
+=======
+
+>>>>>>> 4f51853c98e2c55e95e44678c963a58e7db86482
 <style lang="less" scoped>
 @media screen and (min-width:1200px){
   .homeBanner {
