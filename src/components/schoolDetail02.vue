@@ -5,16 +5,24 @@
       <div class="carousel">
         <div class="swiper-container">
           <div class="swiper-wrapper">
-              <div class="swiper-slide">
-                <img src="../assets/one.png">
-              </div>
-              <div class="swiper-slide">
-                <img src="../assets/two.png">
-              </div>
-              <div class="swiper-slide">
-                <img src="../assets/san.png">
-              </div>
+            <div class="swiper-slide">
+                <img :src="schoolDatil.schoolShowOne">
+            </div>
+            <div class="swiper-slide">
+                <img :src="schoolDatil.schoolShowTwo">
+            </div>
+            <div class="swiper-slide">
+                <img :src="schoolDatil.schoolShowThird">
+            </div>
+             <div class="swiper-slide">
+                <img :src="schoolDatil.schoolShowOne">
+            </div>
+             <div class="swiper-slide">
+                <img :src="schoolDatil.schoolShowOne">
+            </div>
           </div>
+          <!-- 如果需要分页器 -->
+          <div class="swiper-pagination"></div>
           <!-- 如果需要导航按钮 -->
           <div class="swiper-button-prev"></div>
           <div class="swiper-button-next"></div>
@@ -106,9 +114,9 @@
                 </el-row>
             </div>
             <h1 class="schoolTranslateH1">学校概述</h1>
-            <div class="intoduceJeshao">
-              <p :style="'height:'+activityBannerH+'px'" :class="shortContent?'show':'hide'" class="shortContent">{{schoolDatil.remark}}{{schoolDatil.remark}}{{schoolDatil.remark}}</p>
-              <p :class="longContent?'show':'hide'" class="longContent">{{schoolDatil.remark}}{{schoolDatil.remark}}{{schoolDatil.remark}}</p>
+            <div class="intoduceJeshao"  ref="obj">
+              <p :style="'height:'+activityBannerH+'px'" :class="shortContent?'show':'hide'" class="shortContent">{{schoolDatil.remark}}</p>
+              <p :class="longContent?'show':'hide'" class="longContent">{{schoolDatil.remark}}</p>
               <span @click="lookMore" :class="more?'show':'hide'">【更多】</span>
             </div>
           </div>
@@ -313,49 +321,26 @@
                 flag: false,
                 pcSee: false,
                 mobSee: false,
-                value: "",
-                banner: true,
                 schoolDatil: {},
-                schoolSwiper: [],
-                schoolAuthentication: [],
-                schoolId: "",
-                textarea: "", //批注
-                radio: "1",
-                inputTelephone: "", //手机
-                inputName: "", //姓名
-                options: [{
-                    value: "选项0",
-                    label: "幼儿园"
-                }, {
-                    value: "选项1",
-                    label: "小学"
-                }, {
-                    value: "选项2",
-                    label: "初中"
-                }, {
-                    value: "选项3",
-                    label: "高中"
-                }],
-                isMore: false,
                 more: false,
                 longContent: false,
                 shortContent: true,
-                activityBannerH: "200",
+                activityBannerH: "",
                 approveSplit: [],
                 gradeSplit: [],
                 courseSplit: [],
             };
         },
-        
         methods: {
             getDetail() {
                 var that = this;
+                //  var schoolId = that.$route.query.id
                 getSchoolDeatail({
                     schoolId: 100053
                 }).then(res => {
+                    that.schoolDatil = res.data;
                     that.asyncObject = res
                     that.flag = true
-                    that.schoolDatil = res.data;
                     // 认证课程分割
                     var approve = res.data.authentication;
                     that.approveSplit = approve.split(";");
@@ -367,22 +352,45 @@
                     var course = res.data.course;
                     that.courseSplit = course.split(";");
                     // 展开更多
-                    if (that.activityBannerH < 210) {
-                        this.more = true;
-                    }else{
-                        this.more = false;
-                        this.shortContent = false;
-                        this.longContent = true;
-                    }
+                    setTimeout(() => {
+                        if (this.$refs.obj.offsetHeight > 200) {
+                            this.more = true;
+                            this.activityBannerH=200
+                        }else{
+                            this.more = false;
+                        }
+                    }, );
+                    // 元素加载完毕之后再执行
+                    this.$nextTick(()=>{
+                        this.swiperInit()
+                    })
                 });
             },
+             // swiper banner轮播
+            swiperInit(){
+                var mySwiper = new Swiper('.swiper-container',{
+                        autoplay: {
+                        delay:3000,
+                        disableOnInteraction: false,
+                    },
+                    loop: true,
+                    pagination: {
+                        el: '.swiper-pagination',
+                    },
+                    navigation: {
+                        nextEl: '.swiper-button-next',
+                        prevEl: '.swiper-button-prev',
+                    },
+                    observer:true,
+                })
+            },
+            // 点击展开更多
             lookMore() {
+                this.more = false;
                 this.longContent = true;
                 this.shortContent = false;
-                this.more = false;
             }
         },
-       
         mounted() {
             if (screen.width < 768) {
                 this.mobSee = true
@@ -390,20 +398,8 @@
             } else {
                 this.pcSee = true
                 this.mobSee = false
-            }
-            this.test="666";   
+            } 
             this.getDetail();
-            var mySwiper = new Swiper(".swiper-container", {
-                autoplay: {
-                    disableOnInteraction: false, //用户操作后是否禁止自动循环
-                    delay: 4000 //自自动循环时间
-                },
-                loop: true,
-                navigation: {
-                    nextEl: ".swiper-button-next",
-                    prevEl: ".swiper-button-prev"
-                }
-            });
         },
         created() {}
     };

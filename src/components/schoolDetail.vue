@@ -193,6 +193,7 @@ export default {
           },
           observer:true,
           autoplay:true,
+          loop:true,
         })
         var authentication = res.data.authentication;
         console.log(authentication)

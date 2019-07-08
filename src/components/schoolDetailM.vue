@@ -4,7 +4,7 @@
             <img :src="schoolDatil.schoolShowOne" alt="" class="img-responsive">
             <!-- <div class="back"  @click="goBack">  
                 <a><i class="iconfont icon-arrow-left"></i></a>
-            </div> -->
+            </div> -->  
             <div class="head">
                 <el-row>
                     <el-col :span="8">
@@ -124,24 +124,77 @@
                 </div>
                 <div class="tab-pane" id="admission">
                     <p class="titleM">招生信息</p>
+                    <p class="contentM">
+                        <span class="gradeBox">
+                            国际高中
+                            <el-row>
+                                <el-col :span="12">招生对象：同步过来</el-col>
+                                <el-col :span="12">授课形式：面授</el-col>
+                                <el-col :span="12">入学要求：测试+面试</el-col>
+                                <el-col :span="12">班级规模：20-30人</el-col>
+                                <el-col :span="12">入学考试：数学 英语</el-col>
+                                <el-col :span="12">是否住宿：是</el-col>
+                            </el-row>
+                        </span>
+                        <span class="gradeBox">
+                            国际初中
+                            <el-row>
+                                <el-col :span="12">招生对象：同步过来</el-col>
+                                <el-col :span="12">授课形式：面授</el-col>
+                                <el-col :span="12">入学要求：测试+面试</el-col>
+                                <el-col :span="12">班级规模：20-30人</el-col>
+                                <el-col :span="12">入学考试：数学 英语</el-col>
+                                <el-col :span="12">是否住宿：是</el-col>
+                            </el-row>
+                        </span>
+                        <span class="gradeBox">
+                            国际小学
+                            <el-row>
+                                <el-col :span="12">招生对象：同步过来</el-col>
+                                <el-col :span="12">授课形式：面授</el-col>
+                                <el-col :span="12">入学要求：测试+面试</el-col>
+                                <el-col :span="12">班级规模：20-30人</el-col>
+                                <el-col :span="12">入学考试：数学 英语</el-col>
+                                <el-col :span="12">是否住宿：是</el-col>
+                            </el-row>
+                        </span>
+                        <span class="gradeBox">
+                            国际幼儿园
+                            <el-row>
+                                <el-col :span="12">招生对象：同步过来</el-col>
+                                <el-col :span="12">授课形式：面授</el-col>
+                                <el-col :span="12">入学要求：测试+面试</el-col>
+                                <el-col :span="12">班级规模：20-30人</el-col>
+                                <el-col :span="12">入学考试：数学 英语</el-col>
+                                <el-col :span="12">是否住宿：是</el-col>
+                            </el-row>
+                        </span>
+                    </p>
                     <p class="titleM">同城学校</p>
-                    <el-row style="text-align:center">
-                        <el-col :span="8">
-                            <img src="../assets/school.png" alt="" width="100">
-                            <p class="chineseName">北京世青国际学校</p>
-                            <p class="englishName">Beijing World Youth Academy</p>
-                        </el-col>
-                        <el-col :span="8">
-                            <img src="../assets/school.png" alt="" width="100">
-                            <p class="chineseName">北京世青国际学校</p>
-                            <p class="englishName">Beijing World Youth Academy</p>
-                        </el-col>
-                        <el-col :span="8">
-                            <img src="../assets/school.png" alt="" width="100">
-                            <p class="chineseName">北京世青国际学校</p>
-                            <p class="englishName">Beijing World Youth Academy</p>
-                        </el-col>
-                    </el-row>
+                    <p class="contentM">
+                        <el-row style="text-align:center">
+                            <el-col :span="10" class="citySchoolBox">
+                                <img src="../assets/school.png" alt="">
+                                <p class="chineseName">北京世青国际学校</p>
+                                <p class="englishName">Beijing World Youth Academy</p>
+                            </el-col>
+                            <el-col :span="10" class="citySchoolBox">
+                                <img src="../assets/school.png" alt="">
+                                <p class="chineseName">北京世青国际学校</p>
+                                <p class="englishName">Beijing World Youth Academy</p>
+                            </el-col>
+                            <el-col :span="10" style="margin-top:20px;" class="citySchoolBox">
+                                <img src="../assets/school.png" alt="" width="100">
+                                <p class="chineseName">北京世青国际学校</p>
+                                <p class="englishName">Beijing World Youth Academy</p>
+                            </el-col>
+                            <el-col :span="10"  style="margin-top:20px;" class="citySchoolBox">
+                                <img src="../assets/school.png" alt="" width="100">
+                                <p class="chineseName">北京世青国际学校</p>
+                                <p class="englishName">Beijing World Youth Academy</p>
+                            </el-col>
+                        </el-row>
+                    </p>
                     <p class="titleM">新学说分析</p>
                     <p class="contentM">北京世青国际学校致力于将批判性研究、多远文化视角及客观评价标准紧密结合，努力为我校的每一个学生提供良好的学习机会。</p>
                 </div>
@@ -276,9 +329,24 @@ export default {
         font-weight: bold;
         margin: 15px 0;
     }
-    
-    #admission .chineseName {
+    .gradeBox{
         margin: 10px 0;
+        display: inline-block;
+    }
+
+    .citySchoolBox{
+        border-top: 5px solid #214f89;
+        box-shadow: 0px 0px 15px #ccc;
+        border-radius: 5px;
+        margin: 0 13px;
+        padding: 15px 0;
+    }
+    .citySchoolBox img{
+        width:80px;
+    }
+    #admission .chineseName {
+        margin: 5px 0;
+        font-weight: bold
     }
     
     .footer .order {
