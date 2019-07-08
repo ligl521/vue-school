@@ -1,18 +1,24 @@
 <template>
   <div>
     <div class="homeBanner">
+
+      <h1><span>国际学校四库全</span>书</h1>
+      <h6><i class="el-icon-caret-right"></i><span>新学说国际学校行业</span><i class="el-icon-caret-right"></i><span>掌握行业发展水准</span><i class="el-icon-caret-right"></i><span>了解自身成长阶段</span></h6>
       <!-- <img src="../assets/one.png" class="img-responsive" alt="Responsive image"> -->
       <!-- <img src="../assets/banner.png" class="img-responsive" alt="Responsive image"> -->
-      <ul class="homeBnnerSearch">
-        <li>
+      <ul class="homeBnnerSearch  clearfix">
+        <li class="aaa">
           <el-autocomplete
           v-model="state"
           :fetch-suggestions="querySearchAsync"
           placeholder="请输入内容"
           @select="handleSelect"
+          @keyup.enter.native="queryBtn"
         ></el-autocomplete>
         </li>
-        <li><el-button type="info" @click="queryBtn">查询信息</el-button></li>
+        <li class="bbb">
+          <i class="el-icon-search" @click="queryBtn"></i>
+        </li>
       </ul>
     </div>
     <div class="schoolHome">
@@ -40,7 +46,7 @@
           </router-link>
         </div>
         <div class="toolbarRight">
-          <!-- <ul>
+          <ul>
             <li>
               <el-autocomplete
               v-model="state"
@@ -50,7 +56,7 @@
             ></el-autocomplete>
             </li>
             <li><el-button type="info" @click="queryBtn">查询信息</el-button></li>
-          </ul> -->
+          </ul>
         </div>
       </div>
       <div class="schoolHomeCenter">
@@ -223,472 +229,324 @@
         }
     };
 </script>
-
-<<<<<<< HEAD
-<style conped>
-    .schoolHome {
-        margin: 0 auto;
-        width: 1200px;
-    }
-    /* bannenr */
-    
-    .homeBanner {
-        width: 100%;
-        height: 400px;
-    }
-    
-    .homeBanner img {
-        width: 100%;
-        height: 100%;
-    }
-    /* 导航搜索 */
-    
-    .homeToolbar {
-        margin-top: 20px;
-    }
-    
-    .toolbarLeft {
-        float: left;
-        background: #f8f8f8;
-    }
-    
-    .toolbarLeft ul {
-        width: 120px;
-        height: 120px;
-        border: 1px solid #ccc;
-        float: left;
-        border-radius: 5px;
-        margin: 30px;
-    }
-    
-    .toolbarLeft ul:hover {
-        box-shadow: 0 0 3px #999 inset;
-    }
-    
-    .toolbarLeft ul li:first-of-type {
-        height: 90px;
-        text-align: center;
-    }
-    
-    .toolbarLeft ul li:first-of-type i {
-        line-height: 90px;
-        text-align: center;
-        font-size: 50px;
-    }
-    
-    .toolbarLeft ul li:last-of-type {
-        text-align: center;
-    }
-    
-    .toolbarRight {
-        float: left;
-        width: 250px;
-        margin-left: 50px;
-        text-align: center;
-        background: #f8f8f8;
-    }
-    
-    .toolbarRight li:first-of-type {
-        margin-top: 10px;
-    }
-    
-    .toolbarRight li:last-of-type {
-        padding-bottom: 30px;
-    }
-    
-    .toolbarRight button.el-button.el-button--info,
-    .toolbarRight input {
-        width: 200px;
-        margin-top: 30px;
-    }
-    
-    .schoolHome {
-        margin: 0 auto;
-        width: 1200px;
-    }
-    /* bannenr */
-    
-    .homeBanner {
-        width: 100%;
-        /* height: 400px; */
-    }
-    
-    .homeBanner img {
-        width: 100%;
-        /* height: 50%; */
-    }
-    /* 导航搜索 */
-    
-    .homeToolbar {
-        margin-top: 20px;
-    }
-    
-    .toolbarLeft {
-        float: left;
-        background: #f8f8f8;
-    }
-    
-    .toolbarLeft ul {
-        width: 120px;
-        height: 120px;
-        border: 1px solid #ccc;
-        float: left;
-        border-radius: 5px;
-        margin: 30px;
-    }
-    
-    .toolbarLeft ul:hover {
-        box-shadow: 0 0 3px #999 inset;
-    }
-    
-    .toolbarLeft ul li:first-of-type {
-        height: 90px;
-        text-align: center;
-    }
-    
-    .toolbarLeft ul li:first-of-type i {
-        line-height: 90px;
-        text-align: center;
-        font-size: 50px;
-    }
-    
-    .toolbarLeft ul li:last-of-type {
-        text-align: center;
-    }
-    
-    .toolbarRight {
-        float: left;
-        width: 250px;
-        margin-left: 50px;
-        text-align: center;
-        background: #f8f8f8;
-    }
-    
-    .toolbarRight li:first-of-type {
-        margin-top: 10px;
-    }
-    
-    .toolbarRight li:last-of-type {
-        padding-bottom: 30px;
-    }
-    
-    .toolbarRight button.el-button.el-button--info,
-    .toolbarRight input {
-        width: 200px;
-        margin-top: 30px;
-    }
-    /* 学校列表 */
-    
-    .schoolHomeCenter {
-        margin-top: 20px;
-        margin-bottom: 20px;
-        /* border: 1px solid #cccccc; */
-        background: #f8f8f8;
-        overflow: hidden;
-    }
-    
-    .homeCenterToobar {
-        width: 95%;
-        margin: 30px auto 10px;
-        padding-bottom: 10px;
-        border-bottom: 1px solid #cccccc;
-        font-size: 24px;
-    }
-    
-    .homeCenterToobar p {
-        float: left;
-    }
-    
-    .homeCenterToobar p span {
-        margin: 0 10px;
-        color: #777;
-    }
-    
-    .homeCenterToobar p .btnpath {
-        color: rgb(33, 79, 137);
-        border-bottom: 3px solid;
-        padding-bottom: 15px;
-    }
-    
-    .homeCenterToobar p span:hover {
-        color: rgb(33, 79, 137);
-        cursor: pointer;
-    }
-    
-    .homeCenterToobar button.el-button.el-button--info {
-        float: right;
-    }
-    
-    .homeList {
-        width: 95%;
-        margin: 20px auto;
-        /* display: flex; */
-    }
-    
-    .homeList>div {
-        float: left;
-        border: 1px solid #cccccc;
-        width: 265px;
-        margin: 10px;
-        height: 100px;
-    }
-    
-    .homeList>div p {
-        float: left;
-        /* background: red; */
-        width: 70px;
-        height: 70px;
-        margin-left: 20px;
-        margin-top: 10px;
-    }
-    
-    .homeList>div p img {
-        width: 100%;
-        height: 100%;
-    }
-    
-    .homeList>div ul {
-        float: left;
-        margin-left: 15px;
-        margin-top: 15px;
-        line-height: 30px;
-    }
-    /* 学校列表 */
-    
-    .schoolHomeCenter {
-        margin-top: 20px;
-        margin-bottom: 20px;
-        /* border: 1px solid #cccccc; */
-        background: #f8f8f8;
-        overflow: hidden;
-    }
-    
-    .homeCenterToobar {
-        width: 95%;
-        margin: 20px auto 10px;
-        padding-bottom: 10px;
-        border-bottom: 1px solid #cccccc;
-        font-size: 24px;
-    }
-    
-    .homeCenterToobar p {
-        float: left;
-    }
-    
-    .homeCenterToobar p span {
-        padding: 0 10px;
-        color: #777;
-    }
-    
-    .homeCenterToobar p .btnpath {
-        color: red;
-    }
-    
-    .homeCenterToobar p span:hover {
-        color: red;
-        cursor: pointer;
-    }
-    
-    .homeCenterToobar button.el-button.el-button--info {
-        float: right;
-    }
-    
-    .homeList {
-        width: 95%;
-        margin: 20px auto;
-        /* display: flex; */
-    }
-    
-    .homeList>div {
-        float: left;
-        border: 1px solid #cccccc;
-        width: 265px;
-        margin: 10px;
-        height: 100px;
-    }
-    
-    .homeList>div p {
-        float: left;
-        /* background: red; */
-        width: 70px;
-        height: 70px;
-        margin-left: 20px;
-        margin-top: 10px;
-    }
-    
-    .homeList>div p img {
-        width: 100%;
-        height: 100%;
-    }
-    
-    .homeList>div ul {
-        float: left;
-        margin-left: 15px;
-        margin-top: 15px;
-        line-height: 30px;
-    }
-    /* 行业动态 */
-    
-    .homeInquiry {
-        background: #f8f8f8;
-        overflow: hidden;
-    }
-    
-    .homeInquiry h1 {
-        margin-left: 2.5%;
-        font-size: 32px;
-        margin-top: 25px;
-    }
-    
-    .homeInquiryBox {
-        margin-top: 10px;
-        margin-left: 50px;
-        margin-right: 30px;
-        margin-bottom: 30px;
-        /* border-bottom: 2px solid #cccccc; */
-    }
-    
-    .homeInquiryBox>div {
-        /* border: 1px solid #cccccc; */
-        width: 520px;
-        /* padding-left: 10px; */
-        /* height: 180px; */
-        /* margin-left: 30px; */
-        /* margin-top: 30px; */
-        /* margin-bottom: 30px; */
-    }
-    
-    .homeInquiryBox>div:last-of-type {
-        /* margin-left: 75px; */
-    }
-    
-    .homeInquiryBox p {
-        float: left;
-        /* width: 150px;
-    width: 180px; */
-        /* margin-left: 20px; */
-        margin-top: 20px;
-        margin-bottom: 20px;
-    }
-    
-    .homeInquiryBox p img {
-        width: 200px;
-        height: 100px;
-    }
-    
-    .homeInquiryBox ul {
-        float: left;
-        width: 290px;
-        margin-left: 20px;
-        margin-top: 20px;
-        line-height: 26px;
-    }
-    
-    .homeInquiryBox ul li:first-of-type {
-        font-size: 18px;
-    }
-    
-    .homeInquiryBox ul li:last-of-type {
-        color: #777;
-    }
-    
-    .homeInquiryLeft {
-        float: left;
-        margin-left: 30px;
-    }
-    /* 行业动态 */
-    
-    .homeInquiry {
-        background: #f8f8f8;
-        overflow: hidden;
-    }
-    
-    .homeInquiry h1 {
-        margin-left: 2.5%;
-        font-size: 32px;
-        margin-top: 25px;
-    }
-    
-    .homeInquiryBox {
-        margin-top: 10px;
-        margin-left: 0px;
-        margin-right: 30px;
-        margin-bottom: 30px;
-        /* border-bottom: 2px solid #cccccc; */
-    }
-    
-    .homeInquiryBox>div {
-        width: 555px;
-        /* background: #ccc; */
-    }
-    
-    .homeInquiryBox p {
-        float: left;
-        /* width: 150px;
-=======
+<style>
+  .homeBnnerSearch input.el-input__inner {
+    border: 1px solid #fff;
+  }
+</style>
 <style lang="less" scoped>
 @media screen and (min-width:1200px){
   .homeBanner {
-    background: url(../assets/banner.png) no-repeat;
+    background: url(../assets/bannerTwo.png) no-repeat;
     background-size: contain;
-    background-size: 100% 550px;
+    background-size: 100% 600px;
     width: 100%;
     height: 550px;
     overflow: hidden;
+    h1{
+      color: #fff;
+      font-size: 0.5rem;
+      text-align: center;
+      margin-top: 160px;
+      font-weight: bold;
+      span{
+        letter-spacing:7px;
+        margin-right: 5px;
+      }
+    }
+    h6{
+      font-size: 0.15rem;
+      color: #fff;
+      display: table;
+      margin: 20px auto 0;
+      span{
+        letter-spacing:2px;
+      }
+    }
+    i{
+      color: #e7b560;
+    }
   }
+  .homeBnnerSearch{
+    width: 35%;
+    margin: 20px auto 0px;
+    border-radius: 5px;
+    background: #fff;
+    li{
+      float: left;
+    }
+    li:first-of-type{
+      width: 90%;
+      .el-autocomplete {
+        width: 100%;
+      }
+    }
+    li:last-of-type{
+      width: 10%;
+      text-align: center;
+      i{
+        font-size: 20px;
+        margin-top: 10px;
+        color: #ccc;
+      }
+    }
+    li:last-of-type:hover i{
+          color: #409eff;
+    }
+  }
+
 }
 @media screen and (min-width:960px) and (max-width:1199px){
   .homeBanner {
-    background: url(../assets/banner.png) no-repeat;
-   background-size: contain;
+    background: url(../assets/bannerTwo.png) no-repeat;
+    background-size: contain;
     background-size: 100% 480px;
     width: 100%;
     height: 480px;
     overflow: hidden;
+    h1{
+      color: #fff;
+      font-size: 0.5rem;
+      text-align: center;
+      margin-top: 120px;
+      font-weight: bold;
+      span{
+        letter-spacing:7px;
+        margin-right: 5px;
+      }
+    }
+    h6{
+      font-size: 0.15rem;
+      color: #fff;
+      display: table;
+      margin: 20px auto 0;
+      span{
+        letter-spacing:2px;
+      }
+    }
+    i{
+      color: #e7b560;
+    }
+  }
+  .homeBnnerSearch{
+    width: 40%;
+    margin: 20px auto 0px;
+    border-radius: 5px;
+    background: #fff;
+    li{
+      float: left;
+    }
+    li:first-of-type{
+      width: 90%;
+      .el-autocomplete {
+        width: 100%;
+      }
+    }
+    li:last-of-type{
+      width: 10%;
+      text-align: center;
+      i{
+        font-size: 20px;
+        margin-top: 10px;
+        color: #ccc;
+      }
+    }
+    li:last-of-type:hover i{
+      color: #409eff;
+    }
   }
 }
 @media screen and (min-width:768px) and (max-width:959px){
   .homeBanner {
-    background: url(../assets/banner.png) no-repeat;
-   background-size: contain;
+    background: url(../assets/bannerTwo.png) no-repeat;
+    background-size: contain;
     background-size: 100% 390px;
     width: 100%;
     height: 390px;
     overflow: hidden;
+    h1{
+      color: #fff;
+      font-size: 0.4rem;
+      text-align: center;
+      margin-top: 100px;
+      font-weight: bold;
+      span{
+        letter-spacing:7px;
+        margin-right: 5px;
+      }
+    }
+    h6{
+      font-size: 0.15rem;
+      color: #fff;
+      display: table;
+      margin: 20px auto 0;
+      span{
+        letter-spacing:2px;
+      }
+    }
+    i{
+      color: #e7b560;
+    }
+  }
+  .homeBnnerSearch{
+    width: 40%;
+    margin: 20px auto 0px;
+    border-radius: 5px;
+    background: #fff;
+    li{
+      float: left;
+    }
+    li:first-of-type{
+      width: 85%;
+      .el-autocomplete {
+        width: 100%;
+      }
+    }
+    li:last-of-type{
+      width: 15%;
+      text-align: center;
+      i{
+        font-size: 20px;
+        margin-top: 10px;
+        color: #ccc;
+      }
+    }
+    li:last-of-type:hover i{
+          color: #409eff;
+    }
   }
 }
 @media screen and (min-width:480px) and (max-width:767px){
   .homeBanner {
-    background: url(../assets/banner.png) no-repeat;
-   background-size: contain;
+    background: url(../assets/bannerTwo.png) no-repeat;
+    background-size: contain;
     background-size: 100% 300px;
     width: 100%;
     height: 300px;
     overflow: hidden;
+    h1{
+      color: #fff;
+      font-size: 0.3rem;
+      text-align: center;
+      margin-top: 70px;
+      font-weight: bold;
+      span{
+        letter-spacing:7px;
+        margin-right: 5px;
+      }
+    }
+    h6{
+      font-size: 0.15rem;
+      color: #fff;
+      display: table;
+      margin: 20px auto 0;
+      span{
+        letter-spacing:2px;
+      }
+    }
+    i{
+      color: #e7b560;
+    }
+  }
+  .homeBnnerSearch{
+    width: 50%;
+    margin: 20px auto 0px;
+    border-radius: 5px;
+    background: #fff;
+    li{
+      float: left;
+    }
+    li:first-of-type{
+      width: 85%;
+      .el-autocomplete {
+        width: 100%;
+      }
+    }
+    li:last-of-type{
+      width: 15%;
+      text-align: center;
+      i{
+        font-size: 20px;
+        margin-top: 10px;
+        color: #ccc;
+      }
+    }
+    li:last-of-type:hover i{
+      color: #409eff;
+    }
   }
 }
 @media screen and (max-width:479px) {
   .homeBanner {
-    background: url(../assets/banner.png) no-repeat;
-   background-size: contain;
+    background: url(../assets/bannerTwo.png) no-repeat;
+    background-size: contain;
     background-size: 100% 200px;
     width: 100%;
     height: 200px;
     overflow: hidden;
+    h1{
+      color: #fff;
+      font-size: 0.3rem;
+      text-align: center;
+      margin-top: 50px;
+      font-weight: bold;
+      span{
+        letter-spacing:2px;
+        margin-right: 0px;
+      }
+    }
+    h6{
+      font-size: 0.01rem;
+      color: #fff;
+      display: table;
+      margin: 20px auto 0;
+      span{
+        // letter-spacing:2px;
+      }
+    }
+    i{
+      color: #e7b560;
+    }
+  }
+  .homeBnnerSearch{
+    width: 40%;
+    height: 40px;
+    margin: 20px auto 0px;
+    border-radius: 5px;
+    background: #fff;
+    .el-button--info{
+      width: 100%;
+    }
+    li{
+      float: left;
+    }
+    li:first-of-type{
+      width: 70%;
+      height: 20px;
+      .el-autocomplete {
+        width: 100%;
+      }
+
+    }
+    li:last-of-type{
+      width: 30%;
+      text-align: center;
+      i{
+        font-size: 20px;
+        margin-top: 10px;
+        color: #ccc;
+      }
+    }
+    li:last-of-type:hover i{
+      color: #409eff;
+    }
   }
 }
-
-
-
-
 .schoolHome {
   margin: 0 auto;
   width: 1200px;
 }
 /* bannenr */
-.homeBanner {
-
-}
 .homeBanner img {
   width: 100%;
   /* height: 100%; */
@@ -1011,18 +869,17 @@
 .homeInquiryBox p {
   float: left;
   /* width: 150px;
->>>>>>> 8dbf62e8de260a52f947e57c8f6d3a3ae4e67afa
     width: 180px; */
         /* margin-left: 20px; */
         margin-top: 20px;
         margin-bottom: 20px;
     }
-    
+
     .homeInquiryBox p img {
         width: 250px;
         height: 120px;
     }
-    
+
     .homeInquiryBox ul {
         float: left;
         width: 270px;
@@ -1030,15 +887,15 @@
         margin-top: 20px;
         line-height: 26px;
     }
-    
+
     .homeInquiryBox ul li:first-of-type {
         font-size: 18px;
     }
-    
+
     .homeInquiryBox ul li:last-of-type {
         color: #777;
     }
-    
+
     .homeInquiryLeft {
         float: left;
         margin-left: 30px;
