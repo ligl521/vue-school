@@ -1,7 +1,6 @@
 <template>
   <div>
     <div class="homeBanner">
-
       <h1><span>国际学校四库全</span>书</h1>
       <h6><i class="el-icon-caret-right"></i><span>新学说国际学校行业</span><i class="el-icon-caret-right"></i><span>掌握行业发展水准</span><i class="el-icon-caret-right"></i><span>了解自身成长阶段</span></h6>
       <!-- <img src="../assets/one.png" class="img-responsive" alt="Responsive image"> -->
@@ -12,6 +11,7 @@
           v-model="state"
           :fetch-suggestions="querySearchAsync"
           placeholder="请输入内容"
+          :trigger-on-focus="false"
           @select="handleSelect"
           @keyup.enter.native="queryBtn"
         ></el-autocomplete>
@@ -20,6 +20,7 @@
           <i class="el-icon-search" @click="queryBtn"></i>
         </li>
       </ul>
+      <p class="homeBannerP"><a href="http://data.xinxueshuo.cn/nsi/school/detail.html?School_name=100053&whereFrom=search">北京国际双语学校</a><a>北京京西学校</a><a>北京乐成国际学校</a><a>北京BISS国际学校</a><a>上海哈罗国际学校</a><br/><a>上海世界外国语学校</a><a>上海融育北美教育学校</a><a>成都美视国际学校</a><a>深圳国际交流学校</a></p>
     </div>
     <div class="schoolHome">
       <div class="homeToolbar clearfix">
@@ -51,6 +52,7 @@
               <el-autocomplete
               v-model="state"
               :fetch-suggestions="querySearchAsync"
+              :trigger-on-focus="false"
               placeholder="请输入内容"
               @select="handleSelect"
             ></el-autocomplete>
@@ -229,15 +231,11 @@
         }
     };
 </script>
-<<<<<<< HEAD
 <style>
   .homeBnnerSearch input.el-input__inner {
     border: 1px solid #fff;
   }
 </style>
-=======
-
->>>>>>> 4f51853c98e2c55e95e44678c963a58e7db86482
 <style lang="less" scoped>
 @media screen and (min-width:1200px){
   .homeBanner {
@@ -269,6 +267,17 @@
     }
     i{
       color: #e7b560;
+    }
+    .homeBannerP{
+      a{
+        color: #f0f0f0;
+        margin: 0 10px;
+        cursor:pointer;
+      }
+      display: table;
+      margin: 0 auto;
+      line-height: 25px;
+      margin-top: 15px;
     }
   }
   .homeBnnerSearch{
@@ -330,6 +339,16 @@
     }
     i{
       color: #e7b560;
+    }
+    .homeBannerP{
+      a{
+        color: #f0f0f0;
+        padding: 0 10px;
+      }
+      display: table;
+      margin: 0 auto;
+      line-height: 20px;
+      margin-top: 15px;
     }
   }
   .homeBnnerSearch{
@@ -708,30 +727,42 @@
   margin: 20px auto;
   /* display: flex; */
 }
-.homeList > div {
-  float: left;
-  border: 1px solid #cccccc;
-  width: 265px;
-  margin: 10px;
-  height: 100px;
-}
-.homeList > div p {
-  float: left;
-  /* background: red; */
-  width: 70px;
-  height: 70px;
-  margin-left: 20px;
-  margin-top: 10px;
-}
-.homeList > div p img {
-  width: 100%;
-  height: 100%;
-}
-.homeList > div ul {
-  float: left;
-  margin-left: 15px;
-  margin-top: 15px;
-  line-height: 30px;
+.homeList {
+  div{
+    float: left;
+    border: 1px solid #cccccc;
+    width: 265px;
+    margin: 10px;
+    height: 100px;
+    p{
+      float: left;
+      // background: red;
+      width: 100px;
+      height: 100px;
+      position: relative;
+      img{
+        width: 80%;
+        height: 80%;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+      }
+    }
+    ul {
+      float: left;
+      margin-left: 15px;
+      margin-top: 15px;
+      line-height: 30px;
+      li:first-of-type{
+        font-weight: 600;
+      }
+      li:nth-of-type(2){
+        color: #777;
+      }
+    }
+  }
+
 }
 
 /* 学校列表 */
@@ -766,36 +797,7 @@
 .homeCenterToobar button.el-button.el-button--info {
   float: right;
 }
-.homeList {
-  width: 95%;
-  margin: 20px auto;
-  /* display: flex; */
-}
-.homeList > div {
-  float: left;
-  border: 1px solid #cccccc;
-  width: 265px;
-  margin: 10px;
-  height: 100px;
-}
-.homeList > div p {
-  float: left;
-  /* background: red; */
-  width: 70px;
-  height: 70px;
-  margin-left: 20px;
-  margin-top: 10px;
-}
-.homeList > div p img {
-  width: 100%;
-  height: 100%;
-}
-.homeList > div ul {
-  float: left;
-  margin-left: 15px;
-  margin-top: 15px;
-  line-height: 30px;
-}
+
 
 /* 行业动态 */
 .homeInquiry {
