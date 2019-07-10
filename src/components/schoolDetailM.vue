@@ -1,32 +1,32 @@
 <template>
     <div class="schoolDetailM">
         <div class="bgImg">
-            <img :src="schoolDatil.schoolShowOne" alt="" class="img-responsive">
+            <img :src="schoolDetail.schoolShowOne" alt="" class="img-responsive">
             <!-- <div class="back"  @click="goBack">  
                 <a><i class="iconfont icon-arrow-left"></i></a>
             </div> -->  
             <div class="head">
                 <el-row>
                     <el-col :span="8">
-                            <img src="../assets/school.png">
+                            <img :src="schoolDetail.schoolLogo">
                     </el-col>
                     <el-col :span="16">
-                            <h3 style="margin-top:20px">{{schoolDatil.schoolName}}</h3>  
+                            <h3 style="margin-top:20px">{{schoolDetail.schoolName}}</h3>  
                     </el-col>
                     <el-col :span="16">
-                            <h5>{{schoolDatil.schoolEnglishName}}</h5>  
+                            <h5>{{schoolDetail.schoolEnglishName}}</h5>  
                     </el-col>
                 </el-row>
                 <div class="basicMessage">
                     <el-row>
                         <el-col :span="7">
-                            类型：{{schoolDatil.schoolProperties}}
+                            类型：{{schoolDetail.schoolProperties}}
                         </el-col>
                         <el-col :span="7">
-                            面积(亩)：{{schoolDatil.coveredArea}}
+                            面积(亩)：{{schoolDetail.coveredArea}}
                         </el-col>
                         <el-col :span="10">
-                            建校时间：{{schoolDatil.foundingTime}}
+                            建校时间：{{schoolDetail.foundingTime | isZero}}
                         </el-col>
                         <el-col :span="24">
                             课程：<span v-for="everyCourse of courseSplit" style="margin-right:5px;" :key="everyCourse">{{everyCourse}}</span>
@@ -35,16 +35,16 @@
                             学制：<span v-for="everyGrade of gradeSplit" class="grade" :key="everyGrade">{{everyGrade}}</span>
                         </el-col>
                         <el-col :span="24" class="fee">
-                            学费：<span>{{schoolDatil.oneTuition}}</span><span>{{schoolDatil.twoTuition}}</span><span>{{schoolDatil.thirdTuition}}</span><span>{{schoolDatil.fourTuition}}</span>
+                            学费：<span>{{schoolDetail.oneTuition | isZero}}</span><span>{{schoolDetail.twoTuition | isZero}}</span><span>{{schoolDetail.thirdTuition | isZero}}</span><span>{{schoolDetail.fourTuition | isZero}}</span>
+                        </el-col>
+                        <el-col :span="24" class="address">
+                            地址：<span>{{schoolDetail.province | isNull}}</span><span>{{schoolDetail.town | isNull}}</span><span>{{schoolDetail.address | isNull}}</span>
                         </el-col>
                         <el-col :span="24">
-                            地址：<span>{{schoolDatil.province}}</span><span>{{schoolDatil.town}}</span><span>{{schoolDatil.address}}</span>
+                            网址：<span @click="toWebsite(schoolDetail.website)">{{schoolDetail.website}}</span>
                         </el-col>
                         <el-col :span="24">
-                            网址：{{schoolDatil.website}}
-                        </el-col>
-                        <el-col :span="24">
-                            电话：{{schoolDatil.telephone}}
+                            电话：{{schoolDetail.telephone}}
                         </el-col>
                     </el-row>
                 </div>
@@ -60,113 +60,131 @@
             <div class="tab-content">
                 <div class="tab-pane active" id="summary">
                     <p class="titleM">学校简介</p>
-                    <p class="contentM">{{schoolDatil.remark}}</p>
+                    <div  ref="obj">
+                        <p :style="'height:'+activityBannerH+'px'" :class="shortContent?'show':'hide'" class="shortContent contentM">{{schoolDetail.schoolDesc}}</p>
+                        <p :class="longContent?'show':'hide'" class="longContent contentM">{{schoolDetail.schoolDesc}}</p>
+                        <span @click="lookMore" :class="more?'show':'hide'" class="contentM">【更多】</span>
+                    </div>
                     <p class="titleM">学校图片</p>
-                    <p class="contentM"><img :src="schoolDatil.schoolShowOne" alt="" class="img-responsive"></p>
-                    <p class="titleM">硬件设施</p>
-                    <p class="contentM">{{schoolDatil.hardware}}</p>
+                    <p class="contentM">
+                        <span>
+                            <div class="swiper-container">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide">
+                                        <img :src="schoolDetail.schoolShowOne" class="img-responsive">
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <img :src="schoolDetail.schoolShowTwo" class="img-responsive">
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <img :src="schoolDetail.schoolShowThird" class="img-responsive">
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <img :src="schoolDetail.schoolShowFour" class="img-responsive">
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <img :src="schoolDetail.schoolShowFive" class="img-responsive">
+                                    </div>
+                                </div>
+                                <!-- 如果需要分页器 -->
+                                <!-- <div class="swiper-pagination"></div> -->
+                                <!-- 如果需要导航按钮 -->
+                                <!-- <div class="swiper-button-prev"></div> -->
+                                <!-- <div class="swiper-button-next"></div> -->
+                            </div>
+                        </span>
+                    </p>
+                    <p class="titleM"  :class="Ishardware?'show':'hide'">硬件设施</p>
+                    <p class="contentM">{{schoolDetail.hardware | isNull}}</p>
                 </div>
                 <div class="tab-pane" id="concept">
                     <p class="titleM">办学理念</p>
                     <p class="contentM">北京世青国际学校致力于将批判性研究、多远文化视角及客观评价标准紧密结合，努力为我校的每一个学生提供良好的学习机会。我们的使命在于培养原则性强，胸襟开阔的思考者，使他们能够适应多元化的国际社会，有能力改善自己的生活环境，提高自己和他人的生活质量。</p>
-                    <p class="titleM">办学特色</p>
+                    <p class="titleM"  :class="Isfeature?'show':'hide'">办学特色</p>
                     <p class="contentM">
                         <el-row style="text-align:center;margin:20px 0">
                             <el-col :span="12">
-                                <img src="../assets/one.png" alt="" class="img-responsive" style="height:110px">
+                                <img :src="featureList1.cron1" alt="" class="img-responsive" style="height:110px">
                             </el-col>
-                            <el-col :span="12" style="font-weight:bold;">多元文化的融合</el-col>
-                            <el-col :span="12">配合北京市继续开展优质高中部分招生计划分配到初中校工作</el-col>
+                            <el-col :span="12" style="font-weight:bold;">{{featureList1.title1}}</el-col>
+                            <el-col :span="12">{{featureList1.desc}}</el-col>
                         </el-row>
                         <el-row style="text-align:center;margin:20px 0">
                             <el-col :span="12">
-                                <img src="../assets/one.png" alt="" class="img-responsive" style="height:110px">
+                               <img :src="featureList2.cron1" alt="" class="img-responsive">
                             </el-col>
-                            <el-col :span="12" style="font-weight:bold;">多元文化的融合</el-col>
-                            <el-col :span="12">配合北京市继续开展优质高中部分招生计划分配到初中校工作</el-col>
+                            <el-col :span="12" style="font-weight:bold;">{{featureList2.title1}}</el-col>
+                            <el-col :span="12">{{featureList2.desc}}</el-col>
                         </el-row>
                         <el-row style="text-align:center;margin:20px 0">
                             <el-col :span="12">
-                                <img src="../assets/one.png" alt="" class="img-responsive" style="height:110px">
+                                <img :src="featureList3.cron1" alt="" class="img-responsive">
                             </el-col>
-                            <el-col :span="12" style="font-weight:bold;">多元文化的融合</el-col>
-                            <el-col :span="12">配合北京市继续开展优质高中部分招生计划分配到初中校工作</el-col>
+                            <el-col :span="12" style="font-weight:bold;">{{featureList3.title1}}</el-col>
+                            <el-col :span="12">{{featureList3.desc}}</el-col>
                         </el-row>
                     </p>
                 </div>
                 <div class="tab-pane" id="system">
                     <p class="titleM">课程体系</p>
-                    <p class="contentM">IB 课程分为标准难度课程 （SL/ Standard Level） 和更具挑战性的高难度课程 （HL/HigherLevel）。IB 要求学生至少选六门课 ＋ Theory of Knowledge。</p>
-                    <p class="contentM">A-Level课程证书被几乎所有英语授课的大学作为招收新生的入学标准。 在中国开设A-Level课程旨在为中国学生提供进入国外大学的有效途径，具体目标为：培养在国内初高中成绩优秀的学生进入世界顶尖大学；。</p>
-                    <p class="contentM">IBDP课程是国际文凭组织（IBO）在综合各国课程优势的基础上，为具有较强学习动机的16~19岁学生设计的。</p>
+                    <p class="contentM">{{schoolDetail.courseSystem}}</p>
                     <p class="titleM">师资队伍</p>
                     <el-row style="text-align:center;margin:20px 0">
                         <el-col :span="12">
                             <p><i class="iconfont icon-jixinrenshu"></i></p>
-                            <p class="number">{{schoolDatil.students}}</p>
+                            <p class="number">{{schoolDetail.students}}</p>
                             <p class="title">学生数量</p>
                         </el-col>
                         <el-col :span="12">
                             <p><i class="iconfont icon-renshutongji"></i></p>
-                            <p class="number">{{schoolDatil.teacherNum}}</p>
+                            <p class="number">{{schoolDetail.teacherNum}}</p>
                             <p class="title">教师数量</p></el-col>
                         <el-col :span="12" style="margin-top:30px;">
                             <p><i class="iconfont icon-guojia"></i></p>
-                            <p class="number">25个国家</p>
+                            <p class="number">{{schoolDetail.nationalityOfStudents}}个国家</p>
                             <p class="title">学生国籍</p>
                         </el-col>
                         <el-col :span="12" style="margin-top:30px;">
                             <p><i class="iconfont icon-fenchengbili"></i></p>
-                            <p class="number">{{schoolDatil.teacherStuRatio}}</p>
+                            <p class="number">{{schoolDetail.teacherStuRatio}}</p>
                             <p class="title">师生比</p>
                         </el-col>
                     </el-row>
                 </div>
                 <div class="tab-pane" id="admission">
-                    <p class="titleM">招生信息</p>
+                    <p class="titleM" :class="Isadmission?'show':'hide'">招生信息</p>
                     <p class="contentM">
                         <span class="gradeBox">
-                            国际高中
+                            <p>国际高中</p>
                             <el-row>
-                                <el-col :span="12">招生对象：同步过来</el-col>
-                                <el-col :span="12">授课形式：面授</el-col>
-                                <el-col :span="12">入学要求：测试+面试</el-col>
-                                <el-col :span="12">班级规模：20-30人</el-col>
-                                <el-col :span="12">入学考试：数学 英语</el-col>
-                                <el-col :span="12">是否住宿：是</el-col>
+                                <el-col :span="12">招生对象：{{admissionList1.target}}</el-col>
+                                <el-col :span="12">授课形式：{{admissionList1.from}}</el-col>
+                                <el-col :span="12">入学要求：{{admissionList1.require}}</el-col>
+                                <el-col :span="12">班级规模：{{admissionList1.scale}}</el-col>
+                                <el-col :span="12">入学考试：{{admissionList1.exam}}</el-col>
+                                <el-col :span="12">是否住宿：{{admissionList1.stay}}</el-col>
                             </el-row>
                         </span>
                         <span class="gradeBox">
-                            国际初中
+                            <p>国际初中</p>
                             <el-row>
-                                <el-col :span="12">招生对象：同步过来</el-col>
-                                <el-col :span="12">授课形式：面授</el-col>
-                                <el-col :span="12">入学要求：测试+面试</el-col>
-                                <el-col :span="12">班级规模：20-30人</el-col>
-                                <el-col :span="12">入学考试：数学 英语</el-col>
-                                <el-col :span="12">是否住宿：是</el-col>
+                                <el-col :span="12">招生对象：{{admissionList3.target}}</el-col>
+                                <el-col :span="12">授课形式：{{admissionList3.from}}</el-col>
+                                <el-col :span="12">入学要求：{{admissionList3.require}}</el-col>
+                                <el-col :span="12">班级规模：{{admissionList3.scale}}</el-col>
+                                <el-col :span="12">入学考试：{{admissionList3.exam}}</el-col>
+                                <el-col :span="12">是否住宿：{{admissionList3.stay}}</el-col>
                             </el-row>
                         </span>
                         <span class="gradeBox">
-                            国际小学
+                            <p>国际小学</p>
                             <el-row>
-                                <el-col :span="12">招生对象：同步过来</el-col>
-                                <el-col :span="12">授课形式：面授</el-col>
-                                <el-col :span="12">入学要求：测试+面试</el-col>
-                                <el-col :span="12">班级规模：20-30人</el-col>
-                                <el-col :span="12">入学考试：数学 英语</el-col>
-                                <el-col :span="12">是否住宿：是</el-col>
-                            </el-row>
-                        </span>
-                        <span class="gradeBox">
-                            国际幼儿园
-                            <el-row>
-                                <el-col :span="12">招生对象：同步过来</el-col>
-                                <el-col :span="12">授课形式：面授</el-col>
-                                <el-col :span="12">入学要求：测试+面试</el-col>
-                                <el-col :span="12">班级规模：20-30人</el-col>
-                                <el-col :span="12">入学考试：数学 英语</el-col>
-                                <el-col :span="12">是否住宿：是</el-col>
+                                <el-col :span="12">招生对象：{{admissionList2.target}}</el-col>
+                                <el-col :span="12">授课形式：{{admissionList2.from}}</el-col>
+                                <el-col :span="12">入学要求：{{admissionList2.require}}</el-col>
+                                <el-col :span="12">班级规模：{{admissionList2.scale}}</el-col>
+                                <el-col :span="12">入学考试：{{admissionList2.exam}}</el-col>
+                                <el-col :span="12">是否住宿：{{admissionList2.stay}}</el-col>
                             </el-row>
                         </span>
                     </p>
@@ -196,7 +214,7 @@
                         </el-row>
                     </p>
                     <p class="titleM">新学说分析</p>
-                    <p class="contentM">北京世青国际学校致力于将批判性研究、多远文化视角及客观评价标准紧密结合，努力为我校的每一个学生提供良好的学习机会。</p>
+                    <p class="contentM">{{schoolDetail.companyAnalysis}}</p>
                 </div>
             </div>
         </div>
@@ -210,29 +228,127 @@
 </template>
 
 <script>
+import Swiper from "swiper";
+import "swiper/dist/css/swiper.min.css";
 export default {
     props: ['childObject'],
     data(){
      return{
-        schoolDatil: [],
+        schoolDetail: [],
+        more: false,
+        longContent: false,
+        shortContent: true,
+        activityBannerH: "",
         gradeSplit: [],
         courseSplit: [],
+        Ishardware:true,
+        Isfeature:true,
+        featureList1:{},
+        featureList2:{},
+        featureList3:{},
+        Isadmission:true,
+        admissionList1:{},
+        admissionList2:{},
+        admissionList3:{},
      }
+    },
+    filters:{
+        // 模块
+        isNull(obj){
+            if(obj == "0"){
+                return ''
+            }else{
+                return obj
+            }
+        },
+        // 基本内容
+        isZero(msg){
+            if(msg == "0"){
+                return '暂无'
+            }else{
+                return msg
+            }
+        },
     },
     methods:{
         goBack(){
             window.history.go(-1);
-		},
+        },
+        judgeIsNull(){
+            // 判断数据是否为空
+            if(this.schoolDetail.hardware=="0"){
+                this.Ishardware=false
+            }else{
+                this.Ishardware=true
+            }
+        },
+         // swiper banner轮播
+        swiperInit(){
+            var mySwiper = new Swiper('.swiper-container',{
+                autoplay: {
+                    delay:3000,
+                    disableOnInteraction: false,
+                },
+                loop: true,
+                observer:true,
+            })
+        },
+         // 点击跳转到学校网站
+        toWebsite(web){
+            window.open(web,"_blank")
+        },
+        // 点击展开更多
+        lookMore() {
+            this.more = false;
+            this.longContent = true;
+            this.shortContent = false;
+        }
     },
     created(){
-        this.schoolDatil=this.childObject.data;
-         // 年级分割
+        this.schoolDetail=this.childObject.data;
+        // 办学特色
+        if(this.schoolDetail.characteristicsVo==null){
+            this.Isfeature=false
+        }else{
+            this.featureList1=this.schoolDetail.characteristicsVo.one
+            this.featureList2=this.schoolDetail.characteristicsVo.two
+            this.featureList3=this.schoolDetail.characteristicsVo.three
+        }
+        // 招生信息
+        if(this.schoolDetail.enrollmentVo==null){
+            this.Isadmission=false
+        }else{
+            this.admissionList1=this.schoolDetail.enrollmentVo.highSchool
+            this.admissionList2=this.schoolDetail.enrollmentVo.primarySchool
+            this.admissionList3=this.schoolDetail.enrollmentVo.university
+        }
+        // 年级分割
         var grade = this.childObject.data.schoolSystem;
-        this.gradeSplit = grade.split(";");
+        if (grade.indexOf("；") != -1) { 
+            this.gradeSplit = grade.split("；");
+        }else{
+            this.gradeSplit = grade.split(";");
+        }
         // 课程分割
         var course =this.childObject.data.course;
-        this.courseSplit = course.split(";");
+        if (course.indexOf("；") != -1) { 
+            this.courseSplit = course.split("；");
+        }else{
+            this.courseSplit = course.split(";");
+        }
+       
+        
     },
+    mounted(){
+        this.swiperInit()
+        this.judgeIsNull()
+        if (this.$refs.obj.offsetHeight > 150) {
+            this.more = true;
+            this.activityBannerH=150
+        }else{
+            this.more = false;
+        }
+    }
 }
 </script>
 
@@ -285,6 +401,10 @@ export default {
         display: inline-block;
         text-align: center;
     }
+    .address span:last-of-type{
+        margin-left:10px;
+        display:inline-block;
+    }
     
     .head .el-col {
         margin: 5px 0
@@ -320,6 +440,16 @@ export default {
         line-height: 22px;
         padding: 0 20px;
     }
+    .shortContent {
+        overflow: hidden;
+    }
+    span.contentM{
+        color: #214f89;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        padding: 8px 13px;
+    }
     
     #system p i {
         font-size: 50px;
@@ -332,6 +462,15 @@ export default {
     .gradeBox{
         margin: 10px 0;
         display: inline-block;
+        box-shadow: 0px 0px 15px #ccc;
+        padding: 10px 20px;
+        line-height: 24px;
+    }
+    .gradeBox p{
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 5px;
+        letter-spacing: 2px;
     }
 
     .citySchoolBox{
