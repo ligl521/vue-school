@@ -58,15 +58,15 @@
             <el-form-item style="margin-bottom:0">
               <span>
                 <el-button type="text">
-                  <a class="a_color" href>注册账号</a>
+                  <a class="a_color" href="javascript:;">注册账号</a>
                 </el-button>
                 <!-- 注册账号 -->
                 <el-button type="text">
-                  <a class="a_color" href>忘记密码</a>
+                  <a class="a_color" href="javascript:;">忘记密码</a>
                 </el-button>
                 <!-- 忘记密码 -->
                 <el-button type="text">
-                  <a class="a_color" href>遇到问题</a>
+                  <a class="a_color" href="javascript:;">遇到问题</a>
                 </el-button>
                 <!--遇到问题 -->
               </span>
