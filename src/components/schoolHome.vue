@@ -23,6 +23,8 @@
       <p class="homeBannerP"><a href="http://data.xinxueshuo.cn/nsi/school/detail.html?School_name=100053&whereFrom=search">北京国际双语学校</a><a>北京京西学校</a><a>北京乐成国际学校</a><a>北京BISS国际学校</a><a>上海哈罗国际学校</a><br/><a>上海世界外国语学校</a><a>上海融育北美教育学校</a><a>成都美视国际学校</a><a>深圳国际交流学校</a></p>
     </div>
     <div class="schoolHome">
+
+      <!-- 首页导航 -->
       <div class="homeToolbar clearfix">
         <div class="toolbarLeft clearfix">
           <router-link tag="ul" to="/">
@@ -61,6 +63,8 @@
           </ul>
         </div>
       </div>
+
+      <!-- 城市切换 -->
       <div class="schoolHomeCenter">
         <div class="homeCenterToobar clearfix">
          <p><span  v-for="(v,i) in arr" :key="i" @click="son(v,i)" :class="i==index?'btnpath':''">{{v}}</span></p>
@@ -73,19 +77,21 @@
               <img v-if="v.schoolLogo? false:true" :src="schoolLogoUrlTwo">
             </p>
             <ul>
-              <li>{{v.schoolName | ellipsisName}}</li>
+              <li><a href="http://localhost:8080/#/schoolDetail02?id=101371" target="_blank">{{v.schoolName | ellipsisName}}</a></li>
               <li>课程：美国课程</li>
             </ul>
           </div>
         </div>
       </div>
+
+      <!-- 行业动态 -->
       <div class="homeInquiry">
         <h1>行业动态</h1>
         <div class="homeInquiryBox clearfix">
           <div class="homeInquiryLeft" v-for="(v,i) in schoolInquiruList" :key="i">
             <p><img :src="v.coverImage"></p>
             <ul>
-              <li><a :href="v.articleUrl" target="_blank">{{v.title}}</a></li>
+              <li><a :href="v.articleUrl" target="_blank">{{v.title | ellschoolHomeTitle}}</a></li>
               <li>{{v.summary}}</li>
               <!-- <li v-html="v.articleContent"></li> -->
             </ul>
@@ -203,14 +209,14 @@
                 this.getData();
             },
             //点击学校进入详情页
-            homeListBtn(id) {
-                this.$router.push({
-                    path: "./schoolDetail02",
-                    query: {
-                        id: id
-                    }
-                });
-            }
+            // homeListBtn(id) {
+            //     this.$router.push({
+            //         path: "./schoolDetail02",
+            //         query: {
+            //             id: id
+            //         }
+            //     });
+            // }
         },
         mounted() {
             this.getData();
@@ -220,14 +226,21 @@
         },
         //学校过滤超出显示...
         filters: {
-            ellipsisName(value) {
-                if (!value) return "";
-                if (value.length > 7) {
-                    return value.slice(0, 9) + "...";
-                }
-                return value;
+          ellipsisName(value) {
+              if (!value) return "";
+              if (value.length > 7) {
+                  return value.slice(0, 9) + "...";
+              }
+              return value;
+          },
+          //行业动态过滤
+          ellschoolHomeTitle(value){
+            if(!value) return "";
+            if(value.length >28){
+              return value.slice(0,28) + "...";
             }
-
+            return value;
+          }
         }
     };
 </script>
