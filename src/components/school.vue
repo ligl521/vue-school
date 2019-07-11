@@ -40,7 +40,7 @@
         <el-col :xs="12" :sm="6" :md="6" :lg="4" :xl="3" v-for="(item,index) in schoolLists" :key="index">
             <div class="grid-content bg-purple">
               <div class="logoimg" v-if="item.schoolLogo? true:false">
-                <img :src="schoolLogoUrlOne+item.schoolLogo" />
+                <img :src="item.schoolLogo" />
               </div>
               <div class="logoimg" v-if="item.schoolLogo? false:true">
                 <img :src="schoolLogoUrlTwo" />
@@ -59,7 +59,7 @@
     <!-- 学校展示列表two -->
     <div class="schoolDetailTwo" v-if="!schoolDetail">
       <div class="detailBox" v-for="(item,i) in schoolLists" :key="i">
-        <div class="DeatailTwoLeft"><img :src='item.schoolLogo?schoolLogoUrlOne+item.schoolLogo:"http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png"' /></div>
+        <div class="DeatailTwoLeft"><img :src='item.schoolLogo?item.schoolLogo:"http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png"' /></div>
         <div class="DeatailTwoCenter" id="DeatailTwoCenterId">
           <ul>
             <li>{{item.schoolName}}</li>
@@ -349,7 +349,6 @@ export default {
   box-shadow: 0px 0px 15px #ccc;
 }
 .grid-content ul {
-  margin-top: 10px;
   margin-bottom: 20px;
   line-height: 30px;
   color: #777;

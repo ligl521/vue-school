@@ -49,18 +49,7 @@
           </router-link>
         </div>
         <div class="toolbarRight">
-          <ul>
-            <li>
-              <el-autocomplete
-              v-model="state"
-              :fetch-suggestions="querySearchAsync"
-              :trigger-on-focus="false"
-              placeholder="请输入内容"
-              @select="handleSelect"
-            ></el-autocomplete>
-            </li>
-            <li><el-button type="info" @click="queryBtn">查询信息</el-button></li>
-          </ul>
+          <img src="https://nsi.oss-cn-zhangjiakou.aliyuncs.com/nsi-pc/miniProgram.jpg">
         </div>
       </div>
 
@@ -73,7 +62,7 @@
         <div class="homeList clearfix">
           <div v-for="(v,i) in schoolLists" :key="i" @click="homeListBtn(v.id)" >
             <p>
-              <img v-if="v.schoolLogo? true:false" :src="v.coverImage">
+              <img v-if="v.schoolLogo? true:false" :src="v.schoolLogo">
               <img v-if="v.schoolLogo? false:true" :src="schoolLogoUrlTwo">
             </p>
             <ul>
@@ -202,9 +191,9 @@
             },
             //城市切换按钮
             son(v, i) {
-                console.log(v);
+                console.log(i,v);
                 this.index = i;
-                this.SchoolCitypageNum = i + 1;
+                this.SchoolCitypageNum = 1;
                 this.SchoolCitySearchKey = v;
                 this.getData();
             },
@@ -622,9 +611,14 @@
 .toolbarRight {
   float: left;
   width: 250px;
+  height: 180px;
   margin-left: 50px;
   text-align: center;
-  background: #fafafa;
+  // background: #fafafa;
+  img{
+    // width: 100%;
+    height: 100%;
+  }
 }
 .toolbarRight li:first-of-type {
   margin-top: 10px;
@@ -651,90 +645,6 @@
   /* height: 50%; */
 }
 
-/* 导航搜索 */
-.homeToolbar {
-  margin-top: 20px;
-}
-.toolbarLeft {
-  float: left;
-  background: #fafafa;
-}
-.toolbarLeft ul {
-  width: 120px;
-  height: 120px;
-  border: 1px solid #ccc;
-  float: left;
-  border-radius: 5px;
-  margin: 30px;
-}
-.toolbarLeft ul:hover {
-  box-shadow: 0 0 3px #999 inset;
-}
-.toolbarLeft ul li:first-of-type {
-  height: 90px;
-  text-align: center;
-}
-.toolbarLeft ul li:first-of-type i {
-  line-height: 90px;
-  text-align: center;
-  font-size: 50px;
-}
-.toolbarLeft ul li:last-of-type {
-  text-align: center;
-}
-.toolbarRight {
-  float: left;
-  width: 250px;
-  margin-left: 50px;
-  text-align: center;
-  background: #fafafa;
-}
-.toolbarRight li:first-of-type {
-  margin-top: 10px;
-}
-.toolbarRight li:last-of-type {
-  padding-bottom: 30px;
-}
-.toolbarRight button.el-button.el-button--info,
-.toolbarRight input {
-  width: 200px;
-  margin-top: 30px;
-}
-
-/* 学校列表 */
-.schoolHomeCenter {
-  margin-top: 20px;
-  margin-bottom: 20px;
-  /* border: 1px solid #cccccc; */
-  background: #fafafa;
-  overflow: hidden;
-}
-.homeCenterToobar {
-  width: 95%;
-  margin: 30px auto 10px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #cccccc;
-  font-size: 24px;
-}
-.homeCenterToobar p {
-  float: left;
-}
-.homeCenterToobar p span {
-  margin: 0 10px;
-  color: #777;
-}
-.homeCenterToobar p .btnpath {
-  color: rgb(33, 79, 137);
-  border-bottom: 3px solid;
-  padding-bottom: 15px;
-}
-.homeCenterToobar p span:hover {
-  color: rgb(33, 79, 137);
-  cursor: pointer;
-}
-.homeCenterToobar button.el-button.el-button--info {
-  float: right;
-}
 .homeList {
   width: 95%;
   margin: 20px auto;
@@ -788,7 +698,7 @@
 }
 .homeCenterToobar {
   width: 95%;
-  margin: 20px auto 10px;
+  margin: 35px auto 10px;
   padding-bottom: 10px;
   border-bottom: 1px solid #cccccc;
   font-size: 24px;
@@ -802,6 +712,8 @@
 }
 .homeCenterToobar p .btnpath {
   color: red;
+  padding-bottom: 15px;
+  border-bottom: 2px solid red;
 }
 .homeCenterToobar p span:hover {
   color: red;
@@ -809,6 +721,7 @@
 }
 .homeCenterToobar button.el-button.el-button--info {
   float: right;
+  margin-top: -8px;
 }
 
 
