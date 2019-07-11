@@ -20,18 +20,21 @@
     </el-menu>
     <el-dialog
       :visible.sync="dialogVisible"
-      width="17%"
+      width="18%"
       center
+      :modal="true"
       :modal-append-to-body="true"
       :append-to-body="true"
+      :close-on-press-escape="false"
+      :lock-scroll="true"
     >
       <el-tabs stretch v-model="activeName" @tab-click="handleClick">
         <!-- 二维码登录 -->
         <el-tab-pane label="扫码登录" name="first">
-          <span>
+          <div class="img_code">
             <img id="qr_code" src />
-            <p class="span_text"></p>
-          </span>
+          </div>
+          <p class="span_text">请使用微信扫码登录</p>
         </el-tab-pane>
         <!-- 账号密码登录 -->
         <el-tab-pane label="账号密码" name="second">
@@ -51,12 +54,20 @@
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="send_msg('ruleForm')">登录</el-button>
+            </el-form-item>
+            <el-form-item style="margin-bottom:0">
               <span>
-                <el-button type="text">注册账号</el-button>
+                <el-button type="text">
+                  <a class="a_color" href>注册账号</a>
+                </el-button>
                 <!-- 注册账号 -->
-                <el-button type="text">忘记密码</el-button>
+                <el-button type="text">
+                  <a class="a_color" href>忘记密码</a>
+                </el-button>
                 <!-- 忘记密码 -->
-                <el-button type="text">遇到问题?</el-button>
+                <el-button type="text">
+                  <a class="a_color" href>遇到问题</a>
+                </el-button>
                 <!--遇到问题 -->
               </span>
             </el-form-item>
@@ -132,6 +143,7 @@ export default {
     },
     //获取后台给的二维码
     get_msg() {
+      $("body").css("overflow-y", " hidden !important");
       let that = this;
       axios({
         method: "post",
@@ -172,7 +184,7 @@ export default {
               console.log(response.data.data.headimgurl); //用户头像
               that.OpenId = response.data.data.openid; //用户微信ID
               console.log(that.OpenId + "用户微信ID");
-              that.user_cx()
+              that.user_cx();
             }
           })
           .catch(function(error) {
@@ -223,7 +235,13 @@ export default {
   width: 100%;
   z-index: 999;
 }
-
+.img_code {
+  border: 1px solid #ddd;
+  width: 210px;
+  height: 210px;
+  margin: 10px auto 20px;
+  padding: 10px;
+}
 .el-dialog--center .el-dialog__body {
   padding-top: 40px;
   padding-left: 30px;
@@ -237,21 +255,24 @@ export default {
   padding: 0%;
 }
 #qr_code {
-  display: center;
-  margin-left: 12px;
-  margin-bottom: 36px;
-  height: 200px;
-  width: 200px;
-  margin-top: 15px;
+  display: block;
+  height: 100%;
+  width: 100%;
 }
+.span_text {
+  text-align: center;
+  font-size: 14px;
+}
+
 .el-button {
   margin: 5px auto;
 }
 .el-button--primary {
-  padding: 8px 87px;
+  width: 100%;
 }
 #pane-first {
-  display: flex;
+  width: 100%;
+  height: 100%;
 }
 #el-form-item__lable {
   float: left;
@@ -272,10 +293,6 @@ export default {
   padding: 0 12px 0 0;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-}
-form {
-  display: block;
-  margin: 10px;
 }
 .el-dialog--center {
   border-radius: 15px;
@@ -306,9 +323,7 @@ form {
 .el-input__inner {
   margin-bottom: 20px;
 }
-.el-input {
-  width: 200px;
-}
+
 .el-button--text {
   color: rgb(169, 169, 169);
   background: 0 0;
@@ -320,7 +335,13 @@ form {
   width: 320px;
   height: 350px;
 }
-
+.a_color {
+  color: rgb(46, 130, 255);
+  text-decoration: none;
+}
+.a_color:hover {
+  color: rgb(136, 173, 230);
+}
 .el-menu.el-menu--horizontal {
   background: rgb(33, 80, 137);
 }
