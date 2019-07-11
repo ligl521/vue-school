@@ -33,63 +33,47 @@
         </span>
       </p>
     </div>
-    <!-- 学校展示列表 -->
+    <!-- 学校展示列表one -->
     <div class="schoolDetail" v-if="schoolDetail">
       <span id="search_res">{{this.no_school}}</span>
       <el-row :gutter="50" type="flex" style="flex-wrap:wrap">
-        <el-col
-          :xs="12"
-          :sm="6"
-          :md="6"
-          :lg="4"
-          :xl="3"
-          v-for="(item,index) in schoolLists"
-          :key="index"
-        >
-          <div
-            class="grid-content bg-purple"
-            @mousedown="mousedownH($event)"
-            @mouseup="mouseupH($event,item)"
-          >
-            <div class="logoimg" v-if="item.schoolLogo? true:false">
-              <img :src="schoolLogoUrlOne+item.schoolLogo" />
+        <el-col :xs="12" :sm="6" :md="6" :lg="4" :xl="3" v-for="(item,index) in schoolLists" :key="index">
+            <div class="grid-content bg-purple">
+              <div class="logoimg" v-if="item.schoolLogo? true:false">
+                <img :src="schoolLogoUrlOne+item.schoolLogo" />
+              </div>
+              <div class="logoimg" v-if="item.schoolLogo? false:true">
+                <img :src="schoolLogoUrlTwo" />
+              </div>
+              <ul>
+                <!-- http://localhost:8080/#/schoolDetail02?id=101370 -->
+                <li class="schoolName"> <a href="/#/schoolDetail02?id=101370">{{item.schoolName | ellipsisName}} </a></li>
+                <!-- <li class="schoolName"> <a href="http://localhost:8080/#/schoolDetail02?id=101370">{{item.schoolName | ellipsisName}} </a></li> -->
+                <li>学制：<span v-for="(v,i) in item.schoolSystem" :key="i">{{v}},</span></li>
+                <li>课程：AP:美国课程</li>
+              </ul>
             </div>
-            <div class="logoimg" v-if="item.schoolLogo? false:true">
-              <img :src="schoolLogoUrlTwo" />
-            </div>
-            <ul>
-              <li class="schoolName">{{item.schoolName | ellipsisName}}</li>
-              <li>学制：{{item.schoolSystem}}</li>
-              <li>课程：AP:美国课程</li>
-            </ul>
-          </div>
         </el-col>
       </el-row>
     </div>
     <!-- 学校展示列表two -->
     <div class="schoolDetailTwo" v-if="!schoolDetail">
       <div class="detailBox" v-for="(item,i) in schoolLists" :key="i">
-        <div class="detailTwomix">
-          <div class="detailLogo">
-            <img :src='item.schoolLogo?item.schoolLogo:"http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png"' />
-          </div>
-          <div class="datailMinRight">
-            <p class="datailstP">{{item.schoolName}}</p>
-            <ul>
-              <li>
-                <p>机构学制</p>
-                <p>成立时间</p>
-                <p>学校类型</p>
-              </li>
-              <li>
-                <p>小初稿</p>
-                <p>2014-02-03</p>
-                <p>民办</p>
-              </li>
-            </ul>
-          </div>
+        <div class="DeatailTwoLeft"><img :src='item.schoolLogo?schoolLogoUrlOne+item.schoolLogo:"http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png"' /></div>
+        <div class="DeatailTwoCenter" id="DeatailTwoCenterId">
+          <ul>
+            <li>{{item.schoolName}}</li>
+            <li>{{item.schoolEnglishname | ellipsisSchoolNameTwo}}</li>
+            <li>类型：<span>{{item.schoolProperties}}</span><p>学制：<span v-for="(v,i) in item.schoolSystem" :key="i">{{v}}</span></p></li>
+          </ul>
         </div>
-        <p class="detailaAddress">{{item.areas+item.areas02+item.areas03}}</p>
+        <div class="DeatailTwoRight">
+          <ul>
+            <li>认证：IBO CIE</li>
+            <li>建校时间：{{item.loadTime}}</li>
+            <li>{{item.areas03 | ellipsisAddress}}</li>
+          </ul>
+        </div>
       </div>
     </div>
     <div class="block">
@@ -122,7 +106,7 @@ export default {
       input: "",
       schoolLists: [],
       currentPage: 1,
-      pageSize: 12,
+      pageSize: 24,
       pageNum: 1,
       total_school: 0,
       no_school: "",
@@ -142,22 +126,7 @@ export default {
   },
   created() {
     this.input = this.$route.query.item;
-    //  console.log()
-    //   sessionStorage.setItem('inpVal',this.input);
-    //  if(typeof(this.input) == undefined){
-    //    sessionStorage.getItem('iptVal');
-    //  }
     this.handleSelect();
-    // that.input = sessionStorage.getItem("input");
-    // alert("that.$route.params.item.value"+that.$route.params.item.value)
-    // if (that.$route.params.item.value != zundefined) {
-    //   alert("undefined!")
-    // }else{
-    //   alert("no undefined!")
-    // }
-    // if (that.$route.params.item.value) {
-    //   sessionStorage.setItem("input", that.$route.params.item.value);
-    // }
   },
   methods: {
     querySearch(queryString, cb) {
@@ -184,28 +153,6 @@ export default {
       console.log(111);
       this.getschool();
     },
-    //路由跳转到schoolDetail
-    mousedownH(evt) {
-      this.clientX = evt.clientX;
-      this.clientY = evt.clientY;
-    },
-    mouseupH(evt, val) {
-      if (
-        this.clientX == evt.clientX &&
-        this.clientY == evt.clientY &&
-        evt.button == 0
-      ) {
-        this.$router.push({
-          path: "./schoolDetail",
-          query: {
-            id: val.id
-          }
-        });
-      }
-    },
-    // btnSchoolDetailsList(val){
-    //   this.$router.push({path:"./schoolDetail",query:{id:val.id}})
-    // },
     getschool() {
       //获取学校List数据(包括学校搜索)
       getSchoolLibrary({
@@ -232,17 +179,23 @@ export default {
             arr3.push(arr1[j].slice(0, 1));
           }
           // respons.data.list[i].schoolSystems
-          that.schoolLists[i].schoolSystem = arr3.join(",");
+          that.schoolLists[i].schoolSystem = arr3;
         }
+
         //截取时间
-        var jiq = [];
+        var CutTime = [];
         for (var i = 0; i < respons.data.list.length; i++) {
           var str = respons.data.list[i].loadTime.substring(0, 10);
-          jiq.push(str);
-          respons.data.list[i].loadTime = jiq[i];
+          CutTime.push(str);
+          respons.data.list[i].loadTime = CutTime[i];
         }
-        console.log(jiq);
-        console.log(respons.data.list[0].loadTime.substring(0, 10));
+        //截取 学校 类型 民办
+        var CutSchoolType = [];
+        for(var i=0;i < respons.data.list.length; i++){
+          var str = respons.data.list[i].schoolProperties.substring(0, 1);
+          CutSchoolType.push(str);
+          respons.data.list[i].schoolProperties = CutSchoolType[i];
+        }
       });
     },
     handleSizeChange(val) {
@@ -278,15 +231,34 @@ export default {
   filters: {
     ellipsisName(value) {
       if (!value) return "";
-      if (value.length > 6) {
-        return value.slice(0, 6) + "...";
+      if (value.length > 10) {
+        return value.slice(0, 10) + "...";
       }
       return value;
+    },
+    //学校地址
+    ellipsisAddress(value){
+      if(!value) return "";
+      if(value.length > 10){
+        return value.slice(0,10) + "...";
+      }
+      return value
+    },
+    //学校姓名
+    ellipsisSchoolNameTwo(value){
+      if(!value) return "";
+      if(value.length > 100){
+        return value.slice(0,100) + "...";
+      }
+      return value
     }
   }
 };
 </script>
 <style lang="less" scoped type="text/less">
+#container{
+  background: #f5f5f5;
+}
 #search_res {
   display: flex;
   justify-content: center;
@@ -363,7 +335,7 @@ export default {
   min-height: 36px;
   margin-top: 30px; /* margin-left: 5px; */
   text-align: center;
-  height: 2.6rem;
+  // height: 2.6rem;
   border: 1px solid #ccc;
   background: #fff;
 }
@@ -378,6 +350,7 @@ export default {
 }
 .grid-content ul {
   margin-top: 10px;
+  margin-bottom: 20px;
   line-height: 30px;
   color: #777;
 }
@@ -395,8 +368,8 @@ export default {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 100px;
-  height: 100px;
+  width: 1rem;
+  height: 1rem;
 }
 .schoolList {
   border-radius: 10px;
@@ -482,74 +455,166 @@ export default {
     width: 20%;
   }
   .schoolDetailTwo {
-    width: 80%;
+    width: 75%;
     margin: 0 auto;
-  }
-  .detailBox {
-    border: 1px solid #ccc;
-    margin-top: 10px;
-    border-radius: 10px;
-  }
-  .detailBox:hover {
-    box-shadow: 0px 0px 15px #ccc;
+    .detailBox {
+      border: 1px solid #ccc;
+      margin-top: 0.2rem;
+      border-radius: 10px;
+      background: #f9f9f9;
+
+    }
+    .detailBox:hover {
+      box-shadow: 0px 0px 15px #ccc;
+    }
   }
 }
 @media screen and (min-width: 960px) and (max-width: 1199px) {
+  .schoolDetailTwo {
+   .detailBox {
+     background: #fff;
+   }
+  }
 }
 @media screen and (min-width: 768px) and (max-width: 959px) {
+  .schoolDetailTwo {
+   .detailBox {
+     background: #fff;
+   }
+   .DeatailTwoLeft{
+      flex: 3;
+    }
+    .DeatailTwoCenter{
+      flex:7;
+      li:nth-of-type(2){
+        width: 350px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+    }
+  }
 }
 @media screen and (min-width: 480px) and (max-width: 767px) {
+  .schoolDetailTwo {
+    .detailBox {
+     background: #fff;
+    }
+    .DeatailTwoLeft{
+      flex: 3;
+    }
+    .DeatailTwoCenter{
+      flex:7;
+      li:nth-of-type(2){
+        width: 350px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+    }
+    .DeatailTwoRight{
+      display: none;
+    }
+  }
 }
 @media screen and (max-width: 479px) {
   .schoolDetailTwo {
-    font-size: 12px;
-  }
-  .detailaAddress {
-    display: none;
+    .detailBox {
+     background: #fff;
+    }
+    .DeatailTwoLeft{
+      flex: 3;
+    }
+    .DeatailTwoCenter{
+      flex:7;
+      li:nth-of-type(2){
+        width: 230px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+    }
+    .DeatailTwoRight{
+      display: none;
+    }
   }
 }
-.detailBox {
-  background: #fff;
-  overflow: hidden;
+.detailBox{
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
+  background: #f5f5f5;
   margin-top: 0.2rem;
-  padding: 0.3rem 0 0.2rem 0;
-  line-height: 0.4rem;
-  .detailaAddress {
-    margin-left: 3%;
+  display: flex;
+  overflow: hidden;
+  .DeatailTwoLeft{
+    position: relative;
+    width: 20%;
+    img{
+      width: 1rem;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%,-50%);
+    }
   }
-  .detailTwomix {
-    display: flex;
-    justify-content: space-around;
-    .detailLogo {
-      width: 10%;
-      margin-left: 3%;
-      margin-top: 0.05rem;
-      img {
-        width: 1rem;
+  .DeatailTwoCenter{
+    width: 55%;
+    ul{
+      // line-height:0.4rem;
+      li{
+        margin-top: 0.15rem;
+        color: #999;
       }
-    }
-  }
-  .datailMinRight {
-    width: 75%;
-    margin-left: 2%;
-    .datailstP {
-      color: #214f89;
-      font-size: 0.2rem;
-      margin-left: 0.2rem;
-    }
-    ul {
-      li {
-        display: flex;
-        justify-content: space-around;
-        p {
-          flex: 1;
+      li:first-of-type{
+        font-size: 0.2rem;
+        color: #010101;
+      }
+      li:nth-of-type(2){
+        font-size: 0.19rem;
+        color: #030303;
+        margin-top: 0.09rem;
+      }
+      li:nth-of-type(3){
+        P{
+          display: inline-block;
+        }
+        p:last-of-type{
+          margin-left: 0.3rem;
+          span{
+            margin-right: 10px;
+          }
+        }
+        span{
+          display:inline;
+          width: 12px;
+          height: 12px;
           text-align: center;
+          line-height: 12px;
+          padding: 0.05rem 0.05rem;
+          border-radius: 0.05rem;
+          color: #fff;
+          background: #214f89;
         }
       }
-      li:last-of-type {
-        color: #214f89;
+    }
+  }
+  .DeatailTwoRight{
+    width: 25%;
+    ul{
+      li{
+        margin-top: 0.1rem;
+        margin-bottom: 0.12rem;
+      };
+      li:first-of-type{
+        display: inline-block;
+        background: #214f89;
+        color: #fff;
+        padding: 0.02rem 0.05rem;
+        border-radius: 0.05rem;
       }
     }
   }
 }
+
 </style>
