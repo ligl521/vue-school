@@ -50,7 +50,7 @@
               <el-input type="password" v-model="ruleForm.pwd" prop="pwd" placeholder="密码"></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="send_msg('ruleForm')">登录</el-button>
+              <el-button type="primary" @click="send_msg('ruleForm')" class="login">登录</el-button>
               <span>
                 <el-button type="text">注册账号</el-button>
                 <!-- 注册账号 -->
@@ -64,19 +64,39 @@
         </el-tab-pane>
       </el-tabs>
     </el-dialog>
+    <el-dialog
+      :visible.sync="dialogVisible1"
+      width="25%"
+      center
+      :modal-append-to-body="true"
+      :append-to-body="true"
+    >
+        <div class="bindBox">
+            <img src="../assets/bind.png" alt="" class="img-responsive">
+            <h4>新学说与微信账号绑定</h4>
+            <p class="mail"><i class="iconfont icon-youxiang"></i>邮箱</p>
+            <el-input v-model="bindMail" placeholder="请输入邮箱"></el-input>
+            <p class="password"><i class="iconfont icon-mima"></i>密码</p>   
+            <el-input v-model="bindPwd" placeholder="请输入密码"  show-password></el-input>
+            <p><el-button type="primary" @click="nowBind">立即绑定</el-button></p>
+            <p><span>立即注册</span> | <span>忘记密码</span></p>
+        </div>
+    </el-dialog>
   </div>
 </template>
 <script>
 import axios from "axios";
 import { constants } from "fs";
 import { setTimeout, setInterval } from "timers";
-export default {
+import { wechatBind } from '@/api/api'
+export default {  
   data() {
     return {
       dialogVisible: false,
+      dialogVisible1: false,
       activeName: "first",
       sceneStr: "",
-      totalTime: 10,
+      totalTime: 120,
       OpenId: "",
       ruleForm: {
         userMail: "",
@@ -94,7 +114,9 @@ export default {
           { min: 0, max: 100, message: "密码不能为空", trigger: "blur" }
         ]
       },
-      defaultUrl: "./"
+      defaultUrl: "./",
+      bindMail:'',
+      bindPwd:''
     };
   },
   name: "App",
@@ -172,7 +194,7 @@ export default {
               console.log(response.data.data.headimgurl); //用户头像
               that.OpenId = response.data.data.openid; //用户微信ID
               console.log(that.OpenId + "用户微信ID");
-              that.user_cx()
+              that.user_cx();
             }
           })
           .catch(function(error) {
@@ -183,8 +205,7 @@ export default {
     //用户校验身份
     user_cx() {
       let that = this;
-      axios
-        .get(
+      axios.get(
           "http://data.xinxueshuo.cn/nsi-1.0/user/WechatLogin.do?OpenId=" +
             that.OpenId
         )
@@ -195,15 +216,43 @@ export default {
             document.cookie = "memberSign=" + response.data.data.memberSign; //用户等级
             document.cookie =
               "UserVerifyCode=" + response.data.data.userRegistercode; //用户检验码
+            document.cookie = "User_TureName=" + response.data.data.userTurename; //用户真实名字
+            document.cookie = "UserId=" + response.data.data.id; //用户真实名字
+            that.dialogVisible = false;
+          } else {
+              that.dialogVisible = false;
+              that.dialogVisible1 = true;
           }
         })
         .catch(function(error) {
           console.log(error);
         });
     },
+
     handleClick(tab, event) {
       console.log(tab, event);
+    },
+    // 微信绑定
+    wechat(){
+        wechatBind({
+            UserName:this.bindMail,
+            Password:this.bindPwd,
+            OpenId:this.OpenId
+        }).then(res => {
+            if(res.code==0){
+                console.log("绑定成功")
+                this.dialogVisible1 = false;
+                this.user_cx() 
+            }else{
+                console.log("邮箱或密码错误")
+            }
+        })
+    },
+    // 点击绑定
+    nowBind(){
+        this.wechat()
     }
+    
   }
 };
 </script>
@@ -223,7 +272,6 @@ export default {
   width: 100%;
   z-index: 999;
 }
-
 .el-dialog--center .el-dialog__body {
   padding-top: 40px;
   padding-left: 30px;
@@ -333,9 +381,16 @@ form {
   display: flex;
 }
 .el-button.is-round {
-  background-color: beige;
+  background-color: #eee;
+  color: #6e6e6e;
   border-radius: 20px;
   padding: 8px 25px;
+  
+}
+.el-button.is-round:hover{
+    color: #fff;
+    background: #3a74b5;
+    
 }
 .el-menu--horizontal > .el-menu-item {
   float: left;
@@ -348,5 +403,43 @@ form {
 }
 ul.el-menu-demo.el-menu--horizontal.el-menu {
   padding-bottom: 2px;
+}
+.bindBox{
+    text-align: center;
+}
+.bindBox h4{
+    margin-top:10px;
+}
+.bindBox .el-input{
+    width:250px
+}
+.bindBox img{
+    height:100px;
+    margin:0 auto;
+}
+.bindBox p.mail,.bindBox p.password{
+    position: relative;
+    left: -88px;
+    margin: 20px 0 10px;
+    font-size: 18px;
+    letter-spacing: 5px;
+}
+.bindBox p.mail{
+    margin-top:40px;
+}
+.bindBox p i{
+    margin: 0 5px;
+    font-size: 18px;
+}
+.bindBox button{
+    margin:40px 0 20px;
+    padding:10px 90px;
+    font-size: 16px;
+} 
+.bindBox p span{
+    margin: 5px 15px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    display: inline-block;
 }
 </style>
