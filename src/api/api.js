@@ -10,3 +10,5 @@ export const getSchoolDeatail = p => get('/new/school/detail.do', p)
 export const getSchoolHomeInquiry = p => get('/article/list.do', p)
     //国际学校首页 学校城市切换
 export const getSchoolCity = p => get('/new/school/list.do', p)
+    //微信绑定
+export const wechatBind = p => get('/user/WechatBinding.do', p)
