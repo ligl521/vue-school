@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import school from '@/components/school'
-import schoolDetail from '@/components/schoolDetail'
 import homepage from '@/components/homepage'
 import schoolku from '@/components/schoolku'
 import schoolDetail02 from '@/components/schoolDetail02'
@@ -17,11 +16,6 @@ export default new Router({
             path: '/school',
             name: 'school',
             component: school
-        },
-        {
-            path: '/schoolDetail',
-            name: 'schoolDetail',
-            component: schoolDetail
         }, {
             path: '/schoolku',
             name: 'schoolku',
