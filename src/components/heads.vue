@@ -75,6 +75,9 @@ export default {
     return {
       dialogVisible: false,
       activeName: "first",
+      sceneStr: "",
+      totalTime: 10,
+      OpenId: "",
       ruleForm: {
         userMail: "",
         pwd: ""
@@ -129,62 +132,74 @@ export default {
     },
     //获取后台给的二维码
     get_msg() {
+      let that = this;
       axios({
         method: "post",
         url: "http://data.xinxueshuo.cn/nsi-1.0/user/get_qrcode.do"
       }).then(function(response) {
         document.getElementById("qr_code").src = response.data.data.qrCode;
-        var sceneStr = response.data.data.scenStr;
-        console.log(sceneStr);
-        //微信扫码登录轮询
-        //倒计时
-        var totalTime = 120;
-        let clock = window.setInterval(() => {
-          totalTime--;
-          console.log(totalTime);
-          if (totalTime <= 0) {
-            window.clearInterval(clock);
-            console.log($(".span_text").html("二维码已失效，请从新打开二维码"));
-            window.clearInterval(t1);
-            totalTime = 120;
-          }
-        }, 1000);
-        var t1 = window.setInterval(() => {
-          axios
-            .get(
-              "http://data.xinxueshuo.cn/nsi-1.0/user/get_check_login.do?sceneStr=" +
-                sceneStr
-            )
-            .then(function(response) {
-              console.log(response.data);
-              if (response.data.code == 0) {
-                window.clearInterval(t1);
-                window.clearInterval(clock);
-                console.log(response.data.data.headimgurl); //用户头像
-                var OpenId = response.data.data.openid;//用户微信ID
-                axios
-                  .get(
-                    "http://data.xinxueshuo.cn/nsi-1.0/user/WechatLogin.do?OpenId=" +
-                      OpenId
-                  )
-                  .then(function(response) {
-                    console.log(response.data);
-                    if (response.data.code == 0) {
-                      document.cookie="username="+response.data.data.username;//用户邮箱
-                      document.cookie="memberSign="+response.data.data.memberSign;//用户等级
-                      document.cookie="UserVerifyCode="+response.data.data.userRegistercode;//用户检验码
-                    }
-                  })
-                  .catch(function(error) {
-                    console.log(error);
-                  });
-              }
-            })
-            .catch(function(error) {
-              console.log(error);
-            });
-        }, 3000);
+        that.sceneStr = response.data.data.scenStr;
+        console.log(that.sceneStr);
+        that.set_wx();
       });
+    },
+    //微信扫码登录轮询
+    set_wx() {
+      let that = this;
+      console.log(that.totalTime);
+      //倒计时
+      let clock = window.setInterval(() => {
+        that.totalTime--;
+        console.log(that.totalTime);
+        if (that.totalTime <= 0) {
+          window.clearInterval(clock);
+          console.log($(".span_text").html("二维码已失效，请从新打开二维码"));
+          window.clearInterval(t1);
+          that.totalTime = 120;
+        }
+      }, 1000);
+      var t1 = window.setInterval(() => {
+        axios
+          .get(
+            "http://data.xinxueshuo.cn/nsi-1.0/user/get_check_login.do?sceneStr=" +
+              that.sceneStr
+          )
+          .then(function(response) {
+            console.log(response.data);
+            if (response.data.code == 0) {
+              window.clearInterval(t1);
+              window.clearInterval(clock);
+              console.log(response.data.data.headimgurl); //用户头像
+              that.OpenId = response.data.data.openid; //用户微信ID
+              console.log(that.OpenId + "用户微信ID");
+              that.user_cx()
+            }
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
+      }, 3000);
+    },
+    //用户校验身份
+    user_cx() {
+      let that = this;
+      axios
+        .get(
+          "http://data.xinxueshuo.cn/nsi-1.0/user/WechatLogin.do?OpenId=" +
+            that.OpenId
+        )
+        .then(function(response) {
+          console.log(response.data);
+          if (response.data.code == 0) {
+            document.cookie = "username=" + response.data.data.username; //用户邮箱
+            document.cookie = "memberSign=" + response.data.data.memberSign; //用户等级
+            document.cookie =
+              "UserVerifyCode=" + response.data.data.userRegistercode; //用户检验码
+          }
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
     },
     handleClick(tab, event) {
       console.log(tab, event);
