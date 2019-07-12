@@ -53,7 +53,7 @@
               <el-input type="password" v-model="ruleForm.pwd" prop="pwd" placeholder="密码"></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="send_msg('ruleForm')">登录</el-button>
+              <el-button type="primary" @click="send_msg('ruleForm')" class="login">登录</el-button>
             </el-form-item>
             <el-form-item style="margin-bottom:0">
               <span>
@@ -90,7 +90,7 @@
             <p class="password"><i class="iconfont icon-mima"></i>密码</p>   
             <el-input v-model="bindPwd" placeholder="请输入密码"  show-password></el-input>
             <p><el-button type="primary" @click="nowBind">立即绑定</el-button></p>
-            <p><span>立即注册</span> | <span>忘记密码</span></p>
+            <p><span @click="nowRegister">立即注册</span> | <span>忘记密码</span></p>
         </div>
     </el-dialog>
   </div>
@@ -263,6 +263,9 @@ export default {
     // 点击绑定
     nowBind(){
         this.wechat()
+    },
+    nowRegister(){
+        this.$router.push({path: "./register",});
     }
     
   }
@@ -317,7 +320,7 @@ export default {
 .el-button {
   margin: 5px auto;
 }
-.el-button--primary {
+.login {
   width: 100%;
 }
 #pane-first {
