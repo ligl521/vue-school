@@ -47,7 +47,7 @@
               </div>
               <ul>
                 <!-- http://localhost:8080/#/schoolDetail02?id=101370 -->
-                <li class="schoolName"> <a href="/#/schoolDetail02?id=101370">{{item.schoolName | ellipsisName}} </a></li>
+                <li class="schoolName"> <a :href="xinxueshuoSite+'schoolDetail02?id='+choochId" target="_blank">{{item.schoolName | ellipsisName}} </a></li>
                 <!-- <li class="schoolName"> <a href="http://localhost:8080/#/schoolDetail02?id=101370">{{item.schoolName | ellipsisName}} </a></li> -->
                 <li>学制：<span v-for="(v,i) in item.schoolSystem" :key="i">{{v}},</span></li>
                 <li>课程：AP:美国课程</li>
@@ -62,15 +62,15 @@
         <div class="DeatailTwoLeft"><img :src='item.schoolLogo?item.schoolLogo:"http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png"' /></div>
         <div class="DeatailTwoCenter" id="DeatailTwoCenterId">
           <ul>
-            <li>{{item.schoolName}}</li>
+            <li><a :href="xinxueshuoSite+'schoolDetail02?id='+choochId" target="_blank">{{item.schoolName}}</a></li>
             <li>{{item.schoolEnglishname | ellipsisSchoolNameTwo}}</li>
             <li>类型：<span>{{item.schoolProperties}}</span><p>学制：<span v-for="(v,i) in item.schoolSystem" :key="i">{{v}}</span></p></li>
           </ul>
         </div>
         <div class="DeatailTwoRight">
           <ul>
-            <li>认证：IBO CIE</li>
-            <li>建校时间：{{item.loadTime}}</li>
+            <li>认证：<span v-for="(v,i) in item.authentication" :key="i">{{v}}</span></li>
+            <li>建校时间：{{item.foundingTime}}</li>
             <li>{{item.areas03 | ellipsisAddress}}</li>
           </ul>
         </div>
@@ -116,9 +116,10 @@ export default {
       lodingshow: true,
       lodinghide: false,
       isclick: true,
+      choochId:101371,
       schoolLogoUrlOne: "http://data.xinxueshuo.cn/",
-      schoolLogoUrlTwo:
-        "http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png"
+      schoolLogoUrlTwo:"http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png",
+      xinxueshuoSite:"http://data.xinxueshuo.cn/vue-project/dist/index.html#/"
     };
   },
   beforeCreate() {
@@ -183,19 +184,34 @@ export default {
         }
 
         //截取时间
-        var CutTime = [];
-        for (var i = 0; i < respons.data.list.length; i++) {
-          var str = respons.data.list[i].loadTime.substring(0, 10);
-          CutTime.push(str);
-          respons.data.list[i].loadTime = CutTime[i];
-        }
+        // var CutTime = [];
+        // for (var i = 0; i < respons.data.list.length; i++) {
+        //   var str = respons.data.list[i].loadTime.substring(0,10);
+        //   CutTime.push(str);
+        //   respons.data.list[i].loadTime = CutTime[i];
+        // }
         //截取 学校 类型 民办
         var CutSchoolType = [];
         for(var i=0;i < respons.data.list.length; i++){
-          var str = respons.data.list[i].schoolProperties.substring(0, 1);
+          var str = respons.data.list[i].schoolProperties.substring(0,1);
           CutSchoolType.push(str);
           respons.data.list[i].schoolProperties = CutSchoolType[i];
         }
+        //认证 分割
+        for(var i=0;i<respons.data.list.length;i++){
+          var cardArr1 = respons.data.list[i].authentication;
+          if(cardArr1 == "无" || cardArr1 == "0"){
+
+            respons.data.list[i].authentication = "暂时无认证；".split("；").slice(0,1)
+          }else{
+            var cardArr2 = cardArr1.split("；");
+            var cardArr3 = cardArr2.slice(0,cardArr2.length-1);
+            respons.data.list[i].authentication = cardArr3;
+          }
+          // cardArr3.push(cardArr1);
+        console.log(cardArr1,cardArr2,cardArr3)
+        }
+        console.log(respons.data.list.length)
       });
     },
     handleSizeChange(val) {
@@ -585,6 +601,7 @@ export default {
           }
         }
         span{
+          font-size: 0.13rem;
           display:inline;
           width: 12px;
           height: 12px;
@@ -606,11 +623,22 @@ export default {
         margin-bottom: 0.12rem;
       };
       li:first-of-type{
-        display: inline-block;
-        background: #214f89;
-        color: #fff;
-        padding: 0.02rem 0.05rem;
-        border-radius: 0.05rem;
+
+
+
+        span{
+          font-size: 0.13rem;
+          display:inline;
+          // width: 12px;
+          // height: 12px;
+          text-align: center;
+          line-height: 12px;
+          padding: 0.05rem 0.05rem;
+          border-radius: 0.05rem;
+          color: #fff;
+          background: #214f89;
+          margin-right: 5px;
+        }
       }
     }
   }

@@ -11,10 +11,10 @@
     >
       <el-menu-item index="/">首页</el-menu-item>
       <el-menu-item index="/school">国际学校库</el-menu-item>
-      <el-menu-item index="/schoolku">教育机构库</el-menu-item>
-      <el-menu-item index="4">教育人才库</el-menu-item>
-      <el-menu-item index="5">项目数据库</el-menu-item>
-      <el-menu-item index="6">数据可视化</el-menu-item>
+      <el-menu-item index="/schoolGroup">教育机构库</el-menu-item>
+      <el-menu-item index="/schoolTalent">教育人才库</el-menu-item>
+      <el-menu-item index="/schoolDataBade">项目数据库</el-menu-item>
+      <el-menu-item index="/schoolVisual">数据可视化</el-menu-item>
       <el-button
         round
         class="login_btn"
@@ -310,23 +310,23 @@ export default {
       console.log(tab, event);
     },
     // 微信绑定
-    wechat() {
-      wechatBind({
-        UserName: this.bindMail,
-        Password: this.bindPwd,
-        OpenId: this.OpenId
-      }).then(res => {
-        if (res.code == 0) {
-          console.log("绑定成功");
-          this.dialogVisible1 = false;
-          this.user_cx();
-        } else {
-          console.log("邮箱或密码错误");
-        }
-      });
+
+    wechat(){
+        wechatBind({
+            UserName:this.bindMail,
+            Password:this.bindPwd,
+            OpenId:this.OpenId
+        }).then(res => {
+            if(res.code==0){
+                console.log("绑定成功")
+                this.dialogVisible1 = false;
+                this.user_cx()
+            }else{
+                console.log("邮箱或密码错误")
+            }
+        })
     },
     // 点击绑定
-
     nowBind() {
       this.wechat();
     },
@@ -520,10 +520,12 @@ export default {
   color: #6e6e6e;
   border-radius: 20px;
   padding: 8px 25px;
+
 }
-.el-button.is-round:hover {
-  color: #fff;
-  background: #3a74b5;
+.el-button.is-round:hover{
+    color: #fff;
+    background: #3a74b5;
+
 }
 .el-menu--horizontal > .el-menu-item {
   float: left;
@@ -537,43 +539,42 @@ export default {
 ul.el-menu-demo.el-menu--horizontal.el-menu {
   padding-bottom: 2px;
 }
-.bindBox {
-  text-align: center;
+.bindBox{
+    text-align: center;
 }
-.bindBox h4 {
-  margin-top: 10px;
+.bindBox h4{
+    margin-top:10px;
 }
-.bindBox .el-input {
-  width: 250px;
+.bindBox .el-input{
+    width:250px
 }
-.bindBox img {
-  height: 100px;
-  margin: 0 auto;
+.bindBox img{
+    height:100px;
+    margin:0 auto;
 }
-.bindBox p.mail,
-.bindBox p.password {
-  position: relative;
-  left: -88px;
-  margin: 20px 0 10px;
-  font-size: 18px;
-  letter-spacing: 5px;
+.bindBox p.mail,.bindBox p.password{
+    position: relative;
+    left: -88px;
+    margin: 20px 0 10px;
+    font-size: 18px;
+    letter-spacing: 5px;
 }
-.bindBox p.mail {
-  margin-top: 40px;
+.bindBox p.mail{
+    margin-top:40px;
 }
-.bindBox p i {
-  margin: 0 5px;
-  font-size: 18px;
+.bindBox p i{
+    margin: 0 5px;
+    font-size: 18px;
 }
-.bindBox button {
-  margin: 40px 0 20px;
-  padding: 10px 90px;
-  font-size: 16px;
+.bindBox button{
+    margin:40px 0 20px;
+    padding:10px 90px;
+    font-size: 16px;
 }
-.bindBox p span {
-  margin: 5px 15px 15px;
-  font-size: 16px;
-  cursor: pointer;
-  display: inline-block;
+.bindBox p span{
+    margin: 5px 15px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    display: inline-block;
 }
 </style>
