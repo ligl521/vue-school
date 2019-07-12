@@ -5,12 +5,17 @@ import schoolTalent from '@/components/schoolTalent'
 import schoolGroup from '@/components/schoolGroup'
 import schoolDetail02 from '@/components/schoolDetail02'
 import schoolHome from '@/components/schoolHome'
+
 import schoolDataBade from '@/components/schoolDataBade'
 import schoolVisual from '@/components/schoolVisual'
+
+import register from '@/components/register'
+
 Vue.use(Router)
 
 export default new Router({
     routes: [{
+
             path: '/',
             name: 'schoolHome',
             component: schoolHome
@@ -38,8 +43,15 @@ export default new Router({
           path: '/schoolVisual',
           name: 'schoolVisual',
           component: schoolVisual
+        },
+        {
+          path: '/register',
+          name: 'register',
+          component: register
         }
-
-
     ]
 })
+
+
+
+
