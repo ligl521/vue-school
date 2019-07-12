@@ -27,7 +27,7 @@
       <!-- 首页导航 -->
       <div class="homeToolbar clearfix">
         <div class="toolbarLeft clearfix">
-          <router-link tag="ul" to="/">
+          <router-link tag="ul" to="./">
             <li><i class="iconfont icon-jianzhu"></i></li>
             <li>国际学校库</li>
           </router-link>
@@ -50,6 +50,7 @@
         </div>
         <div class="toolbarRight">
           <img src="https://nsi.oss-cn-zhangjiakou.aliyuncs.com/nsi-pc/miniProgram.jpg">
+          <p>国际学校四库全书<br/>微信小程序</p>
         </div>
       </div>
 
@@ -66,7 +67,9 @@
               <img v-if="v.schoolLogo? false:true" :src="schoolLogoUrlTwo">
             </p>
             <ul>
-              <li><a href="http://localhost:8080/#/schoolDetail02?id=101371" target="_blank">{{v.schoolName | ellipsisName}}</a></li>
+              <!-- <li><a :href="xinxueshuoSite+'schoolDetail02?id=101371'" target="_blank">{{v.schoolName | ellipsisName}}</a></li> -->
+              <li><a :href="xinxueshuoSite+'schoolDetail02?id='+choochId" target="_blank">{{v.schoolName | ellipsisName}}</a></li>
+
               <li>课程：美国课程</li>
             </ul>
           </div>
@@ -123,11 +126,13 @@
                     "重庆"
                 ],
                 index: 0,
+                choochId:101371,
                 schoolLists: [],
                 SchoolCitypageNum: 1,
                 SchoolCitySearchKey: "北京",
                 schoolLogoUrlOne: "http://data.xinxueshuo.cn/",
-                schoolLogoUrlTwo: "http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png"
+                schoolLogoUrlTwo: "http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png",
+                xinxueshuoSite:"http://data.xinxueshuo.cn/vue-project/dist/index.html#/"
             };
         },
         methods: {
@@ -583,18 +588,18 @@
 }
 .toolbarLeft {
   float: left;
-  background: #f9f9f9;
 }
 .toolbarLeft ul {
   width: 120px;
   height: 120px;
-  border: 1px solid #ccc;
+  border: 1px solid #999;
   float: left;
   border-radius: 5px;
-  margin: 30px;
+  margin: 30px 40px;
 }
 .toolbarLeft ul:hover {
-  box-shadow: 0 0 3px #999 inset;
+  box-shadow: 0 0 10px #214f89;
+
 }
 .toolbarLeft ul li:first-of-type {
   height: 90px;
@@ -603,34 +608,35 @@
 .toolbarLeft ul li:first-of-type i {
   line-height: 90px;
   text-align: center;
-  font-size: 50px;
+  font-size: 60px;
+  color: #214f89;
+  // text-shadow:0px 0px 6px #214f89;
 }
 .toolbarLeft ul li:last-of-type {
   text-align: center;
+  font-size: 16px;
+  margin-top: 5px;
+  font-weight: 600;
+  color: #555;
 }
 .toolbarRight {
   float: left;
-  width: 250px;
+  // width: 250px;
   height: 180px;
   margin-left: 50px;
   text-align: center;
   // background: #fafafa;
   img{
     // width: 100%;
-    height: 100%;
+    height: 70%;
+  }
+  p{
+    margin-top: 5px;
+    line-height: 18px;
+    color: #214f89;
   }
 }
-.toolbarRight li:first-of-type {
-  margin-top: 10px;
-}
-.toolbarRight li:last-of-type {
-  padding-bottom: 30px;
-}
-.toolbarRight button.el-button.el-button--info,
-.toolbarRight input {
-  width: 200px;
-  margin-top: 30px;
-}
+
 .schoolHome {
   margin: 0 auto;
   width: 1200px;

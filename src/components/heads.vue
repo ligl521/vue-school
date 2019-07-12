@@ -11,10 +11,10 @@
     >
       <el-menu-item index="/">首页</el-menu-item>
       <el-menu-item index="/school">国际学校库</el-menu-item>
-      <el-menu-item index="/schoolku">教育机构库</el-menu-item>
-      <el-menu-item index="4">教育人才库</el-menu-item>
-      <el-menu-item index="5">项目数据库</el-menu-item>
-      <el-menu-item index="6">数据可视化</el-menu-item>
+      <el-menu-item index="/schoolGroup">教育机构库</el-menu-item>
+      <el-menu-item index="/schoolTalent">教育人才库</el-menu-item>
+      <el-menu-item index="/schoolDataBade">项目数据库</el-menu-item>
+      <el-menu-item index="/schoolVisual">数据可视化</el-menu-item>
       <el-button round class="login_btn" type="text" @click="dialogVisible = true;get_msg()">登录</el-button>
       <!-- 点击触发登录dialog -->
     </el-menu>
@@ -87,7 +87,7 @@
             <h4>新学说与微信账号绑定</h4>
             <p class="mail"><i class="iconfont icon-youxiang"></i>邮箱</p>
             <el-input v-model="bindMail" placeholder="请输入邮箱"></el-input>
-            <p class="password"><i class="iconfont icon-mima"></i>密码</p>   
+            <p class="password"><i class="iconfont icon-mima"></i>密码</p>
             <el-input v-model="bindPwd" placeholder="请输入密码"  show-password></el-input>
             <p><el-button type="primary" @click="nowBind">立即绑定</el-button></p>
             <p><span>立即注册</span> | <span>忘记密码</span></p>
@@ -100,7 +100,7 @@ import axios from "axios";
 import { constants } from "fs";
 import { setTimeout, setInterval } from "timers";
 import { wechatBind } from '@/api/api'
-export default {  
+export default {
   data() {
     return {
       dialogVisible: false,
@@ -254,7 +254,7 @@ export default {
             if(res.code==0){
                 console.log("绑定成功")
                 this.dialogVisible1 = false;
-                this.user_cx() 
+                this.user_cx()
             }else{
                 console.log("邮箱或密码错误")
             }
@@ -264,7 +264,7 @@ export default {
     nowBind(){
         this.wechat()
     }
-    
+
   }
 };
 </script>
@@ -408,12 +408,12 @@ export default {
   color: #6e6e6e;
   border-radius: 20px;
   padding: 8px 25px;
-  
+
 }
 .el-button.is-round:hover{
     color: #fff;
     background: #3a74b5;
-    
+
 }
 .el-menu--horizontal > .el-menu-item {
   float: left;
@@ -458,7 +458,7 @@ ul.el-menu-demo.el-menu--horizontal.el-menu {
     margin:40px 0 20px;
     padding:10px 90px;
     font-size: 16px;
-} 
+}
 .bindBox p span{
     margin: 5px 15px 15px;
     font-size: 16px;
