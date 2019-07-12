@@ -68,7 +68,7 @@
               <el-input type="password" v-model="ruleForm.pwd" prop="pwd" placeholder="密码"></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="send_msg('ruleForm')">登录</el-button>
+              <el-button type="primary" @click="send_msg('ruleForm')" class="login">登录</el-button>
             </el-form-item>
             <el-form-item style="margin-bottom:0">
               <span>
@@ -166,7 +166,7 @@ export default {
   name: "App",
   created() {
     if (this.getCookie("username") != "") {
-      this.userTurename =this.getCookie("User_TureName")
+      this.userTurename = this.getCookie("User_TureName");
       this.WechatLogin = true;
       this.headimgurl = false;
     }
@@ -323,8 +323,12 @@ export default {
       });
     },
     // 点击绑定
+
     nowBind() {
       this.wechat();
+    },
+    nowRegister() {
+      this.$router.push({ path: "./register" });
     }
   },
   watch: {
@@ -422,7 +426,7 @@ export default {
 .el-button {
   margin: 5px auto;
 }
-.el-button--primary {
+.login {
   width: 100%;
 }
 #pane-first {
