@@ -165,7 +165,10 @@ export default {
   },
   name: "App",
   created() {
-    if (this.getCookie("username") != "") {
+    if(this.getCookie("username") == null) {
+      this.WechatLogin = false;
+      this.headimgurl = true;
+    }else{
       this.userTurename = this.getCookie("User_TureName");
       this.WechatLogin = true;
       this.headimgurl = false;
