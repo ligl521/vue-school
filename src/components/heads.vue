@@ -338,22 +338,6 @@ export default {
       }
     },
     // 微信绑定
-<<<<<<< HEAD
-    wechat(){
-        wechatBind({
-            UserName:this.bindMail,
-            Password:this.bindPwd,
-            OpenId:this.OpenId
-        }).then(res => {
-            if(res.code==0){
-                console.log("绑定成功")
-                this.dialogVisible1 = false;
-                this.user_cx()
-            }else{
-                console.log("邮箱或密码错误")
-            }
-        })
-=======
     wechat() {
       wechatBind({
         UserName: this.bindMail,
@@ -368,9 +352,7 @@ export default {
           console.log("邮箱或密码错误");
         }
       });
->>>>>>> 76af35e155e18e23be17f7c0dca4f03c1de31dbb
     },
-
     // 点击绑定
     nowBind() {
       this.wechat();
