@@ -73,7 +73,7 @@
             <el-form-item style="margin-bottom:0">
               <span>
                 <el-button type="text">
-                  <a class="a_color" href="javascript:;">注册账号</a>
+                  <a class="a_color" href="javascript:;" @click="nowRegister">注册账号</a>
                 </el-button>
                 <!-- 注册账号 -->
                 <el-button type="text">
@@ -112,7 +112,7 @@
           <el-button type="primary" @click="nowBind">立即绑定</el-button>
         </p>
         <p>
-          <span>立即注册</span> |
+          <span @click="nowRegister">立即注册</span> |
           <span>忘记密码</span>
         </p>
       </div>
@@ -310,7 +310,6 @@ export default {
       console.log(tab, event);
     },
     // 微信绑定
-
     wechat(){
         wechatBind({
             UserName:this.bindMail,
@@ -332,6 +331,8 @@ export default {
     },
     nowRegister() {
       this.$router.push({ path: "./register" });
+      this.dialogVisible = false;
+      this.dialogVisible1 = false;
     }
   },
   watch: {
