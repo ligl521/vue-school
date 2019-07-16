@@ -24,13 +24,21 @@
       >登录</el-button>
       <div class="headimgurl" round v-show="!headimgurl">
         <img v-bind:src="imgurl" />
-        <span>{{userTurename}}</span>
+        <span class="userTurename">{{userTurename}}</span>
+        <el-dropdown>
+          <span class="el-dropdown-link">
+            <i class="iconfont icon-ellipsis-vertical"></i>
+          </span>
+          <el-dropdown-menu>
+            <el-dropdown-item @click.native="dropdown_name('username')">注销</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
       </div>
       <!-- 点击触发登录dialog -->
     </el-menu>
     <el-dialog
       :visible.sync="dialogVisible"
-      width="18%"
+      width="300px"
       center
       :modal="true"
       :modal-append-to-body="true"
@@ -165,11 +173,12 @@ export default {
   },
   name: "App",
   created() {
-    if(this.getCookie("username") == null) {
+    //coolie 是否存在存在
+    if (this.getCookie("username") == null) {
       this.WechatLogin = false;
       this.headimgurl = true;
-    }else{
-      this.userTurename = this.getCookie("User_TureName");
+    } else {
+      this.userTurename = this.getCookie("User_TureName"); //名字
       this.WechatLogin = true;
       this.headimgurl = false;
     }
@@ -178,12 +187,24 @@ export default {
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
     },
-    //coolie 是否存在
+    //coolie 读取存在
     getCookie(name) {
       var arr,
         reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
       if ((arr = document.cookie.match(reg))) return unescape(arr[2]);
       else return null;
+    },
+    //点击注销coolie
+    dropdown_name(name) {
+      var exp = new Date();
+      exp.setTime(exp.getTime() - 1);
+      var cval = this.getCookie(name);
+      if (cval != null) {
+        document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
+        this.WechatLogin = false;
+        this.headimgurl = true;
+        alert("注销成功");
+      }
     },
     //从新加载二维码
     opacity_text() {
@@ -207,7 +228,7 @@ export default {
       if (params.userName != "" && params.passWord != "") {
         axios({
           method: "post",
-          url: "http://192.168.0.28:8080/nsi-1.0/user/login.do",
+          url: "http://data.xinxueshuo.cn/nsi-1.0/user/login.do",
           data: params
         }).then(function(respons) {
           if (respons.data.code == 0) {
@@ -232,8 +253,7 @@ export default {
         that.imgCode = response.data.data.qrCode;
         that.sceneStr = response.data.data.scenStr;
         console.log(that.sceneStr);
-        that.time();
-        that.set_wx();
+        that.handleClick()
       });
     },
     //二维码倒计时
@@ -306,26 +326,34 @@ export default {
         });
     },
 
-    handleClick(tab, event) {
-      console.log(tab, event);
+    handleClick() {
+      if(this.activeName != "first"){
+         clearInterval(this.totalTimeName);
+         clearInterval(this.sceneStrName);
+         this.totalTime = 120;
+      }
+      if(this.activeName == "first"){
+        this.time();
+        this.set_wx();
+      }
     },
     // 微信绑定
-
-    wechat(){
-        wechatBind({
-            UserName:this.bindMail,
-            Password:this.bindPwd,
-            OpenId:this.OpenId
-        }).then(res => {
-            if(res.code==0){
-                console.log("绑定成功")
-                this.dialogVisible1 = false;
-                this.user_cx()
-            }else{
-                console.log("邮箱或密码错误")
-            }
-        })
+    wechat() {
+      wechatBind({
+        UserName: this.bindMail,
+        Password: this.bindPwd,
+        OpenId: this.OpenId
+      }).then(res => {
+        if (res.code == 0) {
+          console.log("绑定成功");
+          this.dialogVisible1 = false;
+          this.user_cx();
+        } else {
+          console.log("邮箱或密码错误");
+        }
+      });
     },
+
     // 点击绑定
     nowBind() {
       this.wechat();
@@ -352,6 +380,14 @@ export default {
   #app {
     margin-top: -52px;
   }
+}
+.el-dropdown-link {
+  cursor: pointer;
+  color: #eee;
+  margin-left: 20px;
+}
+.el-dropdown {
+  vertical-align: top;
 }
 /* 导航 */
 .heads {
@@ -398,7 +434,7 @@ export default {
   margin: 10px auto;
   border-radius: 50%;
 }
-.headimgurl span {
+.headimgurl .userTurename {
   display: inline-block;
   color: #fff;
   vertical-align: top;
@@ -520,12 +556,10 @@ export default {
   color: #6e6e6e;
   border-radius: 20px;
   padding: 8px 25px;
-
 }
-.el-button.is-round:hover{
-    color: #fff;
-    background: #3a74b5;
-
+.el-button.is-round:hover {
+  color: #fff;
+  background: #3a74b5;
 }
 .el-menu--horizontal > .el-menu-item {
   float: left;
@@ -539,42 +573,43 @@ export default {
 ul.el-menu-demo.el-menu--horizontal.el-menu {
   padding-bottom: 2px;
 }
-.bindBox{
-    text-align: center;
+.bindBox {
+  text-align: center;
 }
-.bindBox h4{
-    margin-top:10px;
+.bindBox h4 {
+  margin-top: 10px;
 }
-.bindBox .el-input{
-    width:250px
+.bindBox .el-input {
+  width: 250px;
 }
-.bindBox img{
-    height:100px;
-    margin:0 auto;
+.bindBox img {
+  height: 100px;
+  margin: 0 auto;
 }
-.bindBox p.mail,.bindBox p.password{
-    position: relative;
-    left: -88px;
-    margin: 20px 0 10px;
-    font-size: 18px;
-    letter-spacing: 5px;
+.bindBox p.mail,
+.bindBox p.password {
+  position: relative;
+  left: -88px;
+  margin: 20px 0 10px;
+  font-size: 18px;
+  letter-spacing: 5px;
 }
-.bindBox p.mail{
-    margin-top:40px;
+.bindBox p.mail {
+  margin-top: 40px;
 }
-.bindBox p i{
-    margin: 0 5px;
-    font-size: 18px;
+.bindBox p i {
+  margin: 0 5px;
+  font-size: 18px;
 }
-.bindBox button{
-    margin:40px 0 20px;
-    padding:10px 90px;
-    font-size: 16px;
+.bindBox button {
+  margin: 40px 0 20px;
+  padding: 10px 90px;
+  font-size: 16px;
 }
-.bindBox p span{
-    margin: 5px 15px 15px;
-    font-size: 16px;
-    cursor: pointer;
-    display: inline-block;
+.bindBox p span {
+  margin: 5px 15px 15px;
+  font-size: 16px;
+  cursor: pointer;
+  display: inline-block;
 }
 </style>

@@ -5,7 +5,7 @@ import layout from './layout'
 //element引入
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
-
+import 'element-ui/lib/theme-chalk/display.css';
 import router from './router/index.js'
 import store from './store/store' //引入store
 
@@ -24,10 +24,10 @@ Vue.prototype.bus = new Vue();
 //环境地址
 Vue.prototype.axios = axios
     //测试环境
-    axios.defaults.baseURL = "http://192.168.0.28:8080/nsi-1.0"
+axios.defaults.baseURL = "http://192.168.0.28:8080/nsi-1.0"
     //生产环境
-// axios.defaults.baseURL = "http://data.xinxueshuo.cn/nsi-1.0/"
-// var xinxueshuoSite = "http: //data.xinxueshuo.cn/vue-project/dist/index.html#/"
+    // axios.defaults.baseURL = "http://data.xinxueshuo.cn/nsi-1.0/"
+    // var xinxueshuoSite = "http: //data.xinxueshuo.cn/vue-project/dist/index.html#/"
 
 
 Vue.use(ElementUI, Vuex, VueBus);
