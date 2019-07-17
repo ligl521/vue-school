@@ -325,7 +325,6 @@ export default {
       }
     },
     // 微信绑定
-<<<<<<< HEAD
     wechat(){
         wechatBind({
             UserName:this.bindMail,
@@ -340,22 +339,6 @@ export default {
                 console.log("邮箱或密码错误")
             }
         })
-=======
-    wechat() {
-      wechatBind({
-        UserName: this.bindMail,
-        Password: this.bindPwd,
-        OpenId: this.OpenId
-      }).then(res => {
-        if (res.code == 0) {
-          console.log("绑定成功");
-          this.dialogVisible1 = false;
-          this.user_cx();
-        } else {
-          console.log("邮箱或密码错误");
-        }
-      });
->>>>>>> 4d2e2a5e8fbdcf8fa0e92ae3f268cda92715a0d3
     },
     // 点击绑定
     nowBind() {
