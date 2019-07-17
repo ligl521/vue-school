@@ -131,7 +131,7 @@
 import axios from "axios";
 import { constants } from "fs";
 import { setTimeout, setInterval } from "timers";
-import { wechatBind } from "@/api/api";
+import { wechatBind,login,getQrcode,getCheckLogin,weChatLogin } from "@/api/api";
 export default {
   data() {
     return {
@@ -213,28 +213,26 @@ export default {
     },
     //账号密码传给后台
     send_msg(formName) {
-      this.$refs[formName].validate(valid => {
-        if (valid) {
-          console.log("submit!");
-        } else {
-          console.log("error submit!!");
-          return false;
-        }
-      });
-      let self = this;
-      var params = new URLSearchParams();
-      params.append("userName", self.ruleForm.userMail);
-      params.append("passWord", self.ruleForm.pwd);
-      if (params.userName != "" && params.passWord != "") {
-        axios({
-          method: "post",
-          url: "http://data.xinxueshuo.cn/nsi-1.0/user/login.do",
-          data: params
-        }).then(function(respons) {
-          if (respons.data.code == 0) {
-            alert(respons.data.msg);
+        let self=this
+      if (self.ruleForm.userMail!= "" && self.ruleForm.pwd!= "") {
+          login({
+              userName:self.ruleForm.userMail,
+              passWord:self.ruleForm.pwd
+          }).then(response=>{
+            console.log(response)
+          if (response.code == 0) {
+            self.userTurename = response.data.userTurename;
+            document.cookie = "username=" + response.data.username; //用户邮箱
+            document.cookie = "memberSign=" + response.data.memberSign; //用户等级
+            document.cookie ="UserVerifyCode=" + response.data.userRegistercode; //用户检验码
+            document.cookie ="User_TureName=" + response.data.userTurename; //用户真实名字
+            document.cookie = "UserId=" + response.data.id; //用户ID
+            self.dialogVisible = false;
+            self.WechatLogin = true;
+            self.headimgurl = false;
           } else {
-            alert(respons.data.msg);
+            self.dialogVisible = false;
+            self.dialogVisible1 = true;
           }
         });
       }
@@ -246,12 +244,10 @@ export default {
       clearInterval(that.totalTimeName);
       clearInterval(that.sceneStrName);
       that.totalTime = 120;
-      axios({
-        method: "post",
-        url: "http://data.xinxueshuo.cn/nsi-1.0/user/get_qrcode.do"
-      }).then(function(response) {
-        that.imgCode = response.data.data.qrCode;
-        that.sceneStr = response.data.data.scenStr;
+      getQrcode({}).then(function(response) {
+        console.log(response.data)
+        that.imgCode = response.data.qrCode;
+        that.sceneStr = response.data.scenStr;
         console.log(that.sceneStr);
         that.handleClick()
       });
@@ -274,17 +270,14 @@ export default {
     set_wx() {
       let that = this;
       that.sceneStrName = window.setInterval(() => {
-        axios
-          .get(
-            "http://data.xinxueshuo.cn/nsi-1.0/user/get_check_login.do?sceneStr=" +
-              that.sceneStr
-          )
-          .then(function(response) {
-            if (response.data.code == 0) {
+          getCheckLogin({
+              sceneStr:that.sceneStr
+          }).then(function(response) {
+            if (response.code == 0) {
               clearInterval(that.totalTimeName);
               clearInterval(that.sceneStrName);
-              that.imgurl = response.data.data.headimgurl; //用户头像
-              that.OpenId = response.data.data.openid; //用户微信ID
+              that.imgurl = response.data.headimgurl; //用户头像
+              that.OpenId = response.data.openid; //用户微信ID
               console.log(that.OpenId + "用户微信ID");
               that.user_cx();
             }
@@ -297,22 +290,17 @@ export default {
     //用户校验身份
     user_cx() {
       let that = this;
-      axios
-        .get(
-          "http://data.xinxueshuo.cn/nsi-1.0/user/WechatLogin.do?OpenId=" +
-            that.OpenId
-        )
-        .then(function(response) {
-          console.log(response.data);
-          if (response.data.code == 0) {
-            that.userTurename = response.data.data.userTurename;
-            document.cookie = "username=" + response.data.data.username; //用户邮箱
-            document.cookie = "memberSign=" + response.data.data.memberSign; //用户等级
-            document.cookie =
-              "UserVerifyCode=" + response.data.data.userRegistercode; //用户检验码
-            document.cookie =
-              "User_TureName=" + response.data.data.userTurename; //用户真实名字
-            document.cookie = "UserId=" + response.data.data.id; //用户ID
+      weChatLogin({
+          OpenId:that.OpenId
+      }).then(function(response) {
+          if (response.code == 0) {
+            that.userTurename = response.data.userTurename;
+            document.cookie = "username=" + response.data.username; //用户邮箱
+            document.cookie = "memberSign=" + response.data.memberSign; //用户等级
+            document.cookie ="UserVerifyCode=" + response.data.userRegistercode; //用户检验码
+            document.cookie ="User_TureName=" + response.data.userTurename; //用户真实名字
+            document.cookie = "UserId=" + response.data.id; //用户ID
+            document.cookie = "UserImg=" + that.imgurl; 
             that.dialogVisible = false;
             that.WechatLogin = true;
             that.headimgurl = false;
@@ -325,7 +313,6 @@ export default {
           console.log(error);
         });
     },
-
     handleClick() {
       if(this.activeName != "first"){
          clearInterval(this.totalTimeName);

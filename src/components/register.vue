@@ -1,5 +1,6 @@
 <template>
     <div class="registerBox">
+        <h3>国际学校四库全书-账号注册</h3>
         <!-- 上传头像 -->
         <el-upload
             class="avatar-uploader"
@@ -8,7 +9,7 @@
             :on-success="handleAvatarSuccess"
             :before-upload="beforeAvatarUpload">
             <img v-if="imageUrl" :src="imageUrl" class="avatar">
-            <i v-else class="avatar-uploader-icon upload-img">上传头像</i>  
+            <i v-else class="avatar-uploader-icon upload-img"></i>  
         </el-upload>
         <p>头像尺寸大小为150*150</p>
         <div class="inputBox">
@@ -81,10 +82,7 @@
 
 <script>
 import dragVerify from "vue-drag-verify";
-import { register } from "@/api/api";
-import { isRegister } from "@/api/api";
-import { getVerifyCode } from "@/api/api";
-import { checkVerifyCode } from "@/api/api";
+import {register,isRegister,getVerifyCode,checkVerifyCode} from "@/api/api";
 export default {
   components: {
     dragVerify
@@ -108,13 +106,14 @@ export default {
             UserMail:this.ruleForm.inputMail
         }).then(res=>{
             if(res.code==1){
-                return callback(new Error("邮箱已被注册"));
+                return callback(new Error("邮箱已被注册")); 
             }else if(!mailReg.test(value)){
                 callback(new Error("请输入正确的邮箱地址"));
             }else{
                 callback();
             }
         })
+        
     }
     return {
       ruleForm: {
@@ -128,8 +127,8 @@ export default {
       },
       rules: {
         inputMail: [
-            {required: true, message: "邮箱地址不能为空",},
-            {type: "email",validator: checkisRegister}
+            {required: true, message: "邮箱地址不能为空",trigger:'blur'},
+            {type: "email",validator: checkisRegister,trigger:'blur'}
         ],
         inputName: [
             {required: true, message: "名字不能为空" }
@@ -152,7 +151,8 @@ export default {
             {min: 6, max: 6, message: "密码必须为6位" }
         ]
       },
-      imageUrl: "",
+      imageUrl: " ",
+      fileName:'',
       handlerIcon: "iconfont icon-yanzhengma",
       successIcon: "iconfont icon-yanzhengma",
       background: "#cccccc",
@@ -170,12 +170,29 @@ export default {
       isGet:false,
       totalTime:60,
       totalTimeName:null,
-      getTime:'获取验证码'
+      getTime:'获取验证码',
     };
+  },
+   created() {
+    //coolie 是否存在存在
+    if (this.getCookie("UserImg") == null) {
+        this.imageUrl="https://nsi.oss-cn-zhangjiakou.aliyuncs.com/nsi-user/samplePic/eg04.png"
+        // alert(22)
+    } else {
+        this.imageUrl = this.getCookie("UserImg"); //头像
+        // alert(25552)
+    }
   },
   methods: {
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
+    },
+    //coolie 读取存在
+    getCookie(name) {
+      var arr,
+        reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+      if ((arr = document.cookie.match(reg))) return unescape(arr[2]);
+      else return null;
     },
     // 上传头像
     handleAvatarSuccess(res, file) {
@@ -199,13 +216,14 @@ export default {
             userOrganization: that.ruleForm.inputCompany,
             userPosition: that.ruleForm.inputJob,
             userPhone: that.ruleForm.inputTel,
-            password: that.ruleForm.inputPwd
+            password: that.ruleForm.inputPwd,
+            userPortrait:that.UserPortrait
           }).then(res => {
-            this.$message({
+            that.$message({
                 message: '注册成功',
                 type: 'success'
             });
-            // this.$router.push({ path: "./" });
+            this.$router.push({ path: "./" }); 
           });
         }else if(this.$refs.Verify.isPassing==false) {
            this.$message({
@@ -275,18 +293,24 @@ export default {
       }
     }
   },
-  mounted() {}
+  mounted() {
+  }
 };
 </script>
 
-
 <style lang="less" scoped>
-
 .registerBox {
   box-shadow: 0px 0px 10px #ccc;
-  padding: 50px 0;
+  padding: 20px 0;
   width: 50%;
   margin: 100px auto;
+  h3{
+    text-align: center;
+    margin-bottom: 40px;
+    letter-spacing: 1px;
+    padding-bottom:20px;
+    border-bottom:1px solid #ccc;
+  }
   .inputBox {
     width: 50%;
     margin: 0 auto;
