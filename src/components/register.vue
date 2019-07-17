@@ -112,8 +112,7 @@ export default {
             }else{
                 callback();
             }
-        })
-        
+        })  
     }
     return {
       ruleForm: {
@@ -152,7 +151,6 @@ export default {
         ]
       },
       imageUrl: " ",
-      fileName:'',
       handlerIcon: "iconfont icon-yanzhengma",
       successIcon: "iconfont icon-yanzhengma",
       background: "#cccccc",
@@ -173,14 +171,12 @@ export default {
       getTime:'获取验证码',
     };
   },
-   created() {
+  created() {
     //coolie 是否存在存在
     if (this.getCookie("UserImg") == null) {
         this.imageUrl="https://nsi.oss-cn-zhangjiakou.aliyuncs.com/nsi-user/samplePic/eg04.png"
-        // alert(22)
     } else {
         this.imageUrl = this.getCookie("UserImg"); //头像
-        // alert(25552)
     }
   },
   methods: {
@@ -189,8 +185,7 @@ export default {
     },
     //coolie 读取存在
     getCookie(name) {
-      var arr,
-        reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+      var arr,reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
       if ((arr = document.cookie.match(reg))) return unescape(arr[2]);
       else return null;
     },
@@ -235,7 +230,6 @@ export default {
         }
       });
     },
-    
     handleClick(tab, event) {
       console.log(tab, event);
     },
