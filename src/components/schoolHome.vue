@@ -78,7 +78,7 @@
                 <img src="../assets/icon-tag004.png" alt />
               </div>
               <h3 class="item-title">项目数据库</h3>
-              <div class="item-text">为国际学校禾机构提供最权威的行业数据</div>
+              <div class="item-text">为国际学校和机构提供最权威的行业数据</div>
               <span class="item-link">立即进入</span>
             </a>
             <a href="javascript:;" class="Service-item">
@@ -86,7 +86,7 @@
                 <img src="../assets/icon-tag005.png" alt />
               </div>
               <h3 class="item-title">数据可视化</h3>
-              <div class="item-text">收集整理大量数据分析数量直观展示</div>
+              <div class="item-text">收集整理大量数据分析数据直观展示</div>
               <span class="item-link">立即进入</span>
             </a>
           </div>
@@ -731,7 +731,7 @@ export default {
 .homeCenterToobar {
   width: 95%;
   margin: 35px auto 10px;
-  padding-bottom: 10px;
+  padding-bottom: 5px;
   border-bottom: 1px solid #cccccc;
   font-size: 24px;
 }
@@ -743,12 +743,13 @@ export default {
   color: #777;
 }
 .homeCenterToobar p .btnpath {
-  color: red;
-  padding-bottom: 15px;
-  border-bottom: 2px solid red;
+  color: rgb(33, 79, 137);
+  padding-bottom: 10px;
+  border-bottom: 2px solid rgb(33, 79, 137);
+  font-weight: 700;
 }
 .homeCenterToobar p span:hover {
-  color: red;
+  color: rgb(33, 79, 137);
   cursor: pointer;
 }
 .homeCenterToobar button.el-button.el-button--info {
@@ -807,6 +808,7 @@ export default {
   margin-left: 2.5%;
   font-size: 32px;
   margin-top: 25px;
+  color: rgb(33, 79, 137)
 }
 .homeInquiryBox {
   margin-top: 10px;
@@ -869,6 +871,7 @@ export default {
   height: 240px;
   margin: 0 0 10px;
   border: 1px solid #e7e7e7;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
   border-radius: 10px;
   overflow: hidden;
@@ -918,7 +921,7 @@ export default {
   color: #ffffff;
   display: none;
   padding: 6px 20px;
-  background-color: #05a6f3;
+  background-color: rgb(33, 79, 137);
   margin: 17px auto;
   font-size: 14px;
   line-height: 25px;
