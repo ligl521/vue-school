@@ -11,7 +11,7 @@
             <img v-if="imageUrl" :src="imageUrl" class="avatar">
             <i v-else class="avatar-uploader-icon upload-img"></i>  
         </el-upload>
-        <p>头像尺寸大小为150*150</p>
+        <p>推荐尺寸大小为150*150</p>
         <div class="inputBox">
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
                 <div class="FaBox">
