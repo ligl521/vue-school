@@ -99,28 +99,28 @@
                 </div>
                 <div class="tab-pane" id="concept">
                     <p class="titleM">办学理念</p>
-                    <p class="contentM">北京世青国际学校致力于将批判性研究、多远文化视角及客观评价标准紧密结合，努力为我校的每一个学生提供良好的学习机会。我们的使命在于培养原则性强，胸襟开阔的思考者，使他们能够适应多元化的国际社会，有能力改善自己的生活环境，提高自己和他人的生活质量。</p>
+                    <p class="contentM">{{schoolDetail.schoolManagement}}</p>
                     <p class="titleM"  :class="Isfeature?'show':'hide'">办学特色</p>
                     <p class="contentM">
                         <el-row style="text-align:center;margin:20px 0">
                             <el-col :span="12">
-                                <img :src="featureList1.cron1" alt="" class="img-responsive" style="height:110px">
+                                <img :src="featureList1.img" alt="" class="img-responsive" style="height:110px">
                             </el-col>
-                            <el-col :span="12" style="font-weight:bold;">{{featureList1.title1}}</el-col>
+                            <el-col :span="12" style="font-weight:bold;">{{featureList1.title}}</el-col>
                             <el-col :span="12">{{featureList1.desc}}</el-col>
                         </el-row>
                         <el-row style="text-align:center;margin:20px 0">
                             <el-col :span="12">
-                               <img :src="featureList2.cron1" alt="" class="img-responsive">
+                               <img :src="featureList2.img" alt="" class="img-responsive">
                             </el-col>
-                            <el-col :span="12" style="font-weight:bold;">{{featureList2.title1}}</el-col>
+                            <el-col :span="12" style="font-weight:bold;">{{featureList2.title}}</el-col>
                             <el-col :span="12">{{featureList2.desc}}</el-col>
                         </el-row>
                         <el-row style="text-align:center;margin:20px 0">
                             <el-col :span="12">
-                                <img :src="featureList3.cron1" alt="" class="img-responsive">
+                                <img :src="featureList3.img" alt="" class="img-responsive">
                             </el-col>
-                            <el-col :span="12" style="font-weight:bold;">{{featureList3.title1}}</el-col>
+                            <el-col :span="12" style="font-weight:bold;">{{featureList3.title}}</el-col>
                             <el-col :span="12">{{featureList3.desc}}</el-col>
                         </el-row>
                     </p>

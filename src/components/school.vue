@@ -11,8 +11,9 @@
         :trigger-on-focus="false"
         @select="handleSelect"
         @keyup.enter.native="getschool"
+        class="inputBtn"
       ></el-autocomplete>
-      <el-button id="searchBtn" type="primary" icon="el-icon-search" @click="getschool"></el-button>
+      <el-button id="searchBtn" type="primary"  @click="getschool"><i class="iconfont icon-sousuo"></i></el-button>
     </div>
     <!-- 切换按钮 -->
     <div class="toggleBut clearfix">
@@ -301,8 +302,22 @@ export default {
   margin-top: 10px;
 }
 #searchBtn {
-  padding: 12px 25px;
-  margin-left: -5px;
+    padding: 6px 15px;
+    position: relative;
+    top: 6px;
+    left: -5px;
+    border-radius: 0 4px 4px 0;
+    i{
+        font-size: 30px;
+    }
+}
+.inputBtn{
+    border-radius: 4px 0 0 4px !important;
+    border: 2px solid #214f89 !important;
+}
+.inputBtn :focus {
+    box-shadow: 0px 0px 10px #214f89 !important;
+    border-color:#fff;
 }
 .schoolDetail {
   width: 94%;
