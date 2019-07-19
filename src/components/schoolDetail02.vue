@@ -6,13 +6,13 @@
         <div class="swiper-container">
           <div class="swiper-wrapper">
             <div class="swiper-slide">
-                <img :src="schoolDetail.schoolShowOne">
+               <img :src="schoolDetail.schoolShowOne">
             </div>
             <div class="swiper-slide">
-                <img :src="schoolDetail.schoolShowTwo">
+                 <img :src="schoolDetail.schoolShowTwo">
             </div>
             <div class="swiper-slide">
-                <img :src="schoolDetail.schoolShowThird">
+               <img :src="schoolDetail.schoolShowThird">
             </div>
              <div class="swiper-slide">
                 <img :src="schoolDetail.schoolShowFour">
@@ -126,8 +126,7 @@
           </div>
           <div class="concept">
             <h1 class="schoolTranslateH1">办学理念</h1>
-            <p>北京世青国际学校致力于将批判性研究、多远文化视角及客观评价标准紧密结合，努力为我校的每一个学生提供良好的学习机会。</p>
-            <p>我们的使命在于培养原则性强，胸襟开阔的思考者，使他们能够适应多元化的国际社会，有能力改善自己的生活环境，提高自己和他人的生活质量。</p>
+            <p>{{schoolDetail.schoolManagement}}</p>
           </div>
           <div class="feature" :class="Isfeature?'show':'hide'">
               <h1 class="schoolTranslateH1">办学特色</h1>
@@ -136,21 +135,21 @@
                     <el-col :span="8">
                         <div class="grid-content bg-purple" style="text-align:center;">
                             <img :src="featureList1.cron1" alt="" class="img-responsive">
-                            <p class="title">{{featureList1.title1}}</p>
+                            <p class="title">{{featureList1.title}}</p>
                             <p class="content">{{featureList1.desc}}</p>
                         </div>
                     </el-col>
                     <el-col :span="8">
                         <div class="grid-content bg-purple" style="text-align:center;">
-                            <img :src="featureList2.cron1" alt="" class="img-responsive">
-                            <p class="title">{{featureList2.title1}}</p>
+                            <img :src="featureList2.img" alt="" class="img-responsive">
+                            <p class="title">{{featureList2.title}}</p>
                             <p class="content">{{featureList2.desc}}</p>
                         </div>
                     </el-col>
                     <el-col :span="8">
                         <div class="grid-content bg-purple" style="text-align:center;">
-                            <img :src="featureList3.cron1" alt="" class="img-responsive">
-                            <p class="title">{{featureList3.title1}}</p>
+                            <img :src="featureList3.img" alt="" class="img-responsive">
+                            <p class="title">{{featureList3.title}}</p>
                             <p class="content">{{featureList3.desc}}</p>
                         </div>
                     </el-col>
@@ -218,15 +217,6 @@
                         <el-col :span="12">是否住宿：{{admissionList3.stay}}</el-col>
                     </el-row>
                     <p>国际小学</p>
-                    <el-row width="200%">
-                        <el-col :span="12">招生对象：{{admissionList2.target}}</el-col>
-                        <el-col :span="12">授课形式：{{admissionList2.from}}</el-col>
-                         <el-col :span="12">入学要求：{{admissionList2.require}}</el-col>
-                        <el-col :span="12">班级规模：{{admissionList2.scale}}</el-col>
-                         <el-col :span="12">入学考试：{{admissionList2.exam}}</el-col>
-                        <el-col :span="12">是否住宿：{{admissionList2.stay}}</el-col>
-                    </el-row>
-                    <p>国际幼儿园</p>
                     <el-row width="200%">
                         <el-col :span="12">招生对象：{{admissionList2.target}}</el-col>
                         <el-col :span="12">授课形式：{{admissionList2.from}}</el-col>
@@ -373,8 +363,8 @@
                 var that = this;
                 //  var schoolId = that.$route.query.id
                 getSchoolDeatail({
-                    schoolId: 101378
-                    // schoolId:100053
+                    // schoolId: 100053
+                    schoolId:101386
                 }).then(res => {
                     that.schoolDetail = res.data;
                     that.asyncObject = res
@@ -461,9 +451,13 @@
                     observer:true,
                 })
             },
-            // 点击跳转到学校网站
+            // 点击跳转到学校网站 判断是否带有http 
             toWebsite(web){
-                window.open(web,"_blank")
+                if(web.substr(0, 7).toLowerCase() == "http://"){
+                    window.open(web,"_blank")
+                }else{
+                    window.open("http://"+web,"_blank")
+                }
             },
             // 点击展开更多
             lookMore() {
@@ -579,7 +573,6 @@
     
     .schoolTranslateBox {
         background: #f9f9f9;
-        /* background: #eee; */
         padding: 30px 0;
     }
     /* 基本信息 */
@@ -635,6 +628,7 @@
         width: 83%;
         margin: 0 auto 20px;
         line-height: 32px;
+        font-size: 16px;
     }
     /* 办学理念 */
     
@@ -642,6 +636,7 @@
         width: 83%;
         margin: 0 auto 20px;
         line-height: 32px;
+        font-size: 16px;
     }
     /* 办学特色 */
     .feature{
@@ -699,10 +694,6 @@
         position: relative;
         width: 83%;
         margin: 0 auto;
-    }
-    
-    .admissionBox img {
-        /* height: 600px; */
     }
     
     .admissionContent p {
