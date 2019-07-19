@@ -1,11 +1,11 @@
 <template>
-  <div class="schoolBottom">
-    <footer>
+  <div class="schoolBottom hidden-xs-only">
+    <footer style="width: 1200px;margin: 0 auto;">
       <section
         id="footer-sec"
-        style="padding: 30px 0px;width: 1200px;text-align: center;margin: 0 auto;background: rgb(33, 79, 137);"
+        style="padding: 30px 0px;min-width: 1200px;text-align: center;margin: 0 auto;background: rgb(33, 79, 137);"
       >
-        <div class="container">
+        <div class="">
           <div class="row">
             <div class="col-xs-4 col-md-4 col-lg-4 text-center footerh5">
               <h4 style="font-size: 20px;">关于新学说</h4>

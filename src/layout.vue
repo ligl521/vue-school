@@ -25,4 +25,9 @@ body {
   padding-right: 0 !important;
   overflow-y: scroll !important;
 }
+@media screen and (max-width: 768px) {
+#app {
+  margin-top: 0;
+}
+}
 </style>

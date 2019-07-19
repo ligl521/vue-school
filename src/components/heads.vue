@@ -1,5 +1,5 @@
 <template>
-  <div class="heads">
+  <div class="heads hidden-xs-only">
     <el-menu
       mode="horizontal"
       :default-active="$route.path"
@@ -179,6 +179,7 @@ export default {
       this.headimgurl = true;
     } else {
       this.userTurename = this.getCookie("User_TureName"); //名字
+      this.imgurl = this.getCookie("UserImg"); //用户头像
       this.WechatLogin = true;
       this.headimgurl = false;
     }
@@ -361,14 +362,6 @@ export default {
 };
 </script>
 <style scoped>
-@media (max-width: 768px) {
-  .heads {
-    display: none;
-  }
-  #app {
-    margin-top: -52px;
-  }
-}
 .el-dropdown-link {
   cursor: pointer;
   color: #eee;
@@ -382,6 +375,7 @@ export default {
   position: fixed;
   top: 0px;
   width: 100%;
+  min-width: 1200px;
   z-index: 999;
 }
 .opacity {
