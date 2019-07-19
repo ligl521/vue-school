@@ -24,6 +24,7 @@ export default {
 body {
   padding-right: 0 !important;
   overflow-y: scroll !important;
+  font-family: Helvetica, Tahoma, Arial, "Hiragino Sans GB", "Hiragino Sans GB W3", "Microsoft YaHei", STXihei, STHeiti, Heiti, SimSun, sans-serif;
 }
 @media screen and (max-width: 768px) {
 #app {

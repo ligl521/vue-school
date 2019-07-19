@@ -245,7 +245,7 @@ export default {
       this.SchoolCitypageNum = 1;
       this.SchoolCitySearchKey = v;
       this.getData();
-    },
+    }
     //点击学校进入详情页
     // homeListBtn(id) {
     //     this.$router.push({
@@ -454,9 +454,13 @@ export default {
       li:first-of-type {
         font-weight: 600;
         font-size: 16px;
+        color: #424242;
+        a {
+          color: #424242;
+        }
       }
       li:nth-of-type(2) {
-        color: #777;
+        color: #757575;
       }
     }
   }
@@ -495,7 +499,13 @@ export default {
 }
 .homeCenterToobar button.el-button.el-button--info {
   float: right;
-  margin-top: -8px;
+  margin-top: -4px;
+  width: 52px;
+  height: 34px;
+  padding: 0;
+  text-align: center;
+  font-size: 16px;
+  line-height: 34px;
 }
 
 /* 行业动态 */
@@ -542,10 +552,13 @@ export default {
 
 .homeInquiryBox ul li:first-of-type {
   font-size: 18px;
+  font-weight: 600;
 }
-
+.homeInquiryBox ul li:first-of-type a {
+  color: #424242;
+}
 .homeInquiryBox ul li:last-of-type {
-  color: #777;
+  color: #757575;
 }
 //鼠标进入css
 .Service-box {
