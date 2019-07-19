@@ -23,7 +23,7 @@
         @click="dialogVisible = true;get_msg()"
       >登录</el-button>
       <div class="headimgurl" round v-show="!headimgurl">
-        <img v-bind:src="imgurl" />
+        <img :src="imgurl" />
         <span class="userTurename">{{userTurename}}</span>
         <el-dropdown>
           <span class="el-dropdown-link">
@@ -185,9 +185,13 @@ export default {
       this.headimgurl = true;
     } else {
       this.userTurename = this.getCookie("User_TureName"); //名字
-      this.imgurl = this.getCookie("UserImg"); //用户头像
       this.WechatLogin = true;
       this.headimgurl = false;
+      if(this.getCookie("UserImg") == null){//用户头像
+        this.imgurl = require("../assets/tx.png")
+      }else{
+        this.imgurl = this.getCookie("UserImg"); //用户头像
+      }
     }
   },
   methods: {
@@ -425,6 +429,7 @@ export default {
   height: 32px;
   margin: 10px auto;
   border-radius: 50%;
+  background-color: #fff;
 }
 .headimgurl .userTurename {
   display: inline-block;
