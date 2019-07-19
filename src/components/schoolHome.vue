@@ -107,7 +107,7 @@
           <el-button type="info">更多</el-button>
         </div>
         <div class="homeList clearfix">
-          <div v-for="(v,i) in schoolLists" :key="i" @click="homeListBtn(v.id)">
+          <div v-for="(v,i) in schoolLists" :key="i">
             <p>
               <img v-if="v.schoolLogo? true:false" :src="v.schoolLogo" />
               <img v-if="v.schoolLogo? false:true" :src="schoolLogoUrlTwo" />
@@ -115,7 +115,7 @@
             <ul>
               <li>
                 <a
-                  :href="xinxueshuoSite+'schoolDetail02?id='+choochId"
+                  :href="xinxueshuoSite+'schoolDetail?id='+v.id"
                   target="_blank"
                 >{{v.schoolName | ellipsisName}}</a>
               </li>
@@ -174,7 +174,6 @@ export default {
         "重庆"
       ],
       index: 0,
-      choochId: 101371,
       schoolLists: [],
       SchoolCitypageNum: 1,
       SchoolCitySearchKey: "北京",
