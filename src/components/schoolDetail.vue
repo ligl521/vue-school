@@ -34,16 +34,17 @@
         <div class="schoolLogo">
             <el-row>
                 <el-col :span="6" style="text-align:center;">
-                    <img :src="schoolDetail.schoolLogo" width='170'/>
+                    <img v-if="schoolLogo"  :src="schoolLogo" width='170'/>
+                    <img v-else src="http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png" alt="" width="170">
                 </el-col>
                 <el-col :span="8" style="font-size: 25px;margin-top:60px;">
-                    {{schoolDetail.schoolName}}
+                    {{schoolDetail.schoolName | ellipsisName}}
                 </el-col>
                 <el-col :span="10"  style="font-size: 25px;margin-top:60px;">
-                   认证：<span v-for="everyApprove of approveSplit" class="approve" :key="everyApprove">{{everyApprove}}</span>
+                   认证：<span v-for="everyApprove of approveSplit" class="approve" :key="everyApprove">{{everyApprove | isZero}}</span>
                 </el-col>
                  <el-col :span="8" style="margin-top:30px;font-size: 16px;">
-                    {{schoolDetail.schoolEnglishName | isZero}}
+                    {{schoolDetail.schoolEnglishName | isZero | ellipsisEname}}
                 </el-col>
                 <el-col :span="10"  style="font-size: 20px;margin-top:30px">
                       运营状态：<span class="circle">{{schoolDetail.operationState}}</span>
@@ -71,7 +72,7 @@
                         </div>
                     </el-col>
                 </el-row>
-                <el-row>
+                <el-row style="margin-top:10px;">
                     <el-col :span="8">
                         <div class="grid-content bg-purple">
                             <p>面积（亩）：<span>{{schoolDetail.coveredArea | isZero}}</span></p>
@@ -100,7 +101,7 @@
                         </div>
                     </el-col>
                 </el-row>
-                <el-row style="margin-top:18px;">
+                <el-row style="margin-top:10px;">
                     <el-col :span="12">
                         <div class="grid-content bg-purple">
                             <p>电话：<span>{{schoolDetail.telephone | isZero}}</span></p>
@@ -113,7 +114,7 @@
                     </el-col>
                 </el-row>
             </div>
-            <h1 class="schoolTranslateH1">学校概述</h1>
+            <h1 class="schoolTranslateH1" :class="Isintro?'show':'hide'">学校概述</h1>
             <div class="intoduceJeshao"  ref="obj">
               <p :style="'height:'+activityBannerH+'px'" :class="shortContent?'show':'hide'" class="shortContent">{{schoolDetail.schoolDesc}}</p>
               <p :class="longContent?'show':'hide'" class="longContent">{{schoolDetail.schoolDesc}}</p>
@@ -124,7 +125,7 @@
             <h1 class="schoolTranslateH1">硬件设施</h1>
             <p>{{schoolDetail.hardware | isNull}}</p>
           </div>
-          <div class="concept">
+          <div class="concept" :class="Isconcept?'show':'hide'">
             <h1 class="schoolTranslateH1">办学理念</h1>
             <p>{{schoolDetail.schoolManagement}}</p>
           </div>
@@ -156,7 +157,7 @@
                 </el-row>
             </div>
           </div>
-          <div class="system">
+          <div class="system" :class="Issystem?'show':'hide'">
             <h1 class="schoolTranslateH1">课程体系</h1>
             <p>{{schoolDetail.courseSystem}}</p>
           </div>
@@ -330,6 +331,9 @@
                 countrySplit:[],
                 Ishardware:true,
                 Isfeature:true,
+                Isintro:true,
+                Isconcept:true,
+                Issystem:true,
                 featureList1:{},
                 featureList2:{},
                 featureList3:{},
@@ -338,6 +342,7 @@
                 admissionList2:{},
                 admissionList3:{},
                 schoolList:[],
+                schoolLogo:'',
             };
         },
         filters:{
@@ -357,6 +362,22 @@
                    return msg
                 }
             },
+            ellipsisName(value) {
+                if (!value) return "";
+                if (value.length > 7) {
+                    return value.slice(0, 10) + "...";
+                }else{
+                    return value;
+                }
+            },
+            ellipsisEname(Evalue){
+                if (!Evalue) return "";
+                if (Evalue.length > 10) {
+                    return Evalue.slice(0, 35) + "...";
+                }else{
+                    return Evalue;
+                }
+            }
         },
         methods: {
             getDetail() {
@@ -368,11 +389,27 @@
                     that.schoolDetail = res.data;
                     that.asyncObject = res
                     that.flag = true
+                    that.schoolLogo=res.data.schoolLogo
                     // 判断数据是否为空
                     if(that.schoolDetail.hardware=="0"){
                         this.Ishardware=false
                     }else{
                          this.Ishardware=true
+                    }
+                    if(that.schoolDetail.schoolDesc==null){
+                        this.Isintro=false
+                    }else{
+                         this.Isintro=true
+                    }
+                    if(that.schoolDetail.schoolManagement==null){
+                        this.Isconcept=false
+                    }else{
+                         this.Isconcept=true
+                    }
+                    if(that.schoolDetail.courseSystem==null){
+                        this.Issystem=false
+                    }else{
+                         this.Issystem=true
                     }
                     // 办学特色
                     if(res.data.characteristicsVo==null){
