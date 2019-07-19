@@ -244,7 +244,7 @@ export default {
       this.SchoolCitypageNum = 1;
       this.SchoolCitySearchKey = v;
       this.getData();
-    }
+    },
     //点击学校进入详情页
     // homeListBtn(id) {
     //     this.$router.push({
@@ -425,10 +425,12 @@ export default {
 .homeList {
   div {
     float: left;
-    border: 1px solid #cccccc;
+    border: 1px solid #f2eaea;
+    border-radius: 4px;
     width: 265px;
     margin: 10px;
     height: 100px;
+    background-color: #fff;
     p {
       float: left;
       width: 100px;
@@ -445,11 +447,12 @@ export default {
     }
     ul {
       float: left;
-      margin-left: 15px;
+      margin-left: 0;
       margin-top: 15px;
       line-height: 30px;
       li:first-of-type {
         font-weight: 600;
+        font-size: 16px;
       }
       li:nth-of-type(2) {
         color: #777;
@@ -634,9 +637,9 @@ export default {
 }
 
 .Service-item:hover .item-image {
-  height: 60px;
-  width: 60px;
-  line-height: 60px;
+  height: 70px;
+  width: 70px;
+  line-height: 70px;
   margin: 0 auto;
 }
 
@@ -644,6 +647,9 @@ export default {
   display: block;
 }
 
+.Service-item .item-link:hover {
+  background-color: rgb(92, 130, 175);
+}
 .Service-item:hover .item-title {
   padding: 10px 0 7px;
 }

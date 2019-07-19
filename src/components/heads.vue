@@ -1,5 +1,5 @@
 <template>
-  <div class="heads hidden-xs-only">
+  <div id="heads" class="heads hidden-xs-only">
     <el-menu
       mode="horizontal"
       :default-active="$route.path"
@@ -131,7 +131,13 @@
 import axios from "axios";
 import { constants } from "fs";
 import { setTimeout, setInterval } from "timers";
-import { wechatBind,login,getQrcode,getCheckLogin,weChatLogin } from "@/api/api";
+import {
+  wechatBind,
+  login,
+  getQrcode,
+  getCheckLogin,
+  weChatLogin
+} from "@/api/api";
 export default {
   data() {
     return {
@@ -214,19 +220,20 @@ export default {
     },
     //账号密码传给后台
     send_msg(formName) {
-        let self=this
-      if (self.ruleForm.userMail!= "" && self.ruleForm.pwd!= "") {
-          login({
-              userName:self.ruleForm.userMail,
-              passWord:self.ruleForm.pwd
-          }).then(response=>{
-            console.log(response)
+      let self = this;
+      if (self.ruleForm.userMail != "" && self.ruleForm.pwd != "") {
+        login({
+          userName: self.ruleForm.userMail,
+          passWord: self.ruleForm.pwd
+        }).then(response => {
+          console.log(response);
           if (response.code == 0) {
             self.userTurename = response.data.userTurename;
             document.cookie = "username=" + response.data.username; //用户邮箱
             document.cookie = "memberSign=" + response.data.memberSign; //用户等级
-            document.cookie ="UserVerifyCode=" + response.data.userRegistercode; //用户检验码
-            document.cookie ="User_TureName=" + response.data.userTurename; //用户真实名字
+            document.cookie =
+              "UserVerifyCode=" + response.data.userRegistercode; //用户检验码
+            document.cookie = "User_TureName=" + response.data.userTurename; //用户真实名字
             document.cookie = "UserId=" + response.data.id; //用户ID
             self.dialogVisible = false;
             self.WechatLogin = true;
@@ -246,11 +253,11 @@ export default {
       clearInterval(that.sceneStrName);
       that.totalTime = 120;
       getQrcode({}).then(function(response) {
-        console.log(response.data)
+        console.log(response.data);
         that.imgCode = response.data.qrCode;
         that.sceneStr = response.data.scenStr;
         console.log(that.sceneStr);
-        that.handleClick()
+        that.handleClick();
       });
     },
     //二维码倒计时
@@ -271,9 +278,10 @@ export default {
     set_wx() {
       let that = this;
       that.sceneStrName = window.setInterval(() => {
-          getCheckLogin({
-              sceneStr:that.sceneStr
-          }).then(function(response) {
+        getCheckLogin({
+          sceneStr: that.sceneStr
+        })
+          .then(function(response) {
             if (response.code == 0) {
               clearInterval(that.totalTimeName);
               clearInterval(that.sceneStrName);
@@ -292,16 +300,18 @@ export default {
     user_cx() {
       let that = this;
       weChatLogin({
-          OpenId:that.OpenId
-      }).then(function(response) {
+        OpenId: that.OpenId
+      })
+        .then(function(response) {
           if (response.code == 0) {
             that.userTurename = response.data.userTurename;
             document.cookie = "username=" + response.data.username; //用户邮箱
             document.cookie = "memberSign=" + response.data.memberSign; //用户等级
-            document.cookie ="UserVerifyCode=" + response.data.userRegistercode; //用户检验码
-            document.cookie ="User_TureName=" + response.data.userTurename; //用户真实名字
+            document.cookie =
+              "UserVerifyCode=" + response.data.userRegistercode; //用户检验码
+            document.cookie = "User_TureName=" + response.data.userTurename; //用户真实名字
             document.cookie = "UserId=" + response.data.id; //用户ID
-            document.cookie = "UserImg=" + that.imgurl; 
+            document.cookie = "UserImg=" + that.imgurl;
             that.dialogVisible = false;
             that.WechatLogin = true;
             that.headimgurl = false;
@@ -315,31 +325,31 @@ export default {
         });
     },
     handleClick() {
-      if(this.activeName != "first"){
-         clearInterval(this.totalTimeName);
-         clearInterval(this.sceneStrName);
-         this.totalTime = 120;
+      if (this.activeName != "first") {
+        clearInterval(this.totalTimeName);
+        clearInterval(this.sceneStrName);
+        this.totalTime = 120;
       }
-      if(this.activeName == "first"){
+      if (this.activeName == "first") {
         this.time();
         this.set_wx();
       }
     },
     // 微信绑定
-    wechat(){
-        wechatBind({
-            UserName:this.bindMail,
-            Password:this.bindPwd,
-            OpenId:this.OpenId
-        }).then(res => {
-            if(res.code==0){
-                this.user_cx()
-                console.log("绑定成功")
-                this.dialogVisible1 = false;
-            }else{
-                console.log("邮箱或密码错误")
-            }
-        })
+    wechat() {
+      wechatBind({
+        UserName: this.bindMail,
+        Password: this.bindPwd,
+        OpenId: this.OpenId
+      }).then(res => {
+        if (res.code == 0) {
+          this.user_cx();
+          console.log("绑定成功");
+          this.dialogVisible1 = false;
+        } else {
+          console.log("邮箱或密码错误");
+        }
+      });
     },
     // 点击绑定
     nowBind() {
@@ -349,7 +359,7 @@ export default {
       this.$router.push({ path: "./register" });
       this.dialogVisible = false;
       this.dialogVisible1 = false;
-    }
+    },
   },
   watch: {
     dialogVisible: function() {
@@ -358,7 +368,7 @@ export default {
         clearInterval(that.totalTimeName);
       }
     }
-  }
+  },
 };
 </script>
 <style scoped>
@@ -371,7 +381,7 @@ export default {
   vertical-align: top;
 }
 /* 导航 */
-.heads {
+.heads{
   position: fixed;
   top: 0px;
   width: 100%;
