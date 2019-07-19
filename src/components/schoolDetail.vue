@@ -361,10 +361,9 @@
         methods: {
             getDetail() {
                 var that = this;
-                //  var schoolId = that.$route.query.id
+                 var schoolId = that.$route.query.id
                 getSchoolDeatail({
-                    // schoolId: 100053
-                    schoolId:101386
+                    schoolId:schoolId
                 }).then(res => {
                     that.schoolDetail = res.data;
                     that.asyncObject = res
@@ -451,7 +450,7 @@
                     observer:true,
                 })
             },
-            // 点击跳转到学校网站 判断是否带有http 
+            // 点击跳转到学校网站 判断是否带有http  
             toWebsite(web){
                 if(web.substr(0, 7).toLowerCase() == "http://"){
                     window.open(web,"_blank")

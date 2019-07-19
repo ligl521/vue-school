@@ -48,7 +48,7 @@
               </div>
               <ul>
                 <!-- http://localhost:8080/#/schoolDetail02?id=101370 -->
-                <li class="schoolName"> <a :href="xinxueshuoSite+'schoolDetail02?id='+choochId" target="_blank">{{item.schoolName | ellipsisName}} </a></li>
+                <li class="schoolName"> <a :href="xinxueshuoSite+'schoolDetail?id='+choochId" target="_blank">{{item.schoolName | ellipsisName}} </a></li>
                 <!-- <li class="schoolName"> <a href="http://localhost:8080/#/schoolDetail02?id=101370">{{item.schoolName | ellipsisName}} </a></li> -->
                 <li>学制：<span v-for="(v,i) in item.schoolSystem" :key="i">{{v}},</span></li>
                 <li>课程：AP:美国课程</li>
@@ -63,7 +63,7 @@
         <div class="DeatailTwoLeft"><img :src='item.schoolLogo?item.schoolLogo:"http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png"' /></div>
         <div class="DeatailTwoCenter" id="DeatailTwoCenterId">
           <ul>
-            <li><a :href="xinxueshuoSite+'schoolDetail02?id='+choochId" target="_blank">{{item.schoolName}}</a></li>
+            <li><a :href="xinxueshuoSite+'schoolDetail?id='+choochId" target="_blank">{{item.schoolName}}</a></li>
             <li>{{item.schoolEnglishname | ellipsisSchoolNameTwo}}</li>
             <li>类型：<span>{{item.schoolProperties}}</span><p>学制：<span v-for="(v,i) in item.schoolSystem" :key="i">{{v}}</span></p></li>
           </ul>
