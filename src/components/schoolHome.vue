@@ -1,5 +1,29 @@
 <template>
   <div>
+    <div class="handerH5">
+      <div class="handerH5_left">
+        <img class="handerH5_left_img" src="../assets/logoh5.png" alt />
+        <span class="handerH5_left_span"></span>
+      </div>
+      <div class="handerH5_right">
+        <el-autocomplete
+          v-model="state"
+          :fetch-suggestions="querySearchAsync"
+          placeholder="请输入内容"
+          :trigger-on-focus="false"
+          @select="handleSelect"
+          @keyup.enter.native="queryBtn"
+        ></el-autocomplete>
+        <i class="el-icon-search" @click="queryBtn"></i>
+      </div>
+    </div>
+    <div class="block hidden-sm-and-up">
+      <el-carousel height="226px" arrow="never" ref="carousel">
+        <el-carousel-item v-for="(item,index) in imglist" :key="item.id" name="index">
+          <img :src="item.img" alt />
+        </el-carousel-item>
+      </el-carousel>
+    </div>
     <div class="homeBanner hidden-xs-only">
       <h1>
         <span>国际学校四库全</span>书
@@ -173,6 +197,11 @@ export default {
         "郑州",
         "重庆"
       ],
+      imglist: [
+        { img: require("../assets/bg.png") },
+        { img: require("../assets/bg1.png") },
+        { img: require("../assets/bg2.png") }
+      ],
       index: 0,
       schoolLists: [],
       SchoolCitypageNum: 1,
@@ -184,6 +213,13 @@ export default {
     };
   },
   methods: {
+    aa(index) {
+      this.setActiveItem(index);
+    },
+    setActiveItem(index) {
+      console.log(index);
+      this.$refs.carousel.setActiveItem(index);
+    },
     //请求数据
     getData() {
       //学校列表
@@ -288,6 +324,23 @@ export default {
 }
 </style>
 <style lang="less" scoped>
+.el-carousel__item img {
+  width: 100%;
+  height: auto;
+  color: #475669;
+  font-size: 14px;
+  opacity: 0.75;
+  line-height: 150px;
+  margin: 0;
+}
+
+.el-carousel__item:nth-child(2n) {
+  background-color: #99a9bf;
+}
+
+.el-carousel__item:nth-child(2n + 1) {
+  background-color: #d3dce6;
+}
 .homeBanner {
   background: url(../assets/bannerTwo.png) no-repeat;
   background-size: contain;
@@ -572,7 +625,7 @@ export default {
 }
 
 .Service-item {
-  display: block;
+  display: hidden-sm-and-up;
   width: 200px;
   padding: 30px 16px;
   text-align: center;
@@ -698,6 +751,52 @@ export default {
 }
 
 @media screen and (max-width: 768px) {
+  .handerH5 {
+    position: absolute;
+    z-index: 99;
+    top: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    display: flex;
+    padding: 0 28px;
+    .handerH5_left {
+      width: 24%;
+      margin-right: 7%;
+      .handerH5_left_img {
+        width: 56px;
+        vertical-align: top;
+        height: auto;
+        float: left;
+      }
+      .handerH5_left_span {
+        display: inline-block;
+        width: 2px;
+        height: 34px;
+        border: 1px solid #fff;
+        vertical-align: top;
+        float: right;
+      }
+    }
+    .handerH5_right {
+      width: 70%;
+      i {
+        position: absolute;
+        top: 4px;
+        right: 36px;
+        font-size: 24px;
+        color: rgb(176, 168, 168);
+      }
+    }
+  }
+
+  .el-autocomplete {
+    margin-top: -4px;
+    width: 100%;
+  }
+  .el-carousel__arrow {
+    display: none;
+  }
   .schoolHome {
     margin: 0 auto;
     width: 100%;
