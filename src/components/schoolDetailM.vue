@@ -8,7 +8,8 @@
             <div class="head">
                 <el-row>
                     <el-col :span="8">
-                            <img :src="schoolDetail.schoolLogo">
+                            <img :src="schoolDetail.schoolLogo" v-if="schoolLogo">
+                            <img src="http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png" alt="" v-else>
                     </el-col>
                     <el-col :span="16">
                             <h3 style="margin-top:20px">{{schoolDetail.schoolName}}</h3>  
@@ -59,13 +60,15 @@
             </ul>
             <div class="tab-content">
                 <div class="tab-pane active" id="summary">
-                    <p class="titleM">学校简介</p>
+                    <p class="titleM"  v-if="Isintro">学校简介</p>
+                    <p v-else></p>
                     <div  ref="obj">
                         <p :style="'height:'+activityBannerH+'px'" :class="shortContent?'show':'hide'" class="shortContent contentM">{{schoolDetail.schoolDesc}}</p>
                         <p :class="longContent?'show':'hide'" class="longContent contentM">{{schoolDetail.schoolDesc}}</p>
                         <span @click="lookMore" :class="more?'show':'hide'" class="contentM">【更多】</span>
                     </div>
-                    <p class="titleM">学校图片</p>
+                    <p class="titleM" v-if="schoolShowOne">学校图片</p>
+                    <p v-else></p>
                     <p class="contentM">
                         <span>
                             <div class="swiper-container">
@@ -98,7 +101,8 @@
                     <p class="contentM">{{schoolDetail.hardware | isNull}}</p>
                 </div>
                 <div class="tab-pane" id="concept">
-                    <p class="titleM">办学理念</p>
+                    <p class="titleM"  v-if="Isconcept">办学理念</p>
+                    <p v-else></p>
                     <p class="contentM">{{schoolDetail.schoolManagement}}</p>
                     <p class="titleM"  :class="Isfeature?'show':'hide'">办学特色</p>
                     <p class="contentM">
@@ -126,7 +130,8 @@
                     </p>
                 </div>
                 <div class="tab-pane" id="system">
-                    <p class="titleM">课程体系</p>
+                    <p class="titleM"  v-if="Issystem">课程体系</p>
+                    <p v-else></p>
                     <p class="contentM">{{schoolDetail.courseSystem}}</p>
                     <p class="titleM">师资队伍</p>
                     <el-row style="text-align:center;margin:20px 0">
@@ -250,6 +255,11 @@ export default {
         admissionList1:{},
         admissionList2:{},
         admissionList3:{},
+        Isintro:'',
+        Isconcept:'',
+        Issystem:'',
+        schoolShowOne:'',
+        schoolLogo:''
      }
     },
     filters:{
@@ -295,7 +305,11 @@ export default {
         },
          // 点击跳转到学校网站
         toWebsite(web){
-            window.open(web,"_blank")
+            if(web.substr(0, 7).toLowerCase() == "http://"){
+                window.open(web,"_blank")
+            }else{
+                window.open("http://"+web,"_blank")
+            }
         },
         // 点击展开更多
         lookMore() {
@@ -306,23 +320,28 @@ export default {
     },
     created(){
         this.schoolDetail=this.childObject.data;
+        this.Isintro=this.schoolDetail.schoolDesc
+        this.Isconcept=this.schoolDetail.schoolManagement
+        this.schoolLogo=this.schoolDetail.schoolLogo
+        this.schoolShowOne=this.schoolDetail.schoolShowOne
+        this.Issystem=this.schoolDetail.courseSystem   
         // 办学特色
-        if(this.schoolDetail.characteristicsVo==null){
+        if(this.schoolDetail.schoolCharacteristicsVo==null){
             this.Isfeature=false
         }else{
-            this.featureList1=this.schoolDetail.characteristicsVo.one
-            this.featureList2=this.schoolDetail.characteristicsVo.two
-            this.featureList3=this.schoolDetail.characteristicsVo.three
+            this.featureList1=this.schoolDetail.schoolCharacteristicsVo.one
+            this.featureList2=this.schoolDetail.schoolCharacteristicsVo.two
+            this.featureList3=this.schoolDetail.schoolCharacteristicsVo.three
         }
         // 招生信息
-        if(this.schoolDetail.enrollmentVo==null){
+        if(this.schoolDetail.studentEnrollmentVo==null){
             this.Isadmission=false
         }else{
-            this.admissionList1=this.schoolDetail.enrollmentVo.highSchool
-            this.admissionList2=this.schoolDetail.enrollmentVo.primarySchool
-            this.admissionList3=this.schoolDetail.enrollmentVo.university
-        }
-        // 年级分割
+            this.admissionList1=this.schoolDetail.studentEnrollmentVo.highSchool
+            this.admissionList2=this.schoolDetail.studentEnrollmentVo.primarySchool
+            this.admissionList3=this.schoolDetail.studentEnrollmentVo.university
+        }  
+        // 年级分割     
         var grade = this.childObject.data.schoolSystem;
         if (grade.indexOf("；") != -1) { 
             this.gradeSplit = grade.split("；");
@@ -336,10 +355,8 @@ export default {
         }else{
             this.courseSplit = course.split(";");
         }
-       
-        
     },
-    mounted(){
+    mounted(){   
         this.swiperInit()
         this.judgeIsNull()
         if (this.$refs.obj.offsetHeight > 150) {
@@ -367,7 +384,7 @@ export default {
     
     .bgImg>img {
         position: relative;
-        height: 343px;
+        height: 395px;
         top: -50px;
     }
     

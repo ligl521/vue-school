@@ -4,6 +4,8 @@ import {get, post } from '@/api/http'
 export const getSchoolLibrary = p => get('/new/school/list.do', p)
     //国际学校库首页 学校搜索
 export const getSchoolHomeSearch = p => get('/school/suggest_search.do', p)
+    //国际学校库列表页 高级搜索
+export const getadvancedSearch = p => post('/school/power_search_list.do', p)
     //国际学校库 学校详情页面
 export const getSchoolDeatail = p => get('/new/school/detail.do', p)
     //国际学校库首页 行业动态
