@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="handerH5">
+    <div class="handerH5 hidden-sm-and-up">
       <div class="handerH5_left">
         <img class="handerH5_left_img" src="../assets/logoh5.png" alt />
         <span class="handerH5_left_span"></span>
