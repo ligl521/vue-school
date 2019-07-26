@@ -242,28 +242,43 @@
 
           </div>
           <div class="process">
-              <h1 class="schoolTranslateH1">入学流程</h1>
+              <h1 class="schoolTranslateH1">申请访校</h1>
               <div class="processBox">
-                <el-form :inline="true" :model="formInline" class="demo-form-inline">
-                    <el-form-item>
+                <el-form :inline="true" :model="formInline"  :rules="rules" class="demo-form-inline" ref="formInline">
+                    <el-form-item prop="inputName">
                         <el-input v-model="formInline.inputName" placeholder="学生姓名"></el-input>
+                    </el-form-item>
+                    <el-form-item prop="inputNumber">
+                        <el-input placeholder="手机号码"  v-model="formInline.inputNumber"></el-input>
                     </el-form-item>
                     <el-form-item>
                         <el-select placeholder="在读年级" v-model="formInline.inputGrade">
-                            <el-option label="幼儿园" value='small'></el-option>
-                            <el-option label="一年级" value='one'></el-option>
+                            <el-option label="幼儿园" value='幼儿园'></el-option>
+                            <el-option label="一年级" value='一年级'></el-option>
+                            <el-option label="二年级" value='二年级'></el-option>
+                            <el-option label="三年级" value='三年级'></el-option>
+                            <el-option label="四年级" value='四年级'></el-option>
+                            <el-option label="五年级" value='五年级'></el-option>
+                            <el-option label="六年级" value='六年级'></el-option>
+                            <el-option label="七年级" value='七年级'></el-option>
+                            <el-option label="八年级" value='八年级'></el-option>
+                            <el-option label="九年级" value='九年级'></el-option>
+                            <el-option label="十年级" value='十年级'></el-option>
+                            <el-option label="十一年级" value='十一年级'></el-option>
+                            <el-option label="十二年级" value='十二年级'></el-option>
+                            <el-option label="在职人员" value='在职人员'></el-option>
                         </el-select>
                     </el-form-item>
                 </el-form>
-                <el-form :inline="true" :model="formInline">
-                    <el-form-item>
-                        <el-input placeholder="电话"  v-model="formInline.inputNumber"></el-input>
-                    </el-form-item>
-                     <el-form-item>
-                        <el-input placeholder="备注" v-model="formInline.inputRemark"></el-input>
+                <el-form :model="formInline">
+                    <el-form-item  class="remark">
+                         <el-input type="textarea" v-model="formInline.inputRemark" placeholder="备注"></el-input>
                     </el-form-item>
                 </el-form> 
-                <el-button size="medium" class="order">申请访校</el-button>
+                <div class="order">
+                    <el-button size="medium" type="primary" @click="sumbit('formInline')">立即提交</el-button>
+                    <p>请留下您的"联系方式+姓名"，预约实地体验学校！</p>
+                </div>
               </div>
           </div>
           <div class="cityschool" v-for="(item, index) in schoolList" v-if='index<3' :key="index">
@@ -326,19 +341,38 @@
     import axios from "axios";
     import SchoolFooter from "./schoolFooter.vue";
     import SchoolDetailM from "./schoolDetailM.vue";
-    import {getSchoolDeatail} from "@/api/api";
+    import {getSchoolDeatail,visitSchool} from "@/api/api";
     export default {
          components: {
             SchoolFooter,
             SchoolDetailM
         },
         data() {
+            //校验手机号
+            var phoneReg = /^[1][3,4,5,7,8][0-9]{9}$/;
+            var validatePhone = (rule, value, callback) => {
+                if (!value) {
+                    return callback(new Error("手机号码不能为空"));
+                } else if (!phoneReg.test(value)) {
+                    callback(new Error("请输入正确的手机号码"));
+                } else {
+                    callback();
+                }
+            };
             return {
                 formInline: {
                     inputName: "",
                     inputGrade: "",
                     inputNumber: "",
                     inputRemark: "",
+                },
+                rules: {
+                    inputName:[
+                         {required: true, message: "名字不能为空" }
+                    ],
+                    inputNumber: [
+                         {validator: validatePhone }
+                    ],
                 },
                 asyncObject: '',
                 flag: false,
@@ -412,11 +446,14 @@
             }
         },
         methods: {
+            handleSelect(key, keyPath) {
+                console.log(key, keyPath);
+            },
             getDetail() {
                 var that = this;
-                var schoolId = that.$route.query.id
+                // var schoolId = that.$route.query.id
                 getSchoolDeatail({
-                    schoolId:schoolId 
+                    schoolId:100053 
                 }).then(res => {
                     that.schoolDetail = res.data;
                     // 父传子
@@ -529,7 +566,37 @@
                 this.more = false;
                 this.longContent = true;
                 this.shortContent = false;
-            }
+            },
+            // 提交申请访校
+            sumbit(formName){
+                this.$refs[formName].validate((valid) => {
+                if (valid) {
+                    let that=this
+                    let schoolId = that.$route.query.id
+                    visitSchool({
+                        name:that.formInline.inputName,
+                        attend:that.formInline.inputGrade,
+                        telphone:that.formInline.inputNumber,
+                        remark:that.formInline.inputRemark,
+                        schoolId:100053
+                    }).then(res=>{
+                        if(res.code==0){
+                            this.$message({
+                                message: '恭喜你，提交申请成功',
+                                type: 'success',
+                            });
+                        }else{
+                            this.$message.error('提交申请失败,请重新填写');
+                        }
+                    })
+                } else {
+                    return false;
+                }
+                });
+            },
+            handleClick(tab, event) {
+                console.log(tab, event);
+            },
         },
         mounted() {
             // 判断pc/phone
@@ -610,12 +677,10 @@
     .schoolLogo .approve {
         background: #214f89;
         padding: 5px 8px;
-        margin: 0 5px;
+        margin-right: 7px;
         color: #fff;
         border-radius: 10px;
         font-size: 14px;
-        position: relative;
-        top: -4px;
     }
     
     .schoolLogo span.circle {
@@ -841,7 +906,8 @@
     .process .processBox {
         width: 83%;
         height: 200px;
-        box-shadow: 0px 0px 5px #ccc;
+        background: #f1f2f3;
+        box-shadow: 0px 0px 5px #dadcdf;
         margin: 0 auto 20px;
         text-align: center;
     }
@@ -850,44 +916,50 @@
         letter-spacing: 5px;
         font-size: 25px;
     }
-    
     .processBox img {
         margin-top: 40px;
         width: 600px;
         height: 120px;
     }
+    .processBox .remark{
+        width:540px;
+    }
     
     .processBox .order {
-        border: 2px solid #214f89;
-        color: #214f89;
-        padding: 10px 30px;
-        font-weight: bold;
-        letter-spacing: 3px;
-        font-size: 16px;
+        width:180px;
         position: relative;
-        top: -101px;
-        left: 290px;
+        top: -140px;
+        left: 675px;
+    }
+    .processBox .order .el-button{
+        background-color: #214f89;
+        border: 2px solid #214f89;
+        color: #fff;
+        font-size: 18px;
+        padding: 10px 45px;
+    }
+    .processBox .order p{
+        font-size: 14px;
+        margin-top: 20px;
+        color: #888a8e;
+        line-height: 25px;
     }
     .processBox .el-form:first-of-type{
         width:100%;
-        margin-top:40px;
-        margin-left:80px;
+        margin-top:35px;
+        margin-left:70px;
         display: inline-flex;
     }
     .processBox .el-form:last-of-type{
         width:100%;
-        margin-top:0px;
-        margin-left:80px;
+        margin-left:70px;
         display: inline-flex;
     }
-    .processBox .el-input,.processBox .el-select{
-        width:250px !important;
+    .processBox .el-input{
+        width:180px !important;
     }
-    
-    .el-button:hover {
-        background-color: #214f89;
-        border: 2px solid #214f89;
-        color: #fff;
+    .processBox .el-select{
+        width:160px !important;
     }
     /* 新学说分析 */
     
@@ -897,5 +969,10 @@
         border: 1px solid #ccc;
         margin: 0 auto;
         padding:20px;  
+    }
+</style>
+<style>
+    .el-textarea__inner{
+        resize:none !important;
     }
 </style>

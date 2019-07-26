@@ -20,29 +20,28 @@
             <div class="area">
                 <ul class="clearfix">
                     <li>选择地区：</li>
-                    <li  v-for="(everyArea,index) in areaSplit" :key="index" @click="clickArea($event)">{{everyArea}}</li>
+                    <li  v-for="(everyArea,index) in areaSplit" :key="index" @click="clickArea(everyArea,index)" :class="areaClass==index?'clickStyle':''">{{everyArea}}</li>
                 </ul>
             </div>
             <div class="line"></div>
             <div class="grade">
                 <ul class="clearfix">
                     <li>办学性质：</li>
-                    <li  v-for="(everySys,index) in sysSplit" :key="index" @click="clickArea($event)">{{everySys}}</li>
+                    <li  v-for="(everySys,index) in sysSplit" :key="index" @click="clickSys(everySys,index)" :class="sysClass==index?'clickStyle':''">{{everySys}}</li>
                 </ul>
             </div>
             <div class="line"></div>
             <div class="grade">
                 <ul class="clearfix">
                     <li>学制要求：</li>
-                    <li  v-for="(everyGrade,index) in gradeSplit" :key="index" @click="clickArea($event)">{{everyGrade}}</li>
+                    <li  v-for="(everyGrade,index) in gradeSplit" :key="index" @click="clickGrade(everyGrade,index)" :class="gradeClass==index?'clickStyle':''">{{everyGrade}}</li>
                 </ul>
             </div>
             <div class="line"></div>
             <div class="grade">
                 <ul class="clearfix">
                     <li>课程认证：</li>
-                    <li  v-for="(everyApprove,index) in approveSplit" :key="index" @click="clickArea($event)">{{everyApprove}}</li>
-                   
+                    <li  v-for="(everyApprove,index) in approveSplit" :key="index" @click="clickApprove(everyApprove,index)" :class="approveClass==index?'clickStyle':''">{{everyApprove}}</li>
                 </ul>
             </div>
         </div>
@@ -153,21 +152,21 @@ export default {
       schoolLogoUrlTwo:"http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png",
       xinxueshuoSite:"http://data.xinxueshuo.cn/vue-project/dist/index.html#/",
       areaSplit:[],
-      advancedList:{
-            areas: "北京;上海;天津;重庆;浙江;江苏;广东;福建;湖南;湖北;辽宁;吉林;河北;河南;山东; 陕西;甘肃;新疆;青海;山西;四川;贵州;安徽;江西;云南;西藏;广西;宁夏;海南;香港;澳门;台湾;黑龙江;内蒙古"
-        },
+      advancedList:{areas: "不限;北京;上海;天津;重庆;浙江;江苏;广东;福建;湖南;湖北;辽宁;吉林;河北;河南;山东; 陕西;甘肃;新疆;青海;山西;四川;贵州;安徽;江西;云南;西藏;广西;宁夏;海南;香港;澳门;台湾;黑龙江;内蒙古"},
       sysSplit:[],
-      sysList:{
-            sys: "民办;外籍;公办;其他"
-      },
+      sysList:{sys: "不限;民办;外籍;公办;其他"},
       gradeSplit:[],
-      gradeList:{
-            grade: "高中;初中;小学;幼儿园"
-      },
+      gradeList:{grade: "不限;高中;初中;小学;幼儿园"},
       approveSplit:[],
-      approveList:{
-            approve: "IPC;IBPYP;IBDP;AP;A-LEVEL;其他"
-      },
+      approveList:{approve: "不限;IPC;IBPYP;IBDP;AP;A-LEVEL;其他"},
+      searchArea:"",
+      searchSys:'',
+      searchGrade:'',
+      searchApprove:'',
+      areaClass:0,
+      sysClass:0,
+      gradeClass:0,
+      approveClass:0,
     };
   },
   beforeCreate() {
@@ -198,23 +197,70 @@ export default {
         });
     },
     // 高级搜索选中地区
-    clickArea(e){
-        if (e.target.className.indexOf("clickStyle") == -1) {
-            e.target.className = "clickStyle"; //切换按钮样式
-        } else {
-            e.target.className = "";//切换按钮样式
+    //  clickStyle(e){
+    //      if (e.target.className.indexOf("clickStyle") == -1) {
+    //         e.target.className = "clickStyle"; //切换按钮样式
+    //     } else {
+    //         e.target.className = "";//切换按钮样式
+    //     }
+    // },
+    clickArea(value,index){
+        this.areaClass=index
+        if(value=='不限'){
+            this.searchArea=''
+        }else{
+            this.searchArea=value
         }
+        this.advancedSearch()
     },
-    test(ar){
+    clickGrade(value,index){
+        this.gradeClass=index
+        if(value=='不限'){
+            this.searchGrade=''
+        }else{
+            this.searchGrade=value
+        }
+        this.advancedSearch()
+    },
+    clickSys(value,index){
+        this.sysClass=index
+        if(value=='不限'){
+            this.searchSys=''
+        }else{ 
+            this.searchSys=value
+        }
+        this.advancedSearch()
+    },
+    clickApprove(value,index){
+        this.approveClass=index
+        if(value=='不限'){
+            this.searchApprove=''
+        }else{
+            this.searchApprove=value
+        }
+        this.advancedSearch()
+    },
+    searchSplit(){
         this.areaSplit=this.advancedList.areas.split(";")
         this.sysSplit=this.sysList.sys.split(";")
         this.gradeSplit=this.gradeList.grade.split(";")
         this.approveSplit=this.approveList.approve.split(";")
-        // getadvancedSearch({
-        //     area:ar,
-        // }).then(res=>{
-        //     this.advancedList=res.data.list
-        // })
+    },
+    advancedSearch(){
+        getadvancedSearch({
+            area:this.searchArea,
+            system:this.searchGrade,
+            properties:this.searchSys,
+            pageNum:this.pageNum,
+            pageSize:this.pageSize,
+        }).then(res=>{
+            if(res.code==0){
+                console.log("查询成功")
+                this.schoolLists = res.data.list;
+            }else{
+                console.log("查询失败")
+            }
+        })
     },
     //搜索提示的点击操作
     handleSelect(item) {
@@ -306,7 +352,7 @@ export default {
   },
 
   mounted() {
-      this.test()
+      this.searchSplit()
   },
 
   beforeDestroy() {
