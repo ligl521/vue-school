@@ -12,8 +12,10 @@
         @select="handleSelect"
         @keyup.enter.native="getschool"
         class="inputBtn"
-      ></el-autocomplete>
-      <el-button id="searchBtn" type="primary"  @click="getschool"><i class="iconfont icon-sousuo"></i></el-button>
+      >
+      <!-- <template slot="append" id="searchBtn" type="primary"  @click="getschool">.com</template> -->
+      </el-autocomplete>
+      <el-button slot="append" id="searchBtn" type="primary"  @click="getschool"><i class="iconfont icon-sousuo"></i></el-button>
     </div>
     <div class="advancedSearch">
         <div class="searchBox">
@@ -94,8 +96,8 @@
         <div class="DeatailTwoLeft"><img :src='item.schoolLogo?item.schoolLogo:"http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png"' /></div>
         <div class="DeatailTwoCenter" id="DeatailTwoCenterId">
           <ul>
-            <li><a :href="xinxueshuoSite+'schoolDetail?id='+item.id" target="_blank">{{item.schoolName}}</a></li>
-            <li>{{item.schoolEnglishname | ellipsisSchoolNameTwo}}</li>
+            <li><a :href="xinxueshuoSite+'schoolDetail?id='+item.id" target="_blank">{{item.schoolName  | ellipsisName}}</a></li>
+            <li>{{item.schoolEnglishName | ellipsisSchoolNameTwo}}</li>
             <li>类型：<span>{{item.schoolProperties}}</span><p>学制：<span v-for="(v,i) in item.schoolSystem" :key="i">{{v}}</span></p></li>
           </ul>
         </div>
@@ -152,21 +154,21 @@ export default {
       schoolLogoUrlTwo:"http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png",
       xinxueshuoSite:"http://data.xinxueshuo.cn/vue-project/dist/index.html#/",
       areaSplit:[],
+      searchArea:"",
+      areaClass:0,
       advancedList:{areas: "不限;北京;上海;天津;重庆;浙江;江苏;广东;福建;湖南;湖北;辽宁;吉林;河北;河南;山东; 陕西;甘肃;新疆;青海;山西;四川;贵州;安徽;江西;云南;西藏;广西;宁夏;海南;香港;澳门;台湾;黑龙江;内蒙古"},
       sysSplit:[],
+      searchSys:'',
+      sysClass:0,
       sysList:{sys: "不限;民办;外籍;公办;其他"},
       gradeSplit:[],
+      searchGrade:'',
+      gradeClass:0,
       gradeList:{grade: "不限;高中;初中;小学;幼儿园"},
       approveSplit:[],
-      approveList:{approve: "不限;IPC;IBPYP;IBDP;AP;A-LEVEL;其他"},
-      searchArea:"",
-      searchSys:'',
-      searchGrade:'',
       searchApprove:'',
-      areaClass:0,
-      sysClass:0,
-      gradeClass:0,
       approveClass:0,
+      approveList:{approve: "不限;IPC;IBPYP;IBDP;AP;A-LEVEL;其他"},
     };
   },
   beforeCreate() {
@@ -237,7 +239,7 @@ export default {
             this.searchApprove=''
         }else{
             this.searchApprove=value
-        }
+        } 
         this.advancedSearch()
     },
     searchSplit(){
@@ -338,13 +340,14 @@ export default {
     },
     //切换学校列表
     toggleButTransverse: function() {
-      this.schoolDetail = false;
-      this.chageIcon = true;
+            this.schoolDetail = false;
+            this.chageIcon = true;
     },
     toggleButLongitudinal: function() {
       this.schoolDetail = true;
       this.chageIcon = false;
-    }
+    },
+    
   },
   components: {
     loding,
@@ -353,6 +356,10 @@ export default {
 
   mounted() {
       this.searchSplit()
+      if(screen.width < 768){
+        this.schoolDetail = false;
+        this.chageIcon = true;
+      }
   },
 
   beforeDestroy() {
@@ -387,6 +394,46 @@ export default {
 }; 
 </script>
 <style lang="less" scoped type="text/less">
+@media screen and (max-width: 768px)  {
+    .advancedSearch,.toggleBut,.schoolDetail,.block{
+        display:none;
+    }
+    #searchBar{
+        padding: 20px 0 10px 0;
+        text-align: center;
+        width: 80%;
+    }
+    .detailBox{
+        .DeatailTwoLeft{
+            height:100px;
+            img{
+                width:80px !important;
+            }
+        }
+        .DeatailTwoCenter ul li{
+            &:first-of-type{
+                font-size: 16px !important;
+                color: #010101;
+                margin-top: 20px;
+            }
+            &:nth-of-type(2){
+                font-size: 14px !important;
+                margin-top:10px !important;
+            }
+            &:nth-of-type(3){
+                font-size: 14px !important;
+                margin-top:10px;
+                span{
+                    margin-right:10px;
+                    padding:2px 3px !important;
+                }
+                p span{
+                    padding:2px 3px;
+                }
+            }
+        }
+    }   
+}
 .advancedSearch{
     border: 1px solid #ccc;
     width: 1000px;
@@ -451,7 +498,7 @@ export default {
   padding-top: 25px;
   text-align: center;
 }
-#schoolInput {
+#schoolInput { 
   position: relative;
   font-size: 14px;
   display: inline-block;
@@ -462,12 +509,14 @@ export default {
   line-height: 25px;
   margin-top: 10px;
 }
+#schoolInput{
+        position: relative;
+    }
 #searchBtn {
     padding: 6px 15px;
-    position: relative;
-    top: 6px;
-    left: -5px;
+    position: absolute;
     border-radius: 0 4px 4px 0;
+    height:44px;
     i{
         font-size: 30px;
     }

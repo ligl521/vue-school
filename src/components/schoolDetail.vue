@@ -33,7 +33,7 @@
         <div class="schoolId clearfix"><p>NO.{{schoolDetail.id}}</p></div>
         <div class="schoolLogo">
             <div class="schoolLeft">
-                <img v-if="schoolLogo"  :src="schoolLogo" width='170'/>
+                <img v-if="schoolLogo"  :src="schoolLogo" width='170'/>   
                 <img v-else src="http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png" alt="" width="170">
             </div>
             <div class="schoolRight">
@@ -451,9 +451,9 @@
             },
             getDetail() {
                 var that = this;
-                // var schoolId = that.$route.query.id
+                var schoolId = that.$route.query.id
                 getSchoolDeatail({
-                    schoolId:100053 
+                    schoolId:schoolId 
                 }).then(res => {
                     that.schoolDetail = res.data;
                     // 父传子
@@ -578,7 +578,7 @@
                         attend:that.formInline.inputGrade,
                         telphone:that.formInline.inputNumber,
                         remark:that.formInline.inputRemark,
-                        schoolId:100053
+                        schoolId:schoolId
                     }).then(res=>{
                         if(res.code==0){
                             this.$message({
@@ -587,7 +587,7 @@
                             });
                         }else{
                             this.$message.error('提交申请失败,请重新填写');
-                        }
+                        } 
                     })
                 } else {
                     return false;

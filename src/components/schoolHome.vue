@@ -169,7 +169,7 @@
       </div>
     </div>
     <schoolFooter />
-    <schoolFooterH5 />
+    <bottomMenuH5 />
   </div>
 </template>
 
@@ -177,10 +177,16 @@
 import schoolFooter from "./schoolFooter";
 import schoolFooterH5 from "./schoolFooterH5";
 import axios from "axios";
+import bottomMenuH5 from "./bottomMenuH5"
 import { getSchoolHomeInquiry } from "@/api/api";
 import { getSchoolCity } from "@/api/api";
 import { getSchoolHomeSearch } from "@/api/api";
 export default {
+    components: {
+        schoolFooter,
+        // schoolFooterH5
+        bottomMenuH5
+    },
   data() {
     return {
       state: "",
@@ -293,10 +299,6 @@ export default {
   },
   mounted() {
     this.getData();
-  },
-  components: {
-    schoolFooter,
-    schoolFooterH5
   },
   //学校过滤超出显示...
   filters: {
@@ -818,6 +820,9 @@ export default {
     float: none;
     height: 110px;
     border-bottom: 1px solid #eee;
+  }
+  .homeInquiryBox > div:last-of-type{
+      padding-bottom:170px;
   }
   .homeInquiryBox p {
     float: none;
