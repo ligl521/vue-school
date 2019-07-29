@@ -200,7 +200,8 @@ export default {
       imglist: [
         { img: require("../assets/bg.png") },
         { img: require("../assets/bg1.png") },
-        { img: require("../assets/bg2.png") }
+        { img: require("../assets/bg2.png") },
+        { img: require("../assets/bg3.png") }
       ],
       index: 0,
       schoolLists: [],
@@ -327,19 +328,9 @@ export default {
 .el-carousel__item img {
   width: 100%;
   height: auto;
-  color: #475669;
   font-size: 14px;
-  opacity: 0.75;
   line-height: 150px;
   margin: 0;
-}
-
-.el-carousel__item:nth-child(2n) {
-  background-color: #99a9bf;
-}
-
-.el-carousel__item:nth-child(2n + 1) {
-  background-color: #d3dce6;
 }
 .homeBanner {
   background: url(../assets/bannerTwo.png) no-repeat;
