@@ -15,6 +15,37 @@
       ></el-autocomplete>
       <el-button id="searchBtn" type="primary"  @click="getschool"><i class="iconfont icon-sousuo"></i></el-button>
     </div>
+    <div class="advancedSearch">
+        <div class="searchBox">
+            <div class="area">
+                <ul class="clearfix">
+                    <li>选择地区：</li>
+                    <li  v-for="(everyArea,index) in areaSplit" :key="index" @click="clickArea(everyArea,index)" :class="areaClass==index?'clickStyle':''">{{everyArea}}</li>
+                </ul>
+            </div>
+            <div class="line"></div>
+            <div class="grade">
+                <ul class="clearfix">
+                    <li>办学性质：</li>
+                    <li  v-for="(everySys,index) in sysSplit" :key="index" @click="clickSys(everySys,index)" :class="sysClass==index?'clickStyle':''">{{everySys}}</li>
+                </ul>
+            </div>
+            <div class="line"></div>
+            <div class="grade">
+                <ul class="clearfix">
+                    <li>学制要求：</li>
+                    <li  v-for="(everyGrade,index) in gradeSplit" :key="index" @click="clickGrade(everyGrade,index)" :class="gradeClass==index?'clickStyle':''">{{everyGrade}}</li>
+                </ul>
+            </div>
+            <div class="line"></div>
+            <div class="grade">
+                <ul class="clearfix">
+                    <li>课程认证：</li>
+                    <li  v-for="(everyApprove,index) in approveSplit" :key="index" @click="clickApprove(everyApprove,index)" :class="approveClass==index?'clickStyle':''">{{everyApprove}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
     <!-- 切换按钮 -->
     <div class="toggleBut clearfix">
       <p>
@@ -48,7 +79,7 @@
               </div>
               <ul>
                 <!-- http://localhost:8080/#/schoolDetail02?id=101370 -->
-                <li class="schoolName"> <a :href="xinxueshuoSite+'schoolDetail?id='+choochId" target="_blank">{{item.schoolName | ellipsisName}} </a></li>
+                <li class="schoolName"> <a :href="xinxueshuoSite+'schoolDetail?id='+item.id" target="_blank">{{item.schoolName | ellipsisName}} </a></li>
                 <!-- <li class="schoolName"> <a href="http://localhost:8080/#/schoolDetail02?id=101370">{{item.schoolName | ellipsisName}} </a></li> -->
                 <li>学制：<span v-for="(v,i) in item.schoolSystem" :key="i">{{v}},</span></li>
                 <li>课程：AP:美国课程</li>
@@ -63,7 +94,7 @@
         <div class="DeatailTwoLeft"><img :src='item.schoolLogo?item.schoolLogo:"http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png"' /></div>
         <div class="DeatailTwoCenter" id="DeatailTwoCenterId">
           <ul>
-            <li><a :href="xinxueshuoSite+'schoolDetail?id='+choochId" target="_blank">{{item.schoolName}}</a></li>
+            <li><a :href="xinxueshuoSite+'schoolDetail?id='+item.id" target="_blank">{{item.schoolName}}</a></li>
             <li>{{item.schoolEnglishname | ellipsisSchoolNameTwo}}</li>
             <li>类型：<span>{{item.schoolProperties}}</span><p>学制：<span v-for="(v,i) in item.schoolSystem" :key="i">{{v}}</span></p></li>
           </ul>
@@ -96,7 +127,7 @@
 <script>
 //ajax请求
 import axios from "axios";
-import { getSchoolLibrary } from "@/api/api";
+import { getSchoolLibrary,getadvancedSearch } from "@/api/api";
 import loding from "@/components/loding";
 import schoolFooter from "./schoolFooter";
 import { isUndefined } from "util";
@@ -117,10 +148,25 @@ export default {
       lodingshow: true,
       lodinghide: false,
       isclick: true,
-      choochId:101371,
       schoolLogoUrlOne: "http://data.xinxueshuo.cn/",
       schoolLogoUrlTwo:"http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png",
-      xinxueshuoSite:"http://data.xinxueshuo.cn/vue-project/dist/index.html#/"
+      xinxueshuoSite:"http://data.xinxueshuo.cn/vue-project/dist/index.html#/",
+      areaSplit:[],
+      advancedList:{areas: "不限;北京;上海;天津;重庆;浙江;江苏;广东;福建;湖南;湖北;辽宁;吉林;河北;河南;山东; 陕西;甘肃;新疆;青海;山西;四川;贵州;安徽;江西;云南;西藏;广西;宁夏;海南;香港;澳门;台湾;黑龙江;内蒙古"},
+      sysSplit:[],
+      sysList:{sys: "不限;民办;外籍;公办;其他"},
+      gradeSplit:[],
+      gradeList:{grade: "不限;高中;初中;小学;幼儿园"},
+      approveSplit:[],
+      approveList:{approve: "不限;IPC;IBPYP;IBDP;AP;A-LEVEL;其他"},
+      searchArea:"",
+      searchSys:'',
+      searchGrade:'',
+      searchApprove:'',
+      areaClass:0,
+      sysClass:0,
+      gradeClass:0,
+      approveClass:0,
     };
   },
   beforeCreate() {
@@ -149,6 +195,72 @@ export default {
           }
           cb(arr);
         });
+    },
+    // 高级搜索选中地区
+    //  clickStyle(e){
+    //      if (e.target.className.indexOf("clickStyle") == -1) {
+    //         e.target.className = "clickStyle"; //切换按钮样式
+    //     } else {
+    //         e.target.className = "";//切换按钮样式
+    //     }
+    // },
+    clickArea(value,index){
+        this.areaClass=index
+        if(value=='不限'){
+            this.searchArea=''
+        }else{
+            this.searchArea=value
+        }
+        this.advancedSearch()
+    },
+    clickGrade(value,index){
+        this.gradeClass=index
+        if(value=='不限'){
+            this.searchGrade=''
+        }else{
+            this.searchGrade=value
+        }
+        this.advancedSearch()
+    },
+    clickSys(value,index){
+        this.sysClass=index
+        if(value=='不限'){
+            this.searchSys=''
+        }else{ 
+            this.searchSys=value
+        }
+        this.advancedSearch()
+    },
+    clickApprove(value,index){
+        this.approveClass=index
+        if(value=='不限'){
+            this.searchApprove=''
+        }else{
+            this.searchApprove=value
+        }
+        this.advancedSearch()
+    },
+    searchSplit(){
+        this.areaSplit=this.advancedList.areas.split(";")
+        this.sysSplit=this.sysList.sys.split(";")
+        this.gradeSplit=this.gradeList.grade.split(";")
+        this.approveSplit=this.approveList.approve.split(";")
+    },
+    advancedSearch(){
+        getadvancedSearch({
+            area:this.searchArea,
+            system:this.searchGrade,
+            properties:this.searchSys,
+            pageNum:this.pageNum,
+            pageSize:this.pageSize,
+        }).then(res=>{
+            if(res.code==0){
+                console.log("查询成功")
+                this.schoolLists = res.data.list;
+            }else{
+                console.log("查询失败")
+            }
+        })
     },
     //搜索提示的点击操作
     handleSelect(item) {
@@ -210,9 +322,9 @@ export default {
             respons.data.list[i].authentication = cardArr3;
           }
           // cardArr3.push(cardArr1);
-        console.log(cardArr1,cardArr2,cardArr3)
+        // console.log(cardArr1,cardArr2,cardArr3)
         }
-        console.log(respons.data.list.length)
+        // console.log(respons.data.list.length)
       });
     },
     handleSizeChange(val) {
@@ -239,7 +351,9 @@ export default {
     schoolFooter
   },
 
-  mounted() {},
+  mounted() {
+      this.searchSplit()
+  },
 
   beforeDestroy() {
     // this.bus.$off('em',this.em);
@@ -270,9 +384,56 @@ export default {
       return value
     }
   }
-};
+}; 
 </script>
 <style lang="less" scoped type="text/less">
+.advancedSearch{
+    border: 1px solid #ccc;
+    width: 1000px;
+    margin: 50px auto 0;
+    .searchBox{
+        padding: 25px 20px 50px;
+        .line{
+            border-bottom: 1px dashed #c1c2c3;
+            width: 800px;
+            margin:0 0 8px 105px;
+            display: inline-block;
+        }
+        .area ul,.grade ul{
+            &.clearfix{
+                clear:both;
+                height:0;
+                content:'';
+                display:block;
+            }
+            li{
+                float:left;
+                margin:0 20px 10px 0;
+                cursor: pointer;
+                padding: 7px 10px;
+                border-radius: 2px;
+                &.clickStyle{
+                    background:#214f89;
+                    color:#fff;
+                }
+                &:first-of-type{
+                    color: #949ba1;
+                    font-size: 16px;
+                    margin-right:10px;
+                    height:70px;
+                    &:hover{
+                        background:#f5f5f5;
+                        color:#949ba1;
+                    }
+                }
+            
+            }
+        }
+        .grade ul li:first-of-type{
+            height:0
+        }
+    }
+}
 #container{
   background: #f5f5f5;
 }
@@ -482,7 +643,7 @@ export default {
 }
 @media screen and (min-width: 1200px) {
   .el-autocomplete {
-    width: 20%;
+    width: 300px;
   }
   .schoolDetailTwo {
     width: 75%;
