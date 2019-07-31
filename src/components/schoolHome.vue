@@ -169,7 +169,7 @@
       </div>
     </div>
     <schoolFooter />
-    <bottomMenuH5 />
+    <bottomMenuH5 class="bottomMenuH5"></bottomMenuH5>
   </div>
 </template>
 
@@ -327,6 +327,12 @@ export default {
 }
 </style>
 <style lang="less" scoped>
+.bottomMenuH5{
+    display: none;
+    @media screen and (max-width: 768px)  {
+        display:block;
+    }
+}
 .el-carousel__item img {
   width: 100%;
   height: auto;

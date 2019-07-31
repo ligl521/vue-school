@@ -1,8 +1,9 @@
 <template>
   <div id="container">
     <!-- <loding v-if="this.$store.state.loding"/> -->
-    <div id="searchBar">
-      <!-- 搜索学校 -->
+    <!-- 搜索学校 -->
+    <div searchBox>
+        <div id="searchBar">
       <el-autocomplete
         id="schoolInput"
         v-model="input"
@@ -13,10 +14,11 @@
         @keyup.enter.native="getschool"
         class="inputBtn"
       >
-      <!-- <template slot="append" id="searchBtn" type="primary"  @click="getschool">.com</template> -->
       </el-autocomplete>
       <el-button slot="append" id="searchBtn" type="primary"  @click="getschool"><i class="iconfont icon-sousuo"></i></el-button>
     </div>
+    </div>
+    
     <div class="advancedSearch">
         <div class="searchBox">
             <div class="area">
@@ -91,28 +93,32 @@
       </el-row>
     </div>
     <!-- 学校展示列表two -->
-    <div class="schoolDetailTwo" v-if="!schoolDetail">
-      <div class="detailBox" v-for="(item,i) in schoolLists" :key="i">
-        <div class="DeatailTwoLeft"><img :src='item.schoolLogo?item.schoolLogo:"http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png"' /></div>
-        <div class="DeatailTwoCenter" id="DeatailTwoCenterId">
-          <ul>
-            <li><a :href="xinxueshuoSite+'schoolDetail?id='+item.id" target="_blank">{{item.schoolName  | ellipsisName}}</a></li>
-            <li>{{item.schoolEnglishName | ellipsisSchoolNameTwo}}</li>
-            <li>类型：<span>{{item.schoolProperties}}</span><p>学制：<span v-for="(v,i) in item.schoolSystem" :key="i">{{v}}</span></p></li>
-          </ul>
+        <div class="schoolDetailTwo" v-if="!schoolDetail" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10" infinite-scroll-immediate="false">
+            <div class="detailBox" v-for="(item,i) in schoolLists" :key="i">
+                <div class="DeatailTwoLeft"><img :src='item.schoolLogo?item.schoolLogo:"http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png"' /></div>
+                <div class="DeatailTwoCenter" id="DeatailTwoCenterId">
+                <ul>
+                    <li><a :href="xinxueshuoSite+'schoolDetail?id='+item.id" target="_blank">{{item.schoolName  | ellipsisName}}</a></li>
+                    <li>{{item.schoolEnglishName | ellipsisSchoolNameTwo | iszero}}</li>
+                    <li>类型：<span>{{item.schoolProperties}}</span><p>学制：<span v-for="(v,i) in item.schoolSystem" :key="i">{{v}}</span></p></li>
+                </ul>
+                </div>
+                <div class="DeatailTwoRight">
+                <ul>
+                    <li>认证：<span v-for="(v,i) in item.authentication" :key="i">{{v}}</span></li>
+                    <li>建校时间：{{item.foundingTime}}</li>
+                    <li>{{item.areas03 | ellipsisAddress}}</li>
+                </ul>
+                </div>
+            </div>
         </div>
-        <div class="DeatailTwoRight">
-          <ul>
-            <li>认证：<span v-for="(v,i) in item.authentication" :key="i">{{v}}</span></li>
-            <li>建校时间：{{item.foundingTime}}</li>
-            <li>{{item.areas03 | ellipsisAddress}}</li>
-          </ul>
-        </div>
-      </div>
-    </div>
+        <p v-show="finish" style="padding: 10px 0 70px 0;">没有更多了</p>
+    <!-- <div class="back"  @click="goBack">
+		<a><i class="iconfont icon-ziyuan"></i></a>
+	</div> -->
+    <!-- 分页组件 -->
     <div class="block">
       <span class="demonstration"></span>
-      <!-- 分页组件 -->
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
@@ -122,6 +128,7 @@
         :total="total_school"
       ></el-pagination>
     </div>
+    <bottomMenuH5 class="bottomMenuH5"></bottomMenuH5>
     <schoolFooter />
   </div>
 </template>
@@ -132,8 +139,14 @@ import axios from "axios";
 import { getSchoolLibrary,getadvancedSearch } from "@/api/api";
 import loding from "@/components/loding";
 import schoolFooter from "./schoolFooter";
+import bottomMenuH5 from "./bottomMenuH5"
 import { isUndefined } from "util";
 export default {
+    components: {
+        loding,
+        schoolFooter,
+        bottomMenuH5
+    },
   data() {
     return {
       schoolDetail: true,
@@ -169,6 +182,8 @@ export default {
       searchApprove:'',
       approveClass:0,
       approveList:{approve: "不限;IPC;IBPYP;IBDP;AP;A-LEVEL;其他"},
+      loading: false, //默认是false 可以滚动哦！
+      finish:false,
     };
   },
   beforeCreate() {
@@ -176,7 +191,7 @@ export default {
   },
   created() {
     this.input = this.$route.query.item;
-    this.handleSelect();
+    // this.handleSelect();
   },
   methods: {
     querySearch(queryString, cb) {
@@ -198,14 +213,6 @@ export default {
           cb(arr);
         });
     },
-    // 高级搜索选中地区
-    //  clickStyle(e){
-    //      if (e.target.className.indexOf("clickStyle") == -1) {
-    //         e.target.className = "clickStyle"; //切换按钮样式
-    //     } else {
-    //         e.target.className = "";//切换按钮样式
-    //     }
-    // },
     clickArea(value,index){
         this.areaClass=index
         if(value=='不限'){
@@ -269,7 +276,7 @@ export default {
       console.log(111);
       this.getschool();
     },
-    getschool() {
+    schoolList() {
       //获取学校List数据(包括学校搜索)
       getSchoolLibrary({
         pageNum: this.pageNum,
@@ -278,33 +285,34 @@ export default {
       }).then(respons => {
         this.$store.commit("loding", false);
         let that = this;
-        that.schoolLists = respons.data.list;
+        that.schoolLists = that.schoolLists.concat(respons.data.list);
+        this.pageNum++
+        // console.log(respons.data.list)
+        if(respons.data.size < 24) {
+            that.finish = true; //禁用请求
+        }
+
         that.total_school = respons.data.total;
         //判断有无搜索结果
         that.total_school == 0
           ? (that.no_school = "未搜索到结果，请重新输入关键字！")
           : (that.no_school = "");
-        window.scrollTo(0, 0);
+
         //截取 幼 小 中 高
         for (var i = 0; i < respons.data.list.length; i++) {
           var str = respons.data.list[i].schoolSystem;
-          var arr1 = str.split("；");
+          if (str.search("；") != -1) {
+            var arr1 = str.split("；");
+          }else{
+            var arr1 = str.split(";");
+          }
           var arr2 = arr1.slice(0, arr1.length - 1);
           var arr3 = [];
           for (var j = 0; j < arr2.length; j++) {
             arr3.push(arr1[j].slice(0, 1));
           }
-          // respons.data.list[i].schoolSystems
-          that.schoolLists[i].schoolSystem = arr3;
+          respons.data.list[i].schoolSystem = arr3;
         }
-
-        //截取时间
-        // var CutTime = [];
-        // for (var i = 0; i < respons.data.list.length; i++) {
-        //   var str = respons.data.list[i].loadTime.substring(0,10);
-        //   CutTime.push(str);
-        //   respons.data.list[i].loadTime = CutTime[i];
-        // }
         //截取 学校 类型 民办
         var CutSchoolType = [];
         for(var i=0;i < respons.data.list.length; i++){
@@ -323,11 +331,12 @@ export default {
             var cardArr3 = cardArr2.slice(0,cardArr2.length-1);
             respons.data.list[i].authentication = cardArr3;
           }
-          // cardArr3.push(cardArr1);
-        // console.log(cardArr1,cardArr2,cardArr3)
         }
-        // console.log(respons.data.list.length)
       });
+    },
+    loadMore() {
+        console.log(9999)
+        this.schoolList();
     },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
@@ -347,18 +356,31 @@ export default {
       this.schoolDetail = true;
       this.chageIcon = false;
     },
-    
-  },
-  components: {
-    loding,
-    schoolFooter
-  },
+    // 点击搜索
+    getschool(){
+        this.schoolLists=[]
+        this.pageNum=1
+        this.schoolList();
+    },
+    // 判断是否有上一页
+    goBack: function(){
+        console.log(window.history.length)
+        if (window.history.length <= 1) {
+            window.location.href='../index.html'
+            return false
+        } else {
+            window.history.go(-1);
+        }
+    },
 
+  },
   mounted() {
       this.searchSplit()
       if(screen.width < 768){
         this.schoolDetail = false;
         this.chageIcon = true;
+      }else{
+          this.schoolList();
       }
   },
 
@@ -389,6 +411,13 @@ export default {
         return value.slice(0,100) + "...";
       }
       return value
+    },
+    iszero(obj){
+        if(obj==0){
+            return "暂无"
+        }else{
+            return obj
+        }
     }
   }
 }; 
@@ -403,36 +432,71 @@ export default {
         text-align: center;
         width: 80%;
     }
-    .detailBox{
-        .DeatailTwoLeft{
-            height:100px;
-            img{
-                width:80px !important;
-            }
-        }
-        .DeatailTwoCenter ul li{
-            &:first-of-type{
-                font-size: 16px !important;
-                color: #010101;
-                margin-top: 20px;
-            }
-            &:nth-of-type(2){
-                font-size: 14px !important;
-                margin-top:10px !important;
-            }
-            &:nth-of-type(3){
-                font-size: 14px !important;
-                margin-top:10px;
-                span{
-                    margin-right:10px;
-                    padding:2px 3px !important;
-                }
-                p span{
-                    padding:2px 3px;
+    .schoolDetailTwo{
+        .detailBox{
+            .DeatailTwoLeft{
+                height:100px;
+                img{
+                    width:80px !important;
                 }
             }
+            .DeatailTwoCenter ul li{
+                &:first-of-type{
+                    font-size: 16px !important;
+                    color: #010101;
+                    margin-top: 20px;
+                }
+                &:nth-of-type(2){
+                    font-size: 14px !important;
+                    margin-top:10px !important;
+                }
+                &:nth-of-type(3){
+                    font-size: 14px !important;
+                    margin-top:10px;
+                    span{
+                        margin-right:10px;
+                        padding:2px 3px !important;
+                    }
+                    p span{
+                        padding:2px 3px;
+                    }
+                }
+            }
+        } 
+        .loading{
+            text-align: center;
+            font-size: 16px;
+            padding: 5px;
+            color: #999;
+        }  
+    }
+     p{
+        font-size: 16px;
+        text-align: center;
+    }
+    .back{
+        z-index: 9999;
+        position: fixed;
+        right: 40px;
+        bottom: 40px;
+        a{
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            line-height: 40px;
+            background-color: #215089;
+            border-radius: 8px;
+            color: #fafafa;
+            box-shadow: 0 5px 15px 0 rgba(15,37,64,.2);
+            transition: all .3s ease 0s;
+            i{
+                font-size: 20px;
+                font-weight: 700;
+            }
         }
-    }   
+    }
+
 }
 .advancedSearch{
     border: 1px solid #ccc;

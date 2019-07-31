@@ -8,6 +8,9 @@ import 'element-ui/lib/theme-chalk/index.css';
 import 'element-ui/lib/theme-chalk/display.css';
 import router from './router/index.js'
 import store from './store/store' //引入store
+import MintUI from 'mint-ui'
+import 'mint-ui/lib/style.css'
+Vue.use(MintUI)
 
 //vuex
 import Vuex from 'vuex'

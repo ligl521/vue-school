@@ -20,7 +20,7 @@
                 </router-link>
             </el-col>
             <el-col :span="6">
-                <router-link  :to="{path:'/schoolVisual'}">
+                <router-link  :to="{path:'/schoolTalent'}">
                     <span class="iconfont icon-shuju"></span>
                     <p>项目数据库</p>
                 </router-link>

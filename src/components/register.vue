@@ -89,7 +89,7 @@ export default {
   },
   data() {
     //校验手机号
-    var phoneReg = /^[1][3,4,5,7,8][0-9]{9}$/;
+    var phoneReg = /^[1][3,4,5,7,8,6][0-9]{9}$/;
     var validatePhone = (rule, value, callback) => {
       if (!value) {
         return callback(new Error("手机号码不能为空"));
