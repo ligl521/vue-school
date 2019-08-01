@@ -2,7 +2,7 @@
   <div id="container">
     <!-- <loding v-if="this.$store.state.loding"/> -->
     <!-- 搜索学校 -->
-    <div searchBox>
+    <div class="searchBox">
         <div id="searchBar">
       <el-autocomplete
         id="schoolInput"
@@ -94,6 +94,7 @@
     </div>
     <!-- 学校展示列表two -->
         <div class="schoolDetailTwo" v-if="!schoolDetail" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10" infinite-scroll-immediate="false">
+            <span id="search_res">{{this.no_school}}</span>
             <div class="detailBox" v-for="(item,i) in schoolLists" :key="i">
                 <div class="DeatailTwoLeft"><img :src='item.schoolLogo?item.schoolLogo:"http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png"' /></div>
                 <div class="DeatailTwoCenter" id="DeatailTwoCenterId">
@@ -288,8 +289,8 @@ export default {
         that.schoolLists = that.schoolLists.concat(respons.data.list);
         this.pageNum++
         // console.log(respons.data.list)
-        if(respons.data.size < 24) {
-            that.finish = true; //禁用请求
+        if(respons.data.size < 24 & respons.data.size>0) {
+            that.finish = true;
         }
 
         that.total_school = respons.data.total;
@@ -423,14 +424,19 @@ export default {
 }; 
 </script>
 <style lang="less" scoped type="text/less">
+.bottomMenuH5{
+    display: none;
+    @media screen and(max-width: 768px){
+        display: block;
+    }
+}
 @media screen and (max-width: 768px)  {
     .advancedSearch,.toggleBut,.schoolDetail,.block{
         display:none;
     }
     #searchBar{
         padding: 20px 0 10px 0;
-        text-align: center;
-        width: 80%;
+        width: 83%;
     }
     .schoolDetailTwo{
         .detailBox{
@@ -456,6 +462,7 @@ export default {
                     span{
                         margin-right:10px;
                         padding:2px 3px !important;
+                        font-size: 14px;
                     }
                     p span{
                         padding:2px 3px;
@@ -473,6 +480,7 @@ export default {
      p{
         font-size: 16px;
         text-align: center;
+        margin-left: 3px !important;
     }
     .back{
         z-index: 9999;
@@ -588,6 +596,7 @@ export default {
 .inputBtn{
     border-radius: 4px 0 0 4px !important;
     border: 2px solid #214f89 !important;
+    width:80%;
 }
 .inputBtn :focus {
     box-shadow: 0px 0px 10px #214f89 !important;

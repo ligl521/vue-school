@@ -19,7 +19,7 @@
     </div>
     <div class="block hidden-sm-and-up">
       <el-carousel height="226px" arrow="never" ref="carousel">
-        <el-carousel-item v-for="(item,index) in imglist" :key="item.id" name="index">
+        <el-carousel-item v-for="(item,index) in imglist" :key="index" name="index">
           <img :src="item.img" alt />
         </el-carousel-item>
       </el-carousel>
@@ -150,6 +150,31 @@
         </div>
       </div>
 
+      <div class="menuList">
+          <el-row>
+              <el-col :span="6">
+                  <router-link :to="{path:'/school'}">
+                    <p class="iconfont icon-xuexiaogaikuang"></p>学校库
+                  </router-link>
+              </el-col>
+              <el-col :span="6">
+                  <router-link :to="{path:'/schoolTalent'}">
+                    <p class="iconfont icon-jigou1"></p>机构库
+                  </router-link>
+              </el-col>
+              <el-col :span="6">
+                  <router-link :to="{path:'/schoolTalent'}">
+                    <p class="iconfont icon-rencai1"></p>人才库
+                  </router-link>
+              </el-col>
+              <el-col :span="6">
+                  <router-link :to="{path:'/schoolTalent'}">
+                    <p class="iconfont icon-shuju"></p>数据库
+                  </router-link>
+              </el-col>
+          </el-row>
+      </div>
+
       <!-- 行业动态 -->
       <div class="homeInquiry">
         <h1>行业动态</h1>
@@ -207,7 +232,8 @@ export default {
         { img: require("../assets/bg.png") },
         { img: require("../assets/bg1.png") },
         { img: require("../assets/bg2.png") },
-        { img: require("../assets/bg3.png") }
+        { img: require("../assets/bg3.png") },
+        { img: require("../assets/bg4.png") }
       ],
       index: 0,
       schoolLists: [],
@@ -325,12 +351,52 @@ export default {
 .homeBnnerSearch input.el-input__inner {
   border: 1px solid #fff;
 }
+.el-carousel__indicators--horizontal {
+    left: 45%;
+    transform: translateX(-45%);
+}
 </style>
 <style lang="less" scoped>
 .bottomMenuH5{
     display: none;
     @media screen and (max-width: 768px)  {
         display:block;
+    }
+}
+.menuList{
+    display: none;
+    text-align: center;
+    @media screen and (max-width: 768px)  {
+        display:block;
+        margin:20px;
+        .el-row .el-col{
+            p{
+                text-align: center;
+                color: #fff;
+                width: 50px;
+                height: 50px;
+                line-height: 50px;
+                margin: 0 auto;
+                font-size: 30px;
+                border-radius: 15px;
+                margin-bottom:10px;
+            }
+            &:first-of-type p{
+                background: #5d7edf;
+                font-size: 40px;
+            }
+            &:nth-of-type(2) p{
+                background: #2b75dc;
+            }
+            &:nth-of-type(3) p{
+                background: #a974d7;
+            }
+            &:nth-of-type(4) p{
+                background: #1bbce9;
+                font-size: 35px;
+            }
+            
+        }
     }
 }
 .el-carousel__item img {
