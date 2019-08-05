@@ -2,8 +2,9 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import school from '@/components/school'
 import schoolTalent from '@/components/schoolTalent'
-import schoolGroup from '@/components/schoolGroup'
 import schoolDetail from '@/components/schoolDetail'
+import company from '@/components/company'
+import companyDetail from '@/components/companyDetail'
 import schoolHome from '@/components/schoolHome'
 
 import schoolDataBade from '@/components/schoolDataBade'
@@ -24,9 +25,13 @@ export default new Router({
             name: 'school',
             component: school
         }, {
-            path: '/schoolGroup',
-            name: 'schoolGroup',
-            component: schoolGroup
+            path: '/company',
+            name: 'company',
+            component: company
+        }, {
+            path: '/companyDetail',
+            name: 'companyDetail',
+            component: companyDetail
         }, {
             path: '/schoolDetail',
             name: 'schoolDetail',

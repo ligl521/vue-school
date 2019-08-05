@@ -34,3 +34,9 @@ export const weChatLogin = p => get('/user/WechatLogin.do', p)
 export const CheckImg = p => post('/manager/talent/upload.do', p)
     //申请访校
 export const visitSchool = p => post('/visit/school/save.do', p)
+    //机构列表
+export const companyList = p => get('/institution/list.do', p)
+    //机构搜索
+export const companySearch = p => get('/institution/list.do', p)
+    // 机构详情
+export const companyDetail = p => get('/institution/detail.do', p)

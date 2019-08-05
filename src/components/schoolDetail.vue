@@ -47,7 +47,7 @@
         </div>
         <div class="schoolTranslate">
           <div class="schoolTranslateBox">
-             <h1 class="schoolTranslateH1" style="margin: 0 50px 20px;">基本信息</h1>
+            <h1 class="schoolTranslateH1" style="margin: 0 50px 20px;">基本信息</h1>
             <div class="basic">
                 <el-row style="padding-top:15px;">
                     <el-col :span="7">
@@ -776,10 +776,10 @@
         width: 83%;
         margin: 40px auto 20px;
     }
-    .hardware .line{
-        border-bottom: 1px solid #a7acb1;
-        width: 83%;
-        margin: 20px auto;
+    .hardware .line{ 
+        border-bottom: 1px solid #dcdfe6;
+        width: 83% !important;
+        margin: 20px auto !important;
     }
     /* 办学理念 */
     .concept p {

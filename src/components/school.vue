@@ -1,6 +1,6 @@
 <template>
   <div id="container">
-    <!-- <loding v-if="this.$store.state.loding"/> -->
+    <loding v-if="this.$store.state.loding"/>
     <!-- 搜索学校 -->
     <div class="searchBox">
         <div id="searchBar">
@@ -100,6 +100,7 @@
                 <div class="DeatailTwoCenter" id="DeatailTwoCenterId">
                 <ul>
                     <li><a :href="xinxueshuoSite+'schoolDetail?id='+item.id" target="_blank">{{item.schoolName  | ellipsisName}}</a></li>
+                    <!-- <li><a :href="xinxueshuoSite+'schoolDetailM?id='+item.id" target="_blank">{{item.schoolName  | ellipsisName}}</a></li> -->
                     <li>{{item.schoolEnglishName | ellipsisSchoolNameTwo | iszero}}</li>
                     <li>类型：<span>{{item.schoolProperties}}</span><p>学制：<span v-for="(v,i) in item.schoolSystem" :key="i">{{v}}</span></p></li>
                 </ul>
@@ -286,7 +287,12 @@ export default {
       }).then(respons => {
         this.$store.commit("loding", false);
         let that = this;
-        that.schoolLists = that.schoolLists.concat(respons.data.list);
+        if(screen.width<768){
+            that.schoolLists = that.schoolLists.concat(respons.data.list);
+        }else{
+            that.schoolLists = respons.data.list;
+        }
+        
         this.pageNum++
         // console.log(respons.data.list)
         if(respons.data.size < 24 & respons.data.size>0) {
@@ -345,7 +351,7 @@ export default {
     //分页
     handleCurrentChange(val) {
       this.pageNum = val;
-      this.getschool(sessionStorage.getItem("iptVal"));
+      this.schoolList(sessionStorage.getItem("iptVal"));
       // window.scrollTo(0,0)
     },
     //切换学校列表
