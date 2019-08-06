@@ -7,8 +7,7 @@
               </div>
               <div class="conpanyRight">
                   <p>{{detail.name}}</p>
-                  <p>机构标签：{{detail.label}}</p>
-                  <!-- <span v-for="(everylabel,index) of labelsplit" :key="index"></span> -->
+                  <p>机构标签：<span v-for="(everylabel,index) of labelsplit" :key="index">{{everylabel}}</span></p>
               </div>
           </div>  
           <div class="detailContent">
@@ -17,7 +16,7 @@
                     <el-row>
                         <el-col :span="8">类型：<span>{{detail.type}}</span></el-col>
                         <el-col :span="8">成立时间：<span>{{detail.foundedTime}}</span></el-col>
-                        <el-col :span="8">官网：<span>{{detail.website | isZero}}</span></el-col>
+                        <el-col :span="8">官网：<span @click="toWebsite(detail.website)" class="website">{{detail.website | isZero}}</span></el-col>
                         <el-col :span="24">地址：<span>{{detail.areas01 | isOther}}{{detail.areas02 | isOther}}{{detail.areas03}}</span></el-col>
                     </el-row>
                 </div>
@@ -62,7 +61,7 @@ export default {
     data(){
         return{
             detail:{},
-            // labelsplit:[],
+            labelsplit:[],
             short:true,
             long:false,
             showMore:false,
@@ -102,17 +101,28 @@ export default {
                 }else{
                     that.introduction=true
                 }
-                // var label = res.data.label;
-                // if (label.search("；") != -1) { 
-                //     that.labelsplit = label.split("；");
-                // }else if(label.search(";") != -1){
-                //     that.labelsplit = label.split(";");
-                // }
-                // if(that.labelsplit.splice(that.labelsplit.length-1,1)===' '){
-                //     that.labelsplit = that.labelsplit.slice(0, that.labelsplit.length - 1)
-                // }
+                // 分割标签
+                var label = res.data.label;
+                that.labelsplit = label.split(";");
+                that.labelsplit = that.labelsplit.slice(0, that.labelsplit.length - 1)
+                this.$nextTick(()=>{
+                    if (this.$refs.obj.offsetHeight > 210) {
+                        this.showMore = true;
+                        this.introductionHeight=210
+                    }else{
+                        this.showMore = false;
+                    }
+                })
                 
             })
+        },
+        // 点击跳转到学校网站 判断是否带有http  
+        toWebsite(web){
+            if(web.substr(0, 7).toLowerCase() == "http://" || web.substr(0, 8).toLowerCase() == "https://"){
+                window.open(web,"_blank")
+            }else{
+                window.open("http://"+web,"_blank")
+            }
         },
         more(){
             this.short=false
@@ -122,12 +132,6 @@ export default {
     },
     mounted(){
         this.getDetail()
-        if (this.$refs.obj.offsetHeight > 210) {
-            this.showMore = true;
-            this.introductionHeight=210
-        }else{
-            this.showMore = false;
-        }
     }
 
 }
@@ -139,7 +143,7 @@ export default {
         margin:65px auto;
         border-radius: 5px;
         padding:20px 30px;
-        border:1px solid #ccc;
+        border:1px solid #ddd;
         .detailTop{
             position: relative;
             .conpanyRight p{
@@ -163,10 +167,10 @@ export default {
                         border-radius: 10px;
                         font-size: 16px;
                         text-align: center;
-                        width: 90px;
+                        padding: 5px 10px;
+                        margin: 5px 7px;
                         display: inline-block;
-                        height: 30px;
-                        line-height: 30px;
+                        letter-spacing: 1px;
                     }
                }
             }
@@ -186,17 +190,23 @@ export default {
             .basic {
                 padding:0 50px;
                 .el-row .el-col{
-                    font-size: 18px;
+                    font-size: 16px;
                     margin:10px 0;
                     span{
                         font-weight: bold;
+                        &.website{
+                            cursor: pointer;
+                            &:hover{
+                                color:#214f89;
+                            }
+                        }
                     }
                 }
             }
             .contact {
                 padding:0 50px;
                 .el-row .el-col{
-                    font-size: 18px;
+                    font-size: 16px;
                     margin:10px 0;
                     span{
                         font-weight: bold;
@@ -206,7 +216,7 @@ export default {
             .introduce{
                 padding:0 50px;
                 p{
-                    font-size: 18px;
+                    font-size: 16px;
                     line-height: 30px;
                     color: #214f89;
                     font-weight: 600;
@@ -220,14 +230,11 @@ export default {
             }
             .introduceMore{
                 padding:0 50px;
-                font-size: 18px;
+                font-size: 16px;
                 line-height: 30px;
                 p.short{
                     overflow: hidden;
                 }
-                // p.long{
-                //     height:100%;
-                // }
                 span{
                     color: #214f89;
                     font-weight: bold;
@@ -237,7 +244,7 @@ export default {
             .remark{
                 padding:0 50px;
                 p{
-                    font-size: 18px;
+                    font-size: 16px;
                     margin:10px 0;
                     line-height:30px;
                 }

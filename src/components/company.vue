@@ -2,24 +2,25 @@
     <div style="background: #f5f5f5;">
         <div class="companyGroup">
             <div class="searchBox">
-                <el-input placeholder="请输入内容" v-model="searchKey">
-                    <template slot="append"><i class="iconfont icon-sousuo"  @click="searchCompany"></i></template>
+                <el-input placeholder="请输入内容" v-model="searchKey" @keyup.enter.native="searchCompany">
+                     <el-button @click="searchCompany" slot="append"><i class="iconfont icon-sousuo"></i></el-button>
                 </el-input>
             </div>
         </div>
         <div class="companyList" v-for="(item,index) in list" :key="index">
             <div class="companyLogo">
-                <img :src='item.institutionLogo?item.institutionLogo:"http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png"' >
+                <img :src='item.institutionLogo==0 ||item.institutionLogo==null? "http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png": item.institutionLogo' >
             </div>
             <div class="companyContent">
                 <div class="contentLeft">
                     <p> <a :href="xinxueshuoSite+'companyDetail?id='+item.id" target="_blank">{{item.name}}</a></p>
-                    <p>标签：{{item.label}}</p>
-                    <p><span>类型：{{item.type}}</span><span>地址：{{item.areas}}</span></p>
+                    <p>标签：<span v-for="(everylabel,index) of item.label" :key="index" class="label">{{everylabel | isZero}}</span></p>
+                    <p>类型：{{item.type}}</p>
                 </div>
                 <div class="contentRight">
-                    <p>成立时间：{{item.foundedTime}}年</p>
-                    <p>提交时间：{{formatDateTime(new Date(Number(item.loadTime)))}}</p>
+                    <p><i class="iconfont icon-dingwei1"></i>地址：{{item.areas | isZero}}</p>
+                    <p><i class="iconfont icon-chenglishijian"></i>成立时间：{{item.foundedTime | isZero}}年</p>
+                    <p><i class="iconfont icon-dingdantijiaochenggong"></i>提交时间：{{formatDateTime(new Date(Number(item.loadTime)))}}</p>
                 </div>
             </div>
         </div>
@@ -54,10 +55,19 @@ export default {
       searchKey:'',
       list:[],
       currentPage1: 1,
-      totalNum:'',
+      totalNum:0,
       xinxueshuoSite:"http://data.xinxueshuo.cn/vue-project/dist/index.html#/",
-      searchNull:''
+      searchNull:'',
     }
+  },
+  filters:{
+      isZero(obj){
+          if(obj=="0"){
+              return '暂无'
+          }else{
+              return obj
+          }
+      },
   },
   methods:{
     getList(){
@@ -74,6 +84,21 @@ export default {
             }else{
                 that.searchNull=''
             }
+            // 分割机构标签
+            for (var i = 0; i < res.data.length; i++) {
+                var label = res.data[i].label;
+                var labelSplit = label.split(";");
+                    labelSplit = labelSplit.slice(0, labelSplit.length - 1);
+                    if(labelSplit.length>4){
+                        labelSplit= labelSplit.slice(0,4)
+                    }
+                var labelBox = [];
+                for (var j = 0; j < labelSplit.length; j++) {
+                    labelBox.push(labelSplit[j]);
+                }
+                res.data[i].label = labelBox;
+            }
+
         })
     },
     searchCompany(){
@@ -101,6 +126,7 @@ export default {
     handleCurrentChange(val) {
         this.pageNum = val;
         this.getList();
+        window.scrollTo(0,0)
     },
   },
   mounted() {
@@ -124,7 +150,7 @@ export default {
 .companyList{
     width: 60%;
     margin: 50px auto 0;
-    border: 1px solid #ccc;
+    border: 1px solid #ddd;
     position: relative;
     border-radius: 10px;
     background: #f9f9f9;
@@ -135,6 +161,8 @@ export default {
         box-shadow: 0px 0px 15px #ccc;
     }
     .companyLogo{
+        background: #fff;
+        border-radius: 10px;
         img{
             padding: 20px 30px;
             width: 200px;
@@ -146,37 +174,39 @@ export default {
         top: 25px;
         left: 200px;
         p{
-            margin-top: 18px;
+            margin-top: 20px;
+            font-size: 14px;
             &:first-of-type{
-                font-size: 20px;
-            }
-            &:nth-of-type(2){
-                font-size: 16px;
-            }
-            &:nth-of-type(3){
-                font-size: 16px;
-            }
-            span{
-                margin-right:10px;
+                font-size: 20px !important;
+                font-weight: bold;
             }
             a{
                 &:hover{
                     text-decoration: none;
                 }
             }
+            span.label{
+                background: #214f89;
+                margin-right: 7px;
+                color: #fff;
+                border-radius: 5px;
+                font-size: 14px;
+                text-align: center;
+                letter-spacing: 1px;
+            }
         }
     }
     .contentRight{
         position: absolute;
-        top: 65px;
-        right: 35px;
+        top: 25px;
+        right: 80px;
         p{
-            margin-top: 20px;
-            &:first-of-type{
-                font-size: 16px;
-            }
-            &:last-of-type{
-                font-size: 16px;
+            margin-top: 18px;
+            font-size: 14px;
+            i{
+                color: #337ab7;
+                font-size: 20px;
+                margin-right: 10px;
             }
         }
     }

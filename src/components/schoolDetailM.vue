@@ -53,10 +53,12 @@
         </div>
         <div class="tabbable" style="margin-top:-50px;">
             <ul class="nav nav-tabs">
-                <li class="active"><a href="#summary" data-toggle="tab">学校概述</a></li>
-                <li class=""><a href="#concept" data-toggle="tab">办学理念</a></li>
-                <li class=""><a href="#system" data-toggle="tab">课程体系</a></li>
-                <li class=""><a href="#admission" data-toggle="tab">招生信息</a></li>
+                <li class="active"><a href="#summary" data-toggle="tab">概述</a></li>
+                <li class=""><a href="#concept" data-toggle="tab">理念</a></li>
+                <li class=""><a href="#system" data-toggle="tab">课程</a></li>
+                <li class=""><a href="#admission" data-toggle="tab">招生</a></li>
+                <li class=""><a href="#analyse" data-toggle="tab">更多</a></li>
+                <!-- <li class="" style="width:28%"><a href="#analyse" data-toggle="tab" style="height: 60px;line-height: 42px;">新学说分析</a></li> -->
             </ul>
             <div class="tab-content">
                 <div class="tab-pane active" id="summary">
@@ -98,7 +100,7 @@
                         </span>
                     </p>
                     <p class="titleM"  :class="Ishardware?'show':'hide'">硬件设施</p>
-                    <p class="contentM">{{schoolDetail.hardware | isNull}}</p>
+                    <p class="contentM" style="padding-bottom:60px;">{{schoolDetail.hardware | isNull}}</p>
                 </div>
                 <div class="tab-pane" id="concept">
                     <p class="titleM"  v-if="Isconcept">办学理念</p>
@@ -106,25 +108,25 @@
                     <p class="contentM">{{schoolDetail.schoolManagement}}</p>
                     <p class="titleM"  :class="Isfeature?'show':'hide'">办学特色</p>
                     <p class="contentM">
-                        <el-row style="text-align:center;margin:20px 0">
+                        <el-row style="margin:20px 0">
                             <el-col :span="12">
-                                <img :src="featureList1.img" alt="" class="img-responsive" style="height:110px">
+                                <img :src="featureList1.img" alt="" class="img-responsive" style="height:105px">
                             </el-col>
-                            <el-col :span="12" style="font-weight:bold;">{{featureList1.title}}</el-col>
+                            <el-col :span="12" style="font-weight:bold;text-align:center">{{featureList1.title}}</el-col>
                             <el-col :span="12">{{featureList1.desc}}</el-col>
                         </el-row>
-                        <el-row style="text-align:center;margin:20px 0">
+                        <el-row style="margin:20px 0">
                             <el-col :span="12">
-                               <img :src="featureList2.img" alt="" class="img-responsive">
+                               <img :src="featureList2.img" alt="" class="img-responsive" style="height:105px">
                             </el-col>
-                            <el-col :span="12" style="font-weight:bold;">{{featureList2.title}}</el-col>
+                            <el-col :span="12" style="font-weight:bold;text-align:center">{{featureList2.title}}</el-col>
                             <el-col :span="12">{{featureList2.desc}}</el-col>
                         </el-row>
-                        <el-row style="text-align:center;margin:20px 0">
+                        <el-row style="margin:20px 0">
                             <el-col :span="12">
-                                <img :src="featureList3.img" alt="" class="img-responsive">
+                                <img :src="featureList3.img" alt="" class="img-responsive" style="height:105px">
                             </el-col>
-                            <el-col :span="12" style="font-weight:bold;">{{featureList3.title}}</el-col>
+                            <el-col :span="12" style="font-weight:bold;text-align:center">{{featureList3.title}}</el-col>
                             <el-col :span="12">{{featureList3.desc}}</el-col>
                         </el-row>
                     </p>
@@ -218,8 +220,14 @@
                             </el-col>
                         </el-row>
                     </p>
+                </div>
+                <div class="tab-pane" id="analyse">
+                    <p class="titleM">访校信息</p>
+                    <div class="analyseBox"></div>
+                    <p class="titleM">更多信息</p>
+                    <div class="analyseBox"></div>
                     <p class="titleM">新学说分析</p>
-                    <p class="contentM">{{schoolDetail.companyAnalysis}}</p>
+                    <div class="analyseBox" style="margin-bottom:60px;">{{schoolDetail.companyAnalysis}}</div>
                 </div>
             </div>
         </div>
@@ -441,7 +449,12 @@ export default {
         border: none;
         border-bottom-color: transparent;
     }
+
     
+    .tabbable ul li{
+        width:20%;
+        text-align: center;
+    }
     .tabbable p.titleM {
         padding: 5px 0;
         font-weight: bold;
@@ -449,7 +462,7 @@ export default {
         background: -webkit-linear-gradient(left, #6b83a2 40%, #214f89);
         width: 22%;
         text-align: center;
-        margin: 15px 20px;
+        margin: 30px 20px 15px;
         letter-spacing: 1px;
     }
     
@@ -503,6 +516,18 @@ export default {
     #admission .chineseName {
         margin: 5px 0;
         font-weight: bold
+    }
+    .analyseBox{
+        height: 150px;
+        width: 90%;
+        border: 1px solid #ccc;
+        margin: 0 auto;
+    }
+    .footer{
+        position: fixed;
+        bottom:0;
+        width:100%;
+        z-index: 999;
     }
     
     .footer .order {

@@ -869,7 +869,7 @@
     .admission .admissionContent {
         position: absolute;
         top: 47%;
-        left: 62%;
+        left: 53%;
         transform: translateY(-50%);
     }
     

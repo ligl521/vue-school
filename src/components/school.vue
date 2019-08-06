@@ -331,7 +331,6 @@ export default {
         for(var i=0;i<respons.data.list.length;i++){
           var cardArr1 = respons.data.list[i].authentication;
           if(cardArr1 == "无" || cardArr1 == "0"){
-
             respons.data.list[i].authentication = "暂时无认证；".split("；").slice(0,1)
           }else{
             var cardArr2 = cardArr1.split("；");
