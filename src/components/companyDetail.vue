@@ -90,8 +90,7 @@ export default {
             let that=this
             let companyId=that.$route.query.id
             companyDetail({
-                // institutionId:companyId,
-                institutionId:100216,
+                institutionId:companyId,
             }).then(res=>{
                 that.detail=res.data
                 that.introduction= that.detail.introduction
