@@ -370,6 +370,7 @@ export default {
       let that = this;
       if (that.dialogVisible == false) {
         clearInterval(that.totalTimeName);
+        clearInterval(that.sceneStrName);
       }
     }
   },
