@@ -36,16 +36,11 @@ export const CheckImg = p => post('/manager/talent/upload.do', p)
 export const visitSchool = p => post('/visit/school/save.do', p)
     //机构列表
 export const companyList = p => get('/institution/list.do', p)
-<<<<<<< HEAD
     // 机构智能搜索
 export const suggestSearch = p => get('/institution/suggest_search.do', p)
     // 机构详情
 export const companyDetail = p => get('/institution/detail.do', p)
     // 同城学校
 export const citySchool = p => get('/new/school/find_city_wide.do', p)
-=======
-    // 机构详情
-export const companyDetail = p => get('/institution/detail.do', p)
     //四库全书-数据关联
 export const relation = p => get('/Relation/search.do', p)
->>>>>>> 73de490c1d34c44806b32b14f3443af626b41466

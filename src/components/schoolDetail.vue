@@ -340,11 +340,7 @@
     import axios from "axios";
     import SchoolFooter from "./schoolFooter.vue";
     import SchoolDetailM from "./schoolDetailM.vue";
-<<<<<<< HEAD
-    import {getSchoolDeatail,visitSchool,citySchool} from "@/api/api";
-=======
-    import {getSchoolDeatail,visitSchool,relation,companyDetail} from "@/api/api";
->>>>>>> 73de490c1d34c44806b32b14f3443af626b41466
+    import {getSchoolDeatail,visitSchool,relation,companyDetail,citySchool} from "@/api/api";
     export default {
          components: {
             SchoolFooter,
