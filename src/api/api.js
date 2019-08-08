@@ -36,7 +36,7 @@ export const CheckImg = p => post('/manager/talent/upload.do', p)
 export const visitSchool = p => post('/visit/school/save.do', p)
     //机构列表
 export const companyList = p => get('/institution/list.do', p)
-    //机构搜索
-export const companySearch = p => get('/institution/list.do', p)
     // 机构详情
 export const companyDetail = p => get('/institution/detail.do', p)
+    //四库全书-数据关联
+export const relation = p => get('/Relation/search.do', p)

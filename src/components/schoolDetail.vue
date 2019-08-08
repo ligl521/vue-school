@@ -323,6 +323,25 @@
             <h1 class="schoolTranslateH1">新学说分析</h1>
             <div class="analyzeContent">{{schoolDetail.companyAnalysis}}</div>
           </div>
+          <div class="analyze">
+            <h1 class="schoolTranslateH1">相关机构</h1>
+                <ul class="schoolTranslateH1_ul" >
+                       <el-popover v-for="(item,i) in relation_list" :key="i" 
+                            placement="top-start"
+                            :title="popover_title"
+                            width="400"
+                            trigger="hover">
+                            <div class="popover_box">
+                               <img class="popover_img" :src="popover_logo" alt="">
+                               <div>
+                                <p class="popover_p">{{popover_service}}</p>
+                                <a class="popover_a"  :href="xinxueshuoSite+'companyDetail?id='+item.c02" target="_blank">查看更多</a>
+                               </div>
+                            </div>
+                            <a class="schoolTranslateH1_ula" @mouseover="companyDetail_val(item.c02)" :href="xinxueshuoSite+'companyDetail?id='+item.c02" target="_blank" slot="reference">{{item.c02}}</a>
+                        </el-popover>
+                </ul>
+          </div>
         </div>
       </div>
     
@@ -341,7 +360,7 @@
     import axios from "axios";
     import SchoolFooter from "./schoolFooter.vue";
     import SchoolDetailM from "./schoolDetailM.vue";
-    import {getSchoolDeatail,visitSchool} from "@/api/api";
+    import {getSchoolDeatail,visitSchool,relation,companyDetail} from "@/api/api";
     export default {
          components: {
             SchoolFooter,
@@ -360,6 +379,7 @@
                 }
             };
             return {
+                visible: false,
                 formInline: {
                     inputName: "",
                     inputGrade: "",
@@ -408,7 +428,15 @@
                 foreignTeacherNum:'',
                 teacherStuRatio:'',
                 nationalityOfStudents:'',
+                xinxueshuoSite:"http://data.xinxueshuo.cn/vue-project/dist/index.html#/",
+                relation_list:[],//相关机构
+                popover_title:"",
+                popover_logo:"",
+                popover_service:""
             };
+        },
+        created(){
+            this.relation_val()
         },
         filters:{
             // 模块
@@ -448,6 +476,36 @@
         methods: {
             handleSelect(key, keyPath) {
                 console.log(key, keyPath);
+            },
+            relation_val(){
+                // relation({
+                //      type:"学校-机构",
+                //      searchId:this.$route.query.id
+                // }).then(res => {
+                //     console.log(res)
+                // })
+                axios({
+                    method:"get",
+                    url:"http://192.168.0.34:8080/nsi-1.0/Relation/search.do",
+                    params:{
+                        type:"学校-机构",
+                        searchId:this.$route.query.id
+                    },
+                }).then(res => {
+                   console.log(res.data)
+                   this.relation_list = res.data.data
+                   console.log(this.relation_list)
+                })
+            },
+            companyDetail_val(el){
+                companyDetail({
+                     institutionId:el
+                }).then(res => {
+                   console.log(res.data)
+                   this.popover_title = res.data.name //title
+                   this.popover_logo = res.data.institutionLogo //logo
+                   this.popover_service = res.data.service //介绍
+                })
             },
             getDetail() {
                 var that = this;
@@ -597,6 +655,7 @@
             handleClick(tab, event) {
                 console.log(tab, event);
             },
+            
         },
         mounted() {
             // 判断pc/phone
@@ -970,9 +1029,49 @@
         margin: 0 auto;
         padding:20px;  
     }
+    /* 相关机构 */
+   .schoolTranslateH1_ul{
+       width: 83%; 
+       margin: 0 auto;
+       padding: 20px;
+    }
+   .schoolTranslateH1_ul  .schoolTranslateH1_ula{
+        background: #214f89;
+        padding: 5px 8px;
+        margin-right: 7px;
+        color: #fff;
+        border-radius: 10px;
+        font-size: 14px;
+    }
+    .popover_box{
+       padding:0 10px;
+       display: flex
+    }
+    .popover_box .popover_img {
+      width:100px;
+      height:100px;
+      margin-right:10px
+    }
+    .popover_box .popover_p{
+        overflow:hidden;
+        height:60px;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+    }
+    .popover_box .popover_a{
+        display: block;
+        text-align: right;
+        margin-top: 5px;
+        text-decoration:underline 
+    }
 </style>
 <style>
     .el-textarea__inner{
         resize:none !important;
+    }
+    .el-popover__title{
+        text-align: center!important;
     }
 </style>
