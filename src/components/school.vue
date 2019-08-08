@@ -266,6 +266,11 @@ export default {
             pageSize:this.pageSize,
         }).then(res=>{
             if(res.code==0){
+                this.total_school = res.data.total;
+                //判断有无搜索结果
+                this.total_school == 0
+                ? (this.no_school = "未搜索到结果，请重新输入关键字！")
+                : (this.no_school = "");
                 console.log("查询成功")
                 this.schoolLists = res.data.list;
             }else{

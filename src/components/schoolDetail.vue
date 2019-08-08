@@ -265,7 +265,6 @@
                             <el-option label="十年级" value='十年级'></el-option>
                             <el-option label="十一年级" value='十一年级'></el-option>
                             <el-option label="十二年级" value='十二年级'></el-option>
-                            <el-option label="在职人员" value='在职人员'></el-option>
                         </el-select>
                     </el-form-item>
                 </el-form>
@@ -280,32 +279,14 @@
                 </div>
               </div>
           </div>
-          <div class="cityschool" v-for="(item, index) in schoolList" v-if='index<3' :key="index">
+          <div class="cityschool">
               <h1 class="schoolTranslateH1">同城学校</h1>
               <el-row :gutter="20" style="width: 90%;margin: 0 auto;">
-                <el-col :span="8"  class="imgbox">
+                <el-col :span="8"  class="imgbox" v-for="(item, index) in schoolList" v-if='index<3' :key="index">
                     <div class="grid-content bg-purple" style="text-align:center;">
-                        <img src="../assets/school.png" alt="" width="150">
-                        <p class="chineseName">北京世青国际学校</p>
-                        <p class="englishName">Beijing World Youth Academy</p>
-                    </div>
-                </el-col>
-                <el-col :span="8" class="imgbox">
-                    <div class="grid-content bg-purple" style="text-align:center;">
-                        <!-- <p class="imgbox"> -->
-                            <img src="../assets/school.png" alt=""  width="150">
-                        <!-- </p> -->
-                        <p class="chineseName">北京世青国际学校</p>
-                        <p class="englishName">Beijing World Youth Academy</p>
-                    </div>
-                </el-col>
-                <el-col :span="8" class="imgbox">
-                    <div class="grid-content bg-purple" style="text-align:center;">
-                         <!-- <p class="imgbox"> -->
-                             <img src="../assets/school.png" alt=""  width="150">
-                         <!-- </p> -->
-                       <p class="chineseName">北京世青国际学校</p>
-                        <p class="englishName">Beijing World Youth Academy</p>
+                        <img :src="item.schoolLogo?item.schoolLogo:'http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png'" alt="" width="150">
+                        <p class="chineseName">{{item.schoolName | ellipsisName}}</p>
+                        <p class="englishName">{{item.schoolEnglishName | isZero | ellipsisEname}}</p>
                     </div>
                 </el-col>
             </el-row>
@@ -340,7 +321,7 @@
     import axios from "axios";
     import SchoolFooter from "./schoolFooter.vue";
     import SchoolDetailM from "./schoolDetailM.vue";
-    import {getSchoolDeatail,visitSchool} from "@/api/api";
+    import {getSchoolDeatail,visitSchool,citySchool} from "@/api/api";
     export default {
          components: {
             SchoolFooter,
@@ -429,7 +410,7 @@
             // 学校名字长度限制
             ellipsisName(value) {
                 if (!value) return "";
-                if (value.length > 8) {
+                if (value.length > 10) {
                     return value.slice(0, 10) + "...";
                 }else{
                     return value;
@@ -437,8 +418,8 @@
             },
             ellipsisEname(Evalue){
                 if (!Evalue) return "";
-                if (Evalue.length > 10) {
-                    return Evalue.slice(0, 35) + "...";
+                if (Evalue.length > 20) {
+                    return Evalue.slice(0, 60) + "...";
                 }else{
                     return Evalue;
                 }
@@ -522,17 +503,17 @@
                     }else{
                         that.courseSplit = course.split(";");
                     }
-                    // 元素加载完毕之后再执行 banner轮播 展开更多
-                    this.$nextTick(()=>{
-                        this.swiperInit()
-                        if (this.$refs.obj.offsetHeight > 200) {
-                            this.more = true;
-                            this.activityBannerH=200
-                        }else{
-                            this.more = false;
-                        }
-                    })
+                    
                 });
+            },
+            getCitySchool(){
+                let that=this
+                var schoolId = that.$route.query.id
+                 citySchool({
+                     id:schoolId
+                 }).then(res=>{
+                     that.schoolList=res.data
+                 })
             },
              // swiper banner轮播
             swiperInit(){
@@ -608,8 +589,18 @@
             } else {
                 this.pcSee = true
                 this.mobSee = false
+                this.$nextTick(()=>{
+                    if (this.$refs.obj.offsetHeight > 200) {
+                        this.more = true;
+                        this.activityBannerH=200
+                    }else{
+                        this.more = false;
+                    }
+                })
             } 
             this.getDetail();
+            this.getCitySchool()
+            this.swiperInit()
         },
     };
 </script>
@@ -894,6 +885,10 @@
         font-size: 20px;
         border-radius: 5px;
     }
+    .cityschool .imgbox img{
+        width:150px;
+        height:150px;
+    }
     
     .cityschool p.chineseName {
         margin: 15px 0;
@@ -902,6 +897,7 @@
     .cityschool p.englishName {
         line-height: 23px;
         font-size: 14px;
+        height: 45px;
     }
     /* 入学流程 */
     

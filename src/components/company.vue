@@ -2,9 +2,9 @@
     <div style="background: #f5f5f5;">
         <div class="companyGroup">
             <div class="searchBox">
-                <el-input placeholder="请输入内容" v-model="searchKey" @keyup.enter.native="searchCompany">
+                <el-autocomplete placeholder="请输入内容" v-model="searchKey" @keyup.enter.native="searchCompany"  :fetch-suggestions="getSuggestSearch" @select="handleSelect" :trigger-on-focus="false">
                      <el-button @click="searchCompany" slot="append"><i class="iconfont icon-sousuo"></i></el-button>
-                </el-input>
+                </el-autocomplete>
             </div>
         </div>
         <div class="companyList" v-for="(item,index) in list" :key="index">
@@ -19,7 +19,7 @@
                 </div>
                 <div class="contentRight">
                     <p><i class="iconfont icon-dingwei1"></i>地址：{{item.areas | isZero}}</p>
-                    <p><i class="iconfont icon-chenglishijian"></i>成立时间：{{item.foundedTime | isZero}}年</p>
+                    <p><i class="iconfont icon-chenglishijian"></i>成立时间：{{item.foundedTime | isZero}}</p>
                     <p><i class="iconfont icon-dingdantijiaochenggong"></i>提交时间：{{formatDateTime(new Date(Number(item.loadTime)))}}</p>
                 </div>
             </div>
@@ -43,7 +43,7 @@
 
 <script>
 import schoolFooter from './schoolFooter'
-import {companyList} from "@/api/api";
+import {companyList,suggestSearch} from "@/api/api";
 export default {
     components:{
         schoolFooter
@@ -68,6 +68,9 @@ export default {
               return obj
           }
       },
+  },
+  created() {
+    this.searchKey = this.$route.query.item;
   },
   methods:{
     getList(){
@@ -104,6 +107,19 @@ export default {
     searchCompany(){
         this.getList()
     },
+    getSuggestSearch(queryString, cb){
+        suggestSearch({
+            keyword:this.searchKey
+        }).then(res=>{
+            var arr = [];
+            for (var i = 0; i < res.data.length; i++) {
+                let a1 = {}; //创建对象
+                a1.value = res.data[i];
+                arr.push(a1);
+            }
+            cb(arr);
+        })
+    },
     // 时间戳
     formatDateTime(inputTime) {
         var date = new Date(inputTime);
@@ -128,7 +144,13 @@ export default {
         this.getList();
         window.scrollTo(0,0)
     },
+    // 搜索提示
+    handleSelect(item) {
+        console.log(item);
+        this.getList()
+    }
   },
+  
   mounted() {
       this.getList()
   },
@@ -138,13 +160,16 @@ export default {
 .companyGroup{
     text-align: center;
     .searchBox{
-        width: 450px;
         display: inline-block;
         margin-top: 50px;
-        i{
-            font-size: 40px;
-            color: #fff;
+        .el-autocomplete{
+            width: 450px;
+             i{
+                font-size: 40px;
+                color: #fff;
+            }
         }
+       
     }
 }
 .companyList{
@@ -164,15 +189,15 @@ export default {
         background: #fff;
         border-radius: 10px;
         img{
-            padding: 20px 30px;
-            width: 200px;
+            padding: 20px;
+            width: 170px;
             height:170px;
         }
     }
     .contentLeft{
         position: absolute;
         top: 25px;
-        left: 200px;
+        left: 180px;
         p{
             margin-top: 20px;
             font-size: 14px;

@@ -36,7 +36,9 @@ export const CheckImg = p => post('/manager/talent/upload.do', p)
 export const visitSchool = p => post('/visit/school/save.do', p)
     //机构列表
 export const companyList = p => get('/institution/list.do', p)
-    //机构搜索
-export const companySearch = p => get('/institution/list.do', p)
+    // 机构智能搜索
+export const suggestSearch = p => get('/institution/suggest_search.do', p)
     // 机构详情
 export const companyDetail = p => get('/institution/detail.do', p)
+    // 同城学校
+export const citySchool = p => get('/new/school/find_city_wide.do', p)
