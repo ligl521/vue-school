@@ -289,16 +289,13 @@ export default {
         let that = this;
         if(screen.width<768){
             that.schoolLists = that.schoolLists.concat(respons.data.list);
+            this.pageNum++
+            if(respons.data.size < 24 & respons.data.size>0) {
+                that.finish = true;
+            }
         }else{
             that.schoolLists = respons.data.list;
         }
-        
-        this.pageNum++
-        // console.log(respons.data.list)
-        if(respons.data.size < 24 & respons.data.size>0) {
-            that.finish = true;
-        }
-
         that.total_school = respons.data.total;
         //判断有无搜索结果
         that.total_school == 0

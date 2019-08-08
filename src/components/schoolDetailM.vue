@@ -51,14 +51,13 @@
                 </div>
             </div>
         </div>
-        <div class="tabbable" style="margin-top:-50px;">
-            <ul class="nav nav-tabs">
+        <div class="tabbable" >
+            <ul class="nav nav-tabs"  id="navfixed">
                 <li class="active"><a href="#summary" data-toggle="tab">概述</a></li>
                 <li class=""><a href="#concept" data-toggle="tab">理念</a></li>
                 <li class=""><a href="#system" data-toggle="tab">课程</a></li>
                 <li class=""><a href="#admission" data-toggle="tab">招生</a></li>
                 <li class=""><a href="#analyse" data-toggle="tab">更多</a></li>
-                <!-- <li class="" style="width:28%"><a href="#analyse" data-toggle="tab" style="height: 60px;line-height: 42px;">新学说分析</a></li> -->
             </ul>
             <div class="tab-content">
                 <div class="tab-pane active" id="summary">
@@ -122,7 +121,7 @@
                             <el-col :span="12" style="font-weight:bold;text-align:center">{{featureList2.title}}</el-col>
                             <el-col :span="12">{{featureList2.desc}}</el-col>
                         </el-row>
-                        <el-row style="margin:20px 0">
+                        <el-row style="margin:20px 0;padding-bottom:50px;">
                             <el-col :span="12">
                                 <img :src="featureList3.img" alt="" class="img-responsive" style="height:105px">
                             </el-col>
@@ -136,7 +135,7 @@
                     <p v-else></p>
                     <p class="contentM">{{schoolDetail.courseSystem}}</p>
                     <p class="titleM">师资队伍</p>
-                    <el-row style="text-align:center;margin:20px 0">
+                    <el-row style="text-align:center;margin:40px 0">
                         <el-col :span="12">
                             <p><i class="iconfont icon-jixinrenshu"></i></p>
                             <p class="number">{{schoolDetail.students}}</p>
@@ -146,12 +145,12 @@
                             <p><i class="iconfont icon-renshutongji"></i></p>
                             <p class="number">{{schoolDetail.teacherNum}}</p>
                             <p class="title">教师数量</p></el-col>
-                        <el-col :span="12" style="margin-top:30px;">
+                        <el-col :span="12" style="margin-top:60px;">
                             <p><i class="iconfont icon-guojia"></i></p>
                             <p class="number">{{schoolDetail.nationalityOfStudents}}个国家</p>
                             <p class="title">学生国籍</p>
                         </el-col>
-                        <el-col :span="12" style="margin-top:30px;">
+                        <el-col :span="12" style="margin-top:60px;padding-bottom:80px;">
                             <p><i class="iconfont icon-fenchengbili"></i></p>
                             <p class="number">{{schoolDetail.teacherStuRatio}}</p>
                             <p class="title">师生比</p>
@@ -195,6 +194,47 @@
                             </el-row>
                         </span>
                     </p>
+                    <p class="titleM">申请访校</p>
+                    <p class="contentM">
+                        <span>
+                            <div class="applyBox">
+                                 <el-form :model="formInline"  :rules="rules" class="demo-form-inline" ref="formInline">
+                                    <el-form-item prop="inputName">
+                                        <el-input v-model="formInline.inputName" placeholder="学生姓名"></el-input>
+                                    </el-form-item>
+                                    <el-form-item prop="inputNumber">
+                                        <el-input placeholder="手机号码"  v-model="formInline.inputNumber"></el-input>
+                                    </el-form-item>
+                                    <el-form-item>
+                                        <el-select placeholder="在读年级" v-model="formInline.inputGrade">
+                                            <el-option label="幼儿园" value='幼儿园'></el-option>
+                                            <el-option label="一年级" value='一年级'></el-option>
+                                            <el-option label="二年级" value='二年级'></el-option>
+                                            <el-option label="三年级" value='三年级'></el-option>
+                                            <el-option label="四年级" value='四年级'></el-option>
+                                            <el-option label="五年级" value='五年级'></el-option>
+                                            <el-option label="六年级" value='六年级'></el-option>
+                                            <el-option label="七年级" value='七年级'></el-option>
+                                            <el-option label="八年级" value='八年级'></el-option>
+                                            <el-option label="九年级" value='九年级'></el-option>
+                                            <el-option label="十年级" value='十年级'></el-option>
+                                            <el-option label="十一年级" value='十一年级'></el-option>
+                                            <el-option label="十二年级" value='十二年级'></el-option>
+                                            <el-option label="在职人员" value='在职人员'></el-option>
+                                        </el-select>
+                                    </el-form-item>
+                                </el-form>
+                                 <el-form :model="formInline">
+                                    <el-form-item  class="remark">
+                                        <el-input type="textarea" v-model="formInline.inputRemark" placeholder="备注"></el-input>
+                                    </el-form-item>
+                                </el-form> 
+                                <div class="order">
+                                    <el-button size="medium" type="primary" @click="sumbit('formInline')">立即提交</el-button>
+                                </div>
+                            </div>
+                        </span>
+                    </p>
                     <p class="titleM">同城学校</p>
                     <p class="contentM">
                         <el-row style="text-align:center">
@@ -213,7 +253,7 @@
                                 <p class="chineseName">北京世青国际学校</p>
                                 <p class="englishName">Beijing World Youth Academy</p>
                             </el-col>
-                            <el-col :span="10"  style="margin-top:20px;" class="citySchoolBox">
+                            <el-col :span="10"  style="margin-top:20px;margin-bottom:60px;" class="citySchoolBox">
                                 <img src="../assets/school.png" alt="" width="100">
                                 <p class="chineseName">北京世青国际学校</p>
                                 <p class="englishName">Beijing World Youth Academy</p>
@@ -232,10 +272,16 @@
             </div>
         </div>
         <div class="footer">
-            <el-row  style="text-align:center">
-                <el-col :span="12" class="order">预约访校</el-col>
-                <el-col :span="12" class="enter">申请入学</el-col>
-            </el-row>
+            <div style="width:50%;text-align:center;float:left">
+                <span class="order">预约访校</span>
+            </div>
+            <div style="width:50%;text-align:center;float:right">
+                <span class="enter">申请入学</span>
+            </div>
+            <!-- <el-row  style="text-align:center">
+                <el-col :span="6" class="order">预约访校</el-col>
+                <el-col :span="6" class="enter">申请入学</el-col>
+            </el-row> -->
         </div>
   </div>
 </template>
@@ -243,10 +289,36 @@
 <script>
 import Swiper from "swiper";
 import "swiper/dist/css/swiper.min.css";
+import {visitSchool} from "@/api/api"
 export default {
     props: ['childObject'],
     data(){
+        //校验手机号
+        var phoneReg = /^[1][3,4,5,7,8][0-9]{9}$/;
+        var validatePhone = (rule, value, callback) => {
+            if (!value) {
+                return callback(new Error("手机号码不能为空"));
+            } else if (!phoneReg.test(value)) {
+                callback(new Error("请输入正确的手机号码"));
+            } else {
+                callback();
+            }
+        };
      return{
+         formInline: {
+            inputName: "",
+            inputGrade: "",
+            inputNumber: "",
+            inputRemark: "",
+        },
+        rules: {
+            inputName:[
+                    {required: true, message: "名字不能为空" }
+            ],
+            inputNumber: [
+                    {validator: validatePhone }
+            ],
+        },
         schoolDetail: [],
         more: false,
         longContent: false,
@@ -324,7 +396,57 @@ export default {
             this.more = false;
             this.longContent = true;
             this.shortContent = false;
+        },
+         // 提交申请访校
+        sumbit(formName){
+            this.$refs[formName].validate((valid) => {
+                if (valid) {
+                    let that=this
+                    let schoolId = that.$route.query.id
+                    visitSchool({
+                        name:that.formInline.inputName,
+                        attend:that.formInline.inputGrade,
+                        telphone:that.formInline.inputNumber,
+                        remark:that.formInline.inputRemark,
+                        schoolId:schoolId
+                    }).then(res=>{
+                        // 父传子
+                        that.asyncObject = res
+                        that.flag = true
+                        if(res.code==0){
+                            this.$message({
+                                message: '恭喜你，提交申请成功',
+                                type: 'success',
+                            });
+                        }else{
+                            this.$message.error('提交申请失败,请重新填写');
+                        } 
+                    })
+                } else {
+                    return false;
+                }
+            });
+        },
+        handleClick(tab, event) {
+            console.log(tab, event);
+        },
+        // 监听高度
+        handleScroll () {
+            var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+            var offsetTop = document.querySelector('#navfixed').offsetTop;
+            // console.log(scrollTop)
+            if(scrollTop>320){
+                document.querySelector('#navfixed').style.top = '0px';
+            }else{
+                offsetTop = 345 - Number(scrollTop);
+                document.querySelector('#navfixed').style.top = offsetTop+'px';
+            }
+            
         }
+
+        
+        
+       
     },
     created(){
         this.schoolDetail=this.childObject.data;
@@ -363,21 +485,39 @@ export default {
         }else{
             this.courseSplit = course.split(";");
         }
+        this.$nextTick(()=>{
+             if (this.$refs.obj.offsetHeight > 150) {
+                this.more = true;
+                this.activityBannerH=150
+            }else{
+                this.more = false;
+            }
+        })
     },
     mounted(){   
         this.swiperInit()
         this.judgeIsNull()
-        if (this.$refs.obj.offsetHeight > 150) {
-            this.more = true;
-            this.activityBannerH=150
-        }else{
-            this.more = false;
-        }
-    }
+        window.addEventListener('scroll', this.handleScroll)
+    },
+    destroyed () {
+        window.removeEventListener('scroll', this.handleScroll)
+    },
 }
 </script>
 
 <style scoped>
+    #navfixed{
+        position: fixed;
+        top:345px;
+        width:100%;
+        z-index: 999;
+    }
+    .tab-content{
+        height:auto;
+        overflow: scroll;
+        position: relative;
+        top:25px;
+    }
     .back i{
         color: #fff;
         position: absolute;
@@ -391,9 +531,7 @@ export default {
     }
     
     .bgImg>img {
-        position: relative;
-        height: 395px;
-        top: -50px;
+        height: 345px;
     }
     
     .head {
@@ -402,6 +540,7 @@ export default {
         color: #fff;
         position: absolute;
         top: 0;
+        height:345px; 
     }
     
     .head img {
@@ -517,6 +656,18 @@ export default {
         margin: 5px 0;
         font-weight: bold
     }
+    #admission .applyBox{
+        box-shadow: 0px 0px 5px #ddd;
+        text-align: center;
+        padding: 20px 0;
+    }
+    #admission .applyBox .el-form,#admission .applyBox .el-select,#admission .applyBox .el-textarea{
+        width:270px;
+        margin: 0 auto;
+    }
+     #admission .applyBox .el-button{
+        width:200px;
+    }
     .analyseBox{
         height: 150px;
         width: 90%;
@@ -528,23 +679,25 @@ export default {
         bottom:0;
         width:100%;
         z-index: 999;
+        box-shadow: 0 0 10px #ddd;
+        background: #fff;
+    }
+    .footer span{
+        color: #fff;
+        font-size: 16px;
+        padding: 7px 10px;
+        margin: 10px 0;
+        font-weight: bold;
+        display: inline-block;
+        border-radius: 5px;
     }
     
     .footer .order {
-        color: #fff;
         background: #214f89;
-        font-size: 18px;
-        padding: 10px 0;
-        margin-top: 20px;
-        font-weight: bold;
     }
     
     .footer .enter {
-        color: #fff;
         background: #e65858;
-        font-size: 18px;
-        padding: 10px 0;
-        margin-top: 20px;
-        font-weight: bold;
     }
 </style>
+

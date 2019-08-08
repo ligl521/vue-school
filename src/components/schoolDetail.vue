@@ -239,7 +239,6 @@
                     </el-row> -->
                 </div>
               </div>
-
           </div>
           <div class="process">
               <h1 class="schoolTranslateH1">申请访校</h1>
@@ -638,6 +637,9 @@
                         remark:that.formInline.inputRemark,
                         schoolId:schoolId
                     }).then(res=>{
+                        // 父传子
+                        that.asyncObject = res
+                        that.flag = true
                         if(res.code==0){
                             this.$message({
                                 message: '恭喜你，提交申请成功',

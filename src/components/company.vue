@@ -186,7 +186,7 @@ export default {
                 }
             }
             span.label{
-                background: #214f89;
+                background: #337ab7;
                 margin-right: 7px;
                 color: #fff;
                 border-radius: 5px;
