@@ -477,23 +477,12 @@
                 console.log(key, keyPath);
             },
             relation_val(){
-                // relation({
-                //      type:"学校-机构",
-                //      searchId:this.$route.query.id
-                // }).then(res => {
-                //     console.log(res)
-                // })
-                axios({
-                    method:"get",
-                    url:"http://192.168.0.34:8080/nsi-1.0/Relation/search.do",
-                    params:{
-                        type:"学校-机构",
-                        searchId:this.$route.query.id
-                    },
+                relation({
+                     type:"学校-机构",
+                     searchId:this.$route.query.id
                 }).then(res => {
-                   console.log(res.data)
-                   this.relation_list = res.data.data
-                   console.log(this.relation_list)
+                    console.log(res)
+                    this.relation_list = res.data
                 })
             },
             companyDetail_val(el){
