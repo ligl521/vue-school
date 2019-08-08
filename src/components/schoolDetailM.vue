@@ -53,11 +53,11 @@
         </div>
         <div class="tabbable" >
             <ul class="nav nav-tabs"  id="navfixed">
-                <li class="active"><a href="#summary" data-toggle="tab">概述</a></li>
-                <li class=""><a href="#concept" data-toggle="tab">理念</a></li>
-                <li class=""><a href="#system" data-toggle="tab">课程</a></li>
-                <li class=""><a href="#admission" data-toggle="tab">招生</a></li>
-                <li class=""><a href="#analyse" data-toggle="tab">更多</a></li>
+                <li class="active"><a href="#summary" data-toggle="tab">学校概述</a></li>
+                <!-- <li class=""><a href="#concept" data-toggle="tab">理念</a></li> -->
+                <li class=""><a href="#system" data-toggle="tab">课程体系</a></li>
+                <li class=""><a href="#admission" data-toggle="tab">招生信息</a></li>
+                <li class=""><a href="#analyse" data-toggle="tab">更多分析</a></li>
             </ul>
             <div class="tab-content">
                 <div class="tab-pane active" id="summary">
@@ -99,9 +99,7 @@
                         </span>
                     </p>
                     <p class="titleM"  :class="Ishardware?'show':'hide'">硬件设施</p>
-                    <p class="contentM" style="padding-bottom:60px;">{{schoolDetail.hardware | isNull}}</p>
-                </div>
-                <div class="tab-pane" id="concept">
+                    <p class="contentM">{{schoolDetail.hardware | isNull}}</p>
                     <p class="titleM"  v-if="Isconcept">办学理念</p>
                     <p v-else></p>
                     <p class="contentM">{{schoolDetail.schoolManagement}}</p>
@@ -121,7 +119,7 @@
                             <el-col :span="12" style="font-weight:bold;text-align:center">{{featureList2.title}}</el-col>
                             <el-col :span="12">{{featureList2.desc}}</el-col>
                         </el-row>
-                        <el-row style="margin:20px 0;padding-bottom:50px;">
+                        <el-row>
                             <el-col :span="12">
                                 <img :src="featureList3.img" alt="" class="img-responsive" style="height:105px">
                             </el-col>
@@ -130,6 +128,35 @@
                         </el-row>
                     </p>
                 </div>
+                <!-- <div class="tab-pane" id="concept">
+                    <p class="titleM"  v-if="Isconcept">办学理念</p>
+                    <p v-else></p>
+                    <p class="contentM">{{schoolDetail.schoolManagement}}</p>
+                    <p class="titleM"  :class="Isfeature?'show':'hide'">办学特色</p>
+                    <p class="contentM">
+                        <el-row style="margin:20px 0">
+                            <el-col :span="12">
+                                <img :src="featureList1.img" alt="" class="img-responsive" style="height:105px">
+                            </el-col>
+                            <el-col :span="12" style="font-weight:bold;text-align:center">{{featureList1.title}}</el-col>
+                            <el-col :span="12">{{featureList1.desc}}</el-col>
+                        </el-row>
+                        <el-row style="margin:20px 0">
+                            <el-col :span="12">
+                               <img :src="featureList2.img" alt="" class="img-responsive" style="height:105px">
+                            </el-col>
+                            <el-col :span="12" style="font-weight:bold;text-align:center">{{featureList2.title}}</el-col>
+                            <el-col :span="12">{{featureList2.desc}}</el-col>
+                        </el-row>
+                        <el-row style="margin:20px 0;">
+                            <el-col :span="12">
+                                <img :src="featureList3.img" alt="" class="img-responsive" style="height:105px">
+                            </el-col>
+                            <el-col :span="12" style="font-weight:bold;text-align:center">{{featureList3.title}}</el-col>
+                            <el-col :span="12">{{featureList3.desc}}</el-col>
+                        </el-row>
+                    </p>
+                </div> -->
                 <div class="tab-pane" id="system">
                     <p class="titleM"  v-if="Issystem">课程体系</p>
                     <p v-else></p>
@@ -150,7 +177,7 @@
                             <p class="number">{{schoolDetail.nationalityOfStudents}}个国家</p>
                             <p class="title">学生国籍</p>
                         </el-col>
-                        <el-col :span="12" style="margin-top:60px;padding-bottom:80px;">
+                        <el-col :span="12" style="margin-top:60px; margin-bottom: 40px;">
                             <p><i class="iconfont icon-fenchengbili"></i></p>
                             <p class="number">{{schoolDetail.teacherStuRatio}}</p>
                             <p class="title">师生比</p>
@@ -230,33 +257,18 @@
                                     </el-form-item>
                                 </el-form> 
                                 <div class="order">
-                                    <el-button size="medium" type="primary" @click="sumbit('formInline')">立即提交</el-button>
+                                    <el-button size="medium" type="primary" @click="submit('formInline')">立即提交</el-button>
                                 </div>
                             </div>
                         </span>
                     </p>
                     <p class="titleM">同城学校</p>
-                    <p class="contentM">
+                    <p class="contentM citySchool">
                         <el-row style="text-align:center">
-                            <el-col :span="10" class="citySchoolBox">
-                                <img src="../assets/school.png" alt="">
-                                <p class="chineseName">北京世青国际学校</p>
-                                <p class="englishName">Beijing World Youth Academy</p>
-                            </el-col>
-                            <el-col :span="10" class="citySchoolBox">
-                                <img src="../assets/school.png" alt="">
-                                <p class="chineseName">北京世青国际学校</p>
-                                <p class="englishName">Beijing World Youth Academy</p>
-                            </el-col>
-                            <el-col :span="10" style="margin-top:20px;" class="citySchoolBox">
-                                <img src="../assets/school.png" alt="" width="100">
-                                <p class="chineseName">北京世青国际学校</p>
-                                <p class="englishName">Beijing World Youth Academy</p>
-                            </el-col>
-                            <el-col :span="10"  style="margin-top:20px;margin-bottom:60px;" class="citySchoolBox">
-                                <img src="../assets/school.png" alt="" width="100">
-                                <p class="chineseName">北京世青国际学校</p>
-                                <p class="englishName">Beijing World Youth Academy</p>
+                            <el-col :span="10" class="citySchoolBox"  v-for="(item, index) in schoolList"  :key="index">
+                                <img :src="item.schoolLogo" alt="">
+                                <p class="chineseName">{{item.schoolName | ellipsisName}}</p>
+                                <p class="englishName">{{item.schoolEnglishName | ellipsisEname|isZero}}</p>
                             </el-col>
                         </el-row>
                     </p>
@@ -267,29 +279,54 @@
                     <p class="titleM">更多信息</p>
                     <div class="analyseBox"></div>
                     <p class="titleM">新学说分析</p>
-                    <div class="analyseBox" style="margin-bottom:60px;">{{schoolDetail.companyAnalysis}}</div>
+                    <div class="analyseBox">{{schoolDetail.companyAnalysis}}</div>
                 </div>
             </div>
         </div>
-        <div class="footer">
-            <div style="width:50%;text-align:center;float:left">
-                <span class="order">预约访校</span>
-            </div>
-            <div style="width:50%;text-align:center;float:right">
-                <span class="enter">申请入学</span>
-            </div>
-            <!-- <el-row  style="text-align:center">
-                <el-col :span="6" class="order">预约访校</el-col>
-                <el-col :span="6" class="enter">申请入学</el-col>
-            </el-row> -->
+        <div class="process">
+            <el-button type="text" @click="dialogFormVisible = true">申请访校</el-button>
         </div>
+        <el-dialog title="申请访校" :visible.sync="dialogFormVisible">
+                <el-form :model="formInline"  :rules="rules" class="demo-form-inline" ref="formInline">
+                    <el-form-item prop="inputName">
+                        <el-input v-model="formInline.inputName" placeholder="学生姓名"></el-input>
+                    </el-form-item>
+                    <el-form-item prop="inputNumber">
+                        <el-input placeholder="手机号码"  v-model="formInline.inputNumber"></el-input>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-select placeholder="在读年级" v-model="formInline.inputGrade">
+                            <el-option label="幼儿园" value='幼儿园'></el-option>
+                            <el-option label="一年级" value='一年级'></el-option>
+                            <el-option label="二年级" value='二年级'></el-option>
+                            <el-option label="三年级" value='三年级'></el-option>
+                            <el-option label="四年级" value='四年级'></el-option>
+                            <el-option label="五年级" value='五年级'></el-option>
+                            <el-option label="六年级" value='六年级'></el-option>
+                            <el-option label="七年级" value='七年级'></el-option>
+                            <el-option label="八年级" value='八年级'></el-option>
+                            <el-option label="九年级" value='九年级'></el-option>
+                            <el-option label="十年级" value='十年级'></el-option>
+                            <el-option label="十一年级" value='十一年级'></el-option>
+                            <el-option label="十二年级" value='十二年级'></el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item  class="remark">
+                        <el-input type="textarea" v-model="formInline.inputRemark" placeholder="备注"></el-input>
+                    </el-form-item>
+                </el-form>
+                <div slot="footer" class="dialog-footer">
+                    <el-button @click="dialogFormVisible = false">取 消</el-button>
+                    <el-button type="primary" @click="submit('formInline')">提 交</el-button>
+                </div>
+            </el-dialog>
   </div>
 </template>
 
 <script>
 import Swiper from "swiper";
 import "swiper/dist/css/swiper.min.css";
-import {visitSchool} from "@/api/api"
+import {visitSchool,citySchool} from "@/api/api"
 export default {
     props: ['childObject'],
     data(){
@@ -305,6 +342,7 @@ export default {
             }
         };
      return{
+         dialogFormVisible: false,
          formInline: {
             inputName: "",
             inputGrade: "",
@@ -339,7 +377,8 @@ export default {
         Isconcept:'',
         Issystem:'',
         schoolShowOne:'',
-        schoolLogo:''
+        schoolLogo:'',
+        schoolList:[],
      }
     },
     filters:{
@@ -359,6 +398,23 @@ export default {
                 return msg
             }
         },
+        // 学校名字长度限制
+        ellipsisName(value) {
+            if (!value) return "";
+            if (value.length > 9) {
+                return value.slice(0, 9) + "...";
+            }else{
+                return value;
+            }
+        },
+        ellipsisEname(Evalue){
+            if (!Evalue) return "";
+            if (Evalue.length > 20) {
+                return Evalue.slice(0, 30) + "...";
+            }else{
+                return Evalue;
+            }
+        }
     },
     methods:{
         goBack(){
@@ -398,7 +454,7 @@ export default {
             this.shortContent = false;
         },
          // 提交申请访校
-        sumbit(formName){
+        submit(formName){
             this.$refs[formName].validate((valid) => {
                 if (valid) {
                     let that=this
@@ -410,9 +466,7 @@ export default {
                         remark:that.formInline.inputRemark,
                         schoolId:schoolId
                     }).then(res=>{
-                        // 父传子
-                        that.asyncObject = res
-                        that.flag = true
+                        this.dialogFormVisible=false
                         if(res.code==0){
                             this.$message({
                                 message: '恭喜你，提交申请成功',
@@ -427,6 +481,16 @@ export default {
                 }
             });
         },
+        getCitySchool(){
+            let that=this
+            var schoolId = that.$route.query.id
+                citySchool({
+                    id:schoolId
+                }).then(res=>{
+                    console.log(res.data)
+                    that.schoolList=res.data
+                })
+        },
         handleClick(tab, event) {
             console.log(tab, event);
         },
@@ -434,8 +498,8 @@ export default {
         handleScroll () {
             var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
             var offsetTop = document.querySelector('#navfixed').offsetTop;
-            // console.log(scrollTop)
-            if(scrollTop>320){
+            console.log(scrollTop)
+            if(scrollTop>280 || scrollTop==265){
                 document.querySelector('#navfixed').style.top = '0px';
             }else{
                 offsetTop = 345 - Number(scrollTop);
@@ -443,10 +507,6 @@ export default {
             }
             
         }
-
-        
-        
-       
     },
     created(){
         this.schoolDetail=this.childObject.data;
@@ -486,7 +546,7 @@ export default {
             this.courseSplit = course.split(";");
         }
         this.$nextTick(()=>{
-             if (this.$refs.obj.offsetHeight > 150) {
+            if (this.$refs.obj.offsetHeight > 150) {
                 this.more = true;
                 this.activityBannerH=150
             }else{
@@ -497,15 +557,27 @@ export default {
     mounted(){   
         this.swiperInit()
         this.judgeIsNull()
+        this.getCitySchool()
         window.addEventListener('scroll', this.handleScroll)
     },
     destroyed () {
-        window.removeEventListener('scroll', this.handleScroll)
+        window.removeEventListener('scroll', this.handleScroll) 
     },
 }
 </script>
+<style>
+.el-dialog{
+    width:80% !important;
+}
+.el-select{
+    width:100%;
+}
+</style>
 
-<style scoped>
+<style scoped lang="less">
+    #summary,#admission,#analyse{
+        padding-bottom:80px;
+    }
     #navfixed{
         position: fixed;
         top:345px;
@@ -516,7 +588,7 @@ export default {
         height:auto;
         overflow: scroll;
         position: relative;
-        top:25px;
+        top:20px;
     }
     .back i{
         color: #fff;
@@ -591,8 +663,7 @@ export default {
 
     
     .tabbable ul li{
-        width:20%;
-        text-align: center;
+        width:25%;
     }
     .tabbable p.titleM {
         padding: 5px 0;
@@ -646,11 +717,15 @@ export default {
         border-top: 5px solid #214f89;
         box-shadow: 0px 0px 15px #ccc;
         border-radius: 5px;
-        margin: 0 13px;
+        margin: 20px 13px 0;
         padding: 15px 0;
     }
     .citySchoolBox img{
         width:80px;
+        height:80px;
+    }
+     #admission .englishName {
+        height:45px;
     }
     #admission .chineseName {
         margin: 5px 0;
@@ -674,30 +749,20 @@ export default {
         border: 1px solid #ccc;
         margin: 0 auto;
     }
-    .footer{
+    .process{
+        border-radius: 5px;
+        background: #409eff;
+        color: #fff !important;
         position: fixed;
-        bottom:0;
-        width:100%;
-        z-index: 999;
-        box-shadow: 0 0 10px #ddd;
-        background: #fff;
+        bottom: 20px;
+        right: 20px;
+        border: 1px solid #ccc;
     }
-    .footer span{
+    .process .el-button--text{
         color: #fff;
         font-size: 16px;
-        padding: 7px 10px;
-        margin: 10px 0;
+        padding: 10px;
         font-weight: bold;
-        display: inline-block;
-        border-radius: 5px;
-    }
-    
-    .footer .order {
-        background: #214f89;
-    }
-    
-    .footer .enter {
-        background: #e65858;
     }
 </style>
 
