@@ -205,7 +205,7 @@ import axios from "axios";
 import bottomMenuH5 from "./bottomMenuH5"
 import { getSchoolHomeInquiry } from "@/api/api";
 import { getSchoolCity } from "@/api/api";
-import { getSchoolHomeSearch } from "@/api/api";
+import { getSchoolHomeSearch,CommonApi,getadvancedSearch } from "@/api/api";
 export default {
     components: {
         schoolFooter,
@@ -214,6 +214,7 @@ export default {
     },
   data() {
     return {
+      CommonApi_ip_name:"",
       state: "",
       homeJump: "",
       schoolInquiruList: [],
@@ -221,12 +222,15 @@ export default {
         "北京",
         "上海",
         "广州",
+        "南京",
         "深圳",
-        "沈阳",
         "成都",
         "杭州",
         "郑州",
-        "重庆"
+        "重庆",
+        "武汉",
+        "西安",
+        "天津",
       ],
       imglist: [
         { img: require("../assets/bg.png") },
@@ -238,12 +242,16 @@ export default {
       index: 0,
       schoolLists: [],
       SchoolCitypageNum: 1,
-      SchoolCitySearchKey: "北京",
+      // SchoolCitySearchKey: "北京",
       schoolLogoUrlOne: "http://data.xinxueshuo.cn/",
       schoolLogoUrlTwo:
         "http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png",
       xinxueshuoSite: "http://data.xinxueshuo.cn/vue-project/dist/index.html#/"
     };
+  },
+  created(){
+    this.CommonApi_ip()
+    this.getadvancedSearch_val()
   },
   methods: {
     aa(index) {
@@ -259,7 +267,7 @@ export default {
       getSchoolCity({
         pageNum: this.SchoolCitypageNum,
         pageSize: 12,
-        searchKey: this.SchoolCitySearchKey
+        searchKey: this.CommonApi_ip_name
       }).then(res => {
         console.log(res.data.list);
         this.schoolLists = res.data.list;
@@ -311,9 +319,9 @@ export default {
       console.log(i, v);
       this.index = i;
       this.SchoolCitypageNum = 1;
-      this.SchoolCitySearchKey = v;
+      this.CommonApi_ip_name = v;
       this.getData();
-    }
+    },
     //点击学校进入详情页
     // homeListBtn(id) {
     //     this.$router.push({
@@ -323,6 +331,25 @@ export default {
     //         }
     //     });
     // }
+    CommonApi_ip(){
+       CommonApi({
+       }).then(res =>{
+         console.log(res.data)
+         this.CommonApi_ip_name = res.data
+       })
+    },
+    getadvancedSearch_val(){
+      getadvancedSearch({
+         area:this.CommonApi_ip_name,
+      }).then(res =>{
+        console.log(res.data.list)
+        if(res.data.list == ""){
+          this.arr[0] = "北京"
+        }else{
+           this.arr[0] = this.CommonApi_ip_name
+        }
+      })
+    }
   },
   mounted() {
     this.getData();

@@ -11,6 +11,7 @@ import schoolDataBade from '@/components/schoolDataBade'
 import schoolVisual from '@/components/schoolVisual'
 
 import register from '@/components/register'
+import schoolAdd from '@/components/schoolAdd'
 
 Vue.use(Router)
 
@@ -48,11 +49,15 @@ export default new Router({
             path: '/schoolVisual',
             name: 'schoolVisual',
             component: schoolVisual
-        },
-        {
+        }, {
             path: '/register',
             name: 'register',
             component: register
+        }, {
+            path: '/schoolAdd',
+            name: 'schoolAdd',
+            component: schoolAdd
         },
+
     ]
 })

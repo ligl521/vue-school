@@ -44,3 +44,5 @@ export const companyDetail = p => get('/institution/detail.do', p)
 export const citySchool = p => get('/new/school/find_city_wide.do', p)
     //四库全书-数据关联
 export const relation = p => get('/Relation/search.do', p)
+    //用户IP地址查询定位
+export const CommonApi = p => post('/CommonApi/ipToLocation.do', p)
