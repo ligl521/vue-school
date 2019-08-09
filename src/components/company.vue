@@ -21,7 +21,7 @@
                     <p><i class="iconfont icon-dingwei1"></i>地址：{{item.areas | isZero}}</p>
                     <p><i class="iconfont icon-chenglishijian"></i>成立时间：{{item.foundedTime | isZero}}</p>
                     <p><i class="iconfont icon-dingdantijiaochenggong"></i>提交时间：{{formatDateTime(new Date(Number(item.loadTime)))}}</p>
-                </div>
+                </div> 
             </div>
         </div>
         <div v-html="searchNull" class="searchNull"></div>

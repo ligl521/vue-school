@@ -1,6 +1,6 @@
 <template>
   <div id="container">
-    <loding v-if="this.$store.state.loding"/>
+    <!-- <loding v-if="this.$store.state.loding"/> -->
     <!-- 搜索学校 -->
     <div class="searchBox">
         <div id="searchBar">
@@ -70,7 +70,7 @@
       </p>
     </div>
     <!-- 学校展示列表one -->
-    <div class="schoolDetail" v-if="schoolDetail">
+    <div class="schoolDetail" v-if="schoolDetail"  v-loading="isLoading"> 
       <span id="search_res">{{this.no_school}}</span>
       <el-row :gutter="50" type="flex" style="flex-wrap:wrap">
         <el-col :xs="12" :sm="6" :md="6" :lg="4" :xl="3" v-for="(item,index) in schoolLists" :key="index">
@@ -93,7 +93,7 @@
       </el-row>
     </div>
     <!-- 学校展示列表two -->
-        <div class="schoolDetailTwo" v-if="!schoolDetail" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10" infinite-scroll-immediate="false">
+        <div class="schoolDetailTwo" v-if="!schoolDetail" v-loading="isLoading" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10" infinite-scroll-immediate="false">
             <span id="search_res">{{this.no_school}}</span>
             <div class="detailBox" v-for="(item,i) in schoolLists" :key="i">
                 <div class="DeatailTwoLeft"><img :src='item.schoolLogo?item.schoolLogo:"http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png"' /></div>
@@ -186,10 +186,11 @@ export default {
       approveList:{approve: "不限;IPC;IBPYP;IBDP;AP;A-LEVEL;其他"},
       loading: false, //默认是false 可以滚动哦！
       finish:false,
+      isLoading:true,
     };
   },
   beforeCreate() {
-    this.$store.commit("loding", true);
+    // this.$store.commit("loding", true);
   },
   created() {
     this.input = this.$route.query.item;
@@ -290,8 +291,9 @@ export default {
         pageSize: this.pageSize,
         searchKey: this.input
       }).then(respons => {
-        this.$store.commit("loding", false);
+        // this.$store.commit("loding", false);
         let that = this;
+        this.isLoading=false
         if(screen.width<768){
             that.schoolLists = that.schoolLists.concat(respons.data.list);
             this.pageNum++

@@ -12,11 +12,14 @@
                             <img src="http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png" alt="" v-else>
                     </el-col>
                     <el-col :span="16">
-                            <h3 style="margin-top:20px">{{schoolDetail.schoolName}}</h3>  
+                            <h3 style="margin-top:10px">{{schoolDetail.schoolName}}</h3>  
                     </el-col>
                     <el-col :span="16">
-                            <h5>{{schoolDetail.schoolEnglishName}}</h5>  
+                            <h5>{{schoolDetail.schoolEnglishName|ellipsisEname}}</h5>  
                     </el-col>
+                     <el-col :span="16">
+                        地址：<span>{{schoolDetail.province | isNull}}</span><span>{{schoolDetail.town | isNull}}</span>
+                     </el-col>
                 </el-row>
                 <div class="basicMessage">
                     <el-row>
@@ -33,28 +36,33 @@
                             课程：<span v-for="everyCourse of courseSplit" style="margin-right:5px;" :key="everyCourse">{{everyCourse}}</span>
                         </el-col>
                         <el-col :span="24">
-                            学制：<span v-for="everyGrade of gradeSplit" class="grade" :key="everyGrade">{{everyGrade}}</span>
-                        </el-col>
-                        <el-col :span="24" class="fee">
-                            学费：<span>{{schoolDetail.oneTuition | isZero}}</span><span>{{schoolDetail.twoTuition | isZero}}</span><span>{{schoolDetail.thirdTuition | isZero}}</span><span>{{schoolDetail.fourTuition | isZero}}</span>
-                        </el-col>
-                        <el-col :span="24" class="address">
-                            地址：<span>{{schoolDetail.province | isNull}}</span><span>{{schoolDetail.town | isNull}}</span><span>{{schoolDetail.address | isNull}}</span>
-                        </el-col>
-                        <el-col :span="24">
                             网址：<span @click="toWebsite(schoolDetail.website)">{{schoolDetail.website}}</span>
                         </el-col>
                         <el-col :span="24">
                             电话：{{schoolDetail.telephone}}
                         </el-col>
+                        <!-- <el-col :span="24">
+                            学制：<span v-for="everyGrade of gradeSplit" class="grade" :key="everyGrade">{{everyGrade}}</span>
+                        </el-col>
+                        <el-col :span="24" class="fee">
+                            学费：<span>{{schoolDetail.oneTuition | isZero}}</span><span>{{schoolDetail.twoTuition | isZero}}</span><span>{{schoolDetail.thirdTuition | isZero}}</span><span>{{schoolDetail.fourTuition | isZero}}</span>
+                        </el-col> -->
                     </el-row>
+                     <div class="boxfee">
+                    <p>
+                        学制：<span v-for="everyGrade of gradeSplit" class="grade" :key="everyGrade">{{everyGrade}}</span>
+                    </p>
+                    <p class="fee">
+                        学费：<span>{{schoolDetail.oneTuition | isZero}}</span><span>{{schoolDetail.twoTuition | isZero}}</span><span>{{schoolDetail.thirdTuition | isZero}}</span><span>{{schoolDetail.fourTuition | isZero}}</span>
+                    </p>
                 </div>
+                </div>
+               
             </div>
         </div>
         <div class="tabbable" >
             <ul class="nav nav-tabs"  id="navfixed">
                 <li class="active"><a href="#summary" data-toggle="tab">学校概述</a></li>
-                <!-- <li class=""><a href="#concept" data-toggle="tab">理念</a></li> -->
                 <li class=""><a href="#system" data-toggle="tab">课程体系</a></li>
                 <li class=""><a href="#admission" data-toggle="tab">招生信息</a></li>
                 <li class=""><a href="#analyse" data-toggle="tab">更多分析</a></li>
@@ -99,7 +107,7 @@
                         </span>
                     </p>
                     <p class="titleM"  :class="Ishardware?'show':'hide'">硬件设施</p>
-                    <p class="contentM">{{schoolDetail.hardware | isNull}}</p>
+                    <p class="contentM">{{schoolDetail.hardware | isNull}}<span>具体地址：<span>{{schoolDetail.province | isNull}}</span><span>{{schoolDetail.town | isNull}}</span><span>{{schoolDetail.address | isNull}}</span></span></p>
                     <p class="titleM"  v-if="Isconcept">办学理念</p>
                     <p v-else></p>
                     <p class="contentM">{{schoolDetail.schoolManagement}}</p>
@@ -127,7 +135,10 @@
                             <el-col :span="12">{{featureList3.desc}}</el-col>
                         </el-row>
                     </p>
+                
+                    <!-- <a href="#system" data-toggle="tab">更多</a> -->
                 </div>
+                
                 <!-- <div class="tab-pane" id="concept">
                     <p class="titleM"  v-if="Isconcept">办学理念</p>
                     <p v-else></p>
@@ -221,8 +232,8 @@
                             </el-row>
                         </span>
                     </p>
-                    <p class="titleM">申请访校</p>
-                    <p class="contentM">
+                    <!-- <p class="titleM">申请访校</p> -->
+                    <!-- <p class="contentM">
                         <span>
                             <div class="applyBox">
                                  <el-form :model="formInline"  :rules="rules" class="demo-form-inline" ref="formInline">
@@ -261,7 +272,7 @@
                                 </div>
                             </div>
                         </span>
-                    </p>
+                    </p> -->
                     <p class="titleM">同城学校</p>
                     <p class="contentM citySchool">
                         <el-row style="text-align:center">
@@ -498,7 +509,7 @@ export default {
         handleScroll () {
             var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
             var offsetTop = document.querySelector('#navfixed').offsetTop;
-            console.log(scrollTop)
+            // console.log(scrollTop)
             if(scrollTop>280 || scrollTop==265){
                 document.querySelector('#navfixed').style.top = '0px';
             }else{
@@ -631,15 +642,22 @@ export default {
         padding: 10px;
     }
     
-    .basicMessage .el-col span.grade,
-    .basicMessage .fee span {
+    // .basicMessage .el-col span.grade,
+    // .basicMessage .fee span {
+    //     width: 53px;
+    //     display: inline-block;
+    //     text-align: center;
+    // }
+    .boxfee{
+        background: rgba(255, 255, 255, 0.3);
+        padding: 10px;
+        margin-top: 10px;
+        text-align: center;
+    }
+    .boxfee span.grade,.boxfee .fee span{
         width: 53px;
         display: inline-block;
         text-align: center;
-    }
-    .address span:last-of-type{
-        margin-left:10px;
-        display:inline-block;
     }
     
     .head .el-col {
@@ -751,17 +769,18 @@ export default {
     }
     .process{
         border-radius: 5px;
-        background: #409eff;
+        background: #2364a6;
         color: #fff !important;
         position: fixed;
         bottom: 20px;
-        right: 20px;
-        border: 1px solid #ccc;
+        right: -5px;
+        box-shadow: 0 0 5px #2364a6;
+        z-index: 9;
     }
     .process .el-button--text{
         color: #fff;
         font-size: 16px;
-        padding: 10px;
+        padding: 7px;
         font-weight: bold;
     }
 </style>
