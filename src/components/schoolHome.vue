@@ -242,16 +242,11 @@ export default {
       index: 0,
       schoolLists: [],
       SchoolCitypageNum: 1,
-      // SchoolCitySearchKey: "北京",
       schoolLogoUrlOne: "http://data.xinxueshuo.cn/",
       schoolLogoUrlTwo:
         "http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png",
       xinxueshuoSite: "http://data.xinxueshuo.cn/vue-project/dist/index.html#/"
     };
-  },
-  created(){
-    this.CommonApi_ip()
-    this.getadvancedSearch_val()
   },
   methods: {
     aa(index) {
@@ -334,25 +329,26 @@ export default {
     CommonApi_ip(){
        CommonApi({
        }).then(res =>{
-         console.log(res.data)
-         this.CommonApi_ip_name = res.data
+         console.log(res)
+         if(res.code == 0){
+           this.CommonApi_ip_name = res.data
+           getadvancedSearch({
+             area:res.data,
+           }).then(res =>{
+                if(res.data.list == ""){
+                  this.arr[0] = "北京"
+                }else{
+                  this.arr[0] = this.CommonApi_ip_name
+                }
+             })
+         }
+         
        })
     },
-    getadvancedSearch_val(){
-      getadvancedSearch({
-         area:this.CommonApi_ip_name,
-      }).then(res =>{
-        console.log(res.data.list)
-        if(res.data.list == ""){
-          this.arr[0] = "北京"
-        }else{
-           this.arr[0] = this.CommonApi_ip_name
-        }
-      })
-    }
   },
   mounted() {
     this.getData();
+    this.CommonApi_ip();
   },
   //学校过滤超出显示...
   filters: {
