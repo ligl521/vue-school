@@ -7,7 +7,7 @@
                 </el-autocomplete>
             </div>
         </div>
-        <div class="companyList" v-for="(item,index) in list" :key="index">
+        <div class="companyList" v-for="(item,index) in list" :key="index" v-loading="loading">
             <div class="companyLogo">
                 <img :src='item.institutionLogo==0 ||item.institutionLogo==null? "http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png": item.institutionLogo' >
             </div>
@@ -58,6 +58,7 @@ export default {
       totalNum:0,
       xinxueshuoSite:"http://data.xinxueshuo.cn/vue-project/dist/index.html#/",
       searchNull:'',
+      loading:true,
     }
   },
   filters:{
@@ -81,6 +82,7 @@ export default {
             searchKey:that.searchKey
         }).then(res=>{
             that.list=res.data
+            that.loading=false
             that.totalNum=res.count
             if(that.totalNum==0){
                 that.searchNull="未搜索到结果，请重新输入关键字！"
@@ -107,6 +109,7 @@ export default {
     searchCompany(){
         this.getList()
     },
+    // 智能提示搜索
     getSuggestSearch(queryString, cb){
         suggestSearch({
             keyword:this.searchKey

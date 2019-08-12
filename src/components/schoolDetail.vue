@@ -33,8 +33,7 @@
         <div class="schoolId clearfix"><p>NO.{{schoolDetail.id}}</p></div>
         <div class="schoolLogo">
             <div class="schoolLeft">
-                <img v-if="schoolLogo"  :src="schoolLogo" width='170'/>   
-                <img v-else src="http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png" alt="" width="170">
+                <img :src='schoolDetail.schoolLogo?schoolDetail.schoolLogo:"http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png"' width='170'/>
             </div>
             <div class="schoolRight">
                 <ul>
@@ -324,7 +323,6 @@
           </div>
         </div>
       </div>
-    
   </div>
   <school-footer  v-if="pcSee"></school-footer>
   <div v-if="mobSee">
@@ -397,8 +395,7 @@
                 admissionList3:{},
                 admissionList4:{},
                 schoolList:[],
-                schoolLogo:'',// v-if判断
-                Isintro:'',
+                Isintro:'',// v-if判断
                 Isconcept:'',
                 Issystem:'',
                 Ishardware:true,
@@ -487,7 +484,6 @@
                     that.asyncObject = res
                     that.flag = true
                     // v-if判断
-                    that.schoolLogo=that.schoolDetail.schoolLogo
                     that.Isintro=that.schoolDetail.schoolDesc
                     that.Issystem=that.schoolDetail.courseSystem
                     that.Isconcept=that.schoolDetail.schoolManagement
@@ -663,7 +659,6 @@
         color: #26343f;
     }
     /* bannner */
-    
     .swiper-slide {
         height: 400px;
     }

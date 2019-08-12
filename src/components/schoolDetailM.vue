@@ -2,20 +2,16 @@
     <div class="schoolDetailM">
         <div class="bgImg">
             <img :src="schoolDetail.schoolShowOne" alt="" class="img-responsive">
-            <!-- <div class="back"  @click="goBack">  
-                <a><i class="iconfont icon-arrow-left"></i></a>
-            </div> -->  
             <div class="head">
                 <el-row>
                     <el-col :span="8">
-                            <img :src="schoolDetail.schoolLogo" v-if="schoolLogo">
-                            <img src="http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png" alt="" v-else>
+                        <img :src='schoolDetail.schoolLogo?schoolDetail.schoolLogo:"http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png"'>
                     </el-col>
                     <el-col :span="16">
-                            <h3 style="margin-top:10px">{{schoolDetail.schoolName}}</h3>  
+                        <h3 style="margin-top:10px">{{schoolDetail.schoolName}}</h3>  
                     </el-col>
                     <el-col :span="16">
-                            <h5>{{schoolDetail.schoolEnglishName|ellipsisEname}}</h5>  
+                        <h5>{{schoolDetail.schoolEnglishName|ellipsisEname}}</h5>  
                     </el-col>
                      <el-col :span="16">
                         地址：<span>{{schoolDetail.province | isNull}}</span><span>{{schoolDetail.town | isNull}}</span>
@@ -41,23 +37,12 @@
                         <el-col :span="24">
                             电话：{{schoolDetail.telephone}}
                         </el-col>
-                        <!-- <el-col :span="24">
-                            学制：<span v-for="everyGrade of gradeSplit" class="grade" :key="everyGrade">{{everyGrade}}</span>
-                        </el-col>
-                        <el-col :span="24" class="fee">
-                            学费：<span>{{schoolDetail.oneTuition | isZero}}</span><span>{{schoolDetail.twoTuition | isZero}}</span><span>{{schoolDetail.thirdTuition | isZero}}</span><span>{{schoolDetail.fourTuition | isZero}}</span>
-                        </el-col> -->
                     </el-row>
-                     <div class="boxfee">
-                    <p>
-                        学制：<span v-for="everyGrade of gradeSplit" class="grade" :key="everyGrade">{{everyGrade}}</span>
-                    </p>
-                    <p class="fee">
-                        学费：<span>{{schoolDetail.oneTuition | isZero}}</span><span>{{schoolDetail.twoTuition | isZero}}</span><span>{{schoolDetail.thirdTuition | isZero}}</span><span>{{schoolDetail.fourTuition | isZero}}</span>
-                    </p>
+                    <div class="boxfee">
+                        <p>学制：<span v-for="everyGrade of gradeSplit" class="grade" :key="everyGrade">{{everyGrade}}</span></p>
+                        <p class="fee">学费：<span>{{schoolDetail.oneTuition | isZero}}</span><span>{{schoolDetail.twoTuition | isZero}}</span><span>{{schoolDetail.thirdTuition | isZero}}</span><span>{{schoolDetail.fourTuition | isZero}}</span></p>
+                    </div>
                 </div>
-                </div>
-               
             </div>
         </div>
         <div class="tabbable" >
@@ -74,7 +59,7 @@
                     <div  ref="obj">
                         <p :style="'height:'+activityBannerH+'px'" :class="shortContent?'show':'hide'" class="shortContent contentM">{{schoolDetail.schoolDesc}}</p>
                         <p :class="longContent?'show':'hide'" class="longContent contentM">{{schoolDetail.schoolDesc}}</p>
-                        <span @click="lookMore" :class="more?'show':'hide'" class="contentM">【更多】</span>
+                        <span @click="lookMore" :class="more?'show':'hide'" class="contentM more">【更多】</span>
                     </div>
                     <p class="titleM" v-if="schoolShowOne">学校图片</p>
                     <p v-else></p>
@@ -113,67 +98,35 @@
                     <p class="contentM">{{schoolDetail.schoolManagement}}</p>
                     <p class="titleM"  :class="Isfeature?'show':'hide'">办学特色</p>
                     <p class="contentM">
-                        <el-row style="margin:20px 0">
+                        <el-row class="featureBox">
                             <el-col :span="12">
-                                <img :src="featureList1.img" alt="" class="img-responsive" style="height:105px">
+                                <img :src="featureList1.img" alt="" class="img-responsive">
                             </el-col>
-                            <el-col :span="12" style="font-weight:bold;text-align:center">{{featureList1.title}}</el-col>
+                            <el-col :span="12">{{featureList1.title}}</el-col>
                             <el-col :span="12">{{featureList1.desc}}</el-col>
                         </el-row>
-                        <el-row style="margin:20px 0">
+                        <el-row class="featureBox">
                             <el-col :span="12">
-                               <img :src="featureList2.img" alt="" class="img-responsive" style="height:105px">
+                               <img :src="featureList2.img" alt="" class="img-responsive">
                             </el-col>
-                            <el-col :span="12" style="font-weight:bold;text-align:center">{{featureList2.title}}</el-col>
+                            <el-col :span="12">{{featureList2.title}}</el-col>
                             <el-col :span="12">{{featureList2.desc}}</el-col>
                         </el-row>
-                        <el-row>
+                        <el-row class="featureBox" style="margin-bottom:0">
                             <el-col :span="12">
-                                <img :src="featureList3.img" alt="" class="img-responsive" style="height:105px">
+                                <img :src="featureList3.img" alt="" class="img-responsive">
                             </el-col>
-                            <el-col :span="12" style="font-weight:bold;text-align:center">{{featureList3.title}}</el-col>
+                            <el-col :span="12">{{featureList3.title}}</el-col>
                             <el-col :span="12">{{featureList3.desc}}</el-col>
                         </el-row>
                     </p>
-                
-                    <!-- <a href="#system" data-toggle="tab">更多</a> -->
                 </div>
-                
-                <!-- <div class="tab-pane" id="concept">
-                    <p class="titleM"  v-if="Isconcept">办学理念</p>
-                    <p v-else></p>
-                    <p class="contentM">{{schoolDetail.schoolManagement}}</p>
-                    <p class="titleM"  :class="Isfeature?'show':'hide'">办学特色</p>
-                    <p class="contentM">
-                        <el-row style="margin:20px 0">
-                            <el-col :span="12">
-                                <img :src="featureList1.img" alt="" class="img-responsive" style="height:105px">
-                            </el-col>
-                            <el-col :span="12" style="font-weight:bold;text-align:center">{{featureList1.title}}</el-col>
-                            <el-col :span="12">{{featureList1.desc}}</el-col>
-                        </el-row>
-                        <el-row style="margin:20px 0">
-                            <el-col :span="12">
-                               <img :src="featureList2.img" alt="" class="img-responsive" style="height:105px">
-                            </el-col>
-                            <el-col :span="12" style="font-weight:bold;text-align:center">{{featureList2.title}}</el-col>
-                            <el-col :span="12">{{featureList2.desc}}</el-col>
-                        </el-row>
-                        <el-row style="margin:20px 0;">
-                            <el-col :span="12">
-                                <img :src="featureList3.img" alt="" class="img-responsive" style="height:105px">
-                            </el-col>
-                            <el-col :span="12" style="font-weight:bold;text-align:center">{{featureList3.title}}</el-col>
-                            <el-col :span="12">{{featureList3.desc}}</el-col>
-                        </el-row>
-                    </p>
-                </div> -->
                 <div class="tab-pane" id="system">
                     <p class="titleM"  v-if="Issystem">课程体系</p>
                     <p v-else></p>
                     <p class="contentM">{{schoolDetail.courseSystem}}</p>
                     <p class="titleM">师资队伍</p>
-                    <el-row style="text-align:center;margin:40px 0">
+                    <el-row class="teachers">
                         <el-col :span="12">
                             <p><i class="iconfont icon-jixinrenshu"></i></p>
                             <p class="number">{{schoolDetail.students}}</p>
@@ -274,10 +227,10 @@
                         </span>
                     </p> -->
                     <p class="titleM">同城学校</p>
-                    <p class="contentM citySchool">
+                    <p class="contentM">
                         <el-row style="text-align:center">
                             <el-col :span="10" class="citySchoolBox"  v-for="(item, index) in schoolList"  :key="index">
-                                <img :src="item.schoolLogo" alt="">
+                                <img :src='item.schoolLogo?item.schoolLogo:"http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png"' alt="">
                                 <p class="chineseName">{{item.schoolName | ellipsisName}}</p>
                                 <p class="englishName">{{item.schoolEnglishName | ellipsisEname|isZero}}</p>
                             </el-col>
@@ -295,42 +248,42 @@
             </div>
         </div>
         <div class="process">
-            <el-button type="text" @click="dialogFormVisible = true">申请访校</el-button>
+            <span type="text" @click="dialogFormVisible = true">申请访校</span>
         </div>
         <el-dialog title="申请访校" :visible.sync="dialogFormVisible">
-                <el-form :model="formInline"  :rules="rules" class="demo-form-inline" ref="formInline">
-                    <el-form-item prop="inputName">
-                        <el-input v-model="formInline.inputName" placeholder="学生姓名"></el-input>
-                    </el-form-item>
-                    <el-form-item prop="inputNumber">
-                        <el-input placeholder="手机号码"  v-model="formInline.inputNumber"></el-input>
-                    </el-form-item>
-                    <el-form-item>
-                        <el-select placeholder="在读年级" v-model="formInline.inputGrade">
-                            <el-option label="幼儿园" value='幼儿园'></el-option>
-                            <el-option label="一年级" value='一年级'></el-option>
-                            <el-option label="二年级" value='二年级'></el-option>
-                            <el-option label="三年级" value='三年级'></el-option>
-                            <el-option label="四年级" value='四年级'></el-option>
-                            <el-option label="五年级" value='五年级'></el-option>
-                            <el-option label="六年级" value='六年级'></el-option>
-                            <el-option label="七年级" value='七年级'></el-option>
-                            <el-option label="八年级" value='八年级'></el-option>
-                            <el-option label="九年级" value='九年级'></el-option>
-                            <el-option label="十年级" value='十年级'></el-option>
-                            <el-option label="十一年级" value='十一年级'></el-option>
-                            <el-option label="十二年级" value='十二年级'></el-option>
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item  class="remark">
-                        <el-input type="textarea" v-model="formInline.inputRemark" placeholder="备注"></el-input>
-                    </el-form-item>
-                </el-form>
-                <div slot="footer" class="dialog-footer">
-                    <el-button @click="dialogFormVisible = false">取 消</el-button>
-                    <el-button type="primary" @click="submit('formInline')">提 交</el-button>
-                </div>
-            </el-dialog>
+            <el-form :model="formInline"  :rules="rules" class="demo-form-inline" ref="formInline">
+                <el-form-item prop="inputName">
+                    <el-input v-model="formInline.inputName" placeholder="学生姓名"></el-input>
+                </el-form-item>
+                <el-form-item prop="inputNumber">
+                    <el-input placeholder="手机号码"  v-model="formInline.inputNumber"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-select placeholder="在读年级" v-model="formInline.inputGrade">
+                        <el-option label="幼儿园" value='幼儿园'></el-option>
+                        <el-option label="一年级" value='一年级'></el-option>
+                        <el-option label="二年级" value='二年级'></el-option>
+                        <el-option label="三年级" value='三年级'></el-option>
+                        <el-option label="四年级" value='四年级'></el-option>
+                        <el-option label="五年级" value='五年级'></el-option>
+                        <el-option label="六年级" value='六年级'></el-option>
+                        <el-option label="七年级" value='七年级'></el-option>
+                        <el-option label="八年级" value='八年级'></el-option>
+                        <el-option label="九年级" value='九年级'></el-option>
+                        <el-option label="十年级" value='十年级'></el-option>
+                        <el-option label="十一年级" value='十一年级'></el-option>
+                        <el-option label="十二年级" value='十二年级'></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item  class="remark">
+                    <el-input type="textarea" v-model="formInline.inputRemark" placeholder="备注"></el-input>
+                </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="dialogFormVisible = false">取 消</el-button>
+                <el-button type="primary" @click="submit('formInline')">提 交</el-button>
+            </div>
+        </el-dialog>
   </div>
 </template>
 
@@ -388,7 +341,6 @@ export default {
         Isconcept:'',
         Issystem:'',
         schoolShowOne:'',
-        schoolLogo:'',
         schoolList:[],
      }
     },
@@ -413,7 +365,7 @@ export default {
         ellipsisName(value) {
             if (!value) return "";
             if (value.length > 9) {
-                return value.slice(0, 9) + "...";
+                return value.slice(0, 7) + "...";
             }else{
                 return value;
             }
@@ -428,9 +380,9 @@ export default {
         }
     },
     methods:{
-        goBack(){
-            window.history.go(-1);
-        },
+        // goBack(){
+        //     window.history.go(-1);
+        // },
         judgeIsNull(){
             // 判断数据是否为空
             if(this.schoolDetail.hardware=="0"){
@@ -523,7 +475,6 @@ export default {
         this.schoolDetail=this.childObject.data;
         this.Isintro=this.schoolDetail.schoolDesc
         this.Isconcept=this.schoolDetail.schoolManagement
-        this.schoolLogo=this.schoolDetail.schoolLogo
         this.schoolShowOne=this.schoolDetail.schoolShowOne
         this.Issystem=this.schoolDetail.courseSystem   
         // 办学特色
@@ -576,6 +527,210 @@ export default {
     },
 }
 </script>
+<style scoped lang="less">
+.schoolDetailM{
+    width: 100%;
+    .bgImg{
+        img {
+            height: 345px;
+        }
+        .head {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 15px 20px 20px;
+            color: #fff;
+            position: absolute;
+            top: 0;
+            height:345px;
+            .el-col{
+                margin: 5px 0;
+                img{
+                    width: 100px;
+                    height:100px;
+                    border-radius: 50%;
+                    margin-bottom: 10px;
+                }
+            }
+            .basicMessage {
+                background: rgba(0, 0, 0, 0.3);
+                padding: 10px;
+                .boxfee{
+                    background: rgba(255, 255, 255, 0.3);
+                    padding: 10px;
+                    margin-top: 10px;
+                    span.grade,.fee span{
+                        width: 55px;
+                        display: inline-block;
+                        text-align: center;
+                    }
+                }
+
+            }
+        }
+    }
+    .tabbable{
+        ul {
+            &#navfixed{
+                position: fixed;
+                top:345px;
+                width:100%;
+                z-index: 999;
+                border-bottom: none;
+                background: #f7f9fa;
+            }
+            li{
+                width:25%;
+                &.active{
+                    a,a:focus,a:hover{
+                        color: #214f89;
+                        font-weight: bold;
+                        background-color: #fff;
+                        border: none;
+                        border-bottom-color: transparent;
+                    }
+                }
+            }
+        }
+        .tab-content{
+            height:auto;
+            overflow: scroll;
+            position: relative;
+            top:20px;
+            .tab-pane{
+                p{
+                    &.titleM{
+                        padding: 5px 0;
+                        font-weight: bold;
+                        color: #fff;
+                        background: -webkit-linear-gradient(left, #6b83a2 40%, #214f89);
+                        width: 22%;
+                        text-align: center;
+                        margin: 30px 20px 15px;
+                        letter-spacing: 1px;
+                    }
+                    &.contentM {
+                        line-height: 22px;
+                        padding: 0 20px;
+                    }
+                }
+                &#summary{
+                    padding-bottom:80px;
+                    .shortContent {
+                        overflow: hidden;
+                    }
+                    .more{
+                        color: #214f89;
+                        font-size: 14px;
+                        font-weight: 600;
+                        cursor: pointer;
+                        padding: 8px 13px;
+                    }
+                    .featureBox{
+                        margin:20px 0;
+                        img{
+                            height: 105px;
+                        }
+                        .el-col{
+                            &:nth-of-type(2){
+                                font-weight:bold;
+                                text-align:center
+                            }
+                        }
+                    }
+                }
+                &#system{
+                    .teachers{
+                        text-align:center;
+                        margin:40px 0;
+                        p{
+                            i{
+                                font-size: 50px;
+                            }
+                            &.number{
+                                font-weight: bold;
+                                margin: 15px 0;
+                            }
+                        }
+                    }
+                }
+                &#admission{
+                    padding-bottom:80px;
+                    .gradeBox{
+                        margin: 10px 0;
+                        display: inline-block;
+                        box-shadow: 0px 0px 15px #ccc;
+                        padding: 10px 20px;
+                        line-height: 24px;
+                        p{
+                            font-size: 16px;
+                            font-weight: bold;
+                            margin-bottom: 5px;
+                            letter-spacing: 2px;
+                        }
+                    }
+                    .citySchoolBox{
+                        border-top: 5px solid #214f89;
+                        box-shadow: 0px 0px 15px #ccc;
+                        border-radius: 5px;
+                        margin: 20px 13px 0;
+                        padding: 15px 5px;
+                        img{
+                             width:80px;
+                            height:80px;
+                        }
+                        .englishName{
+                            height:45px;
+                        }
+                        .chineseName{
+                            margin: 5px 0;
+                            font-weight: bold;
+                        }
+                    }
+                }
+                &#analyse{
+                    padding-bottom:80px;
+                    .analyseBox{
+                        height: 150px;
+                        width: 90%;
+                        border: 1px solid #ccc;
+                        margin: 0 auto;
+                    }
+                }
+            }
+        }
+    }
+    .process{
+        border-radius: 50px 0 0 50px;
+        padding: 5px 15px;
+        background: #2364a6;
+        color: #fff !important;
+        position: fixed;
+        bottom: 20px;
+        right: -12px;
+        letter-spacing: 1px;
+        line-height: 15px;
+        font-size: 14px;
+        box-shadow: 0 0 5px #2364a6;
+        z-index: 9;
+        span{
+            display: inline-block;
+            width: 35px;
+        }
+    }
+    
+}  
+    // #admission .applyBox{
+    //     box-shadow: 0px 0px 5px #ddd;
+    //     text-align: center;
+    //     padding: 20px 0;
+    // }
+    // #admission .applyBox .el-form,#admission .applyBox .el-select,#admission .applyBox .el-textarea{
+    //     width:270px;
+    //     margin: 0 auto;
+    // }
+    //  #admission .applyBox .el-button{
+    //     width:200px;
+    // }
+</style>
 <style>
 .el-dialog{
     width:80% !important;
@@ -584,204 +739,3 @@ export default {
     width:100%;
 }
 </style>
-
-<style scoped lang="less">
-    #summary,#admission,#analyse{
-        padding-bottom:80px;
-    }
-    #navfixed{
-        position: fixed;
-        top:345px;
-        width:100%;
-        z-index: 999;
-    }
-    .tab-content{
-        height:auto;
-        overflow: scroll;
-        position: relative;
-        top:20px;
-    }
-    .back i{
-        color: #fff;
-        position: absolute;
-        top: 10px;
-        left: 3px;
-        z-index: 999;
-        font-size: 25px;
-    }
-    .schoolDetailM {
-        width: 100%;
-    }
-    
-    .bgImg>img {
-        height: 345px;
-    }
-    
-    .head {
-        background: rgba(0, 0, 0, 0.5);
-        padding: 15px 20px 20px;
-        color: #fff;
-        position: absolute;
-        top: 0;
-        height:345px; 
-    }
-    
-    .head img {
-        width: 100px;
-        border-radius: 50%;
-        margin-bottom: 10px;
-    }
-    
-    .head h2,
-    .head h4 {
-        margin: 10px 0;
-    }
-    
-    .head .basicMessage {
-        background: rgba(0, 0, 0, 0.3);
-        padding: 10px;
-    }
-    
-    // .basicMessage .el-col span.grade,
-    // .basicMessage .fee span {
-    //     width: 53px;
-    //     display: inline-block;
-    //     text-align: center;
-    // }
-    .boxfee{
-        background: rgba(255, 255, 255, 0.3);
-        padding: 10px;
-        margin-top: 10px;
-        text-align: center;
-    }
-    .boxfee span.grade,.boxfee .fee span{
-        width: 53px;
-        display: inline-block;
-        text-align: center;
-    }
-    
-    .head .el-col {
-        margin: 5px 0
-    }
-    
-    .nav-tabs {
-        border-bottom: none;
-        background: #f7f9fa;
-    }
-    
-    .nav-tabs>li.active>a,
-    .nav-tabs>li.active>a:focus,
-    .nav-tabs>li.active>a:hover {
-        color: #214f89;
-        font-weight: bold;
-        background-color: #fff;
-        border: none;
-        border-bottom-color: transparent;
-    }
-
-    
-    .tabbable ul li{
-        width:25%;
-    }
-    .tabbable p.titleM {
-        padding: 5px 0;
-        font-weight: bold;
-        color: #fff;
-        background: -webkit-linear-gradient(left, #6b83a2 40%, #214f89);
-        width: 22%;
-        text-align: center;
-        margin: 30px 20px 15px;
-        letter-spacing: 1px;
-    }
-    
-    .tabbable p.contentM {
-        line-height: 22px;
-        padding: 0 20px;
-    }
-    .shortContent {
-        overflow: hidden;
-    }
-    span.contentM{
-        color: #214f89;
-        font-size: 14px;
-        font-weight: 600;
-        cursor: pointer;
-        padding: 8px 13px;
-    }
-    
-    #system p i {
-        font-size: 50px;
-    }
-    
-    #system p.number {
-        font-weight: bold;
-        margin: 15px 0;
-    }
-    .gradeBox{
-        margin: 10px 0;
-        display: inline-block;
-        box-shadow: 0px 0px 15px #ccc;
-        padding: 10px 20px;
-        line-height: 24px;
-    }
-    .gradeBox p{
-        font-size: 16px;
-        font-weight: bold;
-        margin-bottom: 5px;
-        letter-spacing: 2px;
-    }
-
-    .citySchoolBox{
-        border-top: 5px solid #214f89;
-        box-shadow: 0px 0px 15px #ccc;
-        border-radius: 5px;
-        margin: 20px 13px 0;
-        padding: 15px 0;
-    }
-    .citySchoolBox img{
-        width:80px;
-        height:80px;
-    }
-     #admission .englishName {
-        height:45px;
-    }
-    #admission .chineseName {
-        margin: 5px 0;
-        font-weight: bold
-    }
-    #admission .applyBox{
-        box-shadow: 0px 0px 5px #ddd;
-        text-align: center;
-        padding: 20px 0;
-    }
-    #admission .applyBox .el-form,#admission .applyBox .el-select,#admission .applyBox .el-textarea{
-        width:270px;
-        margin: 0 auto;
-    }
-     #admission .applyBox .el-button{
-        width:200px;
-    }
-    .analyseBox{
-        height: 150px;
-        width: 90%;
-        border: 1px solid #ccc;
-        margin: 0 auto;
-    }
-    .process{
-        border-radius: 5px;
-        background: #2364a6;
-        color: #fff !important;
-        position: fixed;
-        bottom: 20px;
-        right: -5px;
-        box-shadow: 0 0 5px #2364a6;
-        z-index: 9;
-    }
-    .process .el-button--text{
-        color: #fff;
-        font-size: 16px;
-        padding: 7px;
-        font-weight: bold;
-    }
-</style>
-

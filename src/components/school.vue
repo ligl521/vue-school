@@ -1,6 +1,5 @@
 <template>
   <div id="container">
-    <!-- <loding v-if="this.$store.state.loding"/> -->
     <!-- 搜索学校 -->
     <div class="searchSchool">
       <div id="searchBar">
@@ -14,8 +13,9 @@
           @keyup.enter.native="getschool"
           class="inputBtn"
         >
-        </el-autocomplete>
         <el-button slot="append" id="searchBtn" type="primary"  @click="getschool"><i class="iconfont icon-sousuo"></i></el-button>
+        </el-autocomplete>
+       
       </div>
       <router-link to="/schoolAdd">
         <div class="schoolSiku"><i class="el-icon-plus"></i>添加学校库</div>
@@ -85,9 +85,7 @@
                 <img :src="schoolLogoUrlTwo" />
               </div>
               <ul>
-                <!-- http://localhost:8080/#/schoolDetail02?id=101370 -->
                 <li class="schoolName"> <a :href="xinxueshuoSite+'schoolDetail?id='+item.id" target="_blank">{{item.schoolName | ellipsisName}} </a></li>
-                <!-- <li class="schoolName"> <a href="http://localhost:8080/#/schoolDetail02?id=101370">{{item.schoolName | ellipsisName}} </a></li> -->
                 <li>学制：<span v-for="(v,i) in item.schoolSystem" :key="i">{{v}},</span></li>
                 <li>课程：AP:美国课程</li>
               </ul>
@@ -96,46 +94,23 @@
       </el-row>
     </div>
     <!-- 学校展示列表two -->
-<<<<<<< HEAD
-        <div class="schoolDetailTwo" v-if="!schoolDetail" v-loading="isLoading" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10" infinite-scroll-immediate="false">
-            <span id="search_res">{{this.no_school}}</span>
-            <div class="detailBox" v-for="(item,i) in schoolLists" :key="i">
-                <div class="DeatailTwoLeft"><img :src='item.schoolLogo?item.schoolLogo:"http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png"' /></div>
-                <div class="DeatailTwoCenter" id="DeatailTwoCenterId">
-                <ul>
-                    <li><a :href="xinxueshuoSite+'schoolDetail?id='+item.id" target="_blank">{{item.schoolName  | ellipsisName}}</a></li>
-                    <!-- <li><a :href="xinxueshuoSite+'schoolDetailM?id='+item.id" target="_blank">{{item.schoolName  | ellipsisName}}</a></li> -->
-                    <li>{{item.schoolEnglishName | ellipsisSchoolNameTwo | iszero}}</li>
-                    <li>类型：<span>{{item.schoolProperties}}</span><p>学制：<span v-for="(v,i) in item.schoolSystem" :key="i">{{v}}</span></p></li>
-                </ul>
-                </div>
-                <div class="DeatailTwoRight">
-                <ul>
-                    <li>认证：<span v-for="(v,i) in item.authentication" :key="i">{{v}}</span></li>
-                    <li>建校时间：{{item.foundingTime}}</li>
-                    <li>{{item.areas03 | ellipsisAddress}}</li>
-                </ul>
-                </div>
-=======
-    <div class="schoolDetailTwo" v-if="!schoolDetail" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10" infinite-scroll-immediate="false">
+    <div class="schoolDetailTwo" v-if="!schoolDetail" v-loading="isLoading" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10" infinite-scroll-immediate="false">
         <span id="search_res">{{this.no_school}}</span>
         <div class="detailBox" v-for="(item,i) in schoolLists" :key="i">
             <div class="DeatailTwoLeft"><img :src='item.schoolLogo?item.schoolLogo:"http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png"' /></div>
             <div class="DeatailTwoCenter" id="DeatailTwoCenterId">
             <ul>
                 <li><a :href="xinxueshuoSite+'schoolDetail?id='+item.id" target="_blank">{{item.schoolName  | ellipsisName}}</a></li>
-                <!-- <li><a :href="xinxueshuoSite+'schoolDetailM?id='+item.id" target="_blank">{{item.schoolName  | ellipsisName}}</a></li> -->
                 <li>{{item.schoolEnglishName | ellipsisSchoolNameTwo | iszero}}</li>
                 <li>类型：<span>{{item.schoolProperties}}</span><p>学制：<span v-for="(v,i) in item.schoolSystem" :key="i">{{v}}</span></p></li>
             </ul>
             </div>
             <div class="DeatailTwoRight">
-            <ul>
-                <li>认证：<span v-for="(v,i) in item.authentication" :key="i">{{v}}</span></li>
-                <li>建校时间：{{item.foundingTime}}</li>
-                <li>{{item.areas03 | ellipsisAddress}}</li>
-            </ul>
->>>>>>> b829f2a4b29b70ac0ac95e6af2c1c45d5a596f05
+                <ul>
+                    <li>认证：<span v-for="(v,i) in item.authentication" :key="i">{{v}}</span></li>
+                    <li>建校时间：{{item.foundingTime}}</li>
+                    <li>{{item.areas03 | ellipsisAddress}}</li>
+                </ul>
             </div>
         </div>
     </div>
@@ -213,9 +188,6 @@ export default {
       finish:false,
       isLoading:true,
     };
-  },
-  beforeCreate() {
-    // this.$store.commit("loding", true);
   },
   created() {
     this.input = this.$route.query.item;
@@ -308,7 +280,7 @@ export default {
     handleSelect(item) {
       console.log(111);
       this.getschool();
-    },
+    },  
     schoolList() {
       //获取学校List数据(包括学校搜索)
       getSchoolLibrary({
@@ -316,23 +288,30 @@ export default {
         pageSize: this.pageSize,
         searchKey: this.input
       }).then(respons => {
-        // this.$store.commit("loding", false);
         let that = this;
-        this.isLoading=false
+        that.isLoading=false
         if(screen.width<768){
             that.schoolLists = that.schoolLists.concat(respons.data.list);
             this.pageNum++
-            if(respons.data.size < 24 & respons.data.size>0) {
+            if(respons.data.total < 24 & respons.data.total>0) {
                 that.finish = true;
+                that.no_school = ""
+            }else if(respons.data.total==0){
+                that.finish = false;
+                that.no_school = "未搜索到结果，请重新输入关键字！"
+            }else{
+                that.finish = false; 
+                that.no_school = ""
             }
         }else{
             that.schoolLists = respons.data.list;
+             that.total_school = respons.data.total;
+            //判断有无搜索结果
+            that.total_school == 0
+            ? (that.no_school = "未搜索到结果，请重新输入关键字！")
+            : (that.no_school = "");
         }
-        that.total_school = respons.data.total;
-        //判断有无搜索结果
-        that.total_school == 0
-          ? (that.no_school = "未搜索到结果，请重新输入关键字！")
-          : (that.no_school = "");
+       
 
         //截取 幼 小 中 高
         for (var i = 0; i < respons.data.list.length; i++) {
@@ -465,7 +444,7 @@ export default {
     }
 }
 @media screen and (max-width: 768px)  {
-    .advancedSearch,.toggleBut,.schoolDetail,.block{
+    .advancedSearch,.toggleBut,.schoolDetail,.block,.schoolSiku{
         display:none;
     }
     #searchBar{
@@ -609,9 +588,8 @@ export default {
   #searchBar {
     margin-left: 50%;
     transform: translateX(-50%);
-    padding-top: 25px;
     display: inline-table;
-
+    padding: 25px 0 10px;
   }
   #schoolInput {
     position: relative;
@@ -635,24 +613,18 @@ export default {
   line-height: 25px;
   margin-top: 10px;
 }
-#schoolInput{
-        position: relative;
-    }
 #searchBtn {
-    padding: 6px 15px;
-    position: absolute;
-    border-radius: 0 4px 4px 0;
-    height:44px;
     i{
         font-size: 30px;
+        color:#fff;
     }
 }
 .inputBtn{
-    border-radius: 4px 0 0 4px !important;
+    border-radius: 6px !important;
     border: 2px solid #214f89 !important;
-    width:80%;
+    width:300px;
 }
-.inputBtn :focus {
+.inputBtn:focus {
     box-shadow: 0px 0px 10px #214f89 !important;
     border-color:#fff;
 }
@@ -1002,3 +974,10 @@ export default {
 }
 
 </style>
+<style>
+.el-input-group__append {
+    border: 0;
+    background: #214f89;
+}
+</style>
+
