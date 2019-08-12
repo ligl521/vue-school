@@ -96,10 +96,9 @@
       </el-row>
     </div>
     <!-- 学校展示列表two -->
-<<<<<<< HEAD
-        <div class="schoolDetailTwo" v-if="!schoolDetail" v-loading="isLoading" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10" infinite-scroll-immediate="false">
-            <span id="search_res">{{this.no_school}}</span>
-            <div class="detailBox" v-for="(item,i) in schoolLists" :key="i">
+    <div class="schoolDetailTwo" v-if="!schoolDetail" v-loading="isLoading" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10" infinite-scroll-immediate="false">
+          <span id="search_res">{{this.no_school}}</span>
+          <div class="detailBox" v-for="(item,i) in schoolLists" :key="i">
                 <div class="DeatailTwoLeft"><img :src='item.schoolLogo?item.schoolLogo:"http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png"' /></div>
                 <div class="DeatailTwoCenter" id="DeatailTwoCenterId">
                 <ul>
@@ -116,28 +115,7 @@
                     <li>{{item.areas03 | ellipsisAddress}}</li>
                 </ul>
                 </div>
-=======
-    <div class="schoolDetailTwo" v-if="!schoolDetail" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10" infinite-scroll-immediate="false">
-        <span id="search_res">{{this.no_school}}</span>
-        <div class="detailBox" v-for="(item,i) in schoolLists" :key="i">
-            <div class="DeatailTwoLeft"><img :src='item.schoolLogo?item.schoolLogo:"http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png"' /></div>
-            <div class="DeatailTwoCenter" id="DeatailTwoCenterId">
-            <ul>
-                <li><a :href="xinxueshuoSite+'schoolDetail?id='+item.id" target="_blank">{{item.schoolName  | ellipsisName}}</a></li>
-                <!-- <li><a :href="xinxueshuoSite+'schoolDetailM?id='+item.id" target="_blank">{{item.schoolName  | ellipsisName}}</a></li> -->
-                <li>{{item.schoolEnglishName | ellipsisSchoolNameTwo | iszero}}</li>
-                <li>类型：<span>{{item.schoolProperties}}</span><p>学制：<span v-for="(v,i) in item.schoolSystem" :key="i">{{v}}</span></p></li>
-            </ul>
-            </div>
-            <div class="DeatailTwoRight">
-            <ul>
-                <li>认证：<span v-for="(v,i) in item.authentication" :key="i">{{v}}</span></li>
-                <li>建校时间：{{item.foundingTime}}</li>
-                <li>{{item.areas03 | ellipsisAddress}}</li>
-            </ul>
->>>>>>> b829f2a4b29b70ac0ac95e6af2c1c45d5a596f05
-            </div>
-        </div>
+          </div>
     </div>
     <p v-show="finish" style="padding: 10px 0 70px 0;">没有更多了</p>
     <!-- <div class="back"  @click="goBack">
