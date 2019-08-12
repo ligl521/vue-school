@@ -198,6 +198,14 @@ export default {
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
     },
+    //设置coolie
+    setCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        var expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + cvalue + "; " + expires+"; path=/"   
+        console.log(d)
+    },
     //coolie 读取存在
     getCookie(name) {
       var arr,
@@ -210,12 +218,17 @@ export default {
       var exp = new Date();
       exp.setTime(exp.getTime() - 1);
       var cval = this.getCookie(name);
-      if (cval != null) {
-        document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
-        this.WechatLogin = false;
-        this.headimgurl = true;
-        alert("注销成功");
-      }
+        if (cval != null) {
+            this.setCookie("username", "", -1);
+            this.setCookie("memberSign", "", -1);
+            this.setCookie("UserVerifyCode", "", -1);
+            this.setCookie("User_TureName", "", -1);
+            this.setCookie("UserId", "", -1);
+            this.setCookie("UserImg", "", -1);
+            this.WechatLogin = false;
+            this.headimgurl = true;
+            alert("注销成功");
+        }
     },
     //从新加载二维码
     opacity_text() {
@@ -233,12 +246,11 @@ export default {
           console.log(response);
           if (response.code == 0) {
             self.userTurename = response.data.userTurename;
-            document.cookie = "username=" + response.data.username; //用户邮箱
-            document.cookie = "memberSign=" + response.data.memberSign; //用户等级
-            document.cookie =
-              "UserVerifyCode=" + response.data.userRegistercode; //用户检验码
-            document.cookie = "User_TureName=" + response.data.userTurename; //用户真实名字
-            document.cookie = "UserId=" + response.data.id; //用户ID
+            self.setCookie("username",response.data.username,7)//用户邮箱
+            self.setCookie("memberSign",response.data.memberSign,7)//用户等级
+            self.setCookie("UserVerifyCode",response.data.userRegistercode,7)//用户检验码
+            self.setCookie("User_TureName",response.data.userTurename,7)//用户真实名字
+            self.setCookie("UserId",response.data.id,7)//用户ID
             self.dialogVisible = false;
             self.WechatLogin = true;
             self.headimgurl = false;
@@ -309,13 +321,12 @@ export default {
         .then(function(response) {
           if (response.code == 0) {
             that.userTurename = response.data.userTurename;
-            document.cookie = "username=" + response.data.username; //用户邮箱
-            document.cookie = "memberSign=" + response.data.memberSign; //用户等级
-            document.cookie =
-              "UserVerifyCode=" + response.data.userRegistercode; //用户检验码
-            document.cookie = "User_TureName=" + response.data.userTurename; //用户真实名字
-            document.cookie = "UserId=" + response.data.id; //用户ID
-            document.cookie = "UserImg=" + that.imgurl;
+            that.setCookie("username",response.data.username,7)//用户邮箱
+            that.setCookie("memberSign",response.data.memberSign,7)//用户等级
+            that.setCookie("UserVerifyCode",response.data.userRegistercode,7)//用户检验码
+            that.setCookie("User_TureName",response.data.userTurename,7)//用户真实名字
+            that.setCookie("UserId",response.data.id,7)
+            that.setCookie("UserImg",that.imgurl,7)
             that.dialogVisible = false;
             that.WechatLogin = true;
             that.headimgurl = false;
