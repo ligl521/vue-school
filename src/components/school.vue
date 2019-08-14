@@ -311,8 +311,6 @@ export default {
             ? (that.no_school = "未搜索到结果，请重新输入关键字！")
             : (that.no_school = "");
         }
-       
-
         //截取 幼 小 中 高
         for (var i = 0; i < respons.data.list.length; i++) {
           var str = respons.data.list[i].schoolSystem;

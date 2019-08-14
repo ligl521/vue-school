@@ -37,10 +37,11 @@
             </div>
             <div class="schoolRight">
                 <ul>
-                    <li style="font-size: 25px;margin:60px 0 0 50px;">{{schoolDetail.schoolName | ellipsisName}}</li>
-                    <li style="font-size: 20px;margin-top:60px;">认证：<span v-for="everyApprove of approveSplit" class="approve" :key="everyApprove">{{everyApprove | isZero}}</span></li>
-                    <li style="font-size: 16px;margin:30px 0 0 50px;">{{schoolDetail.schoolEnglishName | isZero | ellipsisEname}}</li>
+                    <li style="font-size: 25px;margin:60px 0 0 30px;">{{schoolDetail.schoolName | ellipsisName}}</li>
+                    <li style="font-size: 20px;margin-top:60px;width:375px;">认证：<span v-for="everyApprove of approveSplit" class="approve" :key="everyApprove">{{everyApprove | isZero}}</span></li>
                     <li style="font-size: 20px;margin-top:25px;">运营状态：<span class="circle">{{schoolDetail.operationState}}</span></li>
+                    <li style="font-size: 16px;margin: -17px 0px 0px 30px;">{{schoolDetail.schoolEnglishName | isZero | ellipsisEname}}</li>
+                    
                 </ul>
             </div>
         </div>
@@ -199,43 +200,50 @@
               <div class="admissionBox">
                 <img src="../assets/message.png" alt="" class="img-responsive">
                 <div class="admissionContent">
-                    <p v-if="admissionList1">国际高中</p>
-                    <p v-else></p>
-                    <el-row width="200%">
-                        <el-col :span="12">招生对象：{{admissionList1.target}}</el-col>
-                        <el-col :span="12">授课形式：{{admissionList1.from}}</el-col>
-                         <el-col :span="12">入学要求：{{admissionList1.require}}</el-col>
-                        <el-col :span="12">班级规模：{{admissionList1.scale}}</el-col>
-                         <el-col :span="12">入学考试：{{admissionList1.exam}}</el-col>
-                        <el-col :span="12">是否住宿：{{admissionList1.stay}}</el-col>
-                    </el-row>
-                    <p v-if="admissionList3">国际初中</p>
-                    <el-row width="200%">
-                        <el-col :span="12">招生对象：{{admissionList3.target}}</el-col>
-                        <el-col :span="12">授课形式：{{admissionList3.from}}</el-col>
-                         <el-col :span="12">入学要求：{{admissionList3.require}}</el-col>
-                        <el-col :span="12">班级规模：{{admissionList3.scale}}</el-col>
-                         <el-col :span="12">入学考试：{{admissionList3.exam}}</el-col>
-                        <el-col :span="12">是否住宿：{{admissionList3.stay}}</el-col>
-                    </el-row>
-                    <p v-if="admissionList2">国际小学</p>
-                    <el-row width="200%">
-                        <el-col :span="12">招生对象：{{admissionList2.target}}</el-col>
-                        <el-col :span="12">授课形式：{{admissionList2.from}}</el-col>
-                         <el-col :span="12">入学要求：{{admissionList2.require}}</el-col>
-                        <el-col :span="12">班级规模：{{admissionList2.scale}}</el-col>
-                         <el-col :span="12">入学考试：{{admissionList2.exam}}</el-col>
-                        <el-col :span="12">是否住宿：{{admissionList2.stay}}</el-col>
-                    </el-row>
-                    <!-- <p v-if="admissionList4">国际幼儿园</p>
-                    <el-row width="200%">
-                        <el-col :span="12">招生对象：{{admissionList4.target}}</el-col>
-                        <el-col :span="12">授课形式：{{admissionList4.from}}</el-col>
-                         <el-col :span="12">入学要求：{{admissionList4.require}}</el-col>
-                        <el-col :span="12">班级规模：{{admissionList4.scale}}</el-col>
-                         <el-col :span="12">入学考试：{{admissionList4.exam}}</el-col>
-                        <el-col :span="12">是否住宿：{{admissionList4.stay}}</el-col>
-                    </el-row> -->
+                    <div :class="admissionList1?'show':'hide'">
+                        <p>国际幼儿园</p>
+                        <el-row width="200%">
+                            <el-col :span="12">招生对象：{{admissionList1.target}}</el-col>
+                            <el-col :span="12">授课形式：{{admissionList1.froml}}</el-col>
+                            <el-col :span="12">入学要求：{{admissionList1.require}}</el-col>
+                            <el-col :span="12">班级规模：{{admissionList1.scale}}</el-col>
+                            <el-col :span="12">入学考试：{{admissionList1.exam}}</el-col>
+                            <el-col :span="12">是否住宿：{{admissionList1.stay}}</el-col>
+                        </el-row>
+                    </div>
+                    <div  :class="IsadmissionList2?'show':'hide'">
+                        <p>国际小学</p>
+                        <el-row width="200%">
+                            <el-col :span="12">招生对象：{{admissionList2.target}}</el-col>
+                            <el-col :span="12">授课形式：{{admissionList2.froml}}</el-col>
+                            <el-col :span="12">入学要求：{{admissionList2.require}}</el-col>
+                            <el-col :span="12">班级规模：{{admissionList2.scale}}</el-col>
+                            <el-col :span="12">入学考试：{{admissionList2.exam}}</el-col>
+                            <el-col :span="12">是否住宿：{{admissionList2.stay}}</el-col>
+                        </el-row>
+                    </div>
+                    <div :class="IsadmissionList3?'show':'hide'">
+                        <p>国际初中</p>
+                        <el-row width="200%">
+                            <el-col :span="12">招生对象：{{admissionList3.target}}</el-col>
+                            <el-col :span="12">授课形式：{{admissionList3.froml}}</el-col>
+                            <el-col :span="12">入学要求：{{admissionList3.require}}</el-col>
+                            <el-col :span="12">班级规模：{{admissionList3.scale}}</el-col>
+                            <el-col :span="12">入学考试：{{admissionList3.exam}}</el-col>
+                            <el-col :span="12">是否住宿：{{admissionList3.stay}}</el-col>
+                        </el-row>
+                    </div>
+                    <div :class="IsadmissionList4?'show':'hide'">
+                        <p>国际高中</p>
+                        <el-row width="200%">
+                            <el-col :span="12">招生对象：{{admissionList4.target}}</el-col>
+                            <el-col :span="12">授课形式：{{admissionList4.froml}}</el-col>
+                            <el-col :span="12">入学要求：{{admissionList4.require}}</el-col>
+                            <el-col :span="12">班级规模：{{admissionList4.scale}}</el-col>
+                            <el-col :span="12">入学考试：{{admissionList4.exam}}</el-col>
+                            <el-col :span="12">是否住宿：{{admissionList4.stay}}</el-col>
+                        </el-row>
+                    </div>
                 </div>
               </div>
           </div>
@@ -390,6 +398,10 @@
                 featureList2:{},
                 featureList3:{},
                 Isadmission:true,// 招生信息
+                IsadmissionList1:true,
+                IsadmissionList2:true,
+                IsadmissionList3:true,
+                IsadmissionList4:true,
                 admissionList1:{},
                 admissionList2:{},
                 admissionList3:{},
@@ -513,13 +525,25 @@
                         that.featureList3=that.schoolDetail.schoolCharacteristicsVo.three
                     }
                     // 招生信息
-                    if(res.data.studentEnrollmentVo==null){
+                    if(that.schoolDetail.studentEnrollmentVo==null || (that.schoolDetail.studentEnrollmentVo.Kindergarten==''&& that.schoolDetail.studentEnrollmentVo.primarySchool==''&&that.schoolDetail.studentEnrollmentVo.JuniorHighSchool==''&&that.schoolDetail.studentEnrollmentVo.heightSchool=='')){
                         that.Isadmission=false
                     }else{
-                        that.admissionList1=that.schoolDetail.studentEnrollmentVo.highSchool
+                        that.admissionList1=that.schoolDetail.studentEnrollmentVo.Kindergarten
                         that.admissionList2=that.schoolDetail.studentEnrollmentVo.primarySchool
-                        that.admissionList3=that.schoolDetail.studentEnrollmentVo.university
-                        // that.admissionList4=that.schoolDetail.studentEnrollmentVo.kindergarten
+                        that.admissionList3=that.schoolDetail.studentEnrollmentVo.JuniorHighSchool
+                        that.admissionList4=that.schoolDetail.studentEnrollmentVo.heightSchool
+                        if(that.admissionList1==''){
+                            that.IsadmissionList1=false
+                        }
+                        if(that.admissionList2==''){
+                            that.IsadmissionList2=false
+                        }
+                        if(that.admissionList3==''){
+                            that.IsadmissionList3=false
+                        }
+                        if(that.admissionList4==''){
+                            that.IsadmissionList4=false
+                        }
                     }
                     // 认证课程分割
                     var approve = res.data.authentication;
@@ -546,6 +570,16 @@
                     }else{
                         that.courseSplit = course.split(";");
                     }
+
+                    this.$nextTick(()=>{
+                        this.swiperInit()
+                        if (this.$refs.obj.offsetHeight > 200) {
+                            this.more = true;
+                            this.activityBannerH=200
+                        }else{
+                            this.more = false;
+                        }
+                    })
                     
                 });
             },
@@ -633,18 +667,10 @@
             } else {
                 this.pcSee = true
                 this.mobSee = false
-                this.$nextTick(()=>{
-                    if (this.$refs.obj.offsetHeight > 200) {
-                        this.more = true;
-                        this.activityBannerH=200
-                    }else{
-                        this.more = false;
-                    }
-                })
             } 
             this.getDetail();
             this.getCitySchool()
-            this.swiperInit()
+           
         },
     };
 </script>
@@ -834,8 +860,9 @@
         margin:0 auto
     }
     .feature img {
-        width: 260px;
         box-shadow: 5px 5px 0px #c9cabb;
+        display: inline-block;
+
     }
     
     .feature p.title {
