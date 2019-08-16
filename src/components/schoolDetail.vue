@@ -529,9 +529,9 @@
                         that.Isadmission=false
                     }else{
                         that.admissionList1=that.schoolDetail.studentEnrollmentVo.Kindergarten
-                        that.admissionList2=that.schoolDetail.studentEnrollmentVo.primarySchool
-                        that.admissionList3=that.schoolDetail.studentEnrollmentVo.JuniorHighSchool
-                        that.admissionList4=that.schoolDetail.studentEnrollmentVo.heightSchool
+                        that.admissionList2=that.schoolDetail.studentEnrollmentVo.PrimarySchool
+                        that.admissionList3=that.schoolDetail.studentEnrollmentVo.MiddleSchool
+                        that.admissionList4=that.schoolDetail.studentEnrollmentVo.HighSchool
                         if(that.admissionList1==''){
                             that.IsadmissionList1=false
                         }
@@ -541,7 +541,7 @@
                         if(that.admissionList3==''){
                             that.IsadmissionList3=false
                         }
-                        if(that.admissionList4==''){
+                        if(that.admissionList4==''){   
                             that.IsadmissionList4=false
                         }
                     }
