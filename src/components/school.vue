@@ -2,26 +2,26 @@
   <div id="container">
     <!-- 搜索学校 -->
     <div class="searchSchool">
-      <div id="searchBar">
-        <el-autocomplete
-          id="schoolInput"
-          v-model="input"
-          :fetch-suggestions="querySearch"
-          placeholder="请输入学校关键字"
-          :trigger-on-focus="false"
-          @select="handleSelect"
-          @keyup.enter.native="getschool"
-          class="inputBtn"
-        >
-        <el-button slot="append" id="searchBtn" type="primary"  @click="getschool"><i class="iconfont icon-sousuo"></i></el-button>
-        </el-autocomplete>
-       
-      </div>
-      <router-link to="/schoolAdd">
-        <div class="schoolSiku"><i class="el-icon-plus"></i>添加学校库</div>
-      </router-link>
+        <div id="searchBar">
+            <el-autocomplete
+            id="schoolInput"
+            v-model="input"
+            :fetch-suggestions="querySearch"
+            placeholder="请输入学校关键字"
+            :trigger-on-focus="false"
+            @select="handleSelect"
+            @keyup.enter.native="getschool"
+            class="inputBtn"
+            >
+            <el-button slot="append" id="searchBtn" type="primary"  @click="getschool"><i class="iconfont icon-sousuo"></i></el-button>
+            </el-autocomplete>
+            <p>注：国际学校库包括的中国大陆国际学校，其中获得认证或授权的学校有821所。(截止至2018年11月11日)</p>
+        </div>
+        <div class="schoolSiku">
+             <p>加入国际学校库</p> 
+             <p @click="addschool">马上加入</p>
+        </div>
     </div>
-
     <div class="advancedSearch">
         <div class="searchBox">
             <div class="area">
@@ -86,8 +86,8 @@
               </div>
               <ul>
                 <li class="schoolName"> <a :href="xinxueshuoSite+'schoolDetail?id='+item.id" target="_blank">{{item.schoolName | ellipsisName}} </a></li>
-                <li>学制：<span v-for="(v,i) in item.schoolSystem" :key="i">{{v}},</span></li>
-                <li>课程：AP:美国课程</li>
+                <li>建校时间：{{item.foundingTime | iszero}}</li>
+                <li>学制：<span v-for="(v,i) in item.schoolSystem" :key="i">{{v}}，</span></li>
               </ul>
             </div>
         </el-col>
@@ -100,24 +100,22 @@
             <div class="DeatailTwoLeft"><img :src='item.schoolLogo?item.schoolLogo:"http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png"' /></div>
             <div class="DeatailTwoCenter" id="DeatailTwoCenterId">
             <ul>
-                <li><a :href="xinxueshuoSite+'schoolDetail?id='+item.id" target="_blank">{{item.schoolName  | ellipsisName}}</a></li>
-                <li>{{item.schoolEnglishName | ellipsisSchoolNameTwo | iszero}}</li>
+                <li><a :href="xinxueshuoSite+'schoolDetail?id='+item.id" target="_blank">{{item.schoolName | ellipsisSchoolNameTwo}}</a><span :class="item.operationState!=='运营中'?'operationA':'operationB'">{{item.operationState}}</span></li>
+                <!-- <li>{{item.schoolEnglishName | ellipsisSchoolNameTwo | iszero}}</li> -->
                 <li>类型：<span>{{item.schoolProperties}}</span><p>学制：<span v-for="(v,i) in item.schoolSystem" :key="i">{{v}}</span></p></li>
+                <li>课程：<span>{{item.course | iszero}}</span></li>
             </ul>
             </div>
             <div class="DeatailTwoRight">
                 <ul>
+                    <li>地址：<span>{{item.province | ellipsisAddress}}</span></li>
+                    <li>建校时间：<span>{{item.foundingTime | iszero}}</span></li>
                     <li>认证：<span v-for="(v,i) in item.authentication" :key="i">{{v}}</span></li>
-                    <li>建校时间：{{item.foundingTime}}</li>
-                    <li>{{item.areas03 | ellipsisAddress}}</li>
                 </ul>
             </div>
         </div>
     </div>
-    <p v-show="finish" style="padding: 10px 0 70px 0;">没有更多了</p>
-    <!-- <div class="back"  @click="goBack">
-		<a><i class="iconfont icon-ziyuan"></i></a>
-	</div> -->
+    <p class="finish" v-show="finish" style="padding: 10px 0 70px 0;text-align:center;">没有更多了</p>
     <!-- 分页组件 -->
     <div class="block">
       <span class="demonstration"></span>
@@ -191,9 +189,27 @@ export default {
   },
   created() {
     this.input = this.$route.query.item;
-    // this.handleSelect();
   },
   methods: {
+      //coolie 读取存在
+    getCookie(name) {
+      var arr,
+      reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+      if ((arr = document.cookie.match(reg))) return unescape(arr[2]);
+      else return null;
+    },
+    // 加入学校
+    addschool(){
+        if(this.getCookie("username") == null){
+            this.$message({
+                message: '您还没有登录，登陆后即可加入！',
+                type: 'warning'
+            });
+        }else{
+            this.$router.push('/schoolAdd');
+        }
+        
+    },
     querySearch(queryString, cb) {
       let that = this;
       let urldata = new URLSearchParams();
@@ -262,15 +278,40 @@ export default {
             properties:this.searchSys,
             pageNum:this.pageNum,
             pageSize:this.pageSize,
-        }).then(res=>{
-            if(res.code==0){
-                this.total_school = res.data.total;
+        }).then(respons=>{
+            var that=this
+            if(respons.code==0){
+                that.schoolLists = respons.data.list;
                 //判断有无搜索结果
-                this.total_school == 0
-                ? (this.no_school = "未搜索到结果，请重新输入关键字！")
-                : (this.no_school = "");
+                that.total_school == 0
+                ? (that.no_school = "未搜索到结果，请重新输入关键字！")
+                : (that.no_school = "");
                 console.log("查询成功")
-                this.schoolLists = res.data.list;
+                that.total_school = respons.data.total;
+                for (var i = 0; i < respons.data.list.length; i++) {
+                    // 学制
+                    var str = respons.data.list[i].schoolSystem;
+                    if (str.search("；") != -1) {
+                        var arr1 = str.split("；");
+                    }else{
+                        var arr1 = str.split(";");
+                    }
+                    var arr2 = arr1.slice(0, arr1.length - 1);
+                    var arr3 = [];
+                    for (var j = 0; j < arr2.length; j++) {
+                        arr3.push(arr2[j].slice(0, 1));
+                    }
+                    respons.data.list[i].schoolSystem = arr3;
+                    // 认证课程
+                    var cardArr1 = respons.data.list[i].authentication;
+                    if(cardArr1 == "无" || cardArr1 == "0" || cardArr1 == ""||cardArr1 == "0;"){
+                        respons.data.list[i].authentication = "无"
+                    }else{
+                        var cardArr2 = cardArr1.split(";");
+                        var cardArr3 = cardArr2.slice(0,cardArr2.length-1);
+                        respons.data.list[i].authentication = cardArr3;
+                    }
+                }
             }else{
                 console.log("查询失败")
             }
@@ -319,36 +360,44 @@ export default {
           }else{
             var arr1 = str.split(";");
           }
+        //   去除最后空格
           var arr2 = arr1.slice(0, arr1.length - 1);
           var arr3 = [];
           for (var j = 0; j < arr2.length; j++) {
-            arr3.push(arr1[j].slice(0, 1));
+            arr3.push(arr2[j].slice(0, 1));
           }
           respons.data.list[i].schoolSystem = arr3;
         }
         //截取 学校 类型 民办
-        var CutSchoolType = [];
         for(var i=0;i < respons.data.list.length; i++){
-          var str = respons.data.list[i].schoolProperties.substring(0,1);
-          CutSchoolType.push(str);
-          respons.data.list[i].schoolProperties = CutSchoolType[i];
+            var properties = respons.data.list[i].schoolProperties
+            if(properties==''){
+                respons.data.list[i].schoolProperties='无'
+            }else{
+                respons.data.list[i].schoolProperties = properties.substring(0,1);
+            }
         }
         //认证 分割
         for(var i=0;i<respons.data.list.length;i++){
           var cardArr1 = respons.data.list[i].authentication;
-          if(cardArr1 == "无" || cardArr1 == "0"){
-            respons.data.list[i].authentication = "暂时无认证；".split("；").slice(0,1)
+          if(cardArr1 == "无" || cardArr1 == "0" || cardArr1 == ""||cardArr1 == "0;"){
+            respons.data.list[i].authentication = "无"
           }else{
-            var cardArr2 = cardArr1.split("；");
+            var cardArr2 = cardArr1.split(";");
             var cardArr3 = cardArr2.slice(0,cardArr2.length-1);
             respons.data.list[i].authentication = cardArr3;
           }
+          if(cardArr3.length>5){
+              cardArr3.length=5
+          }
         }
+       
       });
     },
     loadMore() {
-        console.log(9999)
-        this.schoolList();
+        if(screen.width < 768){
+             this.schoolList();
+        }
     },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
@@ -356,6 +405,7 @@ export default {
     //分页
     handleCurrentChange(val) {
       this.pageNum = val;
+      this.advancedSearch(sessionStorage.getItem("iptVal"))
       this.schoolList(sessionStorage.getItem("iptVal"));
       // window.scrollTo(0,0)
     },
@@ -419,13 +469,13 @@ export default {
     //学校姓名
     ellipsisSchoolNameTwo(value){
       if(!value) return "";
-      if(value.length > 100){
-        return value.slice(0,100) + "...";
+      if(value.length > 10 && screen.width<768){
+        return value.slice(0,10) + "...";
       }
       return value
     },
     iszero(obj){
-        if(obj==0){
+        if(obj==0 || obj==null){
             return "暂无"
         }else{
             return obj
@@ -445,9 +495,14 @@ export default {
     .advancedSearch,.toggleBut,.schoolDetail,.block,.schoolSiku{
         display:none;
     }
+    .inputBtn{
+        width:350px !important;
+    }
     #searchBar{
-        // padding: 20px 0 10px 0;
-        // width: 83%;
+        padding: 20px 0 10px !important;
+        p{
+            display:none;
+        }
     }
     .schoolDetailTwo{
         .detailBox{
@@ -459,20 +514,27 @@ export default {
             }
             .DeatailTwoCenter ul li{
                 &:first-of-type{
-                    font-size: 16px !important;
+                    font-size: 16px;
                     color: #010101;
-                    margin-top: 20px;
+                    margin-top: 12px;
+                    .operation{
+                        font-size: 14px !important;
+                        border:1px solid #ccc;
+                    }
                 }
                 &:nth-of-type(2){
-                    font-size: 14px !important;
-                    margin-top:10px !important;
+                    font-size: 16px !important;
+                    margin-top:15px !important;
+                    p{
+                        font-size: 16px;
+                        text-align: center;
+                        margin-left: 20px !important;
+                    }
                 }
                 &:nth-of-type(3){
-                    font-size: 14px !important;
-                    margin-top:10px;
+                    font-size: 16px !important;
+                    margin-top:15px;
                     span{
-                        margin-right:10px;
-                        padding:2px 3px !important;
                         font-size: 14px;
                     }
                     p span{
@@ -488,39 +550,16 @@ export default {
             color: #999;
         }
     }
-     p{
-        font-size: 16px;
-        text-align: center;
-        margin-left: 3px !important;
-    }
-    .back{
-        z-index: 9999;
-        position: fixed;
-        right: 40px;
-        bottom: 40px;
-        a{
-            display: inline-block;
-            width: 40px;
-            height: 40px;
-            text-align: center;
-            line-height: 40px;
-            background-color: #215089;
-            border-radius: 8px;
-            color: #fafafa;
-            box-shadow: 0 5px 15px 0 rgba(15,37,64,.2);
-            transition: all .3s ease 0s;
-            i{
-                font-size: 20px;
-                font-weight: 700;
-            }
-        }
-    }
-
 }
 .advancedSearch{
-    border: 1px solid #ccc;
     width: 1000px;
     margin: 50px auto 0;
+    border-radius: 5px;
+    background:#fff;
+    &:hover{
+        box-shadow:0px 0px 20px rgba(153, 153, 153, 0.8);
+        transition: all 0.5s;
+    }
     .searchBox{
         padding: 25px 20px 50px;
         .line{
@@ -583,11 +622,15 @@ export default {
 //学校搜索
 .searchSchool{
   display: flex;
+  justify-content: center;
   #searchBar {
-    margin-left: 50%;
-    transform: translateX(-50%);
     display: inline-table;
-    padding: 25px 0 10px;
+    padding: 55px 0 10px;
+    p{
+        color: #a19c9c;
+        font-size: 14px;
+        margin-top: 30px;
+    }
   }
   #schoolInput {
     position: relative;
@@ -597,14 +640,35 @@ export default {
     margin-left: -200px;
   }
   .schoolSiku{
-    margin-top: 38px;
-    margin-left: -20px;
-    font-size: 23px;
-    font-weight: 600;
+    width: 280px;
+    height: 100px;
+    border-radius: 10px;
+    background-color: #eaf4ff;
+    color: #215089;
+    font-weight: bold;
+    text-align: center;
+    margin: 50px 0 0 70px;
+    p:first-of-type{
+        padding-top: 20px;
+        font-size: 20px;
+        color: #215089;
+        font-weight: bold;
+        letter-spacing: 1px;
+    }
+    p:last-of-type{
+        border-radius: 20px;
+        padding: 8px 25px;
+        margin-top: 10px;
+        display: inline-block;
+        background-color: #215089;
+        color: #fff;
+        transition: all .3s;
+        letter-spacing: 1px;
+    }
   }
   .schoolSiku:hover{
     cursor: pointer;
-    color: #214f89;
+    color: #3075c9;
   }
 }
 .school_infomation {
@@ -620,7 +684,7 @@ export default {
 .inputBtn{
     border-radius: 6px !important;
     border: 2px solid #214f89 !important;
-    width:300px;
+    width:400px;
 }
 .inputBtn:focus {
     box-shadow: 0px 0px 10px #214f89 !important;
@@ -689,7 +753,8 @@ export default {
   color: #214f89;
 }
 .grid-content:hover {
-  box-shadow: 0px 0px 15px #ccc;
+  box-shadow: 0px 0px 10px rgba(153, 153, 153, 0.8);
+  transition:all .5s;
 }
 .grid-content ul {
   margin-bottom: 20px;
@@ -794,20 +859,20 @@ export default {
 }
 @media screen and (min-width: 1200px) {
   .el-autocomplete {
-    width: 300px;
+    width: 650px;
   }
   .schoolDetailTwo {
-    width: 75%;
+    width: 65%;
     margin: 0 auto;
     .detailBox {
       border: 1px solid #ccc;
       margin-top: 0.2rem;
       border-radius: 10px;
       background: #f9f9f9;
-
-    }
-    .detailBox:hover {
-      box-shadow: 0px 0px 15px #ccc;
+      &:hover{
+        box-shadow: 0px 0px 10px rgba(153, 153, 153, 0.8);
+        transition:all .5s;
+      }
     }
   }
 }
@@ -901,23 +966,34 @@ export default {
     }
   }
   .DeatailTwoCenter{
-    width: 55%;
+    width: 50%;
     ul{
-      // line-height:0.4rem;
       li{
-        margin-top: 0.15rem;
+        margin-top: 0.1rem;
         color: #999;
       }
       li:first-of-type{
         font-size: 0.2rem;
-        color: #010101;
+        font-weight: bold;
+        color: #2c2c2c;
+        a{
+            text-decoration: none;
+        }
+        .operationA{
+            font-size: 12px !important;
+            border: 1px solid #10a050;
+            position: relative;
+            top: -5px;
+            margin-left: 20px;
+            padding: 3px 8px;
+            color: #10a050;
+            border-radius: 3px;
+        }
+        .operationB{
+           display: none;
+        }
       }
       li:nth-of-type(2){
-        font-size: 0.19rem;
-        color: #030303;
-        margin-top: 0.09rem;
-      }
-      li:nth-of-type(3){
         P{
           display: inline-block;
         }
@@ -936,36 +1012,53 @@ export default {
           line-height: 12px;
           padding: 0.05rem 0.05rem;
           border-radius: 0.05rem;
-          color: #fff;
-          background: #214f89;
+          color: #337ddb;
+          background: #cedff4;
         }
+      }
+      li:nth-of-type(3){
+          width: 85%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          span{
+                font-size: 16px;
+                color: #333;
+          }
       }
     }
   }
   .DeatailTwoRight{
-    width: 25%;
+    width: 30%;
     ul{
       li{
         margin-top: 0.1rem;
-        margin-bottom: 0.12rem;
+        color:#999;
       };
-      li:first-of-type{
-
-
-
+      li:nth-of-type(3){
         span{
-          font-size: 0.13rem;
+          font-size: 0.12rem;
           display:inline;
-          // width: 12px;
-          // height: 12px;
           text-align: center;
           line-height: 12px;
           padding: 0.05rem 0.05rem;
           border-radius: 0.05rem;
-          color: #fff;
-          background: #214f89;
-          margin-right: 5px;
+          color: #337ddb;
+          background: #cedff4;
+          margin-right: 8px;
         }
+      }
+      li:nth-of-type(2){
+          span{
+              color:#333;
+              font-size: 16px;
+          }
+      }
+      li:nth-of-type(1){
+          span{
+              color:#333;
+              font-size: 16px;
+          }
       }
     }
   }
@@ -978,4 +1071,3 @@ export default {
     background: #214f89;
 }
 </style>
-

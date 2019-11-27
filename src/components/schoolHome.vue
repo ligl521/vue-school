@@ -482,21 +482,32 @@ export default {
   }
   li:first-of-type {
     width: 90%;
+    &:focus{
+        li:last-of-type{
+            background:#214f89;
+            i{
+                color:#fff;
+            }
+        }
+       
+    }
     .el-autocomplete {
       width: 100%;
     }
   }
   li:last-of-type {
     width: 10%;
+    height:40px;
     text-align: center;
     i {
       font-size: 20px;
       margin-top: 10px;
       color: #ccc;
+      &:hover{
+          color: #214f89;
+          font-weight: bold;
+      }
     }
-  }
-  li:last-of-type:hover i {
-    color: #409eff;
   }
 }
 

@@ -1,10 +1,17 @@
 <template>
     <div style="background: #f5f5f5;">
-        <div class="companyGroup">
-            <div class="searchBox">
-                <el-autocomplete placeholder="请输入内容" v-model="searchKey" @keyup.enter.native="searchCompany"  :fetch-suggestions="getSuggestSearch" @select="handleSelect" :trigger-on-focus="false">
-                     <el-button @click="searchCompany" slot="append"><i class="iconfont icon-sousuo"></i></el-button>
-                </el-autocomplete>
+        <div class="companyBox">
+            <div class="companyGroup">
+                <div class="searchBox">
+                    <el-autocomplete placeholder="请输入内容" v-model="searchKey" @keyup.enter.native="searchCompany"  :fetch-suggestions="getSuggestSearch" @select="handleSelect" :trigger-on-focus="false">
+                        <el-button @click="searchCompany" slot="append"><i class="iconfont icon-sousuo"></i></el-button>
+                    </el-autocomplete>
+                </div>
+                <p>热门搜索： 英帆国际教育 华樱出国 力翰科学教育集团 梦帆教育 The Learning Center 大风车</p>
+            </div>
+            <div class="companyku">
+                <p>加入教育机构库</p> 
+                <p>马上加入</p>
             </div>
         </div>
         <div class="companyList" v-for="(item,index) in list" :key="index" v-loading="loading">
@@ -160,21 +167,59 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-.companyGroup{
-    text-align: center;
-    .searchBox{
-        display: inline-block;
-        margin-top: 50px;
-        .el-autocomplete{
-            width: 450px;
-             i{
-                font-size: 40px;
-                color: #fff;
+.companyBox{
+    display: flex;
+        justify-content: center;
+    .companyGroup{
+        .searchBox{
+            display: inline-block;
+            margin-top: 50px;
+            .el-autocomplete{
+                width: 570px;
+                i{
+                    font-size: 40px;
+                    color: #fff;
+                }
             }
         }
-       
+        p{
+            color: #a19c9c;
+            font-size: 14px;
+            margin-top: 30px;
+        }
+    }
+    .companyku{
+        width: 280px;
+        height: 100px;
+        border-radius: 10px;
+        background-color: #eaf4ff;
+        color: #215089;
+        font-weight: bold;
+        text-align: center;
+        margin: 50px 0 0 70px;
+        &:hover{
+            cursor: pointer;
+        }
+        p:first-of-type{
+            padding-top: 20px;
+            font-size: 20px;
+            color: #215089;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        p:last-of-type{
+            border-radius: 20px;
+            padding: 8px 25px;
+            margin-top: 10px;
+            display: inline-block;
+            background-color: #215089;
+            color: #fff;
+            transition: all .3s;
+            letter-spacing: 1px;
+        }
     }
 }
+
 .companyList{
     width: 60%;
     margin: 50px auto 0;
@@ -187,6 +232,7 @@ export default {
     }
     &:hover{
         box-shadow: 0px 0px 15px #ccc;
+        transition: all 0.5s;
     }
     .companyLogo{
         background: #fff;

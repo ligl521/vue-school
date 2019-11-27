@@ -2,7 +2,8 @@
     <div class="schoolDataBade">
         <div class="a1">
           <div>正在改版 敬请期待....</div>
-          <div><a href="http://data.xinxueshuo.cn/nsi/project/project.htmls" target="_blank">请访问老版网站</a></div>
+          <!-- <div><a href="http://data.xinxueshuo.cn/nsi/project/project.html" target="_blank">请访问老版网站</a></div> -->
+           <a>页面将在{{count}}秒内跳转到老版国际学校四库全书</a>
         </div>
 
         <schoolFooter />
@@ -16,8 +17,30 @@ export default {
     return {
       restaurants: [],
       state: '',
-      timeout:  null
+      timeout:  null,
+      count:"",
     }
+  },
+  methods:{
+    startDivi(){
+        const TIME_COUNT = 3;
+        if(!this.timer){
+            this.count = TIME_COUNT;
+            this.timer = setInterval(()=>{
+            if(this.count > 0 && this.count <= TIME_COUNT){
+                this.count--;
+            }else{
+                clearInterval(this.timer);
+                this.timer = null;
+                window.location = "http://data.xinxueshuo.cn/nsi/project/project.html"; 
+            }
+          },1000)
+        }
+    },
+
+  },
+  mounted(){
+    this.startDivi()
   },
 
   created() {

@@ -5,24 +5,24 @@
       <div class="carousel">
         <div class="swiper-container">
           <div class="swiper-wrapper">
-            <div class="swiper-slide">
-               <img :src="schoolDetail.schoolShowOne">
+            <div class="swiper-slide" :class="schoolDetail.schoolShowOne?'show':'hide'">
+               <img :src="schoolDetail.schoolShowOne" >
             </div>
-            <div class="swiper-slide">
+            <div class="swiper-slide"  :class="schoolDetail.schoolShowTwo?'show':'hide'">
                  <img :src="schoolDetail.schoolShowTwo">
             </div>
-            <div class="swiper-slide">
-               <img :src="schoolDetail.schoolShowThird">
+            <div class="swiper-slide" :class="schoolDetail.schoolShowThird?'show':'hide'"> 
+               <img :src="schoolDetail.schoolShowThird" >
             </div>
-             <div class="swiper-slide">
+             <div class="swiper-slide"  :class="schoolDetail.schoolShowFour?'show':'hide'">
                 <img :src="schoolDetail.schoolShowFour">
             </div>
-             <div class="swiper-slide">
+             <div class="swiper-slide"  :class="schoolDetail.schoolShowFive?'show':'hide'">
                 <img :src="schoolDetail.schoolShowFive">
             </div>
           </div>
           <!-- 如果需要分页器 -->
-          <div class="swiper-pagination"></div>
+          <!-- <div class="swiper-pagination"></div> -->
           <!-- 如果需要导航按钮 -->
           <div class="swiper-button-prev"></div>
           <div class="swiper-button-next"></div>
@@ -30,60 +30,56 @@
       </div>
       <!-- //logo以及学校说明 -->
       <div class="schoolSimple">
-        <div class="schoolId clearfix"><p>NO.{{schoolDetail.id}}</p></div>
+        <div class="schoolId clearfix"><p><span>NO.{{schoolDetail.id}}</span></p></div>
         <div class="schoolLogo">
             <div class="schoolLeft">
                 <img :src='schoolDetail.schoolLogo?schoolDetail.schoolLogo:"http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png"' width='170'/>
             </div>
             <div class="schoolRight">
                 <ul>
-                    <li style="font-size: 25px;margin:60px 0 0 30px;">{{schoolDetail.schoolName | ellipsisName}}</li>
-                    <li style="font-size: 20px;margin-top:60px;width:375px;">认证：<span v-for="everyApprove of approveSplit" class="approve" :key="everyApprove">{{everyApprove | isZero}}</span></li>
-                    <li style="font-size: 20px;margin-top:25px;">运营状态：<span class="circle">{{schoolDetail.operationState}}</span></li>
-                    <li style="font-size: 16px;margin: -17px 0px 0px 30px;">{{schoolDetail.schoolEnglishName | isZero | ellipsisEname}}</li>
-                    
+                    <li>类型：<span>{{schoolDetail.schoolProperties}}</span></li>
+                    <li>建校时间：<span>{{schoolDetail.foundingTime | isZero}}</span></li>
+                </ul>
+                <ul>
+                    <li style="font-size:24px;">{{schoolDetail.schoolName}}<span class="circle">{{schoolDetail.operationState}}</span></li>
+                    <li>{{schoolDetail.schoolEnglishName | isZero}}</li>
+                    <li>认证：<span v-for="everyApprove of approveSplit" class="approve" :key="everyApprove">{{everyApprove | isZero}}</span></li>                    
                 </ul>
             </div>
         </div>
         <div class="schoolTranslate">
+          <div class="createTime">
+              <el-button type="primary"><i class="el-icon-refresh" @click="refresh"></i></el-button>
+              <span>{{dateTime}}个月前更新</span>
+          </div>
           <div class="schoolTranslateBox">
             <h1 class="schoolTranslateH1" style="margin: 0 50px 20px;">基本信息</h1>
             <div class="basic">
                 <el-row style="padding-top:15px;">
-                    <el-col :span="7">
+                    <el-col :span="12">
                         <div class="grid-content bg-purple">
-                            <p>类型：<span>{{schoolDetail.schoolProperties}}</span></p>
+                            <p>申请费用：<span>{{schoolDetail.filingFee | isZero}}</span></p>
                         </div>
                     </el-col>
-                    <el-col :span="7">
-                        <div class="grid-content bg-purple">
-                            <p>建校时间：<span>{{schoolDetail.foundingTime | isZero}}</span></p>
-                        </div>
-                    </el-col>
-                    <el-col :span="10">
+                    <el-col :span="12">
                         <div class="grid-content bg-purple">
                             <p class="grade">学制：<span v-for="everyGrade of gradeSplit" :key="everyGrade">{{everyGrade}}</span></p>
                         </div>
                     </el-col>
                 </el-row>
-                <el-row style="margin-top:10px;">
-                    <el-col :span="7">
+                <el-row  style="margin-top:15px;">
+                    <el-col :span="12">
                         <div class="grid-content bg-purple">
                             <p>学生数量：<span>{{schoolDetail.students | isZero}}</span></p>
                         </div>
                     </el-col>
-                    <el-col :span="7">
-                        <div class="grid-content bg-purple">
-                            <p>申请费用：<span>{{schoolDetail.filingFee | isZero}}</span></p>
-                        </div>
-                    </el-col>
-                    <el-col :span="10">
+                    <el-col :span="12">
                         <div class="grid-content bg-purple">
                             <p class="fee">学费：<span >{{schoolDetail.oneTuition  | isZero}}</span><span>{{schoolDetail.twoTuition  | isZero}}</span><span>{{schoolDetail.thirdTuition  | isZero}}</span><span>{{schoolDetail.fourTuition  | isZero}}</span></p>
                         </div>
                     </el-col>
                 </el-row>
-                <el-row style="margin-top: 50px;">
+                <el-row style="margin-top: 30px;">
                     <el-col :span="12">
                         <div class="grid-content bg-purple website">
                             <p>网址：<span @click="toWebsite(schoolDetail.website)">{{schoolDetail.website | isZero}}</span></p>
@@ -95,7 +91,7 @@
                         </div>
                     </el-col>
                 </el-row>
-                <el-row style="margin-top:10px;">
+                <el-row style="margin-top:15px;">
                     <el-col :span="12">
                         <div class="grid-content bg-purple">
                             <p>电话：<span>{{schoolDetail.telephone | isZero}}</span></p>
@@ -195,7 +191,7 @@
                 </div>
             </div>
           </div>
-          <div class="admission"  :class="Isadmission?'show':'hide'">
+          <!-- <div class="admission"  :class="Isadmission?'show':'hide'">
               <h1 class="schoolTranslateH1">招生信息</h1>
               <div class="admissionBox">
                 <img src="../assets/message.png" alt="" class="img-responsive">
@@ -246,7 +242,7 @@
                     </div>
                 </div>
               </div>
-          </div>
+          </div> -->
           <div class="process">
               <h1 class="schoolTranslateH1">申请访校</h1>
               <div class="processBox">
@@ -288,9 +284,9 @@
           </div>
           <div class="cityschool">
               <h1 class="schoolTranslateH1">同城学校</h1>
-              <el-row :gutter="20" style="width: 90%;margin: 0 auto;">
-                <el-col :span="8"  class="imgbox" v-for="(item, index) in schoolList" v-if='index<3' :key="index">
-                    <div class="grid-content bg-purple" style="text-align:center;">
+              <el-row style="width: 87%;margin: 0 auto;">
+                <el-col :span="5"  class="imgbox" v-for="(item, index) in schoolList" :key="index">
+                    <div class="grid-content bg-purple" style="text-align:center;" @click="enterCitySchool(item.id)">
                         <img :src="item.schoolLogo?item.schoolLogo:'http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png'" alt="" width="150">
                         <p class="chineseName">{{item.schoolName | ellipsisName}}</p>
                         <p class="englishName">{{item.schoolEnglishName | isZero | ellipsisEname}}</p>
@@ -421,7 +417,8 @@
                 relation_list:[],//相关机构
                 popover_title:"",
                 popover_logo:"",
-                popover_service:""
+                popover_service:"",
+                dateTime:""
             };
         },
         created(){
@@ -447,8 +444,8 @@
             // 学校名字长度限制
             ellipsisName(value) {
                 if (!value) return "";
-                if (value.length > 10) {
-                    return value.slice(0, 10) + "...";
+                if (value.length > 7) {
+                    return value.slice(0, 7) + "...";
                 }else{
                     return value;
                 }
@@ -456,7 +453,7 @@
             ellipsisEname(Evalue){
                 if (!Evalue) return "";
                 if (Evalue.length > 20) {
-                    return Evalue.slice(0, 60) + "...";
+                    return Evalue.slice(0, 30) + "...";
                 }else{
                     return Evalue;
                 }
@@ -492,6 +489,10 @@
                     schoolId:schoolId 
                 }).then(res => {
                     that.schoolDetail = res.data;
+                    var date = new Date(this.schoolDetail.createTime).getMonth();
+                    var dateNow = new Date().getMonth();
+                    that.dateTime=dateNow-date
+                    console.log(that.dateTime)
                     // 父传子
                     that.asyncObject = res
                     that.flag = true
@@ -554,6 +555,9 @@
                     }else{
                         that.approveSplit=approve
                     }
+                    if(that.approveSplit.length>5){
+                        that.approveSplit.length=5
+                    }
                     // 去除最后空格
                     that.approveSplit = that.approveSplit.slice(0, that.approveSplit.length - 1)
                     // 年级分割
@@ -570,6 +574,9 @@
                     }else{
                         that.courseSplit = course.split(";");
                     }
+                    if(that.courseSplit.length>5){
+                        that.courseSplit.length=6
+                    }
 
                     this.$nextTick(()=>{
                         this.swiperInit()
@@ -583,6 +590,7 @@
                     
                 });
             },
+            // 同城学校
             getCitySchool(){
                 let that=this
                 var schoolId = that.$route.query.id
@@ -591,6 +599,10 @@
                  }).then(res=>{
                      that.schoolList=res.data
                  })
+            },
+            // 点击进入同城学校
+            enterCitySchool(id){
+                window.open('http://data.xinxueshuo.cn/vue-project/dist/index.html#/schoolDetail?id='+id,'_blank')
             },
              // swiper banner轮播
             swiperInit(){
@@ -657,7 +669,18 @@
             handleClick(tab, event) {
                 console.log(tab, event);
             },
-            
+            // 刷新数据
+             refresh() {
+                this.$alert('请求新学说更新此学校数据？', '数据更新申请', {
+                confirmButtonText: '确定',
+                callback: action => {
+                    this.$message({
+                    type: 'success',
+                    message: `提交成功，数据会尽快更新！`
+                    });
+                }
+                });
+            }
         },
         mounted() {
             // 判断pc/phone
@@ -670,11 +693,13 @@
             } 
             this.getDetail();
             this.getCitySchool()
-           
         },
     };
 </script>
 <style scoped>
+.hide{
+    display: none;
+}
     .schoolList {
         width: 1110px;
         margin: 0 auto;
@@ -723,9 +748,23 @@
     .schoolLeft{
         float:left;
     }
-    .schoolRight ul li{
+    .schoolRight ul:first-of-type{
+        position: relative;
+        top: 70px;
+        float: right;
+    }
+    .schoolRight ul:last-of-type{
+        position: relative;
+        top: 20px;
         float:left;
-        width:340px;
+
+    }
+    .schoolRight ul li{
+        margin: 30px 60px;
+        font-size: 18px;
+    }
+    .schoolRight ul li:first-of-type{
+        margin-top:5px;
     }
     
     .schoolLogo .schoolId {
@@ -747,17 +786,24 @@
     
     .schoolLogo span.circle {
         background: #67c23a;
-        border-radius: 10px;
-        padding: 5px 10px;
-        font-size: 16px;
+        border-radius: 5px;
+        padding: 3px 10px;
+        font-size: 12px;
         color: #fff;
-        position: relative;
-        top: -1px;
+        margin-left:15px;
     }
     /* 学校信息 */
     
     .schoolTranslate {
         font-size: 16px;
+    }
+    .createTime{
+        float: right;
+        margin:10px;
+    }
+    .createTime .el-button{
+        padding:5px;
+        margin-right: 5px;
     }
     
     .schoolTranslateH1 {
@@ -944,20 +990,20 @@
     .cityschool .imgbox {
         border-top: 5px solid #214f89;
         box-shadow: 0px 0px 15px #ccc;
-        width: 250px;
-        height: 300px;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        margin: 0 41px;
+        margin: 0 20px;
+        padding: 20px;
         font-weight: bold;
         color: #214f89;
         font-size: 20px;
         border-radius: 5px;
     }
     .cityschool .imgbox img{
-        width:150px;
-        height:150px;
+        width:120px;
+        height:120px;
+        border-radius: 50%;
     }
     
     .cityschool p.chineseName {

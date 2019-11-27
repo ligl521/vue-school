@@ -13,8 +13,6 @@
         <el-step title="建设&投资"></el-step>
       </el-steps>
     </div>
-
-
     <!-- form表单 -->
     <div class="addform">
       <el-form :model="form" ref="form" label-width="100px" class="demo-ruleForm">
@@ -30,7 +28,7 @@
           <el-select v-model="form.schoolProperties" placeholder="请选择学校属性" :value-key="form.schoolProperties">
             <el-option label="运营中" value="运营中"></el-option>
             <el-option label="停办" value="停办"></el-option>
-            <el-option label="凑建" value="凑建"></el-option>
+            <el-option label="筹建" value="筹建"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="地址" prop="address" id="addFlex">
@@ -58,15 +56,12 @@
         <el-form-item label="电话" prop="telephone">
           <el-input v-model="form.telephone" ></el-input>
         </el-form-item>
-
-
       </el-form>
-
     </div>
-
-
-    <el-button style="margin-top: 12px;" @click="next">上一步</el-button>
-    <el-button style="margin-top: 12px;" @click="next">下一步</el-button>
+    <div class="nextButton">
+        <el-button style="margin-top: 12px;" @click="next">上一步</el-button>
+        <el-button style="margin-top: 12px;" @click="next">下一步</el-button>
+    </div>
   </div>
 </template>
 
@@ -135,7 +130,6 @@ export default {
   },
   methods: {
     next() {
-
       if (this.active++ > 5) this.active = 0;
     }
   },
@@ -145,7 +139,7 @@ export default {
 <style lang="less" scoped>
   .schoolAdd{
     width: 80%;
-    // border: 1px solid #000;
+    border: 1px solid #ccc;
     margin: 0 auto;
     .schAd{
       padding-top: 30px;
@@ -184,7 +178,12 @@ export default {
         width: 43%;
       }
     }
-
+    .nextButton{
+        text-align:center;
+        .el-button{
+            margin:20px 30px;
+        }
+    }
 
   }
   @media screen and(min-width: 1200px){
