@@ -50,3 +50,5 @@ export const CommonApi = p => post('/CommonApi/ipToLocation.do', p)
 export const talentlist = p => get('/manager/talent/list.do', p)
     //人才库详情 
 export const talentdetail = p => get('/manager/talent/detail.do', p)
+    //人才库添加
+export const newTalent = p => post('/newTalent/add.do', p)

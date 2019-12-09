@@ -73,6 +73,5 @@ export default new Router({
             name: 'schoolAdd',
             component: schoolAdd
         },
-
     ]
 })
