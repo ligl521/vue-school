@@ -430,7 +430,7 @@ export default {
   margin: 0;
 }
 .homeBanner {
-  background: url(../assets/bannerTwo.png) no-repeat;
+  background: url(../assets/bannerTwo.jpg) no-repeat;
   background-size: contain;
   background-size: 100% 600px;
   width: 100%;

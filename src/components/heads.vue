@@ -12,7 +12,7 @@
       <el-menu-item index="/">首页</el-menu-item>
       <el-menu-item index="/school">国际学校库</el-menu-item>
       <el-menu-item index="/company">教育机构库</el-menu-item>
-      <el-menu-item index="/schoolTalent">教育人才库</el-menu-item>
+      <el-menu-item index="/talent">教育人才库</el-menu-item>
       <el-menu-item index="/schoolDataBade">项目数据库</el-menu-item>
       <el-menu-item index="/schoolVisual">数据可视化</el-menu-item>
       <el-button
@@ -38,7 +38,7 @@
     </el-menu>
     <el-dialog
       :visible.sync="dialogVisible"
-      width="300px"
+      width="300px !important"
       center
       :modal="true"
       :modal-append-to-body="true"
@@ -80,18 +80,19 @@
             </el-form-item>
             <el-form-item style="margin-bottom:0">
               <span>
+                <!-- 注册账号 -->
                 <el-button type="text">
                   <a class="a_color" href="javascript:;" @click="nowRegister">注册账号</a>
                 </el-button>
-                <!-- 注册账号 -->
-                <el-button type="text">
-                  <a class="a_color" href="javascript:;">忘记密码</a>
-                </el-button>
                 <!-- 忘记密码 -->
+                <el-button type="text" @click="centerDialogVisible = true">
+                  <a class="a_color" href="javascript:;"  >忘记密码</a>
+                </el-button>
+             
+                <!--遇到问题 -->
                 <el-button type="text">
                   <a class="a_color" href="javascript:;">遇到问题</a>
                 </el-button>
-                <!--遇到问题 -->
               </span>
             </el-form-item>
           </el-form>
@@ -125,6 +126,38 @@
         </p>
       </div>
     </el-dialog>
+
+    <el-dialog
+        title="找回密码"
+        :visible.sync="centerDialogVisible"
+        width="50%"
+        center
+        :modal="true" 
+        :modal-append-to-body="true"
+        :append-to-body="true"
+        :close-on-press-escape="false"
+        :lock-scroll="true"
+    >
+    <el-tabs v-model="activeName" @tab-click="handleClick">
+        <el-tab-pane label="验证码输入" name="验证码输入">
+            <el-form :model="form">
+                <el-form-item label="邮箱账号" :label-width="formLabelWidth">
+                    <el-input v-model="form.name" autocomplete="off"></el-input>
+                    <span>发送验证码</span>
+                </el-form-item>
+                <el-form-item label="验证码" :label-width="formLabelWidth">
+                    <el-input v-model="form.name" autocomplete="off"></el-input>
+                </el-form-item>
+            </el-form>
+        </el-tab-pane>
+        <el-tab-pane label="重置密码" name="second" disabled>重置密码</el-tab-pane>
+    </el-tabs>
+    
+    <span slot="footer" class="dialog-footer">
+        <el-button @click="centerDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="centerDialogVisible = false">下一步</el-button>
+    </span>
+</el-dialog>
   </div>
 </template>
 <script>
@@ -141,6 +174,18 @@ import {
 export default {
   data() {
     return {
+      centerDialogVisible: false,
+      form: {
+        name: "",
+        region: "",
+        date1: "",
+        date2: "",
+        delivery: false,
+        type: [],
+        resource: "",
+        desc: ""
+      },
+      formLabelWidth: "120px",
       dialogVisible: false, //登录的弹框
       dialogVisible1: false, //扫码未绑定的弹框
       activeName: "first",
@@ -187,24 +232,29 @@ export default {
       this.userTurename = this.getCookie("User_TureName"); //名字
       this.WechatLogin = true;
       this.headimgurl = false;
-      if(this.getCookie("UserImg") == null){//用户头像
-        this.imgurl = require("../assets/tx.png")
-      }else{
+      if (this.getCookie("UserImg") == null) {
+        //用户头像
+        this.imgurl = require("../assets/tx.png");
+      } else {
         this.imgurl = this.getCookie("UserImg"); //用户头像
       }
     }
   },
   methods: {
+    //   aaa(){
+    //       this.dialogVisible=false
+    //        this.centerDialogVisible= true;
+    //   },
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
     },
     //设置coolie
     setCookie(cname, cvalue, exdays) {
-        var d = new Date();
-        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-        var expires = "expires=" + d.toUTCString();
-        document.cookie = cname + "=" + cvalue + "; " + expires+"; path=/"   
-        console.log(d)
+      var d = new Date();
+      d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
+      var expires = "expires=" + d.toUTCString();
+      document.cookie = cname + "=" + cvalue + "; " + expires + "; path=/";
+      console.log(d);
     },
     //coolie 读取存在
     getCookie(name) {
@@ -218,17 +268,17 @@ export default {
       var exp = new Date();
       exp.setTime(exp.getTime() - 1);
       var cval = this.getCookie(name);
-        if (cval != null) {
-            this.setCookie("username", "", -1);
-            this.setCookie("memberSign", "", -1);
-            this.setCookie("UserVerifyCode", "", -1);
-            this.setCookie("User_TureName", "", -1);
-            this.setCookie("UserId", "", -1);
-            this.setCookie("UserImg", "", -1);
-            this.WechatLogin = false;
-            this.headimgurl = true;
-            alert("注销成功");
-        }
+      if (cval != null) {
+        this.setCookie("username", "", -1);
+        this.setCookie("memberSign", "", -1);
+        this.setCookie("UserVerifyCode", "", -1);
+        this.setCookie("User_TureName", "", -1);
+        this.setCookie("UserId", "", -1);
+        this.setCookie("UserImg", "", -1);
+        this.WechatLogin = false;
+        this.headimgurl = true;
+        alert("注销成功");
+      }
     },
     //从新加载二维码
     opacity_text() {
@@ -246,11 +296,11 @@ export default {
           console.log(response);
           if (response.code == 0) {
             self.userTurename = response.data.userTurename;
-            self.setCookie("username",response.data.username,7)//用户邮箱
-            self.setCookie("memberSign",response.data.memberSign,7)//用户等级
-            self.setCookie("UserVerifyCode",response.data.userRegistercode,7)//用户检验码
-            self.setCookie("User_TureName",response.data.userTurename,7)//用户真实名字
-            self.setCookie("UserId",response.data.id,7)//用户ID
+            self.setCookie("username", response.data.username, 7); //用户邮箱
+            self.setCookie("memberSign", response.data.memberSign, 7); //用户等级
+            self.setCookie("UserVerifyCode", response.data.userRegistercode, 7); //用户检验码
+            self.setCookie("User_TureName", response.data.userTurename, 7); //用户真实名字
+            self.setCookie("UserId", response.data.id, 7); //用户ID
             self.dialogVisible = false;
             self.WechatLogin = true;
             self.headimgurl = false;
@@ -321,12 +371,12 @@ export default {
         .then(function(response) {
           if (response.code == 0) {
             that.userTurename = response.data.userTurename;
-            that.setCookie("username",response.data.username,7)//用户邮箱
-            that.setCookie("memberSign",response.data.memberSign,7)//用户等级
-            that.setCookie("UserVerifyCode",response.data.userRegistercode,7)//用户检验码
-            that.setCookie("User_TureName",response.data.userTurename,7)//用户真实名字
-            that.setCookie("UserId",response.data.id,7)
-            that.setCookie("UserImg",that.imgurl,7)
+            that.setCookie("username", response.data.username, 7); //用户邮箱
+            that.setCookie("memberSign", response.data.memberSign, 7); //用户等级
+            that.setCookie("UserVerifyCode", response.data.userRegistercode, 7); //用户检验码
+            that.setCookie("User_TureName", response.data.userTurename, 7); //用户真实名字
+            that.setCookie("UserId", response.data.id, 7);
+            that.setCookie("UserImg", that.imgurl, 7);
             that.dialogVisible = false;
             that.WechatLogin = true;
             that.headimgurl = false;
@@ -374,7 +424,7 @@ export default {
       this.$router.push({ path: "./register" });
       this.dialogVisible = false;
       this.dialogVisible1 = false;
-    },
+    }
   },
   watch: {
     dialogVisible: function() {
@@ -383,8 +433,14 @@ export default {
         clearInterval(that.totalTimeName);
         clearInterval(that.sceneStrName);
       }
+    },
+    centerDialogVisible: function() {
+      let that = this;
+      if (that.centerDialogVisible == true) {
+        this.dialogVisible = false;
+      }
     }
-  },
+  }
 };
 </script>
 <style scoped>
@@ -397,7 +453,7 @@ export default {
   vertical-align: top;
 }
 /* 导航 */
-.heads{
+.heads {
   position: fixed;
   top: 0px;
   width: 100%;
@@ -543,7 +599,7 @@ export default {
   height: 350px;
 }
 .a_color {
-  color: rgb(46, 130, 255);
+  color: #409eff;
   text-decoration: none;
 }
 .a_color:hover {

@@ -250,7 +250,7 @@
         <div class="process">
             <span type="text" @click="dialogFormVisible = true">申请访校</span>
         </div>
-        <el-dialog title="申请访校" :visible.sync="dialogFormVisible">
+        <el-dialog id="visit-dialog" title="申请访校" :visible.sync="dialogFormVisible">
             <el-form :model="formInline"  :rules="rules" class="demo-form-inline" ref="formInline">
                 <el-form-item prop="inputName">
                     <el-input v-model="formInline.inputName" placeholder="学生姓名"></el-input>
@@ -732,9 +732,9 @@ export default {
     // }
 </style>
 <style>
-.el-dialog{
+/* .el-dialog{
     width:80% !important;
-}
+} */
 .el-select{
     width:100%;
 }

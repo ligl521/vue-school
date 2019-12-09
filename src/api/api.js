@@ -46,3 +46,7 @@ export const citySchool = p => get('/new/school/find_city_wide.do', p)
 export const relation = p => get('/Relation/search.do', p)
     //用户IP地址查询定位
 export const CommonApi = p => post('/CommonApi/ipToLocation.do', p)
+    //人才库列表 
+export const talentlist = p => get('/manager/talent/list.do', p)
+    //人才库详情 
+export const talentdetail = p => get('/manager/talent/detail.do', p)

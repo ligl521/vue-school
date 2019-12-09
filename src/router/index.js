@@ -1,7 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import school from '@/components/school'
-import schoolTalent from '@/components/schoolTalent'
+import talent from '@/components/talent'
+import talentDetails from '@/components/talentDetails'
+import resume from '@/components/resume'
+import personnel from '@/components/personnel'
 import schoolDetail from '@/components/schoolDetail'
 import company from '@/components/company'
 import companyDetail from '@/components/companyDetail'
@@ -38,10 +41,22 @@ export default new Router({
             name: 'schoolDetail',
             component: schoolDetail
         }, {
-            path: '/schoolTalent',
-            name: 'schoolTalent',
-            component: schoolTalent
+            path: '/talent',
+            name: 'talent',
+            component: talent
         }, {
+            path: '/talentDetails',
+            name: 'talentDetails',
+            component: talentDetails
+        }, {
+            path: '/personnel',
+            name: 'personnel',
+            component: personnel
+        }, {
+            path: '/resume',
+            name: 'resume',
+            component: resume
+        },{
             path: '/schoolDataBade',
             name: 'schoolDataBade',
             component: schoolDataBade
