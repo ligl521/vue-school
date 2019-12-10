@@ -9,6 +9,7 @@ import schoolDetail from '@/components/schoolDetail'
 import company from '@/components/company'
 import companyDetail from '@/components/companyDetail'
 import schoolHome from '@/components/schoolHome'
+import companyAdd from '@/components/companyAdd'
 
 import schoolDataBade from '@/components/schoolDataBade'
 import schoolVisual from '@/components/schoolVisual'
@@ -37,6 +38,10 @@ export default new Router({
             name: 'companyDetail',
             component: companyDetail
         }, {
+            path: '/companyAdd',
+            name: 'companyAdd',
+            component: companyAdd
+        },{
             path: '/schoolDetail',
             name: 'schoolDetail',
             component: schoolDetail

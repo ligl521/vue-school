@@ -43,7 +43,7 @@ export const companyDetail = p => get('/institution/detail.do', p)
     // 同城学校
 export const citySchool = p => get('/new/school/find_city_wide.do', p)
     //四库全书-数据关联
-export const relation = p => get('/Relation/search.do', p)
+export const relation = p => get('/relation/search.do', p)
     //用户IP地址查询定位
 export const CommonApi = p => post('/CommonApi/ipToLocation.do', p)
     //人才库列表 
@@ -52,3 +52,11 @@ export const talentlist = p => get('/manager/talent/list.do', p)
 export const talentdetail = p => get('/manager/talent/detail.do', p)
     //人才库添加
 export const newTalent = p => post('/newTalent/add.do', p)
+//找回密码
+export const forgetPwd = p => post('/user/forgetPW.do', p)
+//核实验证码
+export const forgetPWverify = p => post('/user/forgetPWverify.do', p)
+//重置密码
+export const resetPwd = p => post('/user/PWAlter.do', p)
+// 请求数据更新
+export const refreshUpdate = p => post('/new/school/school_UpdataButton.do', p)

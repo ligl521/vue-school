@@ -134,11 +134,31 @@ export default {
       });
     },
     details(e) {
-      this.$router.push({ name: "talentDetails", query: { id: e } });
-      //    this.$router.push({name: 'talentDetails', params: {id: e + '.html'}})
+        if(this.getCookie("username") == null){
+            this.$message({
+                message: '您还没有登录，登陆后即可查看！',
+                type: 'warning'
+            });
+        }else{
+            this.$router.push({ name: "talentDetails", query: { id: e } });
+        }
+    },
+      //coolie 读取存在
+    getCookie(name) {
+      var arr,
+      reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+      if ((arr = document.cookie.match(reg))) return unescape(arr[2]);
+      else return null;
     },
     personnel() {
-      this.$router.push({ name: "personnel" });
+       if(this.getCookie("username") == null){
+            this.$message({
+                message: '您还没有登录，登陆后即可加入！',
+                type: 'warning'
+            });
+        }else{
+            this.$router.push({ name: "personnel" });
+        } 
     },
     //搜索引擎
     searchCompany() {

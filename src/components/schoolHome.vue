@@ -52,18 +52,15 @@
         </li>
       </ul>
       <p class="homeBannerP">
-        <a
-          href="http://data.xinxueshuo.cn/nsi/school/detail.html?School_name=100053&whereFrom=search"
-        >北京国际双语学校</a>
-        <a>北京京西学校</a>
-        <a>北京乐成国际学校</a>
-        <a>北京BISS国际学校</a>
-        <a>上海哈罗国际学校</a>
+        <a href="http://data.xinxueshuo.cn/vue-project/dist/index.html#/schoolDetail?id=100139" target="_blank">北京京西学校</a>
+        <a href="http://data.xinxueshuo.cn/vue-project/dist/index.html#/schoolDetail?id=101388" target="_blank">北京乐成国际学校</a>
+        <a href="http://data.xinxueshuo.cn/vue-project/dist/index.html#/schoolDetail?id=100047" target="_blank">北京BISS国际学校</a>
+        <a href="http://data.xinxueshuo.cn/vue-project/dist/index.html#/schoolDetail?id=100053" target="_blank">海嘉国际双语学校</a>
         <br />
-        <a>上海世界外国语学校</a>
-        <a>上海融育北美教育学校</a>
-        <a>成都美视国际学校</a>
-        <a>深圳国际交流学校</a>
+        <a href="http://data.xinxueshuo.cn/vue-project/dist/index.html#/schoolDetail?id=101194" target="_blank">上海融育北美教育学校</a>
+        <a href="http://data.xinxueshuo.cn/vue-project/dist/index.html#/schoolDetail?id=100065" target="_blank">成都美视国际学校</a>
+        <a href="http://data.xinxueshuo.cn/vue-project/dist/index.html#/schoolDetail?id=100176" target="_blank">北京哈罗英国学校</a>
+        <a href="http://data.xinxueshuo.cn/vue-project/dist/index.html#/schoolDetail?id=100947" target="_blank">重庆巴蜀常春藤学校</a>
       </p>
     </div>
     <div class="schoolHome">
@@ -128,7 +125,7 @@
               :class="i==index?'btnpath':''"
             >{{v}}</span>
           </p>
-          <el-button type="info">更多</el-button>
+          <el-button type="info" @click="enterSchoolDetail">更多</el-button>
         </div>
         <div class="homeList clearfix">
           <div v-for="(v,i) in schoolLists" :key="i">
@@ -137,13 +134,7 @@
               <img v-if="v.schoolLogo? false:true" :src="schoolLogoUrlTwo" />
             </p>
             <ul>
-              <li>
-                <a
-                  :href="xinxueshuoSite+'schoolDetail?id='+v.id"
-                  target="_blank"
-                >{{v.schoolName | ellipsisName}}</a>
-              </li>
-
+              <li @click="toDetail(v.id)">{{v.schoolName | ellipsisName}}</li>
               <li>课程：美国课程</li>
             </ul>
           </div>
@@ -256,6 +247,24 @@ export default {
       console.log(index);
       this.$refs.carousel.setActiveItem(index);
     },
+      //coolie 读取存在
+    getCookie(name) {
+      var arr,
+      reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+      if ((arr = document.cookie.match(reg))) return unescape(arr[2]);
+      else return null;
+    },
+    toDetail(id){
+        if(this.getCookie("username") == null){
+            this.$message({
+                message: '您还没有登录，登陆后即可查看！',
+                type: 'warning'
+            });
+        }else{
+            let routeData= this.$router.resolve({path: '/schoolDetail',query:{id:id}})
+            window.open(routeData.href, '_blank');
+        }
+    },
     //请求数据
     getData() {
       //学校列表
@@ -317,15 +326,10 @@ export default {
       this.CommonApi_ip_name = v;
       this.getData();
     },
-    //点击学校进入详情页
-    // homeListBtn(id) {
-    //     this.$router.push({
-    //         path: "./schoolDetail02",
-    //         query: {
-    //             id: id
-    //         }
-    //     });
-    // }
+    //点击更多进入详情页
+   enterSchoolDetail(){
+       this.$router.push({path: "/school"})
+   },
     CommonApi_ip(){
        CommonApi({
        }).then(res =>{
@@ -605,9 +609,9 @@ export default {
       li:first-of-type {
         font-weight: 600;
         font-size: 16px;
-        color: #424242;
+        color: #214f89;
         a {
-          color: #424242;
+          color: #214f89;
         }
       }
       li:nth-of-type(2) {
@@ -657,6 +661,9 @@ export default {
   text-align: center;
   font-size: 16px;
   line-height: 34px;
+  color: #FFF;
+  background-color: #214f89;
+  border-color: #214f89;
 }
 
 /* 行业动态 */

@@ -294,45 +294,38 @@
                 </el-col>
             </el-row>
           </div>
-          <div class="analyze">
-              <h1 class="schoolTranslateH1">访校信息</h1>
-              <div class="analyzeContent"></div>
-          </div>
-          <div class="analyze">
+          <div class="analyze" :class="schoolDetail.remark==''?'hide':'show'">
             <h1 class="schoolTranslateH1">更多信息</h1>
-            <div class="analyzeContent"></div>
-          </div>
-          <div class="analyze">
-            <h1 class="schoolTranslateH1">新学说分析</h1>
-            <div class="analyzeContent">{{schoolDetail.companyAnalysis}}</div>
+            <div class="analyzeContent">{{schoolDetail.remark}}</div>
           </div>
           <div class="analyze">
             <h1 class="schoolTranslateH1">相关机构</h1>
                 <ul class="schoolTranslateH1_ul" >
                        <el-popover v-for="(item,i) in relation_list" :key="i" 
                             placement="top-start"
-                            :title="popover_title"
                             width="400"
                             trigger="hover">
                             <div class="popover_box">
-                               <img class="popover_img" :src="popover_logo" alt="">
+                               <img class="popover_img" :src="popover_logo==0?'http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png':popover_logo" alt="">
                                <div>
+                                <p class="popover_t">{{popover_title}}</p>
                                 <p class="popover_p">{{popover_service}}</p>
-                                <a class="popover_a"  :href="xinxueshuoSite+'companyDetail?id='+item.c02" target="_blank">查看更多</a>
+                                <a class="popover_a"  :href="xinxueshuoSite+'companyDetail?id='+item.t02" target="_blank">查看更多</a>
                                </div>
                             </div>
-                            <a class="schoolTranslateH1_ula" @mouseover="companyDetail_val(item.c02)" :href="xinxueshuoSite+'companyDetail?id='+item.c02" target="_blank" slot="reference">{{item.c02}}</a>
+                            <a class="schoolTranslateH1_ula" @mouseover="companyDetail_val(item.t02)" :href="xinxueshuoSite+'companyDetail?id='+item.t02" target="_blank" slot="reference">{{item.tname}}</a>
                         </el-popover>
                 </ul>
           </div>
         </div>
       </div>
+      
   </div>
+  <div class="feedback">如您在浏览过程中发现数据有误，可通过<span>意见反馈</span>提交给我们，我们将及时处理</div>
   <school-footer  v-if="pcSee"></school-footer>
   <div v-if="mobSee">
        <SchoolDetailM :child-object="asyncObject" v-if="flag"></SchoolDetailM>
   </div>
- 
 </div>
 </template>
 
@@ -342,7 +335,7 @@
     import axios from "axios";
     import SchoolFooter from "./schoolFooter.vue";
     import SchoolDetailM from "./schoolDetailM.vue";
-    import {getSchoolDeatail,visitSchool,relation,companyDetail,citySchool} from "@/api/api";
+    import {getSchoolDeatail,visitSchool,relation,companyDetail,citySchool,refreshUpdate} from "@/api/api";
     export default {
          components: {
             SchoolFooter,
@@ -418,7 +411,8 @@
                 popover_title:"",
                 popover_logo:"",
                 popover_service:"",
-                dateTime:""
+                dateTime:"",
+                schoolName:''
             };
         },
         created(){
@@ -489,6 +483,7 @@
                     schoolId:schoolId 
                 }).then(res => {
                     that.schoolDetail = res.data;
+                    that.schoolName=res.data.schoolName;
                     var date = new Date(this.schoolDetail.createTime).getMonth();
                     var dateNow = new Date().getMonth();
                     that.dateTime=dateNow-date
@@ -669,15 +664,38 @@
             handleClick(tab, event) {
                 console.log(tab, event);
             },
+              //coolie 读取存在
+            getCookie(name) {
+                var arr,
+                reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+                if ((arr = document.cookie.match(reg))) return unescape(arr[2]);
+                else return null;
+            },
             // 刷新数据
              refresh() {
                 this.$alert('请求新学说更新此学校数据？', '数据更新申请', {
                 confirmButtonText: '确定',
                 callback: action => {
-                    this.$message({
-                    type: 'success',
-                    message: `提交成功，数据会尽快更新！`
-                    });
+                    var schoolId = this.$route.query.id
+                    refreshUpdate({
+                        schoolId:schoolId,
+                        schoolName:this.schoolName,
+                        userMail:this.getCookie("username"),
+                    }).then(res=>{
+                        if(res.code==0){
+                            this.$message({
+                                type: 'success',
+                                message: `提交成功，数据会尽快更新！`
+                            });
+                        }else{
+                            this.$message({
+                                type: 'error',
+                                message: `提交失败，请重新提交！`
+                            });
+                        }
+                        
+                    })
+                    
                 }
                 });
             }
@@ -697,6 +715,17 @@
     };
 </script>
 <style scoped>
+.feedback{
+    font-size: 14px;
+    text-align: center;
+    margin:15px 0px 50px;
+}
+.feedback span{
+    margin:0 5px;
+    color:#215689;
+    font-weight: bold;
+    cursor: pointer;
+}
 .hide{
     display: none;
 }
@@ -705,7 +734,6 @@
         margin: 0 auto;
         border: 1px solid #ccc;
         padding-bottom: 30px;
-        margin-bottom: 100px;
         margin-top: 20px;
         color: #26343f;
     }
@@ -1092,10 +1120,10 @@
     }
    .schoolTranslateH1_ul  .schoolTranslateH1_ula{
         background: #214f89;
-        padding: 5px 8px;
+        padding: 8px 10px;
         margin-right: 7px;
         color: #fff;
-        border-radius: 10px;
+        border-radius: 5px;
         font-size: 14px;
     }
     .popover_box{
@@ -1107,9 +1135,14 @@
       height:100px;
       margin-right:10px
     }
+    .popover_box .popover_t{
+        font-size: 18px;
+        margin:15px 0 5px;
+        color: #214f89;
+    }
     .popover_box .popover_p{
         overflow:hidden;
-        height:60px;
+        height:40px;
         text-overflow: ellipsis;
         display: -webkit-box;
         -webkit-line-clamp: 3;
@@ -1119,7 +1152,8 @@
         display: block;
         text-align: right;
         margin-top: 5px;
-        text-decoration:underline 
+        text-decoration:underline;
+        color: #214f89;
     }
 </style>
 <style>

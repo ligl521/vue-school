@@ -11,7 +11,7 @@
             </div>
             <div class="companyku">
                 <p>加入教育机构库</p> 
-                <p>马上加入</p>
+                <p @click="enterAdd">马上加入</p>
             </div>
         </div>
         <div class="companyList" v-for="(item,index) in list" :key="index" v-loading="loading">
@@ -20,7 +20,7 @@
             </div>
             <div class="companyContent">
                 <div class="contentLeft">
-                    <p> <a :href="xinxueshuoSite+'companyDetail?id='+item.id" target="_blank">{{item.name}}</a></p>
+                    <p @click="enterCompanyDeatil(item.id)">{{item.name}}</p>
                     <p>标签：<span v-for="(everylabel,index) of item.label" :key="index" class="label">{{everylabel | isZero}}</span></p>
                     <p>类型：{{item.type}}</p>
                 </div>
@@ -63,7 +63,6 @@ export default {
       list:[],
       currentPage1: 1,
       totalNum:0,
-      xinxueshuoSite:"http://data.xinxueshuo.cn/vue-project/dist/index.html#/",
       searchNull:'',
       loading:true,
     }
@@ -112,6 +111,34 @@ export default {
             }
 
         })
+    },
+      //coolie 读取存在
+    getCookie(name) {
+      var arr,
+      reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+      if ((arr = document.cookie.match(reg))) return unescape(arr[2]);
+      else return null;
+    },
+    enterAdd(){
+        if(this.getCookie("username") == null){
+            this.$message({
+                message: '您还没有登录，登陆后即可加入！',
+                type: 'warning'
+            });
+        }else{
+           this.$router.push({path:"./companyAdd"})
+        }
+    },
+    enterCompanyDeatil(id){
+        if(this.getCookie("username") == null){
+            this.$message({
+                message: '您还没有登录，登陆后即可查看！',
+                type: 'warning'
+            });
+        }else{
+            let routeData= this.$router.resolve({path: '/companyDetail',query:{id:id}})
+            window.open(routeData.href, '_blank');
+        }
     },
     searchCompany(){
         this.getList()
@@ -169,7 +196,8 @@ export default {
 <style lang="less" scoped>
 .companyBox{
     display: flex;
-        justify-content: center;
+    justify-content: center;
+    margin-bottom: 40px;
     .companyGroup{
         .searchBox{
             display: inline-block;
@@ -221,8 +249,8 @@ export default {
 }
 
 .companyList{
-    width: 60%;
-    margin: 50px auto 0;
+    width: 1000px;
+    margin: 20px auto 0;
     border: 1px solid #ddd;
     position: relative;
     border-radius: 10px;

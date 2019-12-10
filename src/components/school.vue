@@ -85,7 +85,7 @@
                 <img :src="schoolLogoUrlTwo" />
               </div>
               <ul>
-                <li class="schoolName"> <a :href="xinxueshuoSite+'schoolDetail?id='+item.id" target="_blank">{{item.schoolName | ellipsisName}} </a></li>
+                <li @click="enterSchoolDetail(item.id)" class="schoolName">{{item.schoolName | ellipsisName}}</li>
                 <li>建校时间：{{item.foundingTime | iszero}}</li>
                 <li>学制：<span v-for="(v,i) in item.schoolSystem" :key="i">{{v}}，</span></li>
               </ul>
@@ -100,8 +100,7 @@
             <div class="DeatailTwoLeft"><img :src='item.schoolLogo?item.schoolLogo:"http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png"' /></div>
             <div class="DeatailTwoCenter" id="DeatailTwoCenterId">
             <ul>
-                <li><a :href="xinxueshuoSite+'schoolDetail?id='+item.id" target="_blank">{{item.schoolName | ellipsisSchoolNameTwo}}</a><span :class="item.operationState!=='运营中'?'operationA':'operationB'">{{item.operationState}}</span></li>
-                <!-- <li>{{item.schoolEnglishName | ellipsisSchoolNameTwo | iszero}}</li> -->
+                <li @click="enterSchoolDetail(item.id)">{{item.schoolName | ellipsisSchoolNameTwo}}<span :class="item.operationState!=='运营中'?'operationA':'operationB'">{{item.operationState}}</span></li>
                 <li>类型：<span>{{item.schoolProperties}}</span><p>学制：<span v-for="(v,i) in item.schoolSystem" :key="i">{{v}}</span></p></li>
                 <li>课程：<span>{{item.course | iszero}}</span></li>
             </ul>
@@ -163,9 +162,7 @@ export default {
       lodingshow: true,
       lodinghide: false,
       isclick: true,
-      schoolLogoUrlOne: "http://data.xinxueshuo.cn/",
       schoolLogoUrlTwo:"http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png",
-      xinxueshuoSite:"http://data.xinxueshuo.cn/vue-project/dist/index.html#/",
       areaSplit:[],
       searchArea:"",
       areaClass:0,
@@ -208,7 +205,17 @@ export default {
         }else{
             this.$router.push('/schoolAdd');
         }
-        
+    },
+    enterSchoolDetail(id){
+        if(this.getCookie("username") == null){
+            this.$message({
+                message: '您还没有登录，登陆后即可查看！',
+                type: 'warning'
+            });
+        }else{
+            let routeData= this.$router.resolve({path: '/schoolDetail',query:{id:id}})
+            window.open(routeData.href, '_blank');
+        }
     },
     querySearch(queryString, cb) {
       let that = this;
@@ -283,11 +290,10 @@ export default {
             if(respons.code==0){
                 that.schoolLists = respons.data.list;
                 //判断有无搜索结果
-                that.total_school == 0
-                ? (that.no_school = "未搜索到结果，请重新输入关键字！")
-                : (that.no_school = "");
-                console.log("查询成功")
                 that.total_school = respons.data.total;
+                that.total_school == 0 ? (that.no_school = "未搜索到结果，请重新输入关键字！") : (that.no_school = "");
+                // console.log("查询成功")
+               
                 for (var i = 0; i < respons.data.list.length; i++) {
                     // 学制
                     var str = respons.data.list[i].schoolSystem;
