@@ -23,14 +23,15 @@
         @click="dialogVisible = true;get_msg()"
       >登录</el-button>
       <div class="headimgurl" round v-show="!headimgurl">
-        <img :src="imgurl" />
-        <span class="userTurename">{{userTurename}}</span>
+        <img @click="personalCenter" :src="imgurl" />
+        <span @click="personalCenter" class="userTurename">{{userTurename}}</span>
         <el-dropdown>
           <span class="el-dropdown-link">
             <i class="iconfont icon-ellipsis-vertical"></i>
           </span>
           <el-dropdown-menu>
             <el-dropdown-item @click.native="dropdown_name('username')">注销</el-dropdown-item>
+            <el-dropdown-item @click.native="personalCenter">个人中心</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
@@ -241,10 +242,6 @@ export default {
     }
   },
   methods: {
-    //   aaa(){
-    //       this.dialogVisible=false
-    //        this.centerDialogVisible= true;
-    //   },
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
     },
@@ -279,6 +276,10 @@ export default {
         this.headimgurl = true;
         alert("注销成功");
       }
+    },
+    //点击跳转到个人中心
+    personalCenter(){
+        this.$router.push({ path: "./personalCenter" });
     },
     //从新加载二维码
     opacity_text() {
@@ -492,18 +493,23 @@ export default {
   margin-left: 200px;
   line-height: 52px;
 }
+.headimgurl:focus{
+    outline:none;
+}
 .headimgurl img {
   width: 32px;
   height: 32px;
   margin: 10px auto;
   border-radius: 50%;
   background-color: #fff;
+  cursor: pointer;
 }
 .headimgurl .userTurename {
   display: inline-block;
   color: #fff;
   vertical-align: top;
   margin-left: 10px;
+  cursor: pointer;
 }
 .el-dialog--center .el-dialog__body {
   padding-top: 40px;
