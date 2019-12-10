@@ -10,12 +10,12 @@ import company from '@/components/company'
 import companyDetail from '@/components/companyDetail'
 import schoolHome from '@/components/schoolHome'
 import companyAdd from '@/components/companyAdd'
-
 import schoolDataBade from '@/components/schoolDataBade'
 import schoolVisual from '@/components/schoolVisual'
-
 import register from '@/components/register'
-import schoolAdd from '@/components/schoolAdd'
+import schoolAdd from '@/components/schoolAdd' 
+import personalCenter from '@/components/personalCenter'
+
 
 Vue.use(Router)
 
@@ -77,6 +77,10 @@ export default new Router({
             path: '/schoolAdd',
             name: 'schoolAdd',
             component: schoolAdd
+        },{
+            path: '/personalCenter',
+            name: 'personalCenter',
+            component: personalCenter
         },
     ]
 })
