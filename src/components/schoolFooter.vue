@@ -102,6 +102,7 @@ export default {};
     
 }
 .schoolBottom {
+  margin-top:30px;
   background: rgb(33, 79, 137);
   color: #dfd1d1;
 }

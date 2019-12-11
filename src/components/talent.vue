@@ -2,21 +2,25 @@
   <div style="background: #f5f5f5;">
     <div class="schoolTalent">
       <!-- 搜索栏 -->
-      <div class="searchBox">
-        <el-input
-          placeholder="请输入内容"
-          v-model="state"
-          @keyup.enter.native="searchCompany"
-        >
-          <el-button
-            @click="searchCompany"
-            class="search"
-            slot="append"
-            icon="el-icon-search"
-          >
-          </el-button>
-        </el-input>
-        <el-button @click="personnel" type="success">加入人才库</el-button>
+      <div class="companyBox">
+        <div class="companyGroup">
+          <div class="searchBox">
+            <el-autocomplete
+              placeholder="请输入内容"
+              v-model="state"
+              @keyup.enter.native="searchCompany"
+              :trigger-on-focus="false"
+            >
+              <el-button @click="searchCompany" slot="append"
+                ><i class="iconfont icon-sousuo"></i
+              ></el-button>
+            </el-autocomplete>
+          </div>
+        </div>
+        <div class="companyku">
+          <p>加入教育机构库</p>
+          <p @click="personnel">马上加入</p>
+        </div>
       </div>
       <!-- 数据列表 -->
       <div class="schoolTalent_list">
@@ -113,7 +117,7 @@ export default {
       state: "",
       timeout: null,
       list_arr: [], //渲染数组
-      list_count: 0 //总条数只能是数字
+      list_count: 0, //总条数只能是数字
     };
   },
   created() {
@@ -134,31 +138,31 @@ export default {
       });
     },
     details(e) {
-        if(this.getCookie("username") == null){
-            this.$message({
-                message: '您还没有登录，登陆后即可查看！',
-                type: 'warning'
-            });
-        }else{
-            this.$router.push({ name: "talentDetails", query: { id: e } });
-        }
+      if (this.getCookie("username") == null) {
+        this.$message({
+          message: "您还没有登录，登陆后即可查看！",
+          type: "warning"
+        });
+      } else {
+        this.$router.push({ name: "talentDetails", query: { id: e } });
+      }
     },
-      //coolie 读取存在
+    //coolie 读取存在
     getCookie(name) {
       var arr,
-      reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+        reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
       if ((arr = document.cookie.match(reg))) return unescape(arr[2]);
       else return null;
     },
     personnel() {
-       if(this.getCookie("username") == null){
-            this.$message({
-                message: '您还没有登录，登陆后即可加入！',
-                type: 'warning'
-            });
-        }else{
-            this.$router.push({ name: "personnel" });
-        } 
+      if (this.getCookie("username") == null) {
+        this.$message({
+          message: "您还没有登录，登陆后即可加入！",
+          type: "warning"
+        });
+      } else {
+        this.$router.push({ name: "personnel" });
+      }
     },
     //搜索引擎
     searchCompany() {
@@ -303,5 +307,69 @@ export default {
       right: 1%;
     }
   }
+}
+
+.companyBox {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+  .companyGroup {
+    .searchBox {
+      display: inline-block;
+      margin-top: 50px;
+      .el-autocomplete {
+        width: 570px;
+        i {
+          font-size: 40px;
+          color: #fff;
+        }
+      }
+    }
+    p {
+      color: #a19c9c;
+      font-size: 14px;
+      margin-top: 30px;
+    }
+  }
+  .companyku {
+    width: 280px;
+    height: 100px;
+    border-radius: 10px;
+    background-color: #eaf4ff;
+    color: #215089;
+    font-weight: bold;
+    text-align: center;
+    margin: 50px 0 0 70px;
+    &:hover {
+      cursor: pointer;
+    }
+    p:first-of-type {
+      padding-top: 20px;
+      font-size: 20px;
+      color: #215089;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+    p:last-of-type {
+      border-radius: 20px;
+      padding: 8px 25px;
+      margin-top: 10px;
+      display: inline-block;
+      background-color: #215089;
+      color: #fff;
+      transition: all 0.3s;
+      letter-spacing: 1px;
+    }
+  }
+}
+</style>
+<style>
+.companyGroup .el-input__inner {
+  height: 50px !important;
+  border: 2px solid #214f89;
+}
+.companyGroup .el-input-group__append {
+  border: 0;
+  background: #214f89;
 }
 </style>

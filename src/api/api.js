@@ -46,9 +46,9 @@ export const citySchool = p => get('/new/school/find_city_wide.do', p)
 export const relation = p => get('/relation/search.do', p)
     //用户IP地址查询定位
 export const CommonApi = p => post('/CommonApi/ipToLocation.do', p)
-    //人才库列表 
+    //人才库列表
 export const talentlist = p => get('/manager/talent/list.do', p)
-    //人才库详情 
+    //人才库详情
 export const talentdetail = p => get('/manager/talent/detail.do', p)
     //人才库添加
 export const newTalent = p => post('/newTalent/add.do', p)
@@ -64,3 +64,6 @@ export const refreshUpdate = p => post('/new/school/school_UpdataButton.do', p)
 export const companyAdd = p => post('/institution/add.do', p)
 // 机构名字校验
 export const checkName = p => post('/institution/check_name.do', p)
+
+//学校库 添加学校
+export const getSchoolAdd = p => post('/manager/new/school/insert.do', p)
