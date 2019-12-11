@@ -25,7 +25,7 @@
           <el-input v-model.trim="form.schoolEnglishName" ></el-input>
         </el-form-item>
         <el-form-item label="学校性质" prop="schoolProperties">
-          <el-select v-model="form.schoolProperties" placeholder="请选择学校属性" :value-key="form.schoolProperties">
+          <el-select v-model="form.schoolProperties" placeholder="请选择学校属性">
             <el-option label="运营中" value="运营中"></el-option>
             <el-option label="停办" value="停办"></el-option>
             <el-option label="筹建" value="筹建"></el-option>

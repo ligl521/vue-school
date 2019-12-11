@@ -60,3 +60,7 @@ export const forgetPWverify = p => post('/user/forgetPWverify.do', p)
 export const resetPwd = p => post('/user/PWAlter.do', p)
 // 请求数据更新
 export const refreshUpdate = p => post('/new/school/school_UpdataButton.do', p)
+// 机构表单提交
+export const companyAdd = p => post('/institution/add.do', p)
+// 机构名字校验
+export const checkName = p => post('/institution/check_name.do', p)
