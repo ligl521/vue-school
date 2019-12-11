@@ -65,5 +65,7 @@ export const companyAdd = p => post('/institution/add.do', p)
 // 机构名字校验
 export const checkName = p => post('/institution/check_name.do', p)
 
-//学校库 添加学校
-export const getSchoolAdd = p => post('/manager/new/school/insert.do', p)
+//添加功能 插入数据
+export const getSchoolAdd = p => post('/new/school/insert.do', p)
+//添加功能 验证学校名是否重复
+export const getSchoolCheck_valid = p => post('/new/school/check_valid.do', p)
