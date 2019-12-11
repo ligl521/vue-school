@@ -98,7 +98,7 @@
             </p>
           </div>
         </div>
-        <div class="tab-card Instructions" style="display:none">
+        <div class="tab-card Instructions">
           <h3 class="text-center" style="margin-bottom: 20px;margin-top: 0;">
             《新学说国际学校四库全书用户协议》
           </h3>
@@ -299,7 +299,7 @@
             </div>
           </div>
         </div>
-        <div class="tab-card problem" style="display:none">
+        <div id="problem" class="tab-card problem">
           <h3 class="problem_h3">新学说~~~期待您的反馈，让我们变得更好</h3>
           <h4 style="margin: 20px 0">
             1、您在浏览网页时遇到什么问题？ （可多选）
@@ -327,7 +327,7 @@
           </h4>
           <el-input
             type="textarea"
-            :rows="2"
+            :rows="3"
             placeholder="请输入内容"
             v-model="textarea"
           >
@@ -357,7 +357,7 @@ export default {
       tabsName: [
         {
           name: "我的简历",
-          isActive: true
+          isActive: false
         },
         {
           name: "使用说明",
@@ -398,8 +398,9 @@ export default {
       ]
     };
   },
-  created() {
-    
+  created() {},
+  mounted() {
+    this.tabsSwitch(this.$route.query.id);
   },
   methods: {
     //选项卡
@@ -581,18 +582,18 @@ export default {
       }
     }
     .problem {
-      padding: 20px;
+      padding: 25px;
       .problem_div {
         margin: 0 10px 20px 30px;
       }
       .problem_h3 {
         color: #215089;
-        margin: 10px 0;
+        margin: 15px 0;
       }
       .ruleForm {
         background-color: #215089 !important;
         float: right !important;
-        margin: 20px auto !important;
+        margin: 27px auto !important;
         display: block;
         font-size: 18px;
         color: #fff;
