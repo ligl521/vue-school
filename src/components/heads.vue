@@ -20,18 +20,28 @@
         class="login_btn"
         type="text"
         v-show="!WechatLogin"
-        @click="dialogVisible = true;get_msg()"
-      >登录</el-button>
+        @click="
+          dialogVisible = true;
+          get_msg();
+        "
+        >登录</el-button
+      >
       <div class="headimgurl" round v-show="!headimgurl">
         <img @click="personalCenter" :src="imgurl" />
-        <span @click="personalCenter" class="userTurename">{{userTurename}}</span>
+        <span @click="personalCenter" class="userTurename">{{
+          userTurename
+        }}</span>
         <el-dropdown>
           <span class="el-dropdown-link">
             <i class="iconfont icon-ellipsis-vertical"></i>
           </span>
           <el-dropdown-menu>
-            <el-dropdown-item @click.native="dropdown_name('username')">注销</el-dropdown-item>
-            <el-dropdown-item @click.native="personalCenter">个人中心</el-dropdown-item>
+            <el-dropdown-item @click.native="dropdown_name('username')"
+              >注销</el-dropdown-item
+            >
+            <el-dropdown-item @click.native="personalCenter"
+              >个人中心</el-dropdown-item
+            >
           </el-dropdown-menu>
         </el-dropdown>
       </div>
@@ -71,27 +81,43 @@
             :status-icon="true"
           >
             <el-form-item prop="userMail">
-              <el-input v-model="ruleForm.userMail" prop="userMail" placeholder="用户名"></el-input>
+              <el-input
+                v-model="ruleForm.userMail"
+                prop="userMail"
+                placeholder="用户名"
+              ></el-input>
             </el-form-item>
             <el-form-item prop="pwd">
-              <el-input type="password" v-model="ruleForm.pwd" prop="pwd" placeholder="密码"></el-input>
+              <el-input
+                type="password"
+                v-model="ruleForm.pwd"
+                prop="pwd"
+                placeholder="密码"
+              ></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="send_msg('ruleForm')" class="login">登录</el-button>
+              <el-button
+                type="primary"
+                @click="send_msg('ruleForm')"
+                class="login"
+                >登录</el-button
+              >
             </el-form-item>
             <el-form-item style="margin-bottom:0">
               <span>
                 <!-- 注册账号 -->
                 <el-button type="text">
-                  <a class="a_color" href="javascript:;" @click="nowRegister">注册账号</a>
+                  <a class="a_color" href="javascript:;" @click="nowRegister"
+                    >注册账号</a
+                  >
                 </el-button>
                 <!-- 忘记密码 -->
                 <el-button type="text" @click="centerDialogVisible = true">
-                  <a class="a_color" href="javascript:;"  >忘记密码</a>
+                  <a class="a_color" href="javascript:;">忘记密码</a>
                 </el-button>
-             
+
                 <!--遇到问题 -->
-                <el-button type="text">
+                <el-button type="text" @click="feedback">
                   <a class="a_color" href="javascript:;">遇到问题</a>
                 </el-button>
               </span>
@@ -110,14 +136,14 @@
       <div class="bindBox">
         <img src="../assets/bind.png" alt class="img-responsive" />
         <h4>新学说与微信账号绑定</h4>
-        <p class="mail">
-          <i class="iconfont icon-youxiang"></i>邮箱
-        </p>
+        <p class="mail"><i class="iconfont icon-youxiang"></i>邮箱</p>
         <el-input v-model="bindMail" placeholder="请输入邮箱"></el-input>
-        <p class="password">
-          <i class="iconfont icon-mima"></i>密码
-        </p>
-        <el-input v-model="bindPwd" placeholder="请输入密码" show-password></el-input>
+        <p class="password"><i class="iconfont icon-mima"></i>密码</p>
+        <el-input
+          v-model="bindPwd"
+          placeholder="请输入密码"
+          show-password
+        ></el-input>
         <p>
           <el-button type="primary" @click="nowBind">立即绑定</el-button>
         </p>
@@ -129,44 +155,74 @@
     </el-dialog>
 
     <el-dialog
-        title="找回密码"
-        :visible.sync="centerDialogVisible"
-        width="500px"
-        center
-        :modal="true" 
-        :modal-append-to-body="true"
-        :append-to-body="true"
-        :close-on-press-escape="false"
-        :lock-scroll="true"
+      title="找回密码"
+      :visible.sync="centerDialogVisible"
+      width="500px"
+      center
+      :modal="true"
+      :modal-append-to-body="true"
+      :append-to-body="true"
+      :close-on-press-escape="false"
+      :lock-scroll="true"
     >
-    <el-tabs v-model="activePwd" @tab-click="handleClick" class="forgetPwd" stretch>
+      <el-tabs
+        v-model="activePwd"
+        @tab-click="handleClick"
+        class="forgetPwd"
+        stretch
+      >
         <el-tab-pane label="验证码输入" name="first">
-            <el-form :rules="codeRules" ref="ruleFormCode" :model="ruleFormCode">
-                <el-form-item center label="邮箱账号" :label-width="formLabelWidth" prop="inputMail">
-                    <el-button @click="sendPW">发送验证码</el-button>
-                    <el-input v-model="ruleFormCode.inputMail"></el-input>
-                </el-form-item>
-                <el-form-item center label="验证码" :label-width="formLabelWidth" prop="getCode">
-                    <el-input v-model="ruleFormCode.getCode" @blur="next"></el-input>
-                </el-form-item>
-            </el-form>
+          <el-form :rules="codeRules" ref="ruleFormCode" :model="ruleFormCode">
+            <el-form-item
+              center
+              label="邮箱账号"
+              :label-width="formLabelWidth"
+              prop="inputMail"
+            >
+              <el-button @click="sendPW">发送验证码</el-button>
+              <el-input v-model="ruleFormCode.inputMail"></el-input>
+            </el-form-item>
+            <el-form-item
+              center
+              label="验证码"
+              :label-width="formLabelWidth"
+              prop="getCode"
+            >
+              <el-input v-model="ruleFormCode.getCode" @blur="next"></el-input>
+            </el-form-item>
+          </el-form>
         </el-tab-pane>
         <el-tab-pane label="重置密码" name="second" :disabled="resetPW">
-            <el-form :rules="pwdRules" ref="ruleFormPwd" :model="ruleFormPwd">
-                <el-form-item center label="重置密码" :label-width="formLabelWidth" prop="passWordOne">
-                    <el-input v-model="ruleFormPwd.passWordOne"></el-input>
-                </el-form-item>
-                <el-form-item center label="确认密码" :label-width="formLabelWidth" prop="passWordTwo">
-                    <el-input v-model="ruleFormPwd.passWordTwo"></el-input>
-                </el-form-item>
-            </el-form>
+          <el-form :rules="pwdRules" ref="ruleFormPwd" :model="ruleFormPwd">
+            <el-form-item
+              center
+              label="重置密码"
+              :label-width="formLabelWidth"
+              prop="passWordOne"
+            >
+              <el-input v-model="ruleFormPwd.passWordOne"></el-input>
+            </el-form-item>
+            <el-form-item
+              center
+              label="确认密码"
+              :label-width="formLabelWidth"
+              prop="passWordTwo"
+            >
+              <el-input v-model="ruleFormPwd.passWordTwo"></el-input>
+            </el-form-item>
+          </el-form>
         </el-tab-pane>
-    </el-tabs>
-    <span slot="footer" class="dialog-footer pwdFooter">
-        <el-button type="primary" :disabled="nextStep" @click="second('ruleFormCode')">下一步</el-button>
+      </el-tabs>
+      <span slot="footer" class="dialog-footer pwdFooter">
+        <el-button
+          type="primary"
+          :disabled="nextStep"
+          @click="second('ruleFormCode')"
+          >下一步</el-button
+        >
         <el-button @click="reset('ruleFormPwd')">完成</el-button>
-    </span>
-</el-dialog>
+      </span>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -189,7 +245,7 @@ export default {
       dialogVisible: false, //登录的弹框
       dialogVisible1: false, //扫码未绑定的弹框
       activeName: "first",
-      activePwd:"first",
+      activePwd: "first",
       sceneStr: "", //请求微信轮询的参数
       sceneStrName: null, //请求微信轮询定时器的名字
       totalTime: 120, //倒计时时间
@@ -223,36 +279,36 @@ export default {
       bindPwd: "", //绑定的密码
       // 找回密码
       centerDialogVisible: false,
-      nextStep:true,
-      resetPW:true,
+      nextStep: true,
+      resetPW: true,
       formLabelWidth: "80px",
-      ruleFormCode:{
-        inputMail:"",
-        getCode:"",
+      ruleFormCode: {
+        inputMail: "",
+        getCode: ""
       },
-      codeRules:{
+      codeRules: {
         inputMail: [
-            {required: true, message: "邮箱地址不能为空",trigger:'blur'},
-            {type: "email",trigger:'blur'}
+          { required: true, message: "邮箱地址不能为空", trigger: "blur" },
+          { type: "email", trigger: "blur" }
         ],
         getCode: [
-            {required: true, message: "请输入验证码" },
-            {min: 6, max: 6, message: "验证码为6位" }
-        ],
+          { required: true, message: "请输入验证码" },
+          { min: 6, max: 6, message: "验证码为6位" }
+        ]
       },
       ruleFormPwd: {
-        passWordOne:"",
-        passWordTwo:"",
+        passWordOne: "",
+        passWordTwo: ""
       },
-      pwdRules:{
+      pwdRules: {
         passWordOne: [
-            {required: true, message: "请设置密码" ,trigger: "blur" },
-            {min: 6, max: 10, message: "密码至少是6位" ,trigger: "blur" }
+          { required: true, message: "请设置密码", trigger: "blur" },
+          { min: 6, max: 10, message: "密码至少是6位", trigger: "blur" }
         ],
         passWordTwo: [
-            {required: true, message: "请确认密码" ,trigger: "blur" },
-            {min: 6, max: 10, message: "密码至少是6位",trigger: "blur"  }
-        ],
+          { required: true, message: "请确认密码", trigger: "blur" },
+          { min: 6, max: 10, message: "密码至少是6位", trigger: "blur" }
+        ]
       }
     };
   },
@@ -275,80 +331,86 @@ export default {
     }
   },
   methods: {
-    sendPW(){
-        forgetPwd({
-            UserMail:this.ruleFormCode.inputMail
-        }).then(res=>{
-            if(res.code==0){
-                this.$message({
-                    message: '验证码发送成功，请输入验证码',
-                    center: true,
-                    type: 'success'
-                });
-            }
-        })
-    },
-    next(){
-        if(this.ruleFormCode.inputMail!==''&& this.ruleFormCode.getCode!==''){
-            this.nextStep=false;
-        }else{
-            this.nextStep=true
+    sendPW() {
+      forgetPwd({
+        UserMail: this.ruleFormCode.inputMail
+      }).then(res => {
+        if (res.code == 0) {
+          this.$message({
+            message: "验证码发送成功，请输入验证码",
+            center: true,
+            type: "success"
+          });
         }
+      });
     },
-    second(formName){
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            forgetPWverify({
-                UserMail:this.ruleFormCode.inputMail,
-                Code:this.ruleFormCode.getCode
-            }).then(res=>{
-                if(res.code==0){
-                    this.$message({
-                        message: '验证码正确',
-                        center: true,
-                        type: 'success'
-                    });
-                    this.nextStep=false
-                    this.activePwd="second"
-                    this.resetPW=false
-                }else{
-                    this.$message({
-                        message: '验证码错误',
-                        center: true,
-                        type: 'warning'
-                    });
-                    this.nextStep=true
-                    this.resetPW=true
-                    this.activePwd="first"
-                }
-            })
-          } else {
-            return false;
-          }
-        });
+    next() {
+      if (
+        this.ruleFormCode.inputMail !== "" &&
+        this.ruleFormCode.getCode !== ""
+      ) {
+        this.nextStep = false;
+      } else {
+        this.nextStep = true;
+      }
     },
-    reset(formName){
-        this.$refs[formName].validate((valid) => {
-            if (valid){
-                resetPwd({
-                    UserMail:this.ruleFormCode.inputMail,
-                    password:this.ruleFormPwd.passWordTwo
-                }).then(res=>{
-                    if(res.code==0 && this.ruleFormPwd.passWordOne==this.ruleFormPwd.passWordTwo){
-                        this.dialogVisible=true
-                        this.centerDialogVisible=false
-                    }else{
-                        this.$message({
-                            message: '两次密码不一致',
-                            center: true,
-                            type: 'warning',
-                        });
-                    }
-                })
-            }else{
-                return false;
+    second(formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          forgetPWverify({
+            UserMail: this.ruleFormCode.inputMail,
+            Code: this.ruleFormCode.getCode
+          }).then(res => {
+            if (res.code == 0) {
+              this.$message({
+                message: "验证码正确",
+                center: true,
+                type: "success"
+              });
+              this.nextStep = false;
+              this.activePwd = "second";
+              this.resetPW = false;
+            } else {
+              this.$message({
+                message: "验证码错误",
+                center: true,
+                type: "warning"
+              });
+              this.nextStep = true;
+              this.resetPW = true;
+              this.activePwd = "first";
             }
-        })
+          });
+        } else {
+          return false;
+        }
+      });
+    },
+    reset(formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          resetPwd({
+            UserMail: this.ruleFormCode.inputMail,
+            password: this.ruleFormPwd.passWordTwo
+          }).then(res => {
+            if (
+              res.code == 0 &&
+              this.ruleFormPwd.passWordOne == this.ruleFormPwd.passWordTwo
+            ) {
+              this.dialogVisible = true;
+              this.centerDialogVisible = false;
+            } else {
+              this.$message({
+                message: "两次密码不一致",
+                center: true,
+                type: "warning"
+              });
+            }
+          });
+        } else {
+          return false;
+        }
+      });
     },
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
@@ -386,8 +448,13 @@ export default {
       }
     },
     //点击跳转到个人中心
-    personalCenter(){
-        this.$router.push({ path: "./personalCenter" });
+    personalCenter() {
+      this.$router.push({ name: "personalCenter", query: { id: "0" } });
+    },
+    //点击跳转到个人中心的问题反馈
+    feedback() {
+      this.dialogVisible = false;
+      this.$router.push({ name: "personalCenter", query: { id: "2" } });
     },
     //从新加载二维码
     opacity_text() {
@@ -548,29 +615,25 @@ export default {
       if (that.centerDialogVisible == true) {
         this.dialogVisible = false;
       }
-    },
-    
-    
+    }
   },
-  mounted(){
-      
-  }
+  mounted() {}
 };
 </script>
 <style scoped>
-.forgetPwd .el-tab-pane .el-form{
-    margin-top:20px;
+.forgetPwd .el-tab-pane .el-form {
+  margin-top: 20px;
 }
-.forgetPwd .el-tab-pane .el-form .el-input{
-    width:250px !important;
-    float:left;
+.forgetPwd .el-tab-pane .el-form .el-input {
+  width: 250px !important;
+  float: left;
 }
-.forgetPwd .el-tab-pane .el-form .el-button{
-    float:right;
-    width:100px;
+.forgetPwd .el-tab-pane .el-form .el-button {
+  float: right;
+  width: 100px;
 }
-.pwdFooter .el-button{
-    margin:0 20px !important;
+.pwdFooter .el-button {
+  margin: 0 20px !important;
 }
 .el-dropdown-link {
   cursor: pointer;
@@ -620,8 +683,8 @@ export default {
   margin-left: 200px;
   line-height: 52px;
 }
-.headimgurl:focus{
-    outline:none;
+.headimgurl:focus {
+  outline: none;
 }
 .headimgurl img {
   width: 32px;
