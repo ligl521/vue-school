@@ -16,6 +16,7 @@
     "axios": "^0.18.0",
     "drag": "0.0.4",
     "echarts": "^4.2.1",
+    "element-china-area-data": "^4.1.2",
     "element-ui": "^2.8.2",
     "less": "^3.9.0",
     "less-loader": "^5.0.0",
