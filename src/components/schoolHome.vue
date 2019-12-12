@@ -610,6 +610,7 @@ export default {
         font-weight: 600;
         font-size: 16px;
         color: #214f89;
+        cursor: pointer;
         a {
           color: #214f89;
         }
