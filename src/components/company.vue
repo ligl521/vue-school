@@ -281,6 +281,7 @@ export default {
             &:first-of-type{
                 font-size: 20px !important;
                 font-weight: bold;
+                cursor: pointer;
             }
             a{
                 &:hover{

@@ -12,9 +12,10 @@
           :on-preview="handlePreview"
           :on-remove="handleRemove"
           :before-remove="beforeRemove"
-          multiple
-          :limit="1"
           :on-exceed="handleExceed"
+          :on-success="beforeUpload"
+          :on-error="error"
+          :limit="1"
           :file-list="fileList"
         >
           <i class="el-icon-plus"></i>
@@ -50,6 +51,13 @@
           {{ tag }}
         </el-tag>
       </div>
+      <div style="text-align: center;margin-top: 40px;">
+        <el-tag @click="add_tag(tag1)">{{ tag1 }}</el-tag>
+        <el-tag @click="add_tag(tag2)">{{ tag2 }}</el-tag>
+        <el-tag @click="add_tag(tag3)">{{ tag3 }}</el-tag>
+        <el-tag @click="add_tag(tag4)">{{ tag4 }}</el-tag>
+        <el-tag @click="add_tag(tag5)">{{ tag5 }}</el-tag>
+      </div>
       <div>
         <el-button class="ruleForm" type="primary">提交</el-button>
       </div>
@@ -60,33 +68,74 @@
 
 <script>
 import schoolfooter from "./schoolFooter";
-import { talentlist } from "@/api/api";
+import { upfile } from "@/api/api";
 export default {
   data() {
     return {
       fileList: [],
       dynamicTags: ["标签一", "标签二", "标签三"],
       inputVisible: false,
-      inputValue: ""
+      inputValue: "",
+      tag1: "1",
+      tag2: "2",
+      tag3: "3",
+      tag4: "4",
+      tag5: "5",
+      userMail: "" //邮箱
     };
   },
-  created() {},
+  created() {
+    this.userMail = this.getCookie("username"); //邮箱
+  },
   methods: {
+    //coolie 读取存在
+    getCookie(name) {
+      var arr,
+        reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+      if ((arr = document.cookie.match(reg))) return unescape(arr[2]);
+      else return null;
+    },
     handleRemove(file, fileList) {
       console.log(file, fileList);
     },
     handlePreview(file) {
       console.log(file);
     },
+    //上传几个文件
     handleExceed(files, fileList) {
       this.$message.warning(`最多上传1个文件`);
     },
+    //文见上传错误反馈
+    error(err, file, fileLists) {
+      this.$message.warning(`上传文件失败，请从新上传`);
+    },
+    //移除文件
     beforeRemove(file, fileList) {
       return this.$confirm(`确定移除 ${file.name}？`);
     },
+    //上传文件
+    beforeUpload(a, file, b) {
+      let formData = new FormData();
+      formData.append("file", file.raw); //传文件
+      formData.append("userMail", this.userMail); //传其他参数
+      formData.append("talentId", "11"); //传其他参数
+      formData.append("type", "nsi-pc/TalentAttachment/"); //传其他参数
+      this.axios({
+        url: "http://192.168.0.102:8080/nsi-1.0/manager/talent/upResume.do",
+        method: "POST", //  这个地方注意
+        data: formData,
+        processData: false,
+        contentType: false
+      }).then(response => {
+        console.log("upload_success_response:", response);
+      });
+      return false; //屏蔽了action的默认上传
+    },
+    //删除标签
     handleClose(tag) {
       this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
     },
+    //判断已有多少个标签
     handleInputConfirm() {
       let inputValue = this.inputValue;
       if (inputValue) {
@@ -99,6 +148,16 @@ export default {
       this.inputVisible = false;
       this.inputValue = "";
     },
+    //添加标签
+    add_tag(val) {
+      if (this.dynamicTags.length < 5) {
+        this.dynamicTags.push(val);
+        this.dynamicTags = Array.from(new Set(this.dynamicTags));
+      } else {
+        alert("最多添加五个标签");
+      }
+    },
+    //添加可以编辑的标签
     showInput() {
       this.inputVisible = true;
       this.$nextTick(_ => {
@@ -183,10 +242,10 @@ export default {
 <style>
 .el-upload-list {
   width: 320px !important;
-  position: absolute!important;
-  left: 160px!important;
-  bottom: 20px!important;
-  text-align: left!important;
+  position: absolute !important;
+  left: 160px !important;
+  bottom: 20px !important;
+  text-align: left !important;
 }
 .el-tag {
   margin-left: 10px;
