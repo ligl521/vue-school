@@ -771,6 +771,7 @@ export default {
   font-size: 15px;
   font-weight: 600;
   color: #000;
+  cursor: pointer;
 }
 .logoimg {
   position: relative;
@@ -982,6 +983,7 @@ export default {
         font-size: 0.2rem;
         font-weight: bold;
         color: #2c2c2c;
+        cursor: pointer;
         a{
             text-decoration: none;
         }

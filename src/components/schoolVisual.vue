@@ -2,8 +2,7 @@
     <div class="schoolVisual">
         <div class="a1">
           <div>正在改版 敬请期待....</div>
-          <!-- <div><a href="http://data.xinxueshuo.cn/nsi/visible/visible.html" target="_blank">请访问老版网站</a></div> -->
-          <a>页面将在{{count}}秒内跳转到老版国际学校四库全书</a>
+          <a>页面将在{{time}}秒内跳转到老版国际学校四库全书</a>
         </div>
 
         <schoolFooter />
@@ -15,32 +14,26 @@ import schoolFooter from './schoolFooter'
 export default {
   data() {
     return {
-      restaurants: [],
-      state: '',
-      timeout:  null,
-      count:""
+      time:0,
     }
   },
 methods:{
-    startDivi(){
-        const TIME_COUNT = 3;
-        if(!this.timer){
-            this.count = TIME_COUNT;
-            this.timer = setInterval(()=>{
-            if(this.count > 0 && this.count <= TIME_COUNT){
-                this.count--;
-            }else{
-                clearInterval(this.timer);
-                this.timer = null;
-                window.location = "http://data.xinxueshuo.cn/nsi/visible/visible.html"; 
-            }
-          },1000)
-        }
-    },
-
+      countDown(){
+        let that=this;
+        that.time--;
+      }
   },
   mounted(){
-    this.startDivi()
+    let that=this; 
+    that.time=5;
+    setInterval(that.countDown,1000);
+  },
+   watch:{
+    'time':function(newVal,oldVal){  
+          if(newVal==0){
+              window.location = "http://data.xinxueshuo.cn/nsi/project/project.html"; 
+          }
+    }
   },
   created() {
 
