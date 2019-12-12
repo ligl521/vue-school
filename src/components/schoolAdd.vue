@@ -499,7 +499,7 @@ export default {
           }
           if(this.active > 4  ) this.active = 4;
         } else {
-          console.log("cuow")
+          console.log("chuow")
           this.active = this.active;
           console.log('error submit!!');
           return false;
