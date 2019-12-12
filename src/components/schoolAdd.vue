@@ -33,7 +33,6 @@
                 <el-option label="外籍" value="外籍"></el-option>
               </el-select>
             </el-form-item>
-
             <el-form-item label="运营状态" prop="operationState">
               <el-select v-model="form.operationState" placeholder="请选择运营状态" :value-key="form.operationState">
                 <el-option label="运营中" value="运营中"></el-option>
@@ -41,37 +40,15 @@
                 <el-option label="停办" value="停办"></el-option>
               </el-select>
             </el-form-item>
-            <div id="seleOp" class="City clearfix">
-
-                <span>省</span>
-                <el-cascader
-                  size="large"
-                  :options="options"
-                  v-model="selectedOptions"
-                  @change="handleChange"
-                  ref="cascaderAddr">
-                </el-cascader>
-                <!-- <div class="el-input el-input--suffix" @change="cityProvice_change" id="cityProvice">
-                  <select >
-                    <option v-if="citySelect">{{form.province}}</option>
-                    <option v-for="(v,i) in provice" :key="i" value="v.name">{{v.name}}</option>
-                  </select>
-                  <span class="el-input__suffix"><span class="el-input__suffix-inner"><i class="el-select__caret el-input__icon el-icon-arrow-up"></i></span></span>
-                </div>
-                <i></i> -->
-
-              <p>
-                <span>市</span>
-                <select @change="cityTown" id="cityTown">
-                  <option v-if="citySelect">{{form.town}}</option>
-                  <option v-for="(v,i) in provice[curshe].city" :key="i" >{{v.name}}</option>
-                </select>
-                <i></i>
-                <br/>
-                <!-- <span v-if="citySpan == true" id="citySpan">地区不能为空</span> -->
-              </p>
-            </div>
-
+            <el-form-item label="省-市" prop="">
+              <el-cascader
+                size="large"
+                :options="options"
+                v-model="selectedOptions"
+                @change="handleChange"
+                ref="cascaderAddr">
+              </el-cascader>
+            </el-form-item>
             <el-form-item label="地址" prop="address" id="addFlex">
               <el-input v-model="form.address" ></el-input>
             </el-form-item>
@@ -97,36 +74,41 @@
             <el-form-item label="电话" prop="telephone">
               <el-input v-model="form.telephone" ></el-input>
             </el-form-item>
-            <el-form :inline="true" class="demo-form-inline TuitionBox">
-              <el-form-item label="幼儿园-学费" prop="oneTuition" >
-                <el-input v-model.number="form.oneTuition" class="TuitionBoxInput"></el-input>
-                <!-- <i>格式为数字，整数</i> -->
-              </el-form-item>
-              <el-form-item label="小学-学费" prop="twoTuition" class="TuitionBoxLabel">
-                <el-input v-model="form.twoTuition" class="TuitionBoxInput"></el-input>
-                <!-- <i>格式为数字，整数</i> -->
-              </el-form-item>
-            </el-form>
-            <el-form :inline="true" class="demo-form-inline TuitionBox">
-              <el-form-item label="初中-学费" prop="thirdTuition" >
-                <el-input v-model.number="form.thirdTuition" class="TuitionBoxInput"></el-input>
-                <!-- <i>格式为数字，整数</i> -->
-              </el-form-item>
-              <el-form-item label="高中-学费" prop="fourTuition" class="TuitionBoxLabel">
-                <el-input v-model.number="form.fourTuition" class="TuitionBoxInput"></el-input>
-                <!-- <i>格式为数字，整数</i> -->
-              </el-form-item>
-            </el-form>
-
-
           </div>
           <!-- 课程信息 -->
           <div v-else-if="active == 1">
+            <el-form-item label="学费" class="">
+                <div class="tuitionSchool">
+                  <div class="tuition">
+                    <div><span>幼儿园</span><el-input v-model="form.oneTuition"></el-input></div>
+                    <div><span>初中</span><el-input v-model="form.thirdTuition" ></el-input></div>
+                  </div>
+                  <div class="tuition">
+                    <div><span>小学</span><el-input v-model="form.twoTuition"></el-input></div>
+                    <div><span>高中</span><el-input v-model="form.fourTuition" ></el-input></div>
+                  </div>
+                  <i>格式为数字，整数 例：150000</i>
+                </div>
+            </el-form-item>
+            <el-form-item label="人数" class="">
+                <div class="tuitionSchool">
+                  <div class="tuition">
+                    <div><span>幼儿园</span><el-input v-model="form.oneTuition"></el-input></div>
+                    <div><span>初中</span><el-input v-model="form.thirdTuition" ></el-input></div>
+                  </div>
+                  <div class="tuition">
+                    <div><span>小学</span><el-input v-model="form.twoTuition"></el-input></div>
+                    <div><span>高中</span><el-input v-model="form.fourTuition" ></el-input></div>
+                  </div>
+                  <i>格式为数字，整数 例：150000</i>
+                </div>
+            </el-form-item>
+
             <el-form-item label="国际课程" prop="course">
-            <div class="addFlexTwo">
-              <el-input v-model="form.course"></el-input>
-              <i>请分号分割 例:IPC;OMYC;PGA;</i>
-            </div>
+              <div class="addFlexTwo">
+                <el-input v-model="form.course"></el-input>
+                <i>请分号分割 例:IPC;OMYC;PGA;</i>
+              </div>
               <el-checkbox-group v-model="inputCheckboxCourse">
                 <el-checkbox label="IPC;" name="course">IPC</el-checkbox>
                 <el-checkbox label="OMYC;" name="course">OMYC</el-checkbox>
@@ -153,6 +135,7 @@
                 <el-checkbox label="其他;" name="course">其他</el-checkbox>
               </el-checkbox-group>
             </el-form-item>
+
             <el-form-item label="认证&组织" prop="authentication">
               <div class="addFlexTwo">
                 <el-input v-model="form.authentication"></el-input>
@@ -254,8 +237,8 @@
         <P>提交成功</P>
         <p>审核通过后将会插入数据库</p>
         <ul>
-          <li><el-button type="info" round>返回学校库</el-button></li>
-          <li><el-button type="info" round>继续提交</el-button></li>
+          <li><el-button type="info" round @click="returnBtn(1)">返回学校库</el-button></li>
+          <li><el-button type="info" round @click="returnBtn(2)">继续提交</el-button></li>
         </ul>
     </div>
   </div>
@@ -338,14 +321,14 @@ export default {
       inputCheckbox:[], //学制
       inputCheckboxCourse:[], //课程
       inputCheckboxauthentication:[], //认证组织
-      thisAreaCode:"",
+      thisAreaCode:"", //省-市
       provice:provice, //城市
       citySelect:false,
       curshe:0,
       options: provinceAndCityData,
       selectedOptions: [],
       completeBtn:"下一步",//完成 下一步按钮切换
-      formShow:true,
+      formShow:false,
       form:{
         schoolName:"",  //学校名字
         schoolEnglishName:"", //学校英文名
@@ -488,12 +471,15 @@ export default {
   },
   methods: {
     next(form) {
+      console.log(this.form)
       this.$refs[form].validate((valid) => {
         console.log(valid)
         if (valid) {
           this.active =  this.active + 1;
           console.log(this.active)
-          if(this.active == 3 ) this.completeBtn = "提交";
+          if(this.active == 3 ){
+            this.completeBtn = "提交";
+          }
           if(this.active == 4){
             getSchoolAdd(
               this.form
@@ -523,51 +509,27 @@ export default {
     },
     Previous(){
       this.active =  this.active - 1;
-      if(this.active < 0 ) this.active = 0;
+      if(this.active < 0 ){
+        this.active = 0;
+      }else if(this.active < 3){
+        this.completeBtn = "下一步";
+      }
     },
     //城市二级联动
     handleChange (e,form,thisAreaCode) {
-      console.log(e)
-      // console.log(this.$refs['cascaderAddr'])
+      console.log(CodeToText[e[0]])
       this.thisAreaCode = this.$refs['cascaderAddr'].currentLabels;
-      // console.log(this.thisAreaCode)
+      this.form.province = this.thisAreaCode[0];
+      this.form.town = this.thisAreaCode[1];
     },
-    //下拉框
-    cityProvice_change:function(){
-      console.log(this.isEdit,store.state.isEd)
-      if(this.isEdit == store.state.isEd){
-        console.log(this.i++)
-        if(this.i++ == 0){
-          let myCityProvice = document.getElementById("cityProvice");
-          let indexOne = myCityProvice.selectedIndex;
-          let indexOneCs = myCityProvice.selectedIndex-1;
-          this.curshe = indexOne-1;
-          this.form.province = myCityProvice[indexOne].text;
-          this.form.town = this.provice[this.curshe].city[0].name;
+    //提交成功后返回操作
+    returnBtn(num){
+      if(num == "1"){
+          this.$router.push({path:'/school'})
         }else{
-          let myCityProvice = document.getElementById("cityProvice");
-          let indexOne = myCityProvice.selectedIndex ;
-          this.curshe = indexOne;
-          this.form.province = myCityProvice[indexOne].text;
-          console.log(this.form.province)
-          this.form.town = this.provice[indexOne].city[0].name;
-        }
-        store.commit("changeis",0)
-      }else{
-        let myCityProvice = document.getElementById("cityProvice");
-        let indexOne = myCityProvice.selectedIndex ;
-        this.curshe = indexOne;
-        console.log("")
-        this.form.province = myCityProvice[indexOne].text;
-        this.form.town = this.provice[indexOne].city[0].name;
+          this.formShow = true;
       }
-      this.citySelect = false;
-    },
-    cityTown:function(){
-      let mycityTown = document.getElementById("cityTown");
-      let indexTwo = mycityTown.selectedIndex;
-      this.form.town = mycityTown[indexTwo].text;
-    },
+    }
   },
    watch: {
     //学制多选
@@ -603,8 +565,10 @@ export default {
 
 <style lang="less" scoped>
   .schoolAdd{
+    min-width:1200px;
     width: 80%;
     margin: 0 auto;
+    border: 1px solid #ccc;
     .schAd{
       padding-top: 30px;
       h1{
@@ -652,88 +616,23 @@ export default {
         }
       }
     }
+    .tuitionSchool{
+      display: flex;
+      /deep/.tuition{
+        line-height: 50px;
+        width: 26% !important;
+        span{
+          display:inline-block;
+          width: 20%;
+        }
+        .el-input{
+          margin-left: 3px;
+          width: 60% !important;
+        }
+      }
+    }
     //表单样式
     form.el-form.demo-ruleForm{
-      #seleOp p{
-        text-align: left;
-        position: relative;
-      }
-      #seleOp p:last-of-type{
-        margin-top: 18px;
-        margin-bottom: 18px;
-      }
-      #seleOp span{
-        display: inline-block;
-        width: 200px;
-        text-align: right;
-        font-size: 14px;
-        line-height: 40px;
-        padding: 0 12px 0 0;
-        -webkit-box-sizing: border-box;
-        box-sizing: border-box;
-      }
-      #seleOp select{
-        width: 399px;
-        height: 40px;
-        outline: 0;
-        border: 1px solid #dcdfe6;
-        appearance: none;
-        display: inline-block;
-        background: #fff;
-        transition:border-color .2s cubic-bezier(.645,.045,.355,1);
-        padding: 0 30px 0 10px;
-        margin-left: -4px;
-        color: #606266;
-        border-radius: 3px;
-      }
-      #seleOp select:focus {
-        border-color: #409EFF;
-      }
-      #seleOp p i{
-        color: rgba(0, 0, 0, 0.0);
-        font-size: 14px;
-        -webkit-transition: -webkit-transform .3s;
-        transition: -webkit-transform .3s;
-        transition: transform .3s;
-        transition: transform .3s, -webkit-transform .3s;
-        transition: transform .3s,-webkit-transform .3s;
-        -webkit-transform: rotateZ(180deg);
-        transform: rotateZ(180deg);
-        cursor: pointer;
-        // font-family: element-icons!important;
-        font-style: normal;
-      }
-      // #seleOp select:focus i{
-      //   border-color: #409EFF;
-      // }
-      #seleOp p i:before{
-        content: "\E605";
-        display: inline-block;
-        /* background: #000; */
-        width: 0px;
-        height: 0px;
-        border-left: 8px solid transparent;
-        border-right: 8px solid transparent;
-        /* border-bottom: 8px solid #000; */
-        border-top: 9px solid#c0c4cc;
-        position: relative;
-        right: 32px;
-        top: 10px;
-      }
-      #seleOp p i:after{
-        content: '';
-        display: inline-block;
-        /* background: #000; */
-        width: 0px;
-        height: 0px;
-        border-left: 9px solid transparent;
-        border-right: 9px solid transparent;
-        /* border-bottom: 8px solid #000; */
-        border-top: 8px solid #fff;
-        position: relative;
-        right: 49px;
-        top: -6px
-      }
       .el-checkbox-group{
         margin-left: 100px;
       }
@@ -764,14 +663,6 @@ export default {
     }
     .el-textarea {
       width: 59%;
-    }
-    /deep/.TuitionBox{
-      .TuitionBoxInput{
-        width: 100%;
-      }
-      .el-form-item__content{
-        width: 153px !important;
-      }
     }
     /deep/.el-form-item__label{
       width: 200px !important;
