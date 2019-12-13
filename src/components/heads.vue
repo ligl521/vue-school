@@ -65,7 +65,7 @@
             <p>二维码已失效</p>
             <el-button type="danger" @click="opacity_text()">刷新</el-button>
           </div>
-          <div class="img_code">
+          <div class="img_code" v-loading="loading">
             <img id="qr_code" v-bind:src="imgCode" />
           </div>
           <p class="span_text">请使用微信扫码登录</p>
@@ -242,6 +242,7 @@ import {
 export default {
   data() {
     return {
+      loading:true,
       dialogVisible: false, //登录的弹框
       dialogVisible1: false, //扫码未绑定的弹框
       activeName: "first",
@@ -471,6 +472,7 @@ export default {
         }).then(response => {
           console.log(response);
           if (response.code == 0) {
+            // self.userTurename = JSON.parse(response.data.userTurename);
             self.userTurename = response.data.userTurename;
             self.setCookie("username", response.data.username, 7); //用户邮箱
             self.setCookie("memberSign", response.data.memberSign, 7); //用户等级
@@ -500,6 +502,7 @@ export default {
         that.sceneStr = response.data.scenStr;
         console.log(that.sceneStr);
         that.handleClick();
+        that.loading=false
       });
     },
     //二维码倒计时
