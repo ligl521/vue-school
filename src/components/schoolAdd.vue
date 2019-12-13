@@ -93,12 +93,12 @@
             <el-form-item label="人数" class="">
                 <div class="tuitionSchool">
                   <div class="tuition">
-                    <div><span>幼儿园</span><el-input v-model="form.oneTuition"></el-input></div>
-                    <div><span>初中</span><el-input v-model="form.thirdTuition" ></el-input></div>
+                    <div><span>幼儿园</span><el-input ></el-input></div>
+                    <div><span>初中</span><el-input ></el-input></div>
                   </div>
                   <div class="tuition">
-                    <div><span>小学</span><el-input v-model="form.twoTuition"></el-input></div>
-                    <div><span>高中</span><el-input v-model="form.fourTuition" ></el-input></div>
+                    <div><span>小学</span><el-input></el-input></div>
+                    <div><span>高中</span><el-input ></el-input></div>
                   </div>
                   <i>格式为数字，整数 例：150000</i>
                 </div>
@@ -328,7 +328,7 @@ export default {
       options: provinceAndCityData,
       selectedOptions: [],
       completeBtn:"下一步",//完成 下一步按钮切换
-      formShow:false,
+      formShow:true,
       form:{
         schoolName:"",  //学校名字
         schoolEnglishName:"", //学校英文名
