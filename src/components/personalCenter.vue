@@ -318,18 +318,27 @@
           </h4>
           <div class="problem_div">
             <el-checkbox
-              v-model="checked1"
+              type="checkbox"
+              v-model="checkedBox"
               label="搜索数据不正确"
+              value="搜索数据不正确"
             ></el-checkbox>
           </div>
           <div class="problem_div">
             <el-checkbox
-              v-model="checked2"
+              type="checkbox"
+              v-model="checkedBox"
               label="网页中排版错乱"
+              value="网页中排版错乱"
             ></el-checkbox>
           </div>
           <div class="problem_div">
-            <el-checkbox v-model="checked3" label="其他问题"></el-checkbox>
+            <el-checkbox 
+              type="checkbox" 
+              v-model="checkedBox" 
+              label="其他问题" 
+              value="其他问题"
+            ></el-checkbox>
           </div>
           <h4 style="margin: 20px 0">
             2、您对新学说数据库有什么建议？
@@ -348,7 +357,7 @@
             3、请留下你的联系方式，我们将会及时通知您问题处理的进展
           </h4>
           <el-input placeholder="请输入联系方式" v-model="input"> </el-input>
-          <el-button class="ruleForm">立即提交</el-button>
+          <el-button @click="ruleForm" class="ruleForm">立即提交</el-button>
         </div>
       </div>
       
@@ -358,16 +367,14 @@
 </template>
 <script>
 import schoolFooter from "./schoolFooter";
-import {checkUpfile} from "@/api/api"
+import { feedback,checkUpfile } from "@/api/api";
 export default {
   data() {
     return {
       input: "",
       textarea: "",
-      checked1: false,
-      checked2: false,
-      checked3: false,
-      checked4: false,
+      checkedBox:[],
+      submitter:'',
       tabsName: [
         {
           name: "我的简历",
@@ -417,8 +424,23 @@ export default {
       personaltraining:"",
     };
   },
-  created() {},
+  created() {
+      this.submitter = this.getCookie("username"); //名字
+      console.log(this.submitter)
+  },
+  mounted() {
+    this.tabsSwitch(this.$route.query.id);
+    this.checkPersonnel() 
+    console.log(this.$route.query.id)
+  },
   methods: {
+    //coolie 读取存在
+    getCookie(name) {
+      var arr,
+        reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+      if ((arr = document.cookie.match(reg))) return unescape(arr[2]);
+      else return null;
+    },
     //选项卡
     tabsSwitch: function(tabIndex) {
       var tabCardCollection = document.querySelectorAll(".tab-card"),
@@ -430,11 +452,18 @@ export default {
       this.tabsName[tabIndex].isActive = true;
       tabCardCollection[tabIndex].style.display = "block";
     },
-    //coolie 读取存在
-    getCookie(name) {
-      var arr,reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
-      if ((arr = document.cookie.match(reg))) return unescape(arr[2]);
-      else return null;
+    ruleForm(){
+        console.log(this.checkedBox.join('/')+';'+this.textarea)
+        console.log(this.input)
+        let that=this
+        feedback({
+            UserName:that.submitter,
+            Content:that.checkedBox.join('/')+';'+that.textarea,
+            Contact:that.input,
+        }).then(res=>{
+            console.log(res)
+            alert(res.msg)
+        })
     },
     checkPersonnel(){
       checkUpfile({
@@ -451,10 +480,6 @@ export default {
     writePersonnel(){
       this.$router.push('/personnel');
     }
-  },
-  mounted(){
-    this.tabsSwitch(this.$route.query.id);
-    this.checkPersonnel() 
   },
   components: {
     schoolFooter
