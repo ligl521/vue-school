@@ -70,4 +70,4 @@ export const getSchoolAdd = p => post('/new/school/insert.do', p)
 //添加功能 验证学校名是否重复
 export const getSchoolCheck_valid = p => post('/new/school/check_valid.do', p)
 //验证是否上传简历
-export const checkUpfile = p => post('/manager/talent/check_upfile.do', p)
+export const checkUpfile = p => get('/newTalent/find_talent_info.do', p)

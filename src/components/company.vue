@@ -69,7 +69,7 @@ export default {
   },
   filters:{
       isZero(obj){
-          if(obj=="0"){
+          if(obj=="0" || obj==null){
               return '暂无'
           }else{
               return obj
@@ -100,8 +100,8 @@ export default {
                 var label = res.data[i].label;
                 var labelSplit = label.split(";");
                     labelSplit = labelSplit.slice(0, labelSplit.length - 1);
-                    if(labelSplit.length>4){
-                        labelSplit= labelSplit.slice(0,4)
+                    if(labelSplit.length>3){
+                        labelSplit= labelSplit.slice(0,3)
                     }
                 var labelBox = [];
                 for (var j = 0; j < labelSplit.length; j++) {

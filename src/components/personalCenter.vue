@@ -49,7 +49,7 @@
               <el-divider direction="vertical"></el-divider
               ><span>工作经历</span>
             </div>
-            <p v-for="(item,index) in personalContent.workExperience" :key="index">
+            <p v-for="(item,index) in personalWork" :key="index">
               <span class="experience_one">{{ item.company }}</span>
               <span class="experience_tow">{{ item.jobType }}</span>
               <span class="experience_three">{{ item.date }}</span>
@@ -61,10 +61,10 @@
           <!-- 教育背景 -->
           <div class="educational">
             <div class="title_name">
-              <el-divider direction="vertical"></el-divider
-              ><span>教育背景</span>
+              <el-divider direction="vertical"></el-divider>
+              <span>教育背景</span>
             </div>
-            <p v-for="(item,index) in personalContent.education" :key="index">
+            <p v-for="(item,index) in personalEdu" :key="index">
               <span class="educational_one">{{ item.schoolName }}</span
               ><span>{{ item.schoolMajor }}</span
               ><span class="educational_tow">{{ item.schoolDate }}</span>
@@ -79,10 +79,13 @@
               <el-divider direction="vertical"></el-divider
               ><span>培训经历</span>
             </div>
-            <p v-for="(item,index) in personalContent.training" :key="index">
+            <!-- <p>
+                <span>{{personalContent.training}}</span>
+            </p> -->
+            <p v-for="(item,index) in personaltraining" :key="index">
               <span class="educational_one">{{ item.trainName }}</span>
               <span class="educational_tow">{{ item.trainDate }}</span>
-              <span class="educational_three">{{ item.trainMajor }}</span>
+              <!-- <span class="educational_three">{{ item.trainMajor }}</span> -->
               <br />
               <span>{{ item.trainTextarea }}</span>
             </p>
@@ -409,13 +412,12 @@ export default {
       // ],
       isCheck:"",
       personalContent:"",
+      personalWork:"",
+      personalEdu:"",
+      personaltraining:"",
     };
   },
   created() {},
-  mounted() {
-    this.tabsSwitch(this.$route.query.id);
-    console.log(this.$route.query.id)
-  },
   methods: {
     //选项卡
     tabsSwitch: function(tabIndex) {
@@ -441,6 +443,9 @@ export default {
           console.log(res)
           this.isCheck=res.code
           this.personalContent=res.data
+          this.personalWork=eval('(' + res.data.workExperience + ')')
+          this.personalEdu=eval('(' + res.data.education + ')')
+          this.personaltraining=eval('(' + res.data.training + ')')
         })
     },
     writePersonnel(){
@@ -448,7 +453,8 @@ export default {
     }
   },
   mounted(){
-    this.checkPersonnel()
+    this.tabsSwitch(this.$route.query.id);
+    this.checkPersonnel() 
   },
   components: {
     schoolFooter
@@ -494,6 +500,7 @@ export default {
 .personalCenter {
   margin: 0 auto;
   width: 1100px;
+  margin-bottom:120px;
   .personalCenter_left {
     display: inline-block;
     vertical-align: top;

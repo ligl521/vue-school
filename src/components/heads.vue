@@ -320,7 +320,7 @@ export default {
       this.WechatLogin = false;
       this.headimgurl = true;
     } else {
-      this.userTurename = this.getCookie("User_TureName"); //名字
+      this.userTurename = decodeURI(this.getCookie("User_TureName")); //名字
       this.WechatLogin = true;
       this.headimgurl = false;
       if (this.getCookie("UserImg") == null) {
@@ -330,6 +330,7 @@ export default {
         this.imgurl = this.getCookie("UserImg"); //用户头像
       }
     }
+    console.log(this.userTurename)
   },
   methods: {
     sendPW() {
@@ -472,7 +473,6 @@ export default {
         }).then(response => {
           console.log(response);
           if (response.code == 0) {
-            // self.userTurename = JSON.parse(response.data.userTurename);
             self.userTurename = response.data.userTurename;
             self.setCookie("username", response.data.username, 7); //用户邮箱
             self.setCookie("memberSign", response.data.memberSign, 7); //用户等级

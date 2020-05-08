@@ -7,7 +7,7 @@
           <div class="swiper-wrapper">
             <div
               class="swiper-slide"
-              :class="schoolDetail.schoolShowOne ? 'show' : 'hide'"
+              :class="schoolDetail.schoolShowOne='0'||schoolDetail.schoolShowOne==null ? 'hide':'show' "
             >
               <img :src="schoolDetail.schoolShowOne" />
             </div>
@@ -632,8 +632,8 @@ export default {
     // 学校名字长度限制
     ellipsisName(value) {
       if (!value) return "";
-      if (value.length > 7) {
-        return value.slice(0, 7) + "...";
+      if (value.length > 10) {
+        return value.slice(0, 10) + "...";
       } else {
         return value;
       }
@@ -903,6 +903,9 @@ export default {
                     // 父传子
                     that.asyncObject = res
                     that.flag = true
+                    if(that.schoolDetail.schoolShowOne==0){
+
+                    }
                     // v-if判断
                     that.Isintro=that.schoolDetail.schoolDesc
                     that.Issystem=that.schoolDetail.courseSystem
@@ -1529,15 +1532,22 @@ export default {
   color: #214f89;
   font-size: 20px;
   border-radius: 5px;
+  cursor: pointer;
 }
+
 .cityschool .imgbox img {
   width: 120px;
   height: 120px;
   border-radius: 50%;
 }
+.cityschool .imgbox img:hover{
+    box-shadow: 0px 0px 15px #ccc;
+    transition: .3s;
+}
 
 .cityschool p.chineseName {
   margin: 15px 0;
+  font-size: 16px;
 }
 
 .cityschool p.englishName {
@@ -1613,6 +1623,7 @@ export default {
   border: 1px solid #ccc;
   margin: 0 auto;
   padding: 20px;
+  line-height: 20px;
 }
 /* 相关机构 */
 .schoolTranslateH1_ul {

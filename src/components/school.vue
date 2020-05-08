@@ -87,7 +87,8 @@
               <ul>
                 <li @click="enterSchoolDetail(item.id)" class="schoolName">{{item.schoolName | ellipsisName}}</li>
                 <li>建校时间：{{item.foundingTime | iszero}}</li>
-                <li>学制：<span v-for="(v,i) in item.schoolSystem" :key="i">{{v}}，</span></li>
+                <li v-if="isSchoolSystem!=''">学制：<span v-for="(v,i) in item.schoolSystem" :key="i">{{v}}，</span></li>
+                <li v-else></li>
               </ul>
             </div>
         </el-col>
@@ -101,7 +102,10 @@
             <div class="DeatailTwoCenter" id="DeatailTwoCenterId">
             <ul>
                 <li @click="enterSchoolDetail(item.id)">{{item.schoolName | ellipsisSchoolNameTwo}}<span :class="item.operationState!=='运营中'?'operationA':'operationB'">{{item.operationState}}</span></li>
-                <li>类型：<span>{{item.schoolProperties}}</span><p>学制：<span v-for="(v,i) in item.schoolSystem" :key="i">{{v}}</span></p></li>
+                <li>类型：<span>{{item.schoolProperties}}</span>
+                    <p v-if="isSchoolSystem!=''">学制：<span v-for="(v,i) in item.schoolSystem" :key="i">{{v}}</span></p>
+                    <p v-else></p>
+                </li>
                 <li>课程：<span>{{item.course | iszero}}</span></li>
             </ul>
             </div>
@@ -182,6 +186,7 @@ export default {
       loading: false, //默认是false 可以滚动哦！
       finish:false,
       isLoading:true,
+      isSchoolSystem:"",
     };
   },
   created() {
@@ -361,6 +366,7 @@ export default {
         //截取 幼 小 中 高
         for (var i = 0; i < respons.data.list.length; i++) {
           var str = respons.data.list[i].schoolSystem;
+          this.isSchoolSystem=respons.data.list[i].schoolSystem
           if (str.search("；") != -1) {
             var arr1 = str.split("；");
           }else{
