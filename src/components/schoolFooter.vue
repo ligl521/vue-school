@@ -29,7 +29,7 @@
               <div class="title">微信公众号</div>
               <div class="social-links">
                 <img alt="微信二维码" height="120"  width="120" src="http://data.xinxueshuo.cn/nsi/assets/img/wechat_QR.png" />
-                <h5 style="font-size: 16px;margin: 20px 0;">微信关注我们</h5>
+                <h5 style="font-size: 16px;margin: 20px 0;">NSI-cm</h5>
               </div>
             </div>
             <div class="col-xs-2 col-md-2 col-lg-2 text-center footerh5">

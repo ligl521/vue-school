@@ -7,7 +7,7 @@
           alt=""
           class="userLogo"
         />
-        <ul v-for="(tab, index) in tabsName">
+        <ul v-for="(tab, index) in tabsName" :key="index">
           <li
             class="tab-link"
             @click="tabsSwitch(index)"
@@ -18,14 +18,14 @@
         </ul>
       </div>
       <div class="personalCenter_right">
-        <div class="tab-card talentDetails">
+        <div class="tab-card talentDetails"  v-if="isCheck==0">
           <div class="top">
             <div class="top_left">
-              <h2>赵艳松</h2>
+              <h2>{{personalContent.username}}</h2>
               <p>
-                <span>25岁</span><span>{{ sex }}</span
-                ><span>{{ education }}</span
-                ><span>{{ workYear }}</span>
+                <span>{{personalContent.age}}岁</span><span>{{personalContent.sex}}</span
+                ><span>{{ personalContent.highEducation }}</span
+                ><span>{{ personalContent.expreience }}</span>
               </p>
             </div>
           </div>
@@ -37,9 +37,9 @@
               ><span>期望职位</span>
             </div>
             <p>
-              <span>{{ expectWorkPosition }}</span
-              ><span>{{ expectWorkPlace }}</span
-              ><span>{{ expectSalary }}</span>
+              <span>{{ personalContent.position }}</span
+              ><span>{{ personalContent.expectedWork }}</span
+              ><span>{{ personalContent.salary }}</span>
             </p>
           </div>
           <el-divider></el-divider>
@@ -49,25 +49,27 @@
               <el-divider direction="vertical"></el-divider
               ><span>工作经历</span>
             </div>
-            <p v-for="item in workExperience">
-              <span class="experience_one">{{ item.dizhi }}</span>
-              <span class="experience_tow">{{ item.laoshi }}</span>
-              <span class="experience_three">{{ item.time }}</span>
+            <p v-for="(item,index) in personalWork" :key="index">
+              <span class="experience_one">{{ item.company }}</span>
+              <span class="experience_tow">{{ item.jobType }}</span>
+              <span class="experience_three">{{ item.date }}</span>
               <br />
-              <span>{{ item.wenben }}</span>
+              <span>{{ item.textarea }}</span>
             </p>
           </div>
           <el-divider></el-divider>
           <!-- 教育背景 -->
           <div class="educational">
             <div class="title_name">
-              <el-divider direction="vertical"></el-divider
-              ><span>教育背景</span>
+              <el-divider direction="vertical"></el-divider>
+              <span>教育背景</span>
             </div>
-            <p v-for="item in educationBackground">
-              <span class="educational_one">{{ item.name }}</span
-              ><span>{{ item.zy }}</span
-              ><span class="educational_tow">{{ item.time }}</span>
+            <p v-for="(item,index) in personalEdu" :key="index">
+              <span class="educational_one">{{ item.schoolName }}</span
+              ><span>{{ item.schoolMajor }}</span
+              ><span class="educational_tow">{{ item.schoolDate }}</span>
+              <br />
+              <span>{{ item.schoolTextarea }}</span>
             </p>
           </div>
           <el-divider></el-divider>
@@ -77,11 +79,15 @@
               <el-divider direction="vertical"></el-divider
               ><span>培训经历</span>
             </div>
-            <p v-for="item in workExperience">
-              <span class="educational_one">{{ item.dizhi }}</span>
-              <span class="educational_tow">{{ item.time }}</span>
+            <!-- <p>
+                <span>{{personalContent.training}}</span>
+            </p> -->
+            <p v-for="(item,index) in personaltraining" :key="index">
+              <span class="educational_one">{{ item.trainName }}</span>
+              <span class="educational_tow">{{ item.trainDate }}</span>
+              <!-- <span class="educational_three">{{ item.trainMajor }}</span> -->
               <br />
-              <span>{{ item.wenben }}</span>
+              <span>{{ item.trainTextarea }}</span>
             </p>
           </div>
           <el-divider></el-divider>
@@ -93,9 +99,15 @@
             </div>
             <p>
               <span
-                >刚再荣升第三任妈妈，照片中见蔡少芬虽然素颜，但精神饱满，已经出院回家安胎，蔡少芬接受传媒访问时开怀地说：“BB重8磅2安士，好健康，老公都有跟入产房剪脐带，好照顾我。”不过她指一开始好害怕，因为又要重新</span
+                >{{personalContent.other}}</span
               >
             </p>
+          </div>
+        </div>
+        <div class="tab-card personalCenter_rightnull" v-else>
+          <div class="rightNullBox">
+            <img src="../assets/user_noadd.png" alt="">
+            <p  @click="writePersonnel">您还没有上传简历，<span>请填写</span> </p>
           </div>
         </div>
         <div class="tab-card Instructions">
@@ -348,13 +360,14 @@
           <el-button @click="ruleForm" class="ruleForm">立即提交</el-button>
         </div>
       </div>
+      
     </div>
     <schoolFooter></schoolFooter>
   </div>
 </template>
 <script>
 import schoolFooter from "./schoolFooter";
-import { feedback } from "@/api/api";
+import { feedback,checkUpfile } from "@/api/api";
 export default {
   data() {
     return {
@@ -377,33 +390,38 @@ export default {
         }
       ],
       active: false,
-      name: "", //名字
-      education: "", //学历
-      workYear: "", //工作年限
-      sex: "", //性别
-      expectWorkPlace: "", //工作地点
-      expectWorkPosition: "", //期望工作
-      expectSalary: "", //期望年薪
-      educationBackground: [
-        { name: "泉州师范学院", time: "2010-2014", zy: "汉语国际教育" },
-        { name: "泉州师范学院-2", time: "2010-2014-2", zy: "汉语国际教育-2" }
-      ], //教育背景
-      workExperience: [
-        {
-          time: "2015.7-2016.5-1",
-          dizhi: "印度尼西亚泗水中文世界-1",
-          laoshi: "中文老师",
-          wenben:
-            "刚再荣升第三任妈妈，照片中见蔡少芬虽然素颜，但精神饱满，已经出院回家安胎，蔡少芬接受传媒访问时开怀地说：“BB重8磅2安士，好健康，老公都有跟入产房剪脐带，好照顾我。”不过她指一开始好害怕，因为又要重新"
-        },
-        {
-          time: "2015.7-2016.5-2",
-          dizhi: "印度尼西亚泗水中文世界-2",
-          laoshi: "中文老师",
-          wenben:
-            "刚再荣升第三任妈妈，照片中见蔡少芬虽然素颜，但精神饱满，已经出院回家安胎，蔡少芬接受传媒访问时开怀地说：“BB重8磅2安士，好健康，老公都有跟入产房剪脐带，好照顾我。”不过她指一开始好害怕，因为又要重新"
-        }
-      ]
+      // name: "", //名字
+      // education: "", //学历
+      // workYear: "", //工作年限
+      // sex: "", //性别
+      // expectWorkPlace: "", //工作地点
+      // expectWorkPosition: "", //期望工作
+      // expectSalary: "", //期望年薪
+      // educationBackground: [
+      //   { name: "泉州师范学院", time: "2010-2014", zy: "汉语国际教育" },
+      //   { name: "泉州师范学院-2", time: "2010-2014-2", zy: "汉语国际教育-2" }
+      // ], //教育背景
+      // workExperience: [
+      //   {
+      //     time: "2015.7-2016.5-1",
+      //     dizhi: "印度尼西亚泗水中文世界-1",
+      //     laoshi: "中文老师",
+      //     wenben:
+      //       "刚再荣升第三任妈妈，照片中见蔡少芬虽然素颜，但精神饱满，已经出院回家安胎，蔡少芬接受传媒访问时开怀地说：“BB重8磅2安士，好健康，老公都有跟入产房剪脐带，好照顾我。”不过她指一开始好害怕，因为又要重新"
+      //   },
+      //   {
+      //     time: "2015.7-2016.5-2",
+      //     dizhi: "印度尼西亚泗水中文世界-2",
+      //     laoshi: "中文老师",
+      //     wenben:
+      //       "刚再荣升第三任妈妈，照片中见蔡少芬虽然素颜，但精神饱满，已经出院回家安胎，蔡少芬接受传媒访问时开怀地说：“BB重8磅2安士，好健康，老公都有跟入产房剪脐带，好照顾我。”不过她指一开始好害怕，因为又要重新"
+      //   }
+      // ],
+      isCheck:"",
+      personalContent:"",
+      personalWork:"",
+      personalEdu:"",
+      personaltraining:"",
     };
   },
   created() {
@@ -412,6 +430,7 @@ export default {
   },
   mounted() {
     this.tabsSwitch(this.$route.query.id);
+    this.checkPersonnel() 
     console.log(this.$route.query.id)
   },
   methods: {
@@ -445,6 +464,21 @@ export default {
             console.log(res)
             alert(res.msg)
         })
+    },
+    checkPersonnel(){
+      checkUpfile({
+          userMail:this.getCookie("username")
+        }).then(res=>{
+          console.log(res)
+          this.isCheck=res.code
+          this.personalContent=res.data
+          this.personalWork=eval('(' + res.data.workExperience + ')')
+          this.personalEdu=eval('(' + res.data.education + ')')
+          this.personaltraining=eval('(' + res.data.training + ')')
+        })
+    },
+    writePersonnel(){
+      this.$router.push('/personnel');
     }
   },
   components: {
@@ -466,10 +500,32 @@ export default {
     vertical-align: text-bottom;
   }
 }
-
+.personalCenter_rightnull{
+  height: 400px;
+  text-align: center;
+  display: inline-block;
+  margin-top: 30px;
+  background: #fff;
+  width: 800px;
+  position: relative;
+  .rightNullBox{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    p{
+      margin-top:20px;
+      span{
+        cursor: pointer;
+        color: #428bca;
+      }
+    }
+  }
+}
 .personalCenter {
   margin: 0 auto;
   width: 1100px;
+  margin-bottom:120px;
   .personalCenter_left {
     display: inline-block;
     vertical-align: top;

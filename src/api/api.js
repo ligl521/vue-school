@@ -71,3 +71,5 @@ export const getSchoolAdd = p => post('/new/school/insert.do', p)
 export const getSchoolCheck_valid = p => post('/new/school/check_valid.do', p)
 //添加功能 问题反馈提交
 export const feedback = p => post('/user/feedback.do', p)
+//验证是否上传简历
+export const checkUpfile = p => get('/newTalent/find_talent_info.do', p)
