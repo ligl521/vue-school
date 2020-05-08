@@ -279,7 +279,8 @@ export default {
       //行业动态
       getSchoolHomeInquiry({
         pageNum: 1,
-        pageSize: 6
+        pageSize: 6,
+        siftType:"新闻"
       }).then(res => {
         this.schoolInquiruList = res.data.list;
       });

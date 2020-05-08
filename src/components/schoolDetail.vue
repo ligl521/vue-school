@@ -679,8 +679,9 @@ export default {
         that.schoolDetail = res.data;
         that.schoolName = res.data.schoolName;
         var date = new Date(this.schoolDetail.createTime).getMonth();
-        var dateNow = new Date().getMonth();
+        var dateNow = new Date().getMonth()+1;
         that.dateTime = dateNow - date;
+        console.log(new Date(this.schoolDetail.createTime))
         console.log(that.dateTime);
         // 父传子
         that.asyncObject = res;
