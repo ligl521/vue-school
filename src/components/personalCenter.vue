@@ -52,7 +52,8 @@
             <p v-for="(item,index) in personalWork" :key="index">
               <span class="experience_one">{{ item.company }}</span>
               <span class="experience_tow">{{ item.jobType }}</span>
-              <span class="experience_three">{{ item.date }}</span>
+              <span class="experience_three">{{ workDate1 }}-</span>
+              <span class="experience_four">{{ workDate2 }}</span>
               <br />
               <span>{{ item.textarea }}</span>
             </p>
@@ -67,7 +68,7 @@
             <p v-for="(item,index) in personalEdu" :key="index">
               <span class="educational_one">{{ item.schoolName }}</span
               ><span>{{ item.schoolMajor }}</span
-              ><span class="educational_tow">{{ item.schoolDate }}</span>
+              ><span class="educational_tow">{{ schoolDate2 }}</span><span class="educational_tow">{{ schoolDate1 }}-</span>
               <br />
               <span>{{ item.schoolTextarea }}</span>
             </p>
@@ -84,7 +85,7 @@
             </p> -->
             <p v-for="(item,index) in personaltraining" :key="index">
               <span class="educational_one">{{ item.trainName }}</span>
-              <span class="educational_tow">{{ item.trainDate }}</span>
+              <span class="educational_tow">{{ trainDate2 }}</span><span class="educational_tow">{{ trainDate1 }}-</span>
               <!-- <span class="educational_three">{{ item.trainMajor }}</span> -->
               <br />
               <span>{{ item.trainTextarea }}</span>
@@ -422,6 +423,12 @@ export default {
       personalWork:"",
       personalEdu:"",
       personaltraining:"",
+      trainDate1:"",
+      trainDate2:"",
+      schoolDate1:"",
+      schoolDate2:"",
+      workDate1:"",
+      workDate2:"",
     };
   },
   created() {
@@ -475,6 +482,12 @@ export default {
           this.personalWork=eval('(' + res.data.workExperience + ')')
           this.personalEdu=eval('(' + res.data.education + ')')
           this.personaltraining=eval('(' + res.data.training + ')')
+          this.trainDate1=new Date(this.personaltraining[0].trainDate[0]).getFullYear() + '.' + (new Date(this.personaltraining[0].trainDate[0]).getMonth() + 1) + '.' + new Date(this.personaltraining[0].trainDate[0]).getDate();
+          this.trainDate2=new Date(this.personaltraining[0].trainDate[1]).getFullYear() + '.' + (new Date(this.personaltraining[0].trainDate[1]).getMonth() + 1) + '.' + new Date(this.personaltraining[0].trainDate[1]).getDate();
+          this.schoolDate1=new Date(this.personalEdu[0].schoolDate[0]).getFullYear() + '.' + (new Date(this.personalEdu[0].schoolDate[0]).getMonth() + 1) + '.' + new Date(this.personalEdu[0].schoolDate[0]).getDate();
+          this.schoolDate2=new Date(this.personalEdu[0].schoolDate[1]).getFullYear() + '.' + (new Date(this.personalEdu[0].schoolDate[1]).getMonth() + 1) + '.' + new Date(this.personalEdu[0].schoolDate[1]).getDate();
+          this.workDate2=new Date(this.personalWork[0].date[1]).getFullYear() + '.' + (new Date(this.personalWork[0].date[1]).getMonth() + 1) + '.' + new Date(this.personalWork[0].date[1]).getDate();
+          this.workDate1=new Date(this.personalWork[0].date[0]).getFullYear() + '.' + (new Date(this.personalWork[0].date[0]).getMonth() + 1) + '.' + new Date(this.personalWork[0].date[0]).getDate();
         })
     },
     writePersonnel(){
@@ -617,6 +630,10 @@ export default {
           .experience_three {
             font-weight: 700;
             margin-left: 40px;
+            color: #9fa3b0;
+          }
+           .experience_four {
+            font-weight: 700;
             color: #9fa3b0;
           }
         }
