@@ -24,7 +24,7 @@
       </div>
       <!-- 数据列表 -->
       <div class="schoolTalent_list">
-        <div class="list" v-for="item in list_arr">
+        <div class="list" v-for="(item,index) in list_arr" :key="index">
           <div class="list_left">
             <img
               :src="item.avatar"
@@ -179,6 +179,12 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+.el-tag.el-tag--success {
+    background-color: #f0f9eb !important;
+    border-color: #e1f3d8 !important;
+    color: #67c23a !important;
+    margin-left: 0 !important;
+}
 .schoolTalent {
   text-align: center;
   // 头部css

@@ -196,7 +196,7 @@ import axios from "axios";
 import bottomMenuH5 from "./bottomMenuH5"
 import { getSchoolHomeInquiry } from "@/api/api";
 import { getSchoolCity } from "@/api/api";
-import { getSchoolHomeSearch,CommonApi,getadvancedSearch } from "@/api/api";
+import { getSchoolHomeSearch,getadvancedSearch } from "@/api/api";
 export default {
     components: {
         schoolFooter,
@@ -331,29 +331,29 @@ export default {
    enterSchoolDetail(){
        this.$router.push({path: "/school"})
    },
-    CommonApi_ip(){
-       CommonApi({
-       }).then(res =>{
-         console.log(res)
-         if(res.code == 0){
-           this.CommonApi_ip_name = res.data
-           getadvancedSearch({
-             area:res.data,
-           }).then(res =>{
-                if(res.data.list == ""){
-                  this.arr[0] = "北京"
-                }else{
-                  this.arr[0] = this.CommonApi_ip_name
-                }
-             })
-         }
+    // CommonApi_ip(){
+    //    CommonApi({
+    //    }).then(res =>{
+    //      console.log(res)
+    //      if(res.code == 0){
+    //        this.CommonApi_ip_name = res.data
+    //        getadvancedSearch({
+    //          area:res.data,
+    //        }).then(res =>{
+    //             if(res.data.list == ""){
+    //               this.arr[0] = "北京"
+    //             }else{
+    //               this.arr[0] = this.CommonApi_ip_name
+    //             }
+    //          })
+    //      }
          
-       })
-    },
+    //    })
+    // },
   },
   mounted() {
     this.getData();
-    this.CommonApi_ip();
+    // this.CommonApi_ip();
   },
   //学校过滤超出显示...
   filters: {

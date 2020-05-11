@@ -541,6 +541,10 @@ export default {
   created() {
     this.ruleForm.submitter = this.getCookie("username"); //名字
     console.log(this.ruleForm.submitter);
+
+    
+    // console.log(d)
+    // console.log(new Date(d).getTime())
   },
   methods: {
     //coolie 读取存在
@@ -554,7 +558,8 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          console.log(this.ruleForm.work_experience_text);
+          this.ruleForm.work_experience_text[0].date[0]=new Date(this.ruleForm.work_experience_text[0].date[0]).getFullYear() + '.' + (new Date(this.ruleForm.work_experience_text[0].date[0]).getMonth() + 1) + '.' + new Date(this.ruleForm.work_experience_text[0].date[0]).getDate();
+          this.ruleForm.work_experience_text[0].date[1]=new Date(this.ruleForm.work_experience_text[0].date[1]).getFullYear() + '.' + (new Date(this.ruleForm.work_experience_text[0].date[1]).getMonth() + 1) + '.' + new Date(this.ruleForm.work_experience_text[0].date[1]).getDate();
           if (this.ruleForm.delivery) {
             this.ruleForm.delivery = "0";
           } else {

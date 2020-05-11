@@ -89,10 +89,10 @@
         </div>
         <div class="schoolTranslate">
           <div class="createTime">
-            <el-button type="primary"
-              ><i class="el-icon-refresh" @click="refresh"></i
-            ></el-button>
-            <span>{{ dateTime }}个月前更新</span>
+            <!-- <el-button type="primary"> -->
+              <i class="el-icon-refresh" @click="refresh"></i>
+            <!-- </el-button> -->
+            <span>{{ dateTime }}前更新</span>
           </div>
           <div class="schoolTranslateBox">
             <h1 class="schoolTranslateH1" style="margin: 0 50px 20px;">
@@ -457,10 +457,7 @@
               </el-col>
             </el-row>
           </div>
-          <div
-            class="analyze"
-            :class="schoolDetail.remark == '' ? 'hide' : 'show'"
-          >
+          <div class="analyze" :class="schoolDetail.remark == '' ? 'hide' : 'show'">
             <h1 class="schoolTranslateH1">更多信息</h1>
             <div class="analyzeContent">{{ schoolDetail.remark }}</div>
           </div>
@@ -633,7 +630,7 @@ export default {
     ellipsisName(value) {
       if (!value) return "";
       if (value.length > 10) {
-        return value.slice(0, 10) + "...";
+        return value.slice(0, 9) + "...";
       } else {
         return value;
       }
@@ -678,10 +675,14 @@ export default {
       }).then(res => {
         that.schoolDetail = res.data;
         that.schoolName = res.data.schoolName;
-        var date = new Date(this.schoolDetail.createTime).getMonth();
-        var dateNow = new Date().getMonth()+1;
-        that.dateTime = dateNow - date;
-        console.log(new Date(this.schoolDetail.createTime))
+        // 更新时间
+        if(new Date(this.schoolDetail.createTime).getYear()!=new Date().getYear()){
+          that.dateTime = new Date().getYear() - new Date(this.schoolDetail.createTime).getYear()+"年";
+        }else if(new Date(this.schoolDetail.createTime).getMonth()!=new Date().getMonth()){
+          that.dateTime = new Date().getMonth() - new Date(this.schoolDetail.createTime).getMonth()+"个月";
+        }else{
+          that.dateTime = new Date().getDate() - new Date(this.schoolDetail.createTime).getDate()+"天";
+        }
         console.log(that.dateTime);
         // 父传子
         that.asyncObject = res;
@@ -1337,9 +1338,20 @@ export default {
   float: right;
   margin: 10px;
 }
-.createTime .el-button {
-  padding: 5px;
-  margin-right: 5px;
+.createTime i{
+  color: #409eff;
+  font-weight: bold;
+  cursor: pointer;
+}
+.createTime i:active {
+  animation:turn 1s linear infinite; 
+}
+@keyframes turn{ 
+  0%{-webkit-transform:rotate(0deg);}
+  25%{-webkit-transform:rotate(90deg);}
+  50%{-webkit-transform:rotate(180deg);}
+  75%{-webkit-transform:rotate(270deg);}
+  100%{-webkit-transform:rotate(360deg);}
 }
 
 .schoolTranslateH1 {
@@ -1539,7 +1551,7 @@ export default {
 .cityschool .imgbox img {
   width: 120px;
   height: 120px;
-  border-radius: 50%;
+  /* border-radius: 50%; */
 }
 .cityschool .imgbox img:hover{
     box-shadow: 0px 0px 15px #ccc;
@@ -1619,12 +1631,13 @@ export default {
 /* 新学说分析 */
 
 .analyze .analyzeContent {
-  height: 200px;
   width: 83%;
-  border: 1px solid #ccc;
-  margin: 0 auto;
-  padding: 20px;
-  line-height: 20px;
+    border: 1px solid #ccc;
+    margin: 0 auto;
+    padding: 20px;
+    line-height: 25px;
+    border-radius: 5px;
+    letter-spacing: 1px;
 }
 /* 相关机构 */
 .schoolTranslateH1_ul {
