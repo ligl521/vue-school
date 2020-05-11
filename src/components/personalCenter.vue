@@ -482,6 +482,8 @@ export default {
           this.personalWork=eval('(' + res.data.workExperience + ')')
           this.personalEdu=eval('(' + res.data.education + ')')
           this.personaltraining=eval('(' + res.data.training + ')')
+
+          
           this.trainDate1=new Date(this.personaltraining[0].trainDate[0]).getFullYear() + '.' + (new Date(this.personaltraining[0].trainDate[0]).getMonth() + 1) + '.' + new Date(this.personaltraining[0].trainDate[0]).getDate();
           this.trainDate2=new Date(this.personaltraining[0].trainDate[1]).getFullYear() + '.' + (new Date(this.personaltraining[0].trainDate[1]).getMonth() + 1) + '.' + new Date(this.personaltraining[0].trainDate[1]).getDate();
           this.schoolDate1=new Date(this.personalEdu[0].schoolDate[0]).getFullYear() + '.' + (new Date(this.personalEdu[0].schoolDate[0]).getMonth() + 1) + '.' + new Date(this.personalEdu[0].schoolDate[0]).getDate();

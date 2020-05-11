@@ -630,7 +630,7 @@ export default {
     ellipsisName(value) {
       if (!value) return "";
       if (value.length > 10) {
-        return value.slice(0, 10) + "...";
+        return value.slice(0, 9) + "...";
       } else {
         return value;
       }
@@ -1551,7 +1551,7 @@ export default {
 .cityschool .imgbox img {
   width: 120px;
   height: 120px;
-  border-radius: 50%;
+  /* border-radius: 50%; */
 }
 .cityschool .imgbox img:hover{
     box-shadow: 0px 0px 15px #ccc;
@@ -1631,12 +1631,13 @@ export default {
 /* 新学说分析 */
 
 .analyze .analyzeContent {
-  height: 200px;
   width: 83%;
-  border: 1px solid #ccc;
-  margin: 0 auto;
-  padding: 20px;
-  line-height: 20px;
+    border: 1px solid #ccc;
+    margin: 0 auto;
+    padding: 20px;
+    line-height: 25px;
+    border-radius: 5px;
+    letter-spacing: 1px;
 }
 /* 相关机构 */
 .schoolTranslateH1_ul {

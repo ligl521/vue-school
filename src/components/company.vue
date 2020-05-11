@@ -7,7 +7,14 @@
                         <el-button @click="searchCompany" slot="append"><i class="iconfont icon-sousuo"></i></el-button>
                     </el-autocomplete>
                 </div>
-                <p>热门搜索： 英帆国际教育 华樱出国 力翰科学教育集团 梦帆教育 The Learning Center 大风车</p>
+                <p class="homeBannerP">
+                    <span>热门搜索：</span>
+                    <a href="http://data.xinxueshuo.cn/vue-project/dist/index.html#/companyDetail?id=100197" target="_blank">英帆国际教育</a>
+                    <a href="http://data.xinxueshuo.cn/vue-project/dist/index.html#/companyDetail?id=100198" target="_blank">华樱出国</a>
+                    <a href="http://data.xinxueshuo.cn/vue-project/dist/index.html#/companyDetail?id=100201" target="_blank">力翰科学教育集团</a>
+                    <a href="http://data.xinxueshuo.cn/vue-project/dist/index.html#/companyDetail?id=100195" target="_blank">赛帆教育</a>
+                    <a href="http://data.xinxueshuo.cn/vue-project/dist/index.html#/companyDetail?id=100189" target="_blank">青苗教育集团</a>
+                </p>
             </div>
             <div class="companyku">
                 <p>加入教育机构库</p> 
@@ -26,7 +33,7 @@
                 </div>
                 <div class="contentRight">
                     <p><i class="iconfont icon-dingwei1"></i>地址：{{item.areas | isZero}}</p>
-                    <p><i class="iconfont icon-chenglishijian"></i>成立时间：{{item.foundedTime | isZero}}</p>
+                    <p><i class="iconfont icon-chenglishijian"></i>成立时间：{{item.foundTime | isZero}}</p>
                     <p><i class="iconfont icon-dingdantijiaochenggong"></i>提交时间：{{formatDateTime(new Date(Number(item.loadTime)))}}</p>
                 </div> 
             </div>
@@ -208,6 +215,12 @@ export default {
                     font-size: 40px;
                     color: #fff;
                 }
+            }
+        }
+        .homeBannerP{
+            a{
+                margin:0 10px;
+                cursor: pointer;
             }
         }
         p{

@@ -113,7 +113,7 @@
                 <ul>
                     <li>地址：<span>{{item.province | ellipsisAddress}}</span></li>
                     <li>建校时间：<span>{{item.foundingTime | iszero}}</span></li>
-                    <li>认证：<span v-for="(v,i) in item.authentication" :key="i">{{v}}</span></li>
+                    <li>认证：<span v-for="(v,i) in item.authentication" :key="i">{{v | iszero}}</span></li>
                 </ul>
             </div>
         </div>
@@ -392,16 +392,23 @@ export default {
         //认证 分割
         for(var i=0;i<respons.data.list.length;i++){
           var cardArr1 = respons.data.list[i].authentication;
-          if(cardArr1 == "无" || cardArr1 == "0" || cardArr1 == ""||cardArr1 == "0;"){
+          if(cardArr1 == "无" || cardArr1 == "0" || cardArr1 == ""||cardArr1 == "0;" || cardArr1 == 0){
             respons.data.list[i].authentication = "无"
           }else{
-            var cardArr2 = cardArr1.split(";");
+            if (cardArr1.search("；") != -1) { 
+                var cardArr2 = cardArr1.split("；");
+            }else{
+               var cardArr2 = cardArr1.split(";");
+            }
             var cardArr3 = cardArr2.slice(0,cardArr2.length-1);
             respons.data.list[i].authentication = cardArr3;
+            console.log(cardArr2)
+            console.log(cardArr3)
+            // if(cardArr3.length>5){
+            //   cardArr3.length=5
+            // }
           }
-          if(cardArr3.length>5){
-              cardArr3.length=5
-          }
+          
         }
        
       });
@@ -487,7 +494,8 @@ export default {
       return value
     },
     iszero(obj){
-        if(obj==0 || obj==null){
+        // console.log(obj)
+        if(obj==0 || obj==null || obj=="0" || obj == "无" || obj == ""||obj == "0;"){
             return "暂无"
         }else{
             return obj
@@ -518,6 +526,7 @@ export default {
     }
     .schoolDetailTwo{
         .detailBox{
+            background:#fff !important;
             .DeatailTwoLeft{
                 height:100px;
                 img{
@@ -881,7 +890,7 @@ export default {
       border: 1px solid #ccc;
       margin-top: 0.2rem;
       border-radius: 10px;
-      background: #f9f9f9;
+      background: #fff;
       &:hover{
         box-shadow: 0px 0px 10px rgba(153, 153, 153, 0.8);
         transition:all .5s;
@@ -963,7 +972,7 @@ export default {
 .detailBox{
   padding-top: 0.2rem;
   padding-bottom: 0.2rem;
-  background: #f5f5f5;
+//   background: #f5f5f5;
   margin-top: 0.2rem;
   display: flex;
   overflow: hidden;
