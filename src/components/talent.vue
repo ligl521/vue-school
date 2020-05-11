@@ -27,19 +27,19 @@
         <div class="list" v-for="item in list_arr">
           <div class="list_left">
             <img
-              src="http://img.zcool.cn/community/01a29158b69c22a801219c774b4b0b.png@1280w_1l_2o_100sh.png"
+              :src="item.avatar"
               alt=""
             />
             <p>
               期望年薪：{{
-                item.expectSalary == "" ? "面议" : item.expectSalary
+                item.salary == "" ? "面议" : item.salary
               }}
             </p>
           </div>
           <div class="list_Middle">
             <p>
               <span class="list_Middle_name" @click="details(item.id)">{{
-                item.name == "" ? "无" : item.name
+                item.username == "" ? "无" : item.username
               }}</span
               >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<el-tag
                 style="vertical-align: text-bottom"
@@ -55,10 +55,10 @@
             </p>
             <p>
               <span>{{
-                item.expectWorkPlace == "" ? "无" : item.expectWorkPlace
+                item.expectedWork == "" ? "无" : item.expectedWork
               }}</span>
-              &nbsp;&nbsp;|&nbsp;&nbsp;<span>{{ item.workYear }}</span>
-              &nbsp;&nbsp;|&nbsp;&nbsp;<span>{{ item.education }}</span>
+              &nbsp;&nbsp;|&nbsp;&nbsp;<span>{{ item.expreience }}</span>
+              &nbsp;&nbsp;|&nbsp;&nbsp;<span>{{ item.highEducation }}</span>
               &nbsp;&nbsp;|&nbsp;&nbsp;
               <span
                 >入职时间：{{
@@ -68,26 +68,25 @@
             </p>
             <p>
               期望职位：<span>{{
-                item.expectWorkPosition == "" ? "无" : item.expectWorkPosition
+                item.position == "" ? "无" : item.position
               }}</span>
             </p>
             <p>
-              现工作地点：{{ item.workPlace == "" ? "无" : item.workPlace }}
+              现工作地点：{{ item.expectedWork == "" ? "无" : item.expectedWork }}
             </p>
           </div>
           <div class="list_right">
             <p>
-              <span
-                >工作时间：{{
-                  item.workYear == "" ? "无" : item.workYear
-                }}</span
-              ><br /><span
-                >毕业院校：{{
-                  item.educationBackground == ""
-                    ? "无"
-                    : item.educationBackground
-                }}</span
-              >
+              工作经历：<span v-for="workExperience in item.workExperience">
+               <br>{{workExperience.company == "" ? "无" : workExperience.company }} 
+               {{workExperience.jobType}}
+              </span>
+              <br>
+              毕业院校：<span v-for="education in item.education">
+               <br>{{education.schoolName == "" ? "无" : education.schoolName }} 
+               {{education.schoolMajor}}<br>
+               {{education.schoolDate[0] | dateformat('YYYY-MM')}}
+              </span>
             </p>
           </div>
           <div @click="details(item.id)" class="details">
@@ -131,10 +130,15 @@ export default {
       talentlist({
         pageNum: num,
         pageSize: "10",
-        talent_searchKey: name
+        searchKey: name
       }).then(res => {
-        this.list_count = res.count;
-        this.list_arr = res.data;
+        this.list_count = res.data.total
+        for (var i in res.data.list) {
+          res.data.list[i].workExperience = JSON.parse(res.data.list[i].workExperience)
+          res.data.list[i].education = JSON.parse(res.data.list[i].education)
+          this.list_arr = res.data.list;
+        }
+        console.log(this.list_arr)
       });
     },
     details(e) {
@@ -257,14 +261,19 @@ export default {
       }
       .list_right {
         width: 20%;
-        margin-left: 35px;
+        margin-right:35px;
         text-align: left;
         p {
-          width: 100%;
-          height: 145px;
-          display: table-cell;
+          white:100%;
+          height:145px;
+          display:table-cell;
+          vertical-align:middle;
           vertical-align: middle;
-          line-height: 36px;
+          line-height: 22px;
+          color: #b1b1b1;
+        }
+        span{
+            color:#000;
         }
       }
       .details {

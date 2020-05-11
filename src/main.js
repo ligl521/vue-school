@@ -21,6 +21,12 @@ import './assets/css/reset.css'
 require('swiper/dist/css/swiper.css')
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 Vue.use(VueAwesomeSwiper)
+//引入时间格式
+import moment from 'moment'
+Vue.filter('dateformat', function(dataStr, pattern = 'YYYY-MM-DD HH:mm:ss') {
+    return moment(dataStr).format(pattern)
+
+})
 //图片裁剪
 import VueCropper from 'vue-cropper'
 Vue.use(VueCropper)
@@ -32,9 +38,9 @@ Vue.prototype.axios = axios
     //测试环境
     //  axios.defaults.baseURL = "http://192.168.0.22:8080/nsi-1.0"
     // axios.defaults.baseURL = "http://192.168.0.103:8080/nsi-1.0"
-    // axios.defaults.baseURL = "http://192.168.0.102:8080/nsi-1.0"
+    axios.defaults.baseURL = "http://192.168.0.102:8080/nsi-1.0"
     //生产环境
-    axios.defaults.baseURL = "http://data.xinxueshuo.cn/nsi-1.0/"
+    // axios.defaults.baseURL = "http://data.xinxueshuo.cn/nsi-1.0/"
     // var xinxueshuoSite = "http: //data.xinxueshuo.cn/vue-project/dist/index.html#/"
 
 

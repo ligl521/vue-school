@@ -21,6 +21,7 @@
     "less": "^3.9.0",
     "less-loader": "^5.0.0",
     "mint-ui": "^2.2.13",
+    "moment": "^2.25.3",
     "verify": "^0.1.2",
     "vue": "^2.6.10",
     "vue-awesome-swiper": "^3.1.3",

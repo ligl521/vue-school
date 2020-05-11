@@ -650,7 +650,7 @@ export default {
           formData.append("type", "nsi-pc/ResumePortrait/");
           _this
             .axios({
-              url: "http://192.168.0.103:8080/nsi-1.0/CommonApi/upload.do",
+              url: "http://data.xinxueshuo.cn/nsi-1.0/CommonApi/upload.do",
               method: "POST", //  这个地方注意
               data: formData,
               processData: false,
@@ -659,7 +659,7 @@ export default {
             .then(response => {
               console.log("upload_success_response:", response);
               if (response.data.code == 0) {
-                console.log(response.data.data.url);
+                this.close()
                 this.ruleForm.imageUrl = response.data.data.url;
               }
             });

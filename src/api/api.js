@@ -47,7 +47,7 @@ export const relation = p => get('/relation/search.do', p)
     //用户IP地址查询定位
 export const CommonApi = p => post('/CommonApi/ipToLocation.do', p)
     //人才库列表
-export const talentlist = p => get('/manager/talent/list.do', p)
+export const talentlist = p => get('/newTalent/list.do', p)
     //人才库详情
 export const talentdetail = p => get('/manager/talent/detail.do', p)
     //人才库添加
