@@ -10,7 +10,7 @@ import company from '@/components/company'
 import companyDetail from '@/components/companyDetail'
 import schoolHome from '@/components/schoolHome'
 import companyAdd from '@/components/companyAdd'
-import schoolDataBade from '@/components/schoolDataBade'
+import project from '@/components/project'
 import schoolVisual from '@/components/schoolVisual'
 import register from '@/components/register'
 import schoolAdd from '@/components/schoolAdd' 
@@ -62,9 +62,9 @@ export default new Router({
             name: 'resume',
             component: resume
         },{
-            path: '/schoolDataBade',
-            name: 'schoolDataBade',
-            component: schoolDataBade
+            path: '/project',
+            name: 'project',
+            component: project
         }, {
             path: '/schoolVisual',
             name: 'schoolVisual',

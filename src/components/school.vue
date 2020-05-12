@@ -1093,4 +1093,7 @@ export default {
     border: 0;
     background: #214f89;
 }
+.el-autocomplete-suggestion{
+  display:block;
+}
 </style>

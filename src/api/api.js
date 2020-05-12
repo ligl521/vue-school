@@ -73,3 +73,5 @@ export const getSchoolCheck_valid = p => post('/new/school/check_valid.do', p)
 export const feedback = p => post('/user/feedback.do', p)
 //验证是否上传简历
 export const checkUpfile = p => get('/newTalent/find_talent_info.do', p)
+//获取项目数据库数据
+export const getProjectDate = p => get('/project/list.do', p)
