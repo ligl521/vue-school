@@ -39,11 +39,11 @@
           <div class="row">
             <div class="col-sm-6 col-md-4 col-lg-4" v-for="(item,index) in projectList" :key="index">
               <div class="thumbnail">
-                <a href="" class="linkHref"><img src="../assets/project/project01.jpg" alt="新学说"></a>
+                <a @click="toProjectDetail(item.id)" class="linkHref"><img src="../assets/project/project01.jpg" alt="新学说"></a>
                 <div class="caption">
                   <h5 class="projectName">{{item.subjectname}}</h5>
-                  <p class="content">
-                    <a href="" class="linkHref" id="lengthControl">{{item.subjectintroduction}}</a>
+                  <p class="content" @click="toProjectDetail(item.id)">
+                    <span class="linkHref" id="lengthControl">{{item.subjectintroduction}}</span>
                   </p>
                   <div class="clearfix publishCompany">
                     <p class="pull-right">发布单位：<span>{{item.company}}</span></p>
@@ -93,6 +93,10 @@ export default {
         this.projectList=res.data
         this.searchCount=res.count
       })
+    },
+    toProjectDetail(id){
+        let routeData= this.$router.resolve({path: '/projectDetail',query:{id:id}})
+        window.open(routeData.href, '_blank');
     },
     touzi(){
       this.searchKey="投资"
@@ -237,6 +241,7 @@ export default {
   .thumbnail{
     .linkHref {
       color: #337ab7;
+      cursor: pointer;
     }
     .caption{
       color:#333;

@@ -75,3 +75,6 @@ export const feedback = p => post('/user/feedback.do', p)
 export const checkUpfile = p => get('/newTalent/find_talent_info.do', p)
 //获取项目数据库数据
 export const getProjectDate = p => get('/project/list.do', p)
+//项目数据库详情
+export const getProjectDetail = p => get('/manager/project/get_projects.do', p)
+

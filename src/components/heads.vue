@@ -14,7 +14,7 @@
       <el-menu-item index="/company">教育机构库</el-menu-item>
       <el-menu-item index="/talent">教育人才库</el-menu-item>
       <el-menu-item index="/project">项目数据库</el-menu-item>
-      <el-menu-item index="/schoolVisual">数据可视化</el-menu-item>
+      <el-menu-item index="/visible">数据可视化</el-menu-item>
       <el-button
         round
         class="login_btn"
