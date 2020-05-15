@@ -31,7 +31,7 @@
         </div>
         <div class="companyku">
           <p>发布项目信息</p>
-          <p @click="enterAdd">马上发布</p>
+          <p @click="addProject">马上发布</p>
         </div>
       </div>
 
@@ -83,6 +83,13 @@ export default {
   },
   
   methods:{
+    //coolie 读取存在
+    getCookie(name) {
+      var arr,
+      reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+      if ((arr = document.cookie.match(reg))) return unescape(arr[2]);
+      else return null;
+    },
     getDate(){
       getProjectDate({
         searchKey:this.searchKey, 
@@ -98,6 +105,17 @@ export default {
         let routeData= this.$router.resolve({path: '/projectDetail',query:{id:id}})
         window.open(routeData.href, '_blank');
     },
+    addProject(){
+        if(this.getCookie("username") == null){
+            this.$message({
+                message: '您还没有登录，登陆后即可加入！',
+                type: 'warning'
+            });
+        }else{
+            this.$router.push('/projectAdd');
+        }
+    },
+
     touzi(){
       this.searchKey="投资"
       this.getDate()

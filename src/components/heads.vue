@@ -465,26 +465,28 @@ export default {
     },
     //账号密码传给后台
     send_msg(formName) {
-      let self = this;
-      if (self.ruleForm.userMail != "" && self.ruleForm.pwd != "") {
+      let that = this;
+      if (that.ruleForm.userMail != "" && that.ruleForm.pwd != "") {
         login({
-          userName: self.ruleForm.userMail,
-          passWord: self.ruleForm.pwd
+          userName: that.ruleForm.userMail,
+          passWord: that.ruleForm.pwd
         }).then(response => {
           console.log(response);
           if (response.code == 0) {
-            self.userTurename = response.data.userTurename;
-            self.setCookie("username", response.data.username, 7); //用户邮箱
-            self.setCookie("memberSign", response.data.memberSign, 7); //用户等级
-            self.setCookie("UserVerifyCode", response.data.userRegistercode, 7); //用户检验码
-            self.setCookie("User_TureName", response.data.userTurename, 7); //用户真实名字
-            self.setCookie("UserId", response.data.id, 7); //用户ID
-            self.dialogVisible = false;
-            self.WechatLogin = true;
-            self.headimgurl = false;
+            that.userTurename = response.data.userTurename;
+            that.setCookie("username", response.data.username, 7); //用户邮箱
+            that.setCookie("memberSign", response.data.memberSign, 7); //用户等级
+            that.setCookie("UserVerifyCode", response.data.userRegistercode, 7); //用户检验码
+            that.setCookie("User_TureName", response.data.userTurename, 7); //用户真实名字
+            that.setCookie("UserId", response.data.id, 7); //用户ID
+            that.setCookie("UserImg", response.data.userPortrait, 7);
+            that.imgurl = response.data.userPortrait
+            that.dialogVisible = false;
+            that.WechatLogin = true;
+            that.headimgurl = false;
           } else {
-            self.dialogVisible = false;
-            self.dialogVisible1 = true;
+            that.dialogVisible = false;
+            that.dialogVisible1 = true;
           }
         });
       }

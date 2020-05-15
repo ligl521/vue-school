@@ -12,6 +12,7 @@ import schoolHome from '@/components/schoolHome'
 import companyAdd from '@/components/companyAdd'
 import project from '@/components/project'
 import projectDetail from '@/components/projectDetail'
+import projectAdd from '@/components/projectAdd'
 
 import visible from '@/components/visible'
 import register from '@/components/register'
@@ -71,6 +72,10 @@ export default new Router({
             path: '/projectDetail',
             name: 'projectDetail',
             component: projectDetail
+        }, {
+            path: '/projectAdd',
+            name: 'projectAdd',
+            component: projectAdd
         }, {
             path: '/visible',
             name: 'visible',
