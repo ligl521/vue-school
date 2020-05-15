@@ -77,14 +77,14 @@
           </div>
           <div class="list_right">
             <p>
-              工作经历：<span v-for="workExperience in item.workExperience">
+              工作经历：<span v-for="(workExperience,index) in item.workExperience" v-if="index<2">
                <br>{{workExperience.company == ""||workExperience.company=="0" ? "无" : workExperience.company }} 
                {{workExperience.jobType == ""||workExperience.jobType=="0" ? "无" : workExperience.jobType}}
               </span>
               <br>
-              毕业院校：<span v-for="education in item.education">
+              毕业院校：<span v-for="(education,index) in item.education" v-if="index<2">
                <br>{{education.schoolName == "" ||education.schoolName=="0" ? "无" : education.schoolName }} 
-               {{education.schoolMajor== "" ||education.schoolMajor=="0" ? "无" : education.schoolMajor}}<br>
+               {{education.schoolMajor== "" ||education.schoolMajor=="0" ? "无" : education.schoolMajor}}
               </span>
             </p>
           </div>
@@ -253,8 +253,8 @@ export default {
         }
       }
       .list_Middle {
-        width: 40%;
-        margin-left: 20px;
+        width: 38%;
+        margin-left: 10px;
         text-align: left;
         p {
           line-height: 36px;
@@ -266,8 +266,8 @@ export default {
         }
       }
       .list_right {
-        width: 20%;
-        margin-right:35px;
+        width: 40%;
+        margin-left: 10px;
         text-align: left;
         p {
           white:100%;
