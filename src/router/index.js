@@ -11,7 +11,10 @@ import companyDetail from '@/components/companyDetail'
 import schoolHome from '@/components/schoolHome'
 import companyAdd from '@/components/companyAdd'
 import project from '@/components/project'
-import schoolVisual from '@/components/schoolVisual'
+import projectDetail from '@/components/projectDetail'
+import projectAdd from '@/components/projectAdd'
+
+import visible from '@/components/visible'
 import register from '@/components/register'
 import schoolAdd from '@/components/schoolAdd' 
 import personalCenter from '@/components/personalCenter'
@@ -65,10 +68,18 @@ export default new Router({
             path: '/project',
             name: 'project',
             component: project
+        },{
+            path: '/projectDetail',
+            name: 'projectDetail',
+            component: projectDetail
         }, {
-            path: '/schoolVisual',
-            name: 'schoolVisual',
-            component: schoolVisual
+            path: '/projectAdd',
+            name: 'projectAdd',
+            component: projectAdd
+        }, {
+            path: '/visible',
+            name: 'visible',
+            component: visible
         }, {
             path: '/register',
             name: 'register',
