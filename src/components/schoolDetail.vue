@@ -459,7 +459,7 @@
           </div>
           <div class="analyze" :class="schoolDetail.remark == '' ? 'hide' : 'show'">
             <h1 class="schoolTranslateH1">更多信息</h1>
-            <div class="analyzeContent">{{ schoolDetail.remark }}</div>
+            <div class="analyzeContent">{{ schoolDetail.remark |isZero }}</div>
           </div>
           <div class="analyze">
             <h1 class="schoolTranslateH1">相关机构</h1>
