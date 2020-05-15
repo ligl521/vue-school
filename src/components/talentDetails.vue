@@ -5,7 +5,7 @@
         <div class="top_left">
           <h2>{{ name==""||name=="0"?"":name }}</h2>
           <p>
-            <span>无</span><span>{{  sex==""||sex=="0"?"无":sex}}</span
+            <span>{{ sex==""||sex=="0"?"无":sex}}</span
             ><span>{{ education==""||education=="0"?"无":education }}</span
             ><span>{{ workYear==""||workYear=="0"?"无":workYear }} 年</span>
           </p>
@@ -74,7 +74,7 @@
         <div class="title_name">
           <el-divider direction="vertical"></el-divider><span>其他要求</span>
         </div>
-        <p>
+        <p class="other">
           <span>{{other==""||other=="0"?"无":other}}</span>
         </p>
       </div>
@@ -236,6 +236,10 @@ export default {
     }
   }
   .educational {
+    .other{
+        font-size: 18px;
+        font-weight: 700;
+    }
     p {
       padding: 30px 40px 10px;
       line-height: 30px;
@@ -249,7 +253,9 @@ export default {
         font-weight: 700;
         color: #9fa3b0;
       }
+      
     }
+    
   }
   .contact {
     .contact_name {
