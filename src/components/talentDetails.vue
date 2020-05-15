@@ -3,16 +3,16 @@
     <div class="talentDetails">
       <div class="top">
         <div class="top_left">
-          <h2>{{ name }}</h2>
+          <h2>{{ name==""||name=="0"?"":name }}</h2>
           <p>
-            <span>25岁</span><span>{{ sex }}</span
-            ><span>{{ education }}</span
-            ><span>{{ workYear }}</span>
+            <span>无</span><span>{{  sex==""||sex=="0"?"无":sex}}</span
+            ><span>{{ education==""||education=="0"?"无":education }}</span
+            ><span>{{ workYear==""||workYear=="0"?"无":workYear }} 年</span>
           </p>
         </div>
         <div class="top_right">
           <img
-            src="http://img.zcool.cn/community/01a29158b69c22a801219c774b4b0b.png@1280w_1l_2o_100sh.png"
+            :src="avatar=='0'?'http://img.zcool.cn/community/01786557e4a6fa0000018c1bf080ca.png':avatar"
             alt=""
           />
         </div>
@@ -24,9 +24,9 @@
           <el-divider direction="vertical"></el-divider><span>期望职位</span>
         </div>
         <p>
-          <span>{{ expectWorkPosition }}</span
-          ><span>{{ expectWorkPlace }}</span
-          ><span>{{ expectSalary }}</span>
+          <span>{{ expectWorkPosition==""||expectWorkPosition=="0"?"无":expectWorkPosition }}</span
+          ><span>{{ expectWorkPlace==""||expectWorkPlace=="0"?"无":expectWorkPlace }}</span
+          ><span>{{ expectSalary==""||expectSalary=="0"?"面议":expectSalary }}</span>
         </p>
       </div>
       <el-divider></el-divider>
@@ -36,11 +36,11 @@
           <el-divider direction="vertical"></el-divider><span>工作经历</span>
         </div>
         <p v-for="item in workExperience">
-          <span class="experience_one">{{ item.dizhi }}</span>
-          <span class="experience_tow">{{ item.laoshi }}</span>
-          <span class="experience_three">{{ item.time }}</span>
+          <span class="experience_one">{{ item.company==""||item.company=="0"?"无":item.company}}</span>
+          <span class="experience_tow">{{ item.jobType==""||item.jobType=="0"?"":item.jobType }}</span>
+          <span class="experience_three">{{ item.date[0]==""||item.date[0]=="0"?"":item.date[0]}}</span>
           <br />
-          <span>{{ item.wenben }}</span>
+          <span>{{ item.textarea==""||item.textarea=="0"?"":item.textarea }}</span>
         </p>
       </div>
       <el-divider></el-divider>
@@ -50,9 +50,9 @@
           <el-divider direction="vertical"></el-divider><span>教育背景</span>
         </div>
         <p v-for="item in educationBackground">
-          <span class="educational_one">{{ item.name }}</span
-          ><span>{{ item.zy }}</span
-          ><span class="educational_tow">{{ item.time }}</span>
+          <span class="educational_one">{{ item.schoolName==""||item.schoolName=="0"?"无":item.schoolName  }}</span
+          ><span>{{ item.schoolMajor==""||item.schoolMajor=="0"?"":item.schoolMajor }}</span
+          ><span class="educational_tow">{{ item.schoolDate[0]==""||item.schoolDate[0]=="0"?"":item.schoolDate[0] }}</span>
         </p>
       </div>
       <el-divider></el-divider>
@@ -61,11 +61,11 @@
         <div class="title_name">
           <el-divider direction="vertical"></el-divider><span>培训经历</span>
         </div>
-        <p v-for="item in workExperience">
-          <span class="educational_one">{{ item.dizhi }}</span>
-          <span class="educational_tow">{{ item.time }}</span>
+        <p v-for="item in training">
+          <span class="educational_one">{{ item.trainName==""||item.trainName=="0"?"无":item.trainName }}</span>
+          <span class="educational_tow">{{ item.trainDate[0]==""||item.trainDate[0]=="0"?"":item.trainDate[0] }}</span>
           <br />
-          <span>{{ item.wenben }}</span>
+          <span>{{ item.trainTextarea==""||item.trainTextarea=="0"?"":item.trainTextarea }}</span>
         </p>
       </div>
       <el-divider></el-divider>
@@ -75,9 +75,7 @@
           <el-divider direction="vertical"></el-divider><span>其他要求</span>
         </div>
         <p>
-          <span
-            >刚再荣升第三任妈妈，照片中见蔡少芬虽然素颜，但精神饱满，已经出院回家安胎，蔡少芬接受传媒访问时开怀地说：“BB重8磅2安士，好健康，老公都有跟入产房剪脐带，好照顾我。”不过她指一开始好害怕，因为又要重新</span
-          >
+          <span>{{other==""||other=="0"?"无":other}}</span>
         </p>
       </div>
       <el-divider></el-divider>
@@ -87,9 +85,9 @@
           <el-divider direction="vertical"></el-divider>
           <div>
             <p class="contact_mode">联系方式</p>
-            <p class="contact_people">联系人：赵艳松</p>
-            <p class="contact_phone">电话：15711049716</p>
-            <p class="contact_email">邮箱：zhaoyansong@xinxueshuo.cn</p>
+            <p class="contact_people">联系人：新学说-小新</p>
+            <p class="contact_phone">电话：15010927730</p>
+            <p class="contact_email">邮箱：zhoujing@xinxueshuo.cn</p>
           </div>
         </div>
       </div>
@@ -105,6 +103,7 @@ import { talentdetail } from "@/api/api";
 export default {
   data() {
     return {
+      avatar:"",//头像
       name: "", //名字
       education: "", //学历
       workYear: "", //工作年限
@@ -112,26 +111,10 @@ export default {
       expectWorkPlace: "", //工作地点
       expectWorkPosition: "", //期望工作
       expectSalary: "", //期望年薪
-      educationBackground: [
-        { name: "泉州师范学院", time: "2010-2014", zy: "汉语国际教育" },
-        { name: "泉州师范学院-2", time: "2010-2014-2", zy: "汉语国际教育-2" }
-      ], //教育背景
-      workExperience: [
-        {
-          time: "2015.7-2016.5-1",
-          dizhi: "印度尼西亚泗水中文世界-1",
-          laoshi: "中文老师",
-          wenben:
-            "刚再荣升第三任妈妈，照片中见蔡少芬虽然素颜，但精神饱满，已经出院回家安胎，蔡少芬接受传媒访问时开怀地说：“BB重8磅2安士，好健康，老公都有跟入产房剪脐带，好照顾我。”不过她指一开始好害怕，因为又要重新"
-        },
-        {
-          time: "2015.7-2016.5-2",
-          dizhi: "印度尼西亚泗水中文世界-2",
-          laoshi: "中文老师",
-          wenben:
-            "刚再荣升第三任妈妈，照片中见蔡少芬虽然素颜，但精神饱满，已经出院回家安胎，蔡少芬接受传媒访问时开怀地说：“BB重8磅2安士，好健康，老公都有跟入产房剪脐带，好照顾我。”不过她指一开始好害怕，因为又要重新"
-        }
-      ]
+      educationBackground: [], //教育背景
+      workExperience: [],//工作经历
+      training:[],//培训经历
+      other:''//其他要求
     };
   },
   created() {
@@ -143,14 +126,19 @@ export default {
         talentId: id
       }).then(res => {
         console.log(res.data);
-        this.name = res.data.name; //名字
-        this.education = res.data.education; //学历
-        this.workYear = res.data.workYear; //工作年限
+        this.avatar = res.data.avatar; //头像
+        this.name = res.data.username; //名字
+        this.education = res.data.highEducation; //学历
+        this.workYear = res.data.expreience; //工作年限
         this.sex = res.data.sex; //性别
-        this.expectWorkPlace = res.data.expectWorkPlace; //工作地点
-        this.expectWorkPosition = res.data.expectWorkPosition; //期望工作
-        this.expectSalary = res.data.expectSalary; //期望年薪
-        //    this.educationBackground = res.data.educationBackground //教育背景
+        this.expectWorkPlace = res.data.expectedWork; //工作地点
+        this.expectWorkPosition = res.data.position; //期望工作
+        this.expectSalary = res.data.salary; //期望年薪
+        this.other = res.data.other; //期望年薪
+        this.educationBackground = JSON.parse(res.data.education); //教育背景
+        this.workExperience = JSON.parse(res.data.workExperience); //工作经历
+        console.log(JSON.parse(res.data.training))
+        this.training = JSON.parse(res.data.training) //培训经历
       });
     },
   },

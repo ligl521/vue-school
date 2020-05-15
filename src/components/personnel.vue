@@ -556,6 +556,7 @@ export default {
     },
     //表单提交
     submitForm(formName) {
+        console.log(this.ruleForm.imageUrl)
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.ruleForm.work_experience_text[0].date[0]=new Date(this.ruleForm.work_experience_text[0].date[0]).getFullYear() + '.' + (new Date(this.ruleForm.work_experience_text[0].date[0]).getMonth() + 1) + '.' + new Date(this.ruleForm.work_experience_text[0].date[0]).getDate();
@@ -565,10 +566,8 @@ export default {
           } else {
             this.ruleForm.delivery = "1";
           }
-          //   alert('提交成功');
-          //   this.$router.push({name:'resume'})
           newTalent({
-            // avatar: this.ruleForm.avatar, //头像
+            avatar: this.ruleForm.imageUrl, //头像
             username: this.ruleForm.username, //姓名
             sex: this.ruleForm.sex, //选项
             telphone: this.ruleForm.telphone, //手机号

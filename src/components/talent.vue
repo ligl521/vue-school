@@ -27,19 +27,19 @@
         <div class="list" v-for="(item,index) in list_arr" :key="index">
           <div class="list_left">
             <img
-              :src="item.avatar"
+              :src="item.avatar=='0'?'http://img.zcool.cn/community/01786557e4a6fa0000018c1bf080ca.png':item.avatar"
               alt=""
             />
             <p>
               期望年薪：{{
-                item.salary == "" ? "面议" : item.salary
+                item.salary == ""|| item.salary== '0' ? "面议" : item.salary
               }}
             </p>
           </div>
           <div class="list_Middle">
             <p>
               <span class="list_Middle_name" @click="details(item.id)">{{
-                item.username == "" ? "无" : item.username
+                item.username == "" ||item.username=="0" ? "无" : item.username
               }}</span
               >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<el-tag
                 style="vertical-align: text-bottom"
@@ -55,10 +55,10 @@
             </p>
             <p>
               <span>{{
-                item.expectedWork == "" ? "无" : item.expectedWork
+                item.expectedWork == ""||item.expectedWork=="0" ? "无" : item.expectedWork
               }}</span>
-              &nbsp;&nbsp;|&nbsp;&nbsp;<span>{{ item.expreience }}</span>
-              &nbsp;&nbsp;|&nbsp;&nbsp;<span>{{ item.highEducation }}</span>
+              &nbsp;&nbsp;|&nbsp;&nbsp;<span>{{ item.expreience==""||item.expreience=="0"?"无": item.expreience}}</span>
+              &nbsp;&nbsp;|&nbsp;&nbsp;<span>{{ item.highEducation==""||item.highEducation=="0"?"无": item.highEducation}}</span>
               &nbsp;&nbsp;|&nbsp;&nbsp;
               <span
                 >入职时间：{{
@@ -68,24 +68,23 @@
             </p>
             <p>
               期望职位：<span>{{
-                item.position == "" ? "无" : item.position
+                item.position == "" || item.position=="0" ? "无" : item.position
               }}</span>
             </p>
             <p>
-              现工作地点：{{ item.expectedWork == "" ? "无" : item.expectedWork }}
+              现工作地点：{{ item.expectedWork == ""|| item.expectedWork=="0" ? "无" : item.expectedWork }}
             </p>
           </div>
           <div class="list_right">
             <p>
               工作经历：<span v-for="workExperience in item.workExperience">
-               <br>{{workExperience.company == "" ? "无" : workExperience.company }} 
-               {{workExperience.jobType}}
+               <br>{{workExperience.company == ""||workExperience.company=="0" ? "无" : workExperience.company }} 
+               {{workExperience.jobType == ""||workExperience.jobType=="0" ? "无" : workExperience.jobType}}
               </span>
               <br>
               毕业院校：<span v-for="education in item.education">
-               <br>{{education.schoolName == "" ? "无" : education.schoolName }} 
-               {{education.schoolMajor}}<br>
-               {{education.schoolDate[0] | dateformat('YYYY-MM')}}
+               <br>{{education.schoolName == "" ||education.schoolName=="0" ? "无" : education.schoolName }} 
+               {{education.schoolMajor== "" ||education.schoolMajor=="0" ? "无" : education.schoolMajor}}<br>
               </span>
             </p>
           </div>
@@ -134,11 +133,12 @@ export default {
       }).then(res => {
         this.list_count = res.data.total
         for (var i in res.data.list) {
-          res.data.list[i].workExperience = JSON.parse(res.data.list[i].workExperience)
-          res.data.list[i].education = JSON.parse(res.data.list[i].education)
-          this.list_arr = res.data.list;
+           console.log(res.data.list[i].education)
+           res.data.list[i].workExperience = JSON.parse(res.data.list[i].workExperience);
+           res.data.list[i].education = JSON.parse(res.data.list[i].education);
+           this.list_arr = res.data.list;
         }
-        console.log(this.list_arr)
+        console.log(res.data.list)
       });
     },
     details(e) {

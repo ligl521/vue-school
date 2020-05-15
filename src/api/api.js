@@ -49,7 +49,7 @@ export const relation = p => get('/relation/search.do', p)
     //人才库列表
 export const talentlist = p => get('/newTalent/list.do', p)
     //人才库详情
-export const talentdetail = p => get('/manager/talent/detail.do', p)
+export const talentdetail = p => get('/manager/newTalent/detail.do', p)
     //人才库添加
 export const newTalent = p => post('/newTalent/add.do', p)
 //找回密码
