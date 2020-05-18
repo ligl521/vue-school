@@ -541,10 +541,6 @@ export default {
   created() {
     this.ruleForm.submitter = this.getCookie("username"); //名字
     console.log(this.ruleForm.submitter);
-
-    
-    // console.log(d)
-    // console.log(new Date(d).getTime())
   },
   methods: {
     //coolie 读取存在
@@ -556,11 +552,23 @@ export default {
     },
     //表单提交
     submitForm(formName) {
-        console.log(this.ruleForm.imageUrl)
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.ruleForm.work_experience_text[0].date[0]=new Date(this.ruleForm.work_experience_text[0].date[0]).getFullYear() + '.' + (new Date(this.ruleForm.work_experience_text[0].date[0]).getMonth() + 1) + '.' + new Date(this.ruleForm.work_experience_text[0].date[0]).getDate();
-          this.ruleForm.work_experience_text[0].date[1]=new Date(this.ruleForm.work_experience_text[0].date[1]).getFullYear() + '.' + (new Date(this.ruleForm.work_experience_text[0].date[1]).getMonth() + 1) + '.' + new Date(this.ruleForm.work_experience_text[0].date[1]).getDate();
+           for (var i in this.ruleForm.work_experience_text){
+              for (var j in this.ruleForm.work_experience_text[i].date){
+                this.ruleForm.work_experience_text[i].date[j]=this.formDataTime(this.ruleForm.work_experience_text[i].date[j])
+              }
+           }
+           for (var i in this.ruleForm.education){
+              for (var j in this.ruleForm.education[i].schoolDate){
+                this.ruleForm.education[i].schoolDate[j]=this.formDataTime(this.ruleForm.education[i].schoolDate[j])
+              }
+           }
+           for (var i in this.ruleForm.training){
+              for (var j in this.ruleForm.training[i].trainDate){
+                this.ruleForm.training[i].trainDate[j]=this.formDataTime(this.ruleForm.training[i].trainDate[j])
+              }
+           }
           if (this.ruleForm.delivery) {
             this.ruleForm.delivery = "0";
           } else {
@@ -595,6 +603,12 @@ export default {
           return false;
         }
       });
+    },
+    //时间转换
+    formDataTime(time){
+       var d= time
+       var oldTime = (new Date(d.getFullYear() + '/' + (d.getMonth() + 1) + '/' + d.getDate() + ' ' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds())).getTime(); //得到毫秒数  
+       return oldTime ;
     },
     //工作经历添加
     addDomain() {

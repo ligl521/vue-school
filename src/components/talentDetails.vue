@@ -137,9 +137,24 @@ export default {
         this.other = res.data.other; //期望年薪
         this.educationBackground = JSON.parse(res.data.education); //教育背景
         this.workExperience = JSON.parse(res.data.workExperience); //工作经历
-        console.log(JSON.parse(res.data.training))
         this.training = JSON.parse(res.data.training) //培训经历
       });
+    },
+    //时间戳转换
+    formatDateTime(inputTime) {
+        var date = new Date(inputTime);
+        var y = date.getFullYear();
+        var m = date.getMonth() + 1;
+        m = m < 10 ? ('0' + m) : m;
+        var d = date.getDate();
+        d = d < 10 ? ('0' + d) : d;
+        var h = date.getHours();
+        h = h < 10 ? ('0' + h) : h;
+        var minute = date.getMinutes();
+        var second = date.getSeconds();
+        minute = minute < 10 ? ('0' + minute) : minute;
+        second = second < 10 ? ('0' + second) : second;
+        return y + '-'+ m + '-' + d 
     },
   },
   components: {

@@ -18,7 +18,7 @@
           </div>
         </div>
         <div class="companyku">
-          <p>加入教育机构库</p>
+          <p>加入教育人才库</p>
           <p @click="personnel">马上加入</p>
         </div>
       </div>
