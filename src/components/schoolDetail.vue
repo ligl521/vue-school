@@ -1294,11 +1294,13 @@ export default {
 .schoolRight ul:last-of-type {
   position: relative;
   top: 20px;
-  float: left;
+  left:20px;
+  /* float: left; */
 }
 .schoolRight ul li {
   margin: 30px 60px;
   font-size: 18px;
+  white-space:nowrap;
 }
 .schoolRight ul li:first-of-type {
   margin-top: 5px;

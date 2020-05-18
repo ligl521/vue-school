@@ -15,7 +15,7 @@
                 <div class="basic">
                     <el-row>
                         <el-col :span="8">类型：<span>{{detail.type}}</span></el-col>
-                        <el-col :span="8">成立时间：<span>{{detail.foundTime}}</span></el-col>
+                        <el-col :span="8">成立时间：<span>{{detail.foundTime | isZero}}</span></el-col>
                         <el-col :span="8">官网：<span @click="toWebsite(detail.webSite)" class="website">{{detail.webSite | isZero}}</span></el-col>
                         <el-col :span="24">地址：<span>{{detail.areas01 | isOther}}{{detail.areas02 | isOther}}{{detail.areas03}}</span></el-col>
                     </el-row>
@@ -23,10 +23,10 @@
                 <h1 class="companyTitle">联系方式</h1>
                <div class="contact">
                     <el-row>
-                        <el-col :span="12">个人姓名：<span>{{detail.contactName}}</span></el-col>
-                        <el-col :span="12">个人职位：<span>{{detail.contactPosition}}</span></el-col>
-                        <el-col :span="12">联系电话：<span>{{detail.contactPhone}}</span></el-col>
-                        <el-col :span="12">联系邮箱：<span>{{detail.contactMail}}</span></el-col>
+                        <el-col :span="12">个人姓名：<span>{{detail.contactName | isZero}}</span></el-col>
+                        <el-col :span="12">个人职位：<span>{{detail.contactPosition | isZero}}</span></el-col>
+                        <el-col :span="12">联系电话：<span>{{detail.contactPhone | isZero}}</span></el-col>
+                        <el-col :span="12">联系邮箱：<span>{{detail.contactMail | isZero}}</span></el-col>
                     </el-row>
                </div>
                <h1 class="companyTitle">服务介绍</h1>
@@ -78,7 +78,7 @@ export default {
             }
         },
         isZero(value){
-            if(value==0){
+            if(value==0 || value==null){
                 return '暂无'
             }else{
                 return value

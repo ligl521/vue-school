@@ -77,7 +77,7 @@
       <span id="search_res">{{this.no_school}}</span>
       <el-row :gutter="50" type="flex" style="flex-wrap:wrap">
         <el-col :xs="12" :sm="6" :md="6" :lg="4" :xl="3" v-for="(item,index) in schoolLists" :key="index">
-            <div class="grid-content bg-purple">
+            <div class="grid-content bg-purple" @click="enterSchoolDetail(item.id)">
               <div class="logoimg" v-if="item.schoolLogo? true:false">
                 <img :src="item.schoolLogo" />
               </div>
@@ -85,7 +85,7 @@
                 <img :src="schoolLogoUrlTwo" />
               </div>
               <ul>
-                <li @click="enterSchoolDetail(item.id)" class="schoolName">{{item.schoolName | ellipsisName}}</li>
+                <li class="schoolName">{{item.schoolName | ellipsisName}}</li>
                 <li>建校时间：{{item.foundingTime | iszero}}</li>
                 <li v-if="isSchoolSystem!=''">学制：<span v-for="(v,i) in item.schoolSystem" :key="i">{{v}}，</span></li>
                 <li v-else></li>
@@ -97,11 +97,11 @@
     <!-- 学校展示列表two -->
     <div class="schoolDetailTwo" v-if="!schoolDetail" v-loading="isLoading" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10" infinite-scroll-immediate="false">
         <span id="search_res">{{this.no_school}}</span>
-        <div class="detailBox" v-for="(item,i) in schoolLists" :key="i">
+        <div class="detailBox" v-for="(item,i) in schoolLists" :key="i" @click="enterSchoolDetail(item.id)">
             <div class="DeatailTwoLeft"><img :src='item.schoolLogo?item.schoolLogo:"http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png"' /></div>
             <div class="DeatailTwoCenter" id="DeatailTwoCenterId">
             <ul>
-                <li @click="enterSchoolDetail(item.id)">{{item.schoolName | ellipsisSchoolNameTwo}}<span :class="item.operationState!=='运营中'?'operationA':'operationB'">{{item.operationState}}</span></li>
+                <li>{{item.schoolName | ellipsisSchoolNameTwo}}<span :class="item.operationState!=='运营中'?'operationA':'operationB'">{{item.operationState}}</span></li>
                 <li>类型：<span>{{item.schoolProperties}}</span>
                     <p v-if="isSchoolSystem!=''">学制：<span v-for="(v,i) in item.schoolSystem" :key="i">{{v}}</span></p>
                     <p v-else></p>
@@ -776,17 +776,22 @@ export default {
 .grid-content:hover {
   box-shadow: 0px 0px 10px rgba(153, 153, 153, 0.8);
   transition:all .5s;
+  cursor: pointer;
 }
 .grid-content ul {
   margin-bottom: 20px;
   line-height: 30px;
   color: #777;
 }
+.grid-content ul li{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .grid-content ul li:first-of-type {
   font-size: 15px;
   font-weight: 600;
   color: #000;
-  cursor: pointer;
 }
 .logoimg {
   position: relative;
