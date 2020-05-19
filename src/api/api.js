@@ -79,3 +79,7 @@ export const getProjectDate = p => get('/project/list.do', p)
 export const getProjectDetail = p => get('/project/detail.do', p)
 //发布项目
 export const projectAdd = p => post('/project/add_project.do', p)
+//时间戳转换
+export const timeChange = p => post('/manager/newTalent/udpate.do', p)
+
+

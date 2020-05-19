@@ -35,7 +35,7 @@
         <div class="experience_name title_name">
           <el-divider direction="vertical"></el-divider><span>工作经历</span>
         </div>
-        <p v-for="item in workExperience">
+        <p v-for="(item,index) in workExperience" :key="index">
           <span class="experience_one">{{ item.company==""||item.company=="0"?"无":item.company}}</span>
           <span class="experience_tow">{{ item.jobType==""||item.jobType=="0"?"":item.jobType }}</span>
           <span class="experience_three">{{ item.date[0]==""||item.date[0]=="0"?"":item.date[0]}}</span>
@@ -49,7 +49,7 @@
         <div class="title_name">
           <el-divider direction="vertical"></el-divider><span>教育背景</span>
         </div>
-        <p v-for="item in educationBackground">
+        <p v-for="(item,index) in educationBackground" :key="index">
           <span class="educational_one">{{ item.schoolName==""||item.schoolName=="0"?"无":item.schoolName  }}</span
           ><span>{{ item.schoolMajor==""||item.schoolMajor=="0"?"":item.schoolMajor }}</span
           ><span class="educational_tow">{{ item.schoolDate[0]==""||item.schoolDate[0]=="0"?"":item.schoolDate[0] }}</span>
@@ -61,9 +61,9 @@
         <div class="title_name">
           <el-divider direction="vertical"></el-divider><span>培训经历</span>
         </div>
-        <p v-for="item in training">
+        <p v-for="(item,index) in training" :key="index">
           <span class="educational_one">{{ item.trainName==""||item.trainName=="0"?"无":item.trainName }}</span>
-          <span class="educational_tow">{{ item.trainDate[0]==""||item.trainDate[0]=="0"?"":item.trainDate[0] }}</span>
+          <span class="educational_tow">{{ item.trainDate[0]==""||item.trainDate[0]=="0"?"":item.trainDate[0]}}</span>
           <br />
           <span>{{ item.trainTextarea==""||item.trainTextarea=="0"?"":item.trainTextarea }}</span>
         </p>
@@ -99,7 +99,7 @@
 
 <script>
 import schoolFooter from "./schoolFooter";
-import { talentdetail } from "@/api/api";
+import { talentdetail,timeChange,talentlist } from "@/api/api";
 export default {
   data() {
     return {
@@ -121,6 +121,18 @@ export default {
     this.talentDetails(this.$route.query.id);
   },
   methods: {
+    //    getList(){
+    //     talentlist({
+    //         pageNum: 1,
+    //         pageSize: "200",
+    //     }).then(res => {
+    //         console.log(res.data.list)
+    //         for (var i in res.data.list) {
+    //              console.log(res.data.list[i].id)
+    //              this.talentDetails(res.data.list[i].id)
+    //         }
+    //     });
+    // },
     talentDetails(id) {
       talentdetail({
         talentId: id
@@ -138,7 +150,37 @@ export default {
         this.educationBackground = JSON.parse(res.data.education); //教育背景
         this.workExperience = JSON.parse(res.data.workExperience); //工作经历
         this.training = JSON.parse(res.data.training) //培训经历
+        for (var i in this.training){
+            for (var j in this.training[i].trainDate){
+                var t=new Date(this.formatDateTime(this.training[i].trainDate[j]))
+                this.training[i].trainDate[j]=t.getTime(t)
+            }
+        }
+        for (var i in this.workExperience){
+            for (var j in this.workExperience[i].date){
+                var w=new Date(this.formatDateTime(this.workExperience[i].date[j]))
+                this.workExperience[i].date[j]=w.getTime(w)
+            }
+        }
+        for (var i in this.educationBackground){
+            for (var j in this.educationBackground[i].schoolDate){
+                var we=new Date(this.formatDateTime(this.educationBackground[i].schoolDate[j]))
+                this.educationBackground[i].schoolDate[j]=we.getTime(we)
+            }
+        }
+        this.getTimeChange(JSON.stringify(this.educationBackground),JSON.stringify(this.workExperience),JSON.stringify(this.training),res.data.id)
       });
+    },
+  
+    getTimeChange(a,b,c,d){
+        timeChange({
+          id:d,
+          education:a,
+          workExperience:b,
+          training:c
+        }).then(res=>{
+            console.log(res)
+        })
     },
     //时间戳转换
     formatDateTime(inputTime) {
@@ -156,6 +198,8 @@ export default {
         second = second < 10 ? ('0' + second) : second;
         return y + '-'+ m + '-' + d 
     },
+  },
+  mounted(){
   },
   components: {
     schoolFooter

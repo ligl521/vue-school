@@ -113,7 +113,7 @@
                 <ul>
                     <li>地址：<span>{{item.province | ellipsisAddress}}</span></li>
                     <li>建校时间：<span>{{item.foundingTime | iszero}}</span></li>
-                    <li>认证：<span v-for="(v,i) in item.authentication" :key="i">{{v | iszero}}</span></li>
+                    <li>认证：<span v-for="(v,i) in item.authentication" :key="i" :class="v=='无'?'authenticationNull':'authenticationText'">{{v}}</span></li>
                 </ul>
             </div>
         </div>
@@ -1043,6 +1043,7 @@ export default {
           color: #337ddb;
           background: #cedff4;
         }
+        
       }
       li:nth-of-type(3){
           width: 85%;
@@ -1064,7 +1065,7 @@ export default {
         color:#999;
       };
       li:nth-of-type(3){
-        span{
+        .authenticationText{
           font-size: 0.12rem;
           display:inline;
           text-align: center;
@@ -1073,6 +1074,14 @@ export default {
           border-radius: 0.05rem;
           color: #337ddb;
           background: #cedff4;
+          margin-right: 8px;
+        }
+        .authenticationNull{
+          display:inline;
+          text-align: center;
+          line-height: 12px;
+          padding: 0.05rem 0.05rem;
+          border-radius: 0.05rem;
           margin-right: 8px;
         }
       }

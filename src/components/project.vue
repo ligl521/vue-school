@@ -20,13 +20,7 @@
           </div>
           <p class="homeBannerP">
               <span>热门搜索：</span>
-              <a @click="touzi" target="_blank">投资</a>
-              <a @click="changdi" target="_blank">场地</a>
-              <a @click="yunying" target="_blank">运营团队</a>
-              <a @click="rencai" target="_blank">人才培训</a>
-              <a @click="kecheng" target="_blank">课程设计</a>
-              <a @click="shichang" target="_blank">市场调研</a>
-              <a @click="pinpai" target="_blank">品牌推广</a>
+              <a v-for="(item,index) in searchHot"  :key="index" @click="hotSearch(item.key)" target="_blank">{{item.key}}</a>
           </p>
         </div>
         <div class="companyku">
@@ -76,6 +70,15 @@ export default {
       searchCount:"",
       pageNum:1,
       pageSize:20,
+      searchHot:[
+          {key:"投资"},
+          {key:"场地"},
+          {key:"运营团队"},
+          {key:"人才培训"},
+          {key:"课程设计"},
+          {key:"市场调研"},
+          {key:"品牌推广"},
+      ]
     }
   },
   created() {
@@ -116,62 +119,10 @@ export default {
         }
     },
 
-    touzi(){
-      this.searchKey="投资"
+    hotSearch(value){
+      this.searchKey=value
       this.getDate()
     },
-    changdi(){
-      this.searchKey="场地"
-      this.getDate()
-    },
-    yunying(){
-      this.searchKey="运营团队"
-      this.getDate()
-    },
-    rencai(){
-      this.searchKey="人才培训"
-      this.getDate()
-    },
-    shichang(){
-      this.searchKey="市场调研"
-      this.getDate()
-    },
-    pinpai(){
-      this.searchKey="品牌推广"
-      this.getDate()
-    },
-    kecheng(){
-      this.searchKey="课程设计"
-      this.getDate()
-    },
-    // 智能提示搜索
-    // getSuggestSearch(queryString, cb){
-    //     suggestSearch({
-    //         keyword:this.searchKey
-    //     }).then(res=>{
-    //         var arr = [];
-    //         for (var i = 0; i < res.data.length; i++) {
-    //             let a1 = {}; //创建对象
-    //             a1.value = res.data[i];
-    //             arr.push(a1);
-    //         }
-    //         cb(arr);
-    //     })
-    // },
-    // // 搜索提示
-    // handleSelect(item) {
-    //     console.log(item);
-    //     this.getDate()
-    // },
-    //  handleSizeChange(val) {
-    //     console.log(`每页 ${val} 条`);
-    // },
-    // handleCurrentChange(val) {
-    //     this.pageNum = val;
-    //     this.getDate();
-    //     window.scrollTo(0,0)
-    // },
-    
     enterAdd(){
         if(this.getCookie("username") == null){
             this.$message({
@@ -186,13 +137,9 @@ export default {
         this.getDate()
     },
   },
-
   mounted(){
     this.getDate()
   },
-  
-  
-  
 }
 </script>
 
