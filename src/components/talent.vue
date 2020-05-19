@@ -16,6 +16,14 @@
               ></el-button>
             </el-autocomplete>
           </div>
+          <p class="homeBannerP"  >
+            <span class="search">热门搜索：</span>
+            <span @click="homeBannerP(1,'英语老师')">英语老师</span>
+            <span @click="homeBannerP(1,'数学老师')">数学老师</span>
+            <span @click="homeBannerP(1,'升学指导')">升学指导</span>
+            <span @click="homeBannerP(1,'人事经理')">人事经理</span>
+            <span @click="homeBannerP(1,'园长')">园长</span>
+          </p>
         </div>
         <div class="companyku">
           <p>加入教育人才库</p>
@@ -171,6 +179,9 @@ export default {
     //搜索引擎
     searchCompany() {
       this.list_num(1, this.state);
+    },
+    homeBannerP(num,name){
+      this.list_num(num, name); 
     }
   },
   components: {
@@ -340,10 +351,25 @@ export default {
         }
       }
     }
-    p {
-      color: #a19c9c;
-      font-size: 14px;
-      margin-top: 30px;
+    .homeBannerP{
+        font-size: 14px;
+        margin-top: 10px;
+        text-align: left;
+        .search{
+          color: #a19c9c;
+          margin:0;
+        }
+        .search:hover{
+          color: #a19c9c;
+        }
+        span{
+          margin:0 10px;
+          cursor: pointer;
+        }
+        span:hover{
+          color:#337ab7;
+          text-decoration:underline
+        }
     }
   }
   .companyku {

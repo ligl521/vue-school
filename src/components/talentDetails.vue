@@ -38,7 +38,7 @@
         <p v-for="item in workExperience">
           <span class="experience_one">{{ item.company==""||item.company=="0"?"无":item.company}}</span>
           <span class="experience_tow">{{ item.jobType==""||item.jobType=="0"?"":item.jobType }}</span>
-          <span class="experience_three">{{ item.date[0]==""||item.date[0]=="0"?"":item.date[0]}}</span>
+          <span class="experience_three">{{ item.date[0]==""||item.date[0]=="0"?"": formatDateTime(item.date[0])}}</span>
           <br />
           <span>{{ item.textarea==""||item.textarea=="0"?"":item.textarea }}</span>
         </p>
@@ -52,7 +52,7 @@
         <p v-for="item in educationBackground">
           <span class="educational_one">{{ item.schoolName==""||item.schoolName=="0"?"无":item.schoolName  }}</span
           ><span>{{ item.schoolMajor==""||item.schoolMajor=="0"?"":item.schoolMajor }}</span
-          ><span class="educational_tow">{{ item.schoolDate[0]==""||item.schoolDate[0]=="0"?"":item.schoolDate[0] }}</span>
+          ><span class="educational_tow">{{ item.schoolDate[0]==""||item.schoolDate[0]=="0"?"":formatDateTime(item.schoolDate[0]) }}</span>
         </p>
       </div>
       <el-divider></el-divider>
@@ -63,7 +63,7 @@
         </div>
         <p v-for="item in training">
           <span class="educational_one">{{ item.trainName==""||item.trainName=="0"?"无":item.trainName }}</span>
-          <span class="educational_tow">{{ item.trainDate[0]==""||item.trainDate[0]=="0"?"":item.trainDate[0] }}</span>
+          <span class="educational_tow">{{ item.trainDate[0]==""||item.trainDate[0]=="0"?"":formatDateTime(item.trainDate[0]) }}</span>
           <br />
           <span>{{ item.trainTextarea==""||item.trainTextarea=="0"?"":item.trainTextarea }}</span>
         </p>
@@ -138,6 +138,7 @@ export default {
         this.educationBackground = JSON.parse(res.data.education); //教育背景
         this.workExperience = JSON.parse(res.data.workExperience); //工作经历
         this.training = JSON.parse(res.data.training) //培训经历
+        console.log(this.training.schoolDate)
       });
     },
     //时间戳转换
