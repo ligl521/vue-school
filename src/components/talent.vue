@@ -85,12 +85,12 @@
           </div>
           <div class="list_right">
             <p>
-              工作经历：<span v-for="(workExperience,index) in item.workExperience" v-if="index<2">
+              工作经历：<span v-for="(workExperience,index) in item.workExperience" v-if="index<2" :key="index">
                <br>{{workExperience.company == ""||workExperience.company=="0" ? "无" : workExperience.company }} 
                {{workExperience.jobType == ""||workExperience.jobType=="0" ? "无" : workExperience.jobType}}
               </span>
               <br>
-              毕业院校：<span v-for="(education,index) in item.education" v-if="index<2">
+              毕业院校：<span v-for="(education,index) in item.education" v-if="index<2" :key="index">
                <br>{{education.schoolName == "" ||education.schoolName=="0" ? "无" : education.schoolName }} 
                {{education.schoolMajor== "" ||education.schoolMajor=="0" ? "无" : education.schoolMajor}}
               </span>
@@ -133,15 +133,15 @@ export default {
     handleCurrentChange(val) {
       this.list_num(val);
     },
-    list_num(num, name) {
+    list_num(num,name) {
       talentlist({
         pageNum: num,
         pageSize: "10",
-        searchKey: name
+        searchKey: name,
       }).then(res => {
         this.list_count = res.data.total
         for (var i in res.data.list) {
-           console.log(res.data.list[i].education)
+        //    console.log(res.data.list[i].education)
            res.data.list[i].workExperience = JSON.parse(res.data.list[i].workExperience);
            res.data.list[i].education = JSON.parse(res.data.list[i].education);
            this.list_arr = res.data.list;
