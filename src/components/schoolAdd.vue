@@ -18,6 +18,20 @@
         <el-form :model="form" ref="form" label-width="100px" class="demo-ruleForm" :rules="rules">
           <!-- 基本信息 -->
           <div v-if="active == 0">
+            <el-upload
+              class="upload-demo"
+              action="https://jsonplaceholder.typicode.com/posts/"
+              :on-preview="handlePreview"
+              :on-remove="handleRemove"
+              :before-remove="beforeRemove"
+              :before-upload="beforeAvatarUpload"
+              multiple
+              :limit="5"
+              :on-exceed="handleExceed"
+              :file-list="fileList">
+              <el-button size="small" type="primary">点击上传banner图片</el-button>
+              <div slot="tip" class="el-upload__tip">最多上传5张，只能上传jpg/png文件，且不超过2M</div>
+            </el-upload>
             <el-form-item label="学校名字" prop="schoolName" id="addFlex" >
               <el-input v-model.trim="form.schoolName"></el-input>
               <!-- @blur="CheckSchool" -->
@@ -329,6 +343,7 @@ export default {
       selectedOptions: [],
       completeBtn:"下一步",//完成 下一步按钮切换
       formShow:true,
+      fileList:[],
       form:{
         schoolName:"",  //学校名字
         schoolEnglishName:"", //学校英文名
@@ -472,6 +487,7 @@ export default {
   methods: {
     next(form) {
       console.log(this.form)
+      // this.schoolShowOne=
       this.$refs[form].validate((valid) => {
         console.log(valid)
         if (valid) {
@@ -529,7 +545,26 @@ export default {
         }else{
           this.formShow = true;
       }
-    }
+    },
+    handleRemove(file, fileList) {
+      console.log(file, fileList);
+    },
+    handlePreview(file) {
+      console.log(file);
+    },
+    handleExceed(files, fileList) {
+      this.$message.warning(`当前限制选择 5 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
+    },
+    beforeRemove(file, fileList) {
+      return this.$confirm(`确定移除 ${ file.name }？`);
+    },
+    beforeAvatarUpload(file) {
+        const isLt2M = file.size / 1024 / 1024 < 2;
+        if (!isLt2M) {
+          this.$message.error('上传头像图片大小不能超过 2MB!');
+        }
+        return isLt2M;
+      }
   },
    watch: {
     //学制多选
@@ -653,6 +688,10 @@ export default {
         font-size: 14px;
         display: inline-block;
         width: 43%;
+      }
+      .upload-demo{
+        margin-bottom:30px;
+        text-align: center;
       }
     }
     .nextButton{
