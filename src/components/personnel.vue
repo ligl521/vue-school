@@ -122,6 +122,13 @@
             v-model.number="ruleForm.profession"
           ></el-input>
         </el-form-item>
+        <el-form-item label="现工作地点" prop="workplace">
+          <el-input
+            placeholder="请输入现工作地点"
+            class="input_css"
+            v-model.number="ruleForm.workplace"
+          ></el-input>
+        </el-form-item>
         <el-form-item label="是否公开简历">
           <el-switch v-model="ruleForm.delivery"></el-switch>
           <span>建议公开简历，获得更多展示机会</span>
@@ -137,7 +144,7 @@
         </el-form-item>
         <el-form-item label="薪资(年薪)" prop="salary">
           <el-input
-            placeholder="请输入薪资(年薪)"
+            placeholder="例：10万"
             class="input_css"
             v-model="ruleForm.salary"
           ></el-input>
@@ -149,7 +156,7 @@
             v-model="ruleForm.expected_work"
           ></el-input>
         </el-form-item>
-        <el-form-item label="入职时间" prop="entry_time">
+        <el-form-item label="期望入职时间" prop="entry_time">
           <el-input
             placeholder="请输入入职时间"
             class="input_css"
@@ -393,9 +400,9 @@
         <el-divider></el-divider>
         <h4>其他要求</h4>
         <el-form-item
-          label="内容"
+          label="其他要求"
           prop="other"
-          :rules="{ required: true, message: '内容不能为空', trigger: 'blur' }"
+          :rules="{ required: true, message: '其他要求不能为空', trigger: 'blur' }"
         >
           <el-input
             class="textarea_css"
@@ -466,6 +473,7 @@ export default {
         high_education: "本科", //学历
         expreience: "1-3", //工作年限
         profession: "", //专业
+        workplace:"",//现在工作地点
         delivery: true, // 简历公开
         position: "", //期望职位
         salary: "", //薪资要求
@@ -523,6 +531,9 @@ export default {
         profession: [
           { required: true, message: "请输入学习专业", trigger: "blur" }
         ],
+        workplace: [
+          { required: true, message: "请输入现工作地点", trigger: "blur" }
+        ],
         position: [{ required: true, message: "请输入职位", trigger: "blur" }],
         salary: [
           { required: true, message: "请输入薪资", trigger: "blur" },
@@ -570,9 +581,9 @@ export default {
               }
            }
           if (this.ruleForm.delivery) {
-            this.ruleForm.delivery = "0";
-          } else {
             this.ruleForm.delivery = "1";
+          } else {
+            this.ruleForm.delivery = "0";
           }
           newTalent({
             avatar: this.ruleForm.imageUrl, //头像
@@ -584,6 +595,7 @@ export default {
             highEducation: this.ruleForm.high_education, //学历
             expreience: this.ruleForm.expreience, //工作年限
             profession: this.ruleForm.profession, //专业
+            workplace: this.ruleForm.workplace, //专业
             isPublic: this.ruleForm.delivery, // 简历公开
             position: this.ruleForm.position, //期望职位
             salary: this.ruleForm.salary, //薪资要求
@@ -597,6 +609,11 @@ export default {
             submitter: this.ruleForm.submitter //提交人邮箱
           }).then(res => {
             console.log(res);
+            if(res.code==0){
+              this.$router.push({ path: "resume",query:{id:res.data}});
+            }else{
+                alert("提交失败！！")
+            }
           });
         } else {
           alert("请填写完整表单！！");
@@ -701,6 +718,7 @@ export default {
       var reader = new FileReader();
       reader.onload = e => {
         let data;
+        console.log(data)
         if (typeof e.target.result === "object") {
           // 把Array Buffer转化为blob 如果是base64不需要
           data = window.URL.createObjectURL(new Blob([e.target.result]));

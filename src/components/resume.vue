@@ -41,7 +41,7 @@
         <el-button v-else class="button-new-tag" @click="showInput" size="small"
           >+ 添加 {{ this.dynamicTags.length }}/5</el-button
         >
-        <el-tag
+        <el-tag style="margin-left:10px;background-color: #215089;color:#fff"
           :key="tag"
           v-for="tag in dynamicTags"
           closable
@@ -50,16 +50,16 @@
         >
           {{ tag }}
         </el-tag>
+        <div style="text-align: center;margin-top: 15px;">
+            <el-tag style="margin-left:5px;background-color:#fff;cursor: pointer" size="medium" @click="add_tag(tag1)">{{ tag1 }}</el-tag>
+            <el-tag style="margin-left:5px;background-color:#fff;cursor: pointer" size="medium" @click="add_tag(tag2)">{{ tag2 }}</el-tag>
+            <el-tag style="margin-left:5px;background-color:#fff;cursor: pointer" size="medium" @click="add_tag(tag3)">{{ tag3 }}</el-tag>
+            <el-tag style="margin-left:5px;background-color:#fff;cursor: pointer" size="medium" @click="add_tag(tag4)">{{ tag4 }}</el-tag>
+        </div>
       </div>
-      <div style="text-align: center;margin-top: 40px;">
-        <el-tag @click="add_tag(tag1)">{{ tag1 }}</el-tag>
-        <el-tag @click="add_tag(tag2)">{{ tag2 }}</el-tag>
-        <el-tag @click="add_tag(tag3)">{{ tag3 }}</el-tag>
-        <el-tag @click="add_tag(tag4)">{{ tag4 }}</el-tag>
-        <el-tag @click="add_tag(tag5)">{{ tag5 }}</el-tag>
-      </div>
+      
       <div>
-        <el-button class="ruleForm" type="primary">提交</el-button>
+        <el-button class="ruleForm" type="primary" @click="submitForm">提交</el-button>
       </div>
     </div>
     <schoolfooter />
@@ -68,24 +68,27 @@
 
 <script>
 import schoolfooter from "./schoolFooter";
-import { upfile } from "@/api/api";
+import { resumeUpdate,talentdetail } from "@/api/api";
 export default {
   data() {
     return {
+      id:"",
+      imgUrl:"",
       fileList: [],
-      dynamicTags: ["标签一", "标签二", "标签三"],
+      dynamicTags: [],
       inputVisible: false,
       inputValue: "",
-      tag1: "1",
-      tag2: "2",
-      tag3: "3",
-      tag4: "4",
-      tag5: "5",
+      tag1: "幼儿园老师",
+      tag2: "小学老师",
+      tag3: "初中老师",
+      tag4: "高中老师",
       userMail: "" //邮箱
     };
   },
   created() {
     this.userMail = this.getCookie("username"); //邮箱
+    this.id = this.$route.query.id
+    this.talentDetails(this.$route.query.id)
   },
   methods: {
     //coolie 读取存在
@@ -118,16 +121,17 @@ export default {
       let formData = new FormData();
       formData.append("file", file.raw); //传文件
       formData.append("userMail", this.userMail); //传其他参数
-      formData.append("talentId", "11"); //传其他参数
+      formData.append("talentId",this.id); //传其他参数
       formData.append("type", "nsi-pc/TalentAttachment/"); //传其他参数
       this.axios({
-        url: "http://192.168.0.102:8080/nsi-1.0/manager/talent/upResume.do",
+        url: "http://data.xinxueshuo.cn/nsi-1.0/manager/talent/upResume.do",
         method: "POST", //  这个地方注意
         data: formData,
         processData: false,
         contentType: false
       }).then(response => {
-        console.log("upload_success_response:", response);
+        console.log(response.data.data.url);
+        this.imgUrl =response.data.data.url
       });
       return false; //屏蔽了action的默认上传
     },
@@ -163,7 +167,32 @@ export default {
       this.$nextTick(_ => {
         this.$refs.saveTagInput.$refs.input.focus();
       });
-    }
+    },
+    //提交
+    submitForm(formName) {
+        console.log(this.dynamicTags)
+        resumeUpdate({
+        id: this.id, //id
+        resume: this.imgUrl, //文件
+        tag: JSON.stringify(this.dynamicTags), //标签
+        }).then(res => {
+            console.log(res);
+            alert("提交成功")
+            if(res.code==0){
+            this.$router.push({path: "talent"});
+            }else{
+                alert("提交失败！！")
+            }
+        });
+    },
+    talentDetails(id) {
+      talentdetail({
+        talentId:id
+      }).then(res => {
+        this.dynamicTags.push(res.data.position)
+        this.training = JSON.parse(res.data.training) //培训经历
+      });
+    },
   },
   components: {
     schoolfooter
@@ -246,18 +275,6 @@ export default {
   left: 160px !important;
   bottom: 20px !important;
   text-align: left !important;
-}
-.el-tag {
-  margin-left: 10px;
-  color: #fff;
-  background-color: #215089 !important;
-}
-.button-new-tag {
-  margin-right: 8px;
-  height: 32px;
-  line-height: 30px;
-  padding-top: 0;
-  padding-bottom: 0;
 }
 .el-tag .el-icon-close {
   color: #fff;
