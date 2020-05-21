@@ -41,7 +41,7 @@ Vue.prototype.axios = axios
     // axios.defaults.baseURL = "http://192.168.0.102:8080/nsi-1.0"
     // axios.defaults.baseURL = "http://high.natapp1.cc/nsi-1.0"
     //生产环境
-    axios.defaults.baseURL = "http://data.xinxueshuo.cn/nsi-1.0/"
+    axios.defaults.baseURL = "https://data.xinxueshuo.cn/nsi-1.0/"
     // var xinxueshuoSite = "http: //data.xinxueshuo.cn/vue-project/dist/index.html#/"
 
 Vue.use(ElementUI, Vuex, VueBus);

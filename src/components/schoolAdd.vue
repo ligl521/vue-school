@@ -13,11 +13,75 @@
           <el-step title="建设&投资"></el-step>
         </el-steps>
       </div>
+      <!-- <div class="container uploadImg">
+          <div class="row">
+              <div class="col-md-4 col-xs-12">
+                <el-upload
+                    class="avatar-uploader"
+                    action="https://jsonplaceholder.typicode.com/posts/"
+                    :show-file-list="false"
+                    ref="uploadlogo"
+                    :before-upload="beforeAvatarUpload"
+                    :on-change="handleAvatarChange">
+                    <img v-if="form.schoolLogo" :src="form.schoolLogo" class="avatar">
+                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                </el-upload>
+                <el-button size="small" type="primary">上传学校logo图</el-button>
+                <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过2M</div>
+              </div>
+              <div class="col-md-8 col-xs-12">
+                <el-upload
+                    action="https://jsonplaceholder.typicode.com/posts/"
+                    :limit='5'
+                    :file-list="fileList"
+                    list-type="picture-card"
+                    ref="uploada"
+                    :on-remove="handleRemove"
+                >   
+                    <i class="el-icon-plus"></i>
+                    <div slot="file" slot-scope="{file}">
+                        <img class="el-upload-list__item-thumbnail" :src="file.url" alt="">
+                    </div>
+                </el-upload>
+                <el-button size="small" type="primary">上传学校banner图</el-button>
+                <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，最多5张且不超过2M</div>
+              </div>
+          </div>
+      </div> -->
+    <div class="uploadlogo">
+       <el-upload
+            class="avatar-uploader"
+            action="https://jsonplaceholder.typicode.com/posts/"
+            :show-file-list="false"
+            ref="uploadlogo"
+            :before-upload="beforeAvatarUpload"
+            :on-change="handleAvatarChange">
+            <img v-if="form.schoolLogo" :src="form.schoolLogo" class="avatar">
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        </el-upload>
+        <el-button size="small" type="primary">上传学校logo图</el-button>
+        <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过2M</div>
+    </div>
       <!-- form表单 -->
       <div class="addform">
         <el-form :model="form" ref="form" label-width="100px" class="demo-ruleForm" :rules="rules">
           <!-- 基本信息 -->
           <div v-if="active == 0">
+            <!-- <el-upload
+              class="upload-demo"
+              action="https://jsonplaceholder.typicode.com/posts/"
+              :on-preview="handlePreview"
+              :on-remove="handleRemove"
+              :before-remove="beforeRemove"
+              :before-upload="beforeAvatarUpload"
+              multiple
+              :limit="5"
+              :on-exceed="handleExceed"
+              :file-list="fileList">
+              <el-button size="small" type="primary">点击上传banner图片</el-button>
+              <div slot="tip" class="el-upload__tip">最多上传5张，只能上传jpg/png文件，且不超过2M</div>
+            </el-upload> -->
+           
             <el-form-item label="学校名字" prop="schoolName" id="addFlex" >
               <el-input v-model.trim="form.schoolName"></el-input>
               <!-- @blur="CheckSchool" -->
@@ -74,7 +138,25 @@
             <el-form-item label="电话" prop="telephone">
               <el-input v-model="form.telephone" ></el-input>
             </el-form-item>
+            <div class="uploadBanner">
+                <el-upload
+                    action="https://jsonplaceholder.typicode.com/posts/"
+                    :limit='5'
+                    :file-list="fileList"
+                    list-type="picture-card"
+                    ref="uploada"
+                    :on-remove="handleRemove"
+                >   
+                    <i class="el-icon-plus"></i>
+                    <div slot="file" slot-scope="{file}">
+                        <img class="el-upload-list__item-thumbnail" :src="file.url" alt="">
+                    </div>
+                </el-upload>
+                <el-button size="small" type="primary">上传学校banner图</el-button>
+                <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，最多5张且不超过2M</div>
+            </div>
           </div>
+          
           <!-- 课程信息 -->
           <div v-else-if="active == 1">
             <el-form-item label="学费" class="">
@@ -329,6 +411,12 @@ export default {
       selectedOptions: [],
       completeBtn:"下一步",//完成 下一步按钮切换
       formShow:true,
+      fileName:"",
+      fileRaw:"",
+      bannerArray:[],
+      bannerImgHttp:[],
+      fileList: [],
+      imageUrl:"",
       form:{
         schoolName:"",  //学校名字
         schoolEnglishName:"", //学校英文名
@@ -472,6 +560,53 @@ export default {
   methods: {
     next(form) {
       console.log(this.form)
+     // 输出
+     for(var i=0;i<this.$refs.uploada.uploadFiles.length;i++){
+        this.fileRaw=this.$refs.uploada.uploadFiles[i].raw
+        this.fileName=this.$refs.uploada.uploadFiles[i].name
+        let that = this;
+        let formData = new FormData();
+        formData.append("file",this.fileRaw,this.fileName);
+        formData.append("type", "nsi-pc/SchoolShow/");
+        that.axios({
+            url: "https://data.xinxueshuo.cn/nsi-1.0/CommonApi/upload.do",
+            method: "POST", //  这个地方注意
+            data: formData,
+            processData: false,
+            contentType: false
+        }).then(response => {
+            if (response.data.code == 0) {
+                that.bannerImgHttp=response.data.data.url
+                that.bannerArray.push(String(that.bannerImgHttp))
+                console.log(that.bannerArray)
+                if(this.bannerArray.length==1){
+                    this.form.schoolShowOne= this.bannerArray[0]
+                }else if(this.bannerArray.length==2){
+                    this.form.schoolShowOne= this.bannerArray[0]
+                    this.form.schoolShowTwo= this.bannerArray[1]
+                }else if(this.bannerArray.length==3){
+                    this.form.schoolShowOne= this.bannerArray[0]
+                    this.form.schoolShowTwo= this.bannerArray[1]
+                    this.form.schoolShowThree= this.bannerArray[2]
+                }else if(this.bannerArray.length==4){
+                    this.form.schoolShowOne= this.bannerArray[0]
+                    this.form.schoolShowTwo= this.bannerArray[1]
+                    this.form.schoolShowThree= this.bannerArray[2]
+                    this.form.schoolShowFour= this.bannerArray[3]
+                }else if(this.bannerArray.length==5){
+                    this.form.schoolShowOne= this.bannerArray[0]
+                    this.form.schoolShowTwo= this.bannerArray[1]
+                    this.form.schoolShowThree= this.bannerArray[2]
+                    this.form.schoolShowFour= this.bannerArray[3]
+                    this.form.schoolShowFive= this.bannerArray[4]
+                }
+                console.log( this.form.schoolShowOne)
+                console.log( this.form.schoolShowFour)
+            }
+        });
+    }
+        
+    
       this.$refs[form].validate((valid) => {
         console.log(valid)
         if (valid) {
@@ -529,8 +664,51 @@ export default {
         }else{
           this.formShow = true;
       }
+    },
+    handleRemove(file) {
+        console.log(file);
+    },
+    // handlePictureCardPreview(file) {
+    //     console.log(file)
+    //     this.dialogImageUrl = file.url;
+    //     this.dialogVisible = true;
+    // },
+    // handleDownload(file) {
+    //     console.log(file);
+    // },
+    handleAvatarChange(file,fileList) {
+        let that = this;
+        this.logofileRaw=this.$refs.uploadlogo.uploadFiles[0].raw
+        this.logofileName=this.$refs.uploadlogo.uploadFiles[0].name
+        let formData = new FormData();
+        formData.append("file",this.logofileRaw,this.logofileName);
+        formData.append("type", "nsi-pc/SchoolLogo");
+        that.axios({
+            url: "https://data.xinxueshuo.cn/nsi-1.0/CommonApi/upload.do",
+            method: "POST", //  这个地方注意
+            data: formData,
+            processData: false,
+            contentType: false
+        }).then(response => {
+            if (response.data.code == 0) {
+                that.form.schoolLogo=response.data.data.url
+                console.log(that.form.schoolLogo)
+            }
+        });
+    },
+    beforeAvatarUpload(file) {
+        const isJPG = file.type === 'image/jpeg';
+        const isLt2M = file.size / 1024 / 1024 < 2;
+        if (!isJPG) {
+            this.$message.error('上传头像图片只能是 JPG 格式!');
+        }
+        if (!isLt2M) {
+            this.$message.error('上传头像图片大小不能超过 2MB!');
+        }
+            return isJPG && isLt2M;
     }
-  },
+        
+},
    watch: {
     //学制多选
     "inputCheckbox":function(val){
@@ -569,6 +747,21 @@ export default {
     width: 80%;
     margin: 0 auto;
     border: 1px solid #ccc;
+    // .uploadImg{
+    //     width:70%;
+    //     padding-top:30px;
+    //     button{
+    //         margin-left:15px;
+    //         margin-top:10px;
+    //     }
+    // }
+    .uploadlogo{
+        width:100%;
+        text-align: center;
+        .avatar-uploader{
+            margin:30px 0 10px;
+        }
+    }
     .schAd{
       padding-top: 30px;
       h1{
@@ -647,12 +840,22 @@ export default {
     .addform{
       // border: 2px solid #337ab7;
       padding-left: 10%;
-      margin: 50px auto 0;
+      margin: 30px auto 0;
+      .uploadBanner{
+          width:80%;
+          button{
+              margin:10px 10px 0;
+          }
+      }
       .el-input {
         position: relative;
         font-size: 14px;
         display: inline-block;
         width: 43%;
+      }
+      .upload-demo{
+        margin-bottom:30px;
+        text-align: center;
       }
     }
     .nextButton{
@@ -678,5 +881,30 @@ export default {
       width: 1200px;
       // background: red;
     }
+  }
+</style>
+<style>
+  .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 148px;
+    height: 148px;
+    line-height: 148px;
+    text-align: center;
+  }
+  .avatar {
+    width: 148px;
+    height: 148px;
+    display: block;
   }
 </style>

@@ -707,6 +707,7 @@ export default {
       }
     },
     uploadImg(e, num) {
+      console.log(e)
       this.active = true;
       var _this = this;
       var file = e.target.files[0];
