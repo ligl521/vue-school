@@ -60,7 +60,7 @@
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
         <el-button size="small" type="primary">上传学校logo图</el-button>
-        <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过2M</div>
+        <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb(推荐尺寸170*170)</div>
     </div>
       <!-- form表单 -->
       <div class="addform">
@@ -146,6 +146,8 @@
                     list-type="picture-card"
                     ref="uploada"
                     :on-remove="handleRemove"
+                    :on-exceed="handleExceed"
+                    :before-upload="beforeBannerUpload"
                 >   
                     <i class="el-icon-plus"></i>
                     <div slot="file" slot-scope="{file}">
@@ -153,7 +155,7 @@
                     </div>
                 </el-upload>
                 <el-button size="small" type="primary">上传学校banner图</el-button>
-                <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，最多5张且不超过2M</div>
+                <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，最多5张且不超过2M(推荐尺寸1100*400)</div>
             </div>
           </div>
           
@@ -668,14 +670,9 @@ export default {
     handleRemove(file) {
         console.log(file);
     },
-    // handlePictureCardPreview(file) {
-    //     console.log(file)
-    //     this.dialogImageUrl = file.url;
-    //     this.dialogVisible = true;
-    // },
-    // handleDownload(file) {
-    //     console.log(file);
-    // },
+    handleExceed(files, fileList) {
+        this.$message.warning(`当前限制选择 5 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
+      },
     handleAvatarChange(file,fileList) {
         let that = this;
         this.logofileRaw=this.$refs.uploadlogo.uploadFiles[0].raw
@@ -697,15 +694,30 @@ export default {
         });
     },
     beforeAvatarUpload(file) {
-        const isJPG = file.type === 'image/jpeg';
+      console.log(file.size)
+        const isJPG = file.type === 'image/jpeg'
+        const isPNG = file.type === 'image/png';
         const isLt2M = file.size / 1024 / 1024 < 2;
-        if (!isJPG) {
-            this.$message.error('上传头像图片只能是 JPG 格式!');
+        if (!isJPG && !isPNG) {
+            this.$message.error('上传logo图片只能是JPG或者PNG格式!');
         }
         if (!isLt2M) {
-            this.$message.error('上传头像图片大小不能超过 2MB!');
+            this.$message.error('上传logo图片大小不能超过 500kb!');
         }
-            return isJPG && isLt2M;
+            return ( isJPG || isPNG ) && isLt2M;
+    },
+    beforeBannerUpload(file) {
+      console.log(file.size)
+        const isJPG = file.type === 'image/jpeg'
+        const isPNG = file.type === 'image/png';
+        const isLt2M = file.size / 1024 / 1024 < 2;
+        if (!isJPG && !isPNG) {
+            this.$message.error('上传banner图片只能是JPG或者PNG格式!');
+        }
+        if (!isLt2M) {
+            this.$message.error('上传banner图片大小不能超过 2Mb!');
+        }
+            return ( isJPG || isPNG ) && isLt2M;
     }
         
 },

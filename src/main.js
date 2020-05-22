@@ -36,13 +36,13 @@ Vue.prototype.bus = new Vue();
 //环境地址
 Vue.prototype.axios = axios
     //测试环境
-    //  axios.defaults.baseURL = "http://192.168.0.22:8080/nsi-1.0"
-    // axios.defaults.baseURL = "http://192.168.0.103:8080/nsi-1.0"
-    // axios.defaults.baseURL = "http://192.168.0.102:8080/nsi-1.0"
-    // axios.defaults.baseURL = "http://high.natapp1.cc/nsi-1.0"
+    //  axios.defaults.baseURL = "https://192.168.0.22:8080/nsi-1.0"
+    // axios.defaults.baseURL = "https://192.168.0.103:8080/nsi-1.0"
+    // axios.defaults.baseURL = "https://192.168.0.102:8080/nsi-1.0"
+    // axios.defaults.baseURL = "https://high.natapp1.cc/nsi-1.0"
     //生产环境
     axios.defaults.baseURL = "https://data.xinxueshuo.cn/nsi-1.0/"
-    // var xinxueshuoSite = "http: //data.xinxueshuo.cn/vue-project/dist/index.html#/"
+    // var xinxueshuoSite = "https: //data.xinxueshuo.cn/data/dist/index.html#/"
 
 Vue.use(ElementUI, Vuex, VueBus);
 Vue.config.productionTip = false

@@ -1,7 +1,7 @@
 <template>
   <div class="project">
       <div class="banner">
-        <img src="http://nsi.oss-cn-zhangjiakou.aliyuncs.com/nsi-pc/banner04.jpg" alt="国际学校项目数据库" class="img-responsive" />
+        <img src="https://nsi.oss-cn-zhangjiakou.aliyuncs.com/nsi-pc/banner04.jpg" alt="国际学校项目数据库" class="img-responsive" />
       </div>
       <!-- 搜索栏 -->
       <div class="companyBox">
@@ -100,7 +100,7 @@ export default {
         pageSize: this.pageSize,
       }).then(res=>{
         console.log(res.data)
-        this.projectList=res.data
+        this.projectList=res.data.list
         this.searchCount=res.count
       })
     },

@@ -35,7 +35,7 @@ export default {
                     clearInterval(this.timer);
                     this.timer = null;
                     //跳转的页面写在此处
-                    window.location = "http://data.xinxueshuo.cn/nsi/talent/talent.html"; 
+                    window.location = "https://data.xinxueshuo.cn/nsi/talent/talent.html"; 
                 }
             },1000)
         }

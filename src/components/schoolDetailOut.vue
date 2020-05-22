@@ -25,7 +25,7 @@ export default {
     getschool() {
       let that = this;
       axios
-        .get("http://data.xinxueshuo.cn/nsi-1.0/new/school/detail?schoolId="+this.schoolId)
+        .get("https://data.xinxueshuo.cn/nsi-1.0/new/school/detail?schoolId="+this.schoolId)
         .then(function(respons) {
           console.log(respons.data);
           that.schoolAdd=respons.data.data.address;

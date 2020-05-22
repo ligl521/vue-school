@@ -56,7 +56,7 @@
               :src="
                 schoolDetail.schoolLogo
                   ? schoolDetail.schoolLogo
-                  : 'http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png'
+                  : 'https://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png'
               "
               width="170"
             />
@@ -442,7 +442,7 @@
                     :src="
                       item.schoolLogo
                         ? item.schoolLogo
-                        : 'http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png'
+                        : 'https://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png'
                     "
                     alt=""
                     width="150"
@@ -476,7 +476,7 @@
                     class="popover_img"
                     :src="
                       popover_logo == 0
-                        ? 'http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png'
+                        ? 'https://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png'
                         : popover_logo
                     "
                     alt=""
@@ -597,7 +597,7 @@ export default {
       foreignTeacherNum: "",
       teacherStuRatio: "",
       nationalityOfStudents: "",
-      xinxueshuoSite: "http://data.xinxueshuo.cn/vue-project/dist/index.html#/",
+      xinxueshuoSite: "https://data.xinxueshuo.cn/data/dist/index.html#/",
       relation_list: [], //相关机构
       popover_title: "",
       popover_logo: "",
@@ -812,7 +812,7 @@ export default {
     // 点击进入同城学校
     enterCitySchool(id) {
       window.open(
-        "http://data.xinxueshuo.cn/vue-project/dist/index.html#/schoolDetail?id=" +
+        "https://data.xinxueshuo.cn/data/dist/index.html#/schoolDetail?id=" +
           id,
         "_blank"
       );
@@ -1014,7 +1014,7 @@ export default {
             },
             // 点击进入同城学校
             enterCitySchool(id){
-                window.open('http://data.xinxueshuo.cn/vue-project/dist/index.html#/schoolDetail?id='+id,'_blank')
+                window.open('https://data.xinxueshuo.cn/data/dist/index.html#/schoolDetail?id='+id,'_blank')
             },
              // swiper banner轮播
             swiperInit(){

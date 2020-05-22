@@ -52,15 +52,15 @@
         </li>
       </ul>
       <p class="homeBannerP">
-        <a href="http://data.xinxueshuo.cn/vue-project/dist/index.html#/schoolDetail?id=100139" target="_blank">北京京西学校</a>
-        <a href="http://data.xinxueshuo.cn/vue-project/dist/index.html#/schoolDetail?id=101388" target="_blank">北京乐成国际学校</a>
-        <a href="http://data.xinxueshuo.cn/vue-project/dist/index.html#/schoolDetail?id=100047" target="_blank">北京BISS国际学校</a>
-        <a href="http://data.xinxueshuo.cn/vue-project/dist/index.html#/schoolDetail?id=100053" target="_blank">海嘉国际双语学校</a>
+        <a href="https://www.xinxueshuo.cn/data/dist/index.html#/schoolDetail?id=100139" target="_blank">北京京西学校</a>
+        <a href="https://www.xinxueshuo.cn/data/dist/index.html#/schoolDetail?id=101388" target="_blank">北京乐成国际学校</a>
+        <a href="https://www.xinxueshuo.cn/data/dist/index.html#/schoolDetail?id=100047" target="_blank">北京BISS国际学校</a>
+        <a href="https://www.xinxueshuo.cn/data/dist/index.html#/schoolDetail?id=100053" target="_blank">海嘉国际双语学校</a>
         <br />
-        <a href="http://data.xinxueshuo.cn/vue-project/dist/index.html#/schoolDetail?id=101194" target="_blank">上海融育北美教育学校</a>
-        <a href="http://data.xinxueshuo.cn/vue-project/dist/index.html#/schoolDetail?id=100065" target="_blank">成都美视国际学校</a>
-        <a href="http://data.xinxueshuo.cn/vue-project/dist/index.html#/schoolDetail?id=100176" target="_blank">北京哈罗英国学校</a>
-        <a href="http://data.xinxueshuo.cn/vue-project/dist/index.html#/schoolDetail?id=100947" target="_blank">重庆巴蜀常春藤学校</a>
+        <a href="https://www.xinxueshuo.cn/data/dist/index.html#/schoolDetail?id=101194" target="_blank">上海融育北美教育学校</a>
+        <a href="https://www.xinxueshuo.cn/data/dist/index.html#/schoolDetail?id=100065" target="_blank">成都美视国际学校</a>
+        <a href="https://www.xinxueshuo.cn/data/dist/index.html#/schoolDetail?id=100176" target="_blank">北京哈罗英国学校</a>
+        <a href="https://www.xinxueshuo.cn/data/dist/index.html#/schoolDetail?id=100947" target="_blank">重庆巴蜀常春藤学校</a>
       </p>
     </div>
     <div class="schoolHome">
@@ -233,10 +233,10 @@ export default {
       index: 0,
       schoolLists: [],
       SchoolCitypageNum: 1,
-      schoolLogoUrlOne: "http://data.xinxueshuo.cn/",
+      schoolLogoUrlOne: "https://data.xinxueshuo.cn/",
       schoolLogoUrlTwo:
-        "http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png",
-      xinxueshuoSite: "http://data.xinxueshuo.cn/vue-project/dist/index.html#/"
+        "https://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png",
+      xinxueshuoSite: "https://www.xinxueshuo.cn/data/dist/index.html#/"
     };
   },
   methods: {
