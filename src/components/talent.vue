@@ -48,18 +48,10 @@
             <p>
               <span class="list_Middle_name" @click="details(item.id)">{{
                 item.username == "" ||item.username=="0" ? "无" : item.username
-              }}</span
-              >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<el-tag
-                style="vertical-align: text-bottom"
-                size="small"
-                type="success"
-                >语文老师</el-tag
-              >&nbsp;&nbsp;&nbsp;&nbsp;<el-tag
-                style="vertical-align: text-bottom"
-                size="small"
-                type="success"
-                >数学老师</el-tag
-              >
+              }}</span>
+              <span style="margin-left:16px" v-for="tag in item.tag">
+               <el-tag style="vertical-align:text-bottom" size="small" type="success">{{tag}}</el-tag>
+              </span>
             </p>
             <p>
               <span>{{
@@ -80,7 +72,7 @@
               }}</span>
             </p>
             <p>
-              现工作地点：{{ item.expectedWork == ""|| item.expectedWork=="0" ? "无" : item.expectedWork }}
+              现工作地点：{{ item.workplace == ""|| item.workplace=="0" ? "无" : item.workplace }}
             </p>
           </div>
           <div class="list_right">
@@ -141,9 +133,9 @@ export default {
       }).then(res => {
         this.list_count = res.data.total
         for (var i in res.data.list) {
-        //    console.log(res.data.list[i].education)
            res.data.list[i].workExperience = JSON.parse(res.data.list[i].workExperience);
            res.data.list[i].education = JSON.parse(res.data.list[i].education);
+           res.data.list[i].tag = JSON.parse(res.data.list[i].tag);
            this.list_arr = res.data.list;
         }
         console.log(res.data.list)

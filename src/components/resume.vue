@@ -3,7 +3,7 @@
     <div class="resume">
       <h2>个人简历 提交成功</h2>
       <h4>
-        您还可以添加简历，让我们更了解您
+        您还可以添加简历附件，让我们更了解您
       </h4>
       <div class="resume_main">
         <el-upload
@@ -177,7 +177,7 @@ export default {
         tag: JSON.stringify(this.dynamicTags), //标签
         }).then(res => {
             console.log(res);
-            alert("提交成功")
+            alert("已提交成功、请等待审核")
             if(res.code==0){
             this.$router.push({path: "talent"});
             }else{
@@ -189,6 +189,27 @@ export default {
       talentdetail({
         talentId:id
       }).then(res => {
+        if(res.data.position.indexOf("英语")!= -1){
+           res.data.position = "英语老师"
+        }else if(res.data.position.indexOf("数学")!= -1){
+           res.data.position = "数学老师"
+        }else if(res.data.position.indexOf("艺术")!= -1){
+           res.data.position = "艺术老师"
+        }else if(res.data.position.indexOf("体育")!= -1){
+           res.data.position = "体育老师"
+        }else if(res.data.position.indexOf("物理")!= -1){
+           res.data.position = "物理老师"
+        }else if(res.data.position.indexOf("化学")!= -1){
+           res.data.position = "化学老师"
+        }else if(res.data.position.indexOf("生物")!= -1){
+           res.data.position = "生物老师"
+        }else if(res.data.position.indexOf("科学")!= -1){
+           res.data.position = "科学老师"
+        }else if(res.data.position.indexOf("双语")!= -1){
+           res.data.position = "双语老师"
+        }else if(res.data.position.indexOf("助教")!= -1){
+           res.data.position = "助教老师"
+        }
         this.dynamicTags.push(res.data.position)
         this.training = JSON.parse(res.data.training) //培训经历
       });

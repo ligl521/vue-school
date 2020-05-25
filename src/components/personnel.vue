@@ -142,13 +142,6 @@
             v-model="ruleForm.position"
           ></el-input>
         </el-form-item>
-        <el-form-item label="薪资(年薪)" prop="salary">
-          <el-input
-            placeholder="例：10万"
-            class="input_css"
-            v-model="ruleForm.salary"
-          ></el-input>
-        </el-form-item>
         <el-form-item label="城市" prop="expected_work">
           <el-input
             placeholder="请输入工作地点"
@@ -163,6 +156,15 @@
             v-model="ruleForm.entry_time"
           ></el-input>
         </el-form-item>
+        <el-form-item label="薪资" prop="salary">
+          <el-radio @change="changeRadio" style="margin-right:0;width:60px" v-model="radio1" name="sex" value="面议" label="面议">面议</el-radio>
+          <el-radio @change="changeRadio" style="margin-right:0;width:60px" v-model="radio1" name="sex" value="年薪" label="年薪">年薪</el-radio>
+          <el-input style="width:132px"
+            placeholder="例：10万"
+            v-model="ruleForm.salary"
+            :class="salaryHide ? 'active' : 'hide'"
+          ></el-input>
+        </el-form-item>
         <el-divider></el-divider>
         <h4>工作经历</h4>
         <div
@@ -171,12 +173,6 @@
         >
           <el-form-item
             label="公司名称"
-            :prop="'work_experience_text.' + index + '.company'"
-            :rules="{
-              required: true,
-              message: '公司名称不能为空',
-              trigger: 'blur'
-            }"
           >
             <el-input
               placeholder="请输入公司名称"
@@ -186,12 +182,6 @@
           </el-form-item>
           <el-form-item
             label="职位名称"
-            :prop="'work_experience_text.' + index + '.jobType'"
-            :rules="{
-              required: true,
-              message: '职位名称不能为空',
-              trigger: 'blur'
-            }"
           >
             <el-input
               placeholder="请输入职位名称"
@@ -201,8 +191,6 @@
           </el-form-item>
           <el-form-item
             label="在职时间"
-            :prop="'work_experience_text.' + index + '.date'"
-            :rules="{ required: true, message: '请输入日期', trigger: 'blur' }"
           >
             <el-date-picker
               class="input_css"
@@ -215,12 +203,6 @@
           <br />
           <el-form-item
             label="工作内容"
-            :prop="'work_experience_text.' + index + '.textarea'"
-            :rules="{
-              required: true,
-              message: '请输入工作内容',
-              trigger: 'blur'
-            }"
           >
             <el-input
               class="textarea_css"
@@ -325,12 +307,6 @@
         <div v-for="(train, index) in ruleForm.training" :key="train.key">
           <el-form-item
             label="培训名称"
-            :prop="'training.' + index + '.trainName'"
-            :rules="{
-              required: true,
-              message: '培训名称不能为空',
-              trigger: 'blur'
-            }"
           >
             <el-input
               placeholder="请输入培训名称"
@@ -340,12 +316,6 @@
           </el-form-item>
           <el-form-item
             label="培训时间"
-            :prop="'training.' + index + '.trainDate'"
-            :rules="{
-              required: true,
-              message: '培训时间不能为空',
-              trigger: 'blur'
-            }"
           >
             <el-date-picker
               class="input_css"
@@ -358,12 +328,6 @@
           <br />
           <el-form-item
             label="培训经历"
-            :prop="'training.' + index + '.trainTextarea'"
-            :rules="{
-              required: true,
-              message: '培训经历不能为空',
-              trigger: 'blur'
-            }"
           >
             <el-input
               class="textarea_css"
@@ -388,8 +352,6 @@
         <h4>资格证书</h4>
         <el-form-item
           label="证书名称"
-          prop="certificate"
-          :rules="{ required: true, message: '内容不能为空', trigger: 'blur' }"
         >
           <el-input
             placeholder="请输入证书名称"
@@ -401,8 +363,6 @@
         <h4>其他要求</h4>
         <el-form-item
           label="其他要求"
-          prop="other"
-          :rules="{ required: true, message: '其他要求不能为空', trigger: 'blur' }"
         >
           <el-input
             class="textarea_css"
@@ -443,8 +403,10 @@ export default {
       }
     };
     return {
+      radio1: '1',
       crap: false,
       active: false,
+      salaryHide:false,
       previews: {},
       option: {
         img:
@@ -561,14 +523,30 @@ export default {
       if ((arr = document.cookie.match(reg))) return unescape(arr[2]);
       else return null;
     },
+    changeRadio(type){
+       if(type =="年薪"){
+         this.ruleForm.salary=""
+         this.salaryHide = true
+       }else{
+         this.ruleForm.salary = type
+         this.salaryHide = false
+       }
+    },
     //表单提交
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-           for (var i in this.ruleForm.work_experience_text){
-              for (var j in this.ruleForm.work_experience_text[i].date){
-                this.ruleForm.work_experience_text[i].date[j]=this.formDataTime(this.ruleForm.work_experience_text[i].date[j])
-              }
+            for (var i in this.ruleForm.work_experience_text){
+                if(this.ruleForm.work_experience_text[i].company == ""){
+                    this.ruleForm.work_experience_text[i].company="0"
+                    this.ruleForm.work_experience_text[i].jobType="0"
+                    this.ruleForm.work_experience_text[i].date="0"
+                    this.ruleForm.work_experience_text[i].textarea="0"
+                }else{
+                    for (var j in this.ruleForm.work_experience_text[i].date){
+                      this.ruleForm.work_experience_text[i].date[j]=this.formDataTime(this.ruleForm.work_experience_text[i].date[j])
+                    }
+                }
            }
            for (var i in this.ruleForm.education){
               for (var j in this.ruleForm.education[i].schoolDate){
@@ -576,9 +554,15 @@ export default {
               }
            }
            for (var i in this.ruleForm.training){
-              for (var j in this.ruleForm.training[i].trainDate){
-                this.ruleForm.training[i].trainDate[j]=this.formDataTime(this.ruleForm.training[i].trainDate[j])
-              }
+                if(this.ruleForm.training[i].trainName == ""){
+                    this.ruleForm.training[i].trainName="0"
+                    this.ruleForm.training[i].trainMajor="0"
+                    this.ruleForm.training[i].textarea="0"
+                }else{
+                    for (var j in this.ruleForm.training[i].trainDate){
+                        this.ruleForm.training[i].trainDate[j]=this.formDataTime(this.ruleForm.training[i].trainDate[j])
+                    }
+                }
            }
           if (this.ruleForm.delivery) {
             this.ruleForm.delivery = "1";
@@ -601,11 +585,11 @@ export default {
             salary: this.ruleForm.salary, //薪资要求
             expectedWork: this.ruleForm.expected_work, //城市
             entryTime: this.ruleForm.entry_time, //入职时间
-            workExperience: JSON.stringify(this.ruleForm.work_experience_text), //工作经验
+            workExperience:JSON.stringify(this.ruleForm.work_experience_text), //工作经验
             education: JSON.stringify(this.ruleForm.education), //教育背景
             training: JSON.stringify(this.ruleForm.training), //培训经历
-            certificate: this.ruleForm.certificate, //资格证书
-            other: this.ruleForm.other, //其他要求
+            certificate: this.ruleForm.certificate == ""?"0":this.ruleForm.certificate, //资格证书
+            other: this.ruleForm.other== ""?"0":this.ruleForm.other, //其他要求
             submitter: this.ruleForm.submitter //提交人邮箱
           }).then(res => {
             console.log(res);
@@ -820,7 +804,7 @@ export default {
   display: none;
 }
 .active {
-  display: block;
+  display: inline-block;
 }
 .show {
   position: fixed;
