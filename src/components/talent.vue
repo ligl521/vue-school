@@ -35,7 +35,7 @@
         <div class="list" v-for="(item,index) in list_arr" :key="index">
           <div class="list_left">
             <img
-              :src="item.avatar=='0'?'http://img.zcool.cn/community/01786557e4a6fa0000018c1bf080ca.png':item.avatar"
+              :src="item.avatar=='0'?'https://img.zcool.cn/community/01786557e4a6fa0000018c1bf080ca.png':item.avatar"
               alt=""
             />
             <p>
@@ -404,8 +404,5 @@ export default {
 .companyGroup .el-input-group__append {
   border: 0;
   background: #214f89;
-}
-.el-autocomplete-suggestion{
-  display:block;
 }
 </style>

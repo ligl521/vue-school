@@ -124,7 +124,7 @@ export default {
       formData.append("talentId",this.id); //传其他参数
       formData.append("type", "nsi-pc/TalentAttachment/"); //传其他参数
       this.axios({
-        url: "http://data.xinxueshuo.cn/nsi-1.0/manager/talent/upResume.do",
+        url: "https://data.xinxueshuo.cn/nsi-1.0/manager/talent/upResume.do",
         method: "POST", //  这个地方注意
         data: formData,
         processData: false,

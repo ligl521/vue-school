@@ -5,7 +5,7 @@
             <div class="head">
                 <el-row>
                     <el-col :span="8">
-                        <img :src='schoolDetail.schoolLogo?schoolDetail.schoolLogo:"http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png"'>
+                        <img :src='schoolDetail.schoolLogo?schoolDetail.schoolLogo:"https://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png"'>
                     </el-col>
                     <el-col :span="16">
                         <h3 style="margin-top:10px">{{schoolDetail.schoolName}}</h3>  
@@ -230,7 +230,7 @@
                     <p class="contentM">
                         <el-row style="text-align:center">
                             <el-col :span="10" class="citySchoolBox"  v-for="(item, index) in schoolList"  :key="index">
-                                <img :src='item.schoolLogo?item.schoolLogo:"http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png"' alt="">
+                                <img :src='item.schoolLogo?item.schoolLogo:"https://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png"' alt="">
                                 <p class="chineseName">{{item.schoolName | ellipsisName}}</p>
                                 <p class="englishName">{{item.schoolEnglishName | ellipsisEname|isZero}}</p>
                             </el-col>

@@ -98,7 +98,7 @@
     <div class="schoolDetailTwo" v-if="!schoolDetail" v-loading="isLoading" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading" infinite-scroll-distance="10" infinite-scroll-immediate="false">
         <span id="search_res">{{this.no_school}}</span>
         <div class="detailBox" v-for="(item,i) in schoolLists" :key="i" @click="enterSchoolDetail(item.id)">
-            <div class="DeatailTwoLeft"><img :src='item.schoolLogo?item.schoolLogo:"http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png"' /></div>
+            <div class="DeatailTwoLeft"><img :src='item.schoolLogo?item.schoolLogo:"https://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png"' /></div>
             <div class="DeatailTwoCenter" id="DeatailTwoCenterId">
             <ul>
                 <li>{{item.schoolName | ellipsisSchoolNameTwo}}<span :class="item.operationState!=='运营中'?'operationA':'operationB'">{{item.operationState}}</span></li>
@@ -166,7 +166,7 @@ export default {
       lodingshow: true,
       lodinghide: false,
       isclick: true,
-      schoolLogoUrlTwo:"http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png",
+      schoolLogoUrlTwo:"https://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png",
       areaSplit:[],
       searchArea:"",
       areaClass:0,
@@ -228,7 +228,7 @@ export default {
       urldata.append("keyword", that.input);
       axios
         .post(
-          "http://data.xinxueshuo.cn/nsi-1.0/school/suggest_search.do",
+          "https://data.xinxueshuo.cn/nsi-1.0/school/suggest_search.do",
           urldata
         )
         .then(function(respons) {
@@ -1106,8 +1106,5 @@ export default {
 .el-input-group__append {
     border: 0;
     background: #214f89;
-}
-.el-autocomplete-suggestion{
-  display:block;
 }
 </style>

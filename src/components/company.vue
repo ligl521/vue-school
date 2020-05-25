@@ -9,11 +9,11 @@
                 </div>
                 <p class="homeBannerP">
                     <span>热门搜索：</span>
-                    <a href="http://data.xinxueshuo.cn/vue-project/dist/index.html#/companyDetail?id=100197" target="_blank">英帆国际教育</a>
-                    <a href="http://data.xinxueshuo.cn/vue-project/dist/index.html#/companyDetail?id=100198" target="_blank">华樱出国</a>
-                    <a href="http://data.xinxueshuo.cn/vue-project/dist/index.html#/companyDetail?id=100201" target="_blank">力翰科学教育集团</a>
-                    <a href="http://data.xinxueshuo.cn/vue-project/dist/index.html#/companyDetail?id=100195" target="_blank">赛帆教育</a>
-                    <a href="http://data.xinxueshuo.cn/vue-project/dist/index.html#/companyDetail?id=100189" target="_blank">青苗教育集团</a>
+                    <a href="https://www.xinxueshuo.cn/data/dist/index.html#/companyDetail?id=100197" target="_blank">英帆国际教育</a>
+                    <a href="https://www.xinxueshuo.cn/data/dist/index.html#/companyDetail?id=100198" target="_blank">华樱出国</a>
+                    <a href="https://www.xinxueshuo.cn/data/dist/index.html#/companyDetail?id=100201" target="_blank">力翰科学教育集团</a>
+                    <a href="https://www.xinxueshuo.cn/data/dist/index.html#/companyDetail?id=100195" target="_blank">赛帆教育</a>
+                    <a href="https://www.xinxueshuo.cn/data/dist/index.html#/companyDetail?id=100189" target="_blank">青苗教育集团</a>
                 </p>
             </div>
             <div class="companyku">
@@ -23,7 +23,7 @@
         </div>
         <div class="companyList" v-for="(item,index) in list" :key="index" v-loading="loading">
             <div class="companyLogo">
-                <img :src='item.institutionLogo==0 ||item.institutionLogo==null? "http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png": item.institutionLogo' >
+                <img :src='item.institutionLogo==0 ||item.institutionLogo==null? "https://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png": item.institutionLogo' >
             </div>
             <div class="companyContent">
                 <div class="contentLeft">
@@ -344,8 +344,5 @@ export default {
     .companyGroup .el-input-group__append {
         border: 0;
         background: #214f89;
-    }
-    .el-autocomplete-suggestion{
-      display:block;
     }
 </style>

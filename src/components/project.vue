@@ -1,13 +1,13 @@
 <template>
   <div class="project">
       <div class="banner">
-        <img src="http://nsi.oss-cn-zhangjiakou.aliyuncs.com/nsi-pc/banner04.jpg" alt="国际学校项目数据库" class="img-responsive" />
+        <img src="https://nsi.oss-cn-zhangjiakou.aliyuncs.com/nsi-pc/banner04.jpg" alt="国际学校项目数据库" class="img-responsive" />
       </div>
       <!-- 搜索栏 -->
       <div class="companyBox">
         <div class="companyGroup">
           <div class="searchBox">
-            <el-autocomplete
+            <el-input
               placeholder="请输入内容"
               v-model="searchKey"
               @keyup.enter.native="searchCompany"
@@ -16,7 +16,7 @@
               <el-button @click="searchCompany" slot="append"
                 ><i class="iconfont icon-sousuo"></i
               ></el-button>
-            </el-autocomplete>
+            </el-input>
           </div>
           <p class="homeBannerP">
               <span>热门搜索：</span>
@@ -100,7 +100,7 @@ export default {
         pageSize: this.pageSize,
       }).then(res=>{
         console.log(res.data)
-        this.projectList=res.data
+        this.projectList=res.data.list
         this.searchCount=res.count
       })
     },
@@ -154,7 +154,7 @@ export default {
       .searchBox {
         display: inline-block;
         margin-top: 50px;
-        .el-autocomplete {
+        .el-input {
           width: 570px;
           i {
             font-size: 40px;
@@ -253,9 +253,6 @@ export default {
     .companyGroup .el-input-group__append {
         border: 0;
         background: #214f89;
-    }
-    .el-autocomplete-suggestion{
-      display:none;
     }
 </style>
 

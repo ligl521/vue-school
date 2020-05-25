@@ -669,7 +669,7 @@ export default {
           formData.append("type", "nsi-pc/ResumePortrait/");
           _this
             .axios({
-              url: "http://data.xinxueshuo.cn/nsi-1.0/CommonApi/upload.do",
+              url: "https://data.xinxueshuo.cn/nsi-1.0/CommonApi/upload.do",
               method: "POST", //  这个地方注意
               data: formData,
               processData: false,
