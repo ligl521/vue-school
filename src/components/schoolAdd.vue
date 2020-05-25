@@ -13,45 +13,10 @@
           <el-step title="建设&投资"></el-step>
         </el-steps>
       </div>
-      <!-- <div class="container uploadImg">
-          <div class="row">
-              <div class="col-md-4 col-xs-12">
-                <el-upload
-                    class="avatar-uploader"
-                    action="https://jsonplaceholder.typicode.com/posts/"
-                    :show-file-list="false"
-                    ref="uploadlogo"
-                    :before-upload="beforeAvatarUpload"
-                    :on-change="handleAvatarChange">
-                    <img v-if="form.schoolLogo" :src="form.schoolLogo" class="avatar">
-                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                </el-upload>
-                <el-button size="small" type="primary">上传学校logo图</el-button>
-                <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过2M</div>
-              </div>
-              <div class="col-md-8 col-xs-12">
-                <el-upload
-                    action="https://jsonplaceholder.typicode.com/posts/"
-                    :limit='5'
-                    :file-list="fileList"
-                    list-type="picture-card"
-                    ref="uploada"
-                    :on-remove="handleRemove"
-                >   
-                    <i class="el-icon-plus"></i>
-                    <div slot="file" slot-scope="{file}">
-                        <img class="el-upload-list__item-thumbnail" :src="file.url" alt="">
-                    </div>
-                </el-upload>
-                <el-button size="small" type="primary">上传学校banner图</el-button>
-                <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，最多5张且不超过2M</div>
-              </div>
-          </div>
-      </div> -->
     <div class="uploadlogo">
-       <el-upload
+        <el-upload
             class="avatar-uploader"
-            action="https://jsonplaceholder.typicode.com/posts/"
+            action="http://jsonplaceholder.typicode.com/posts/?id=2"
             :show-file-list="false"
             ref="uploadlogo"
             :before-upload="beforeAvatarUpload"
@@ -60,37 +25,21 @@
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
         <el-button size="small" type="primary">上传学校logo图</el-button>
-        <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb(推荐尺寸170*170)</div>
+        <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb(推荐尺寸200*200)</div>
     </div>
       <!-- form表单 -->
       <div class="addform">
-        <el-form :model="form" ref="form" label-width="100px" class="demo-ruleForm" :rules="rules">
+        <el-form :model="form" ref="form" label-width="110px" class="demo-ruleForm" :rules="rules" :inline="true" >
           <!-- 基本信息 -->
-          <div v-if="active == 0">
-            <!-- <el-upload
-              class="upload-demo"
-              action="https://jsonplaceholder.typicode.com/posts/"
-              :on-preview="handlePreview"
-              :on-remove="handleRemove"
-              :before-remove="beforeRemove"
-              :before-upload="beforeAvatarUpload"
-              multiple
-              :limit="5"
-              :on-exceed="handleExceed"
-              :file-list="fileList">
-              <el-button size="small" type="primary">点击上传banner图片</el-button>
-              <div slot="tip" class="el-upload__tip">最多上传5张，只能上传jpg/png文件，且不超过2M</div>
-            </el-upload> -->
-           
+          <div v-if="active == 0" class="first">
             <el-form-item label="学校名字" prop="schoolName" id="addFlex" >
               <el-input v-model.trim="form.schoolName"></el-input>
-              <!-- @blur="CheckSchool" -->
-              <i>学校名字不能为空</i>
+              <!-- <i>学校名字不能为空</i> -->
             </el-form-item>
             <el-form-item label="学校英文名字" prop="schoolEnglishName">
               <el-input v-model.trim="form.schoolEnglishName" ></el-input>
             </el-form-item>
-            <el-form-item label="学校性质" prop="schoolProperties">
+            <el-form-item label="学校性质" prop="schoolProperties" >
               <el-select v-model="form.schoolProperties" placeholder="请选择学校性质" :value-key="form.schoolProperties">
                 <el-option label="公办" value="公办"></el-option>
                 <el-option label="民办" value="民办"></el-option>
@@ -104,27 +53,41 @@
                 <el-option label="停办" value="停办"></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="省-市" prop="">
-              <el-cascader
-                size="large"
-                :options="options"
-                v-model="selectedOptions"
-                @change="handleChange"
-                ref="cascaderAddr">
-              </el-cascader>
+            <el-form-item class="page-form-item" label="所在地区" prop="province">
+                <el-select v-model="form.province" placeholder="请选择" @change="provinceChanged" style="width:130px !important;">
+                    <el-option
+                    :key="''"
+                    :label="'全部'"
+                    :value="''">
+                    </el-option>
+                    <el-option
+                    v-for="item in provinces"
+                    :key="item.code"
+                    :label="item.name"
+                    :value="item.name">
+                    </el-option>
+                </el-select>
+                <el-select v-model="city" :loading="loadingCity" placeholder="请选择" style="width:130px !important;">
+                    <el-option
+                    :key="''"
+                    :label="'全部'"
+                    :value="''">
+                    </el-option>
+                    <el-option
+                    v-for="item in cities"
+                    :key="item.code"
+                    :label="item.name"
+                    :value="item.name">
+                    </el-option>
+            </el-select>
             </el-form-item>
-            <el-form-item label="地址" prop="address" id="addFlex">
+             <el-form-item label="成立时间" prop="foundingTime" id="addFlex">
+              <el-input v-model.number="form.foundingTime" ></el-input>
+            </el-form-item>
+            <el-form-item label="详细地址" prop="address" id="addFlex">
               <el-input v-model="form.address" ></el-input>
             </el-form-item>
-            <el-form-item label="成立时间" prop="foundingTime" id="addFlex">
-              <el-input v-model.number="form.foundingTime" ></el-input>
-              <i>请输入四位数字 例：2019</i>
-            </el-form-item>
             <el-form-item label="学制" prop="schoolSystem" >
-              <!-- <div id="addFlexTwo">
-                <el-input v-model="form.schoolSystem" :disabled="true"></el-input>
-                <i>请分号分割 例：幼儿园;小学;初中;</i>
-              </div> -->
               <el-checkbox-group v-model="inputCheckbox">
                 <el-checkbox label="幼儿园;" name="schoolSystem">幼儿园</el-checkbox>
                 <el-checkbox label="小学;" name="schoolSystem">小学</el-checkbox>
@@ -140,7 +103,7 @@
             </el-form-item>
             <div class="uploadBanner">
                 <el-upload
-                    action="https://jsonplaceholder.typicode.com/posts/"
+                    action="http://jsonplaceholder.typicode.com/posts/?id=1"
                     :limit='5'
                     :file-list="fileList"
                     list-type="picture-card"
@@ -148,6 +111,7 @@
                     :on-remove="handleRemove"
                     :on-exceed="handleExceed"
                     :before-upload="beforeBannerUpload"
+                    :on-change="handleBannerChange"
                 >   
                     <i class="el-icon-plus"></i>
                     <div slot="file" slot-scope="{file}">
@@ -158,40 +122,36 @@
                 <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，最多5张且不超过2M(推荐尺寸1100*400)</div>
             </div>
           </div>
-          
           <!-- 课程信息 -->
-          <div v-else-if="active == 1">
-            <el-form-item label="学费" class="">
+          <div v-else-if="active == 1" class="second">
+            <el-form-item label="学费">
                 <div class="tuitionSchool">
                   <div class="tuition">
                     <div><span>幼儿园</span><el-input v-model="form.oneTuition"></el-input></div>
-                    <div><span>初中</span><el-input v-model="form.thirdTuition" ></el-input></div>
+                    <div class="grade"><span>初中</span><el-input v-model="form.thirdTuition" ></el-input></div>
                   </div>
                   <div class="tuition">
                     <div><span>小学</span><el-input v-model="form.twoTuition"></el-input></div>
-                    <div><span>高中</span><el-input v-model="form.fourTuition" ></el-input></div>
+                    <div class="grade"><span>高中</span><el-input v-model="form.fourTuition" ></el-input></div>
                   </div>
-                  <i>格式为数字，整数 例：150000</i>
                 </div>
             </el-form-item>
-            <el-form-item label="人数" class="">
+            <el-form-item label="人数">
                 <div class="tuitionSchool">
                   <div class="tuition">
-                    <div><span>幼儿园</span><el-input ></el-input></div>
-                    <div><span>初中</span><el-input ></el-input></div>
+                    <div><span>幼儿园</span><el-input  v-model="form.oneTuition"></el-input></div>
+                    <div class="grade"><span>初中</span><el-input  v-model="form.oneTuition"></el-input></div>
                   </div>
                   <div class="tuition">
-                    <div><span>小学</span><el-input></el-input></div>
-                    <div><span>高中</span><el-input ></el-input></div>
+                    <div><span>小学</span><el-input v-model="form.oneTuition"></el-input></div>
+                    <div class="grade"><span>高中</span><el-input  v-model="form.oneTuition"></el-input></div>
                   </div>
-                  <i>格式为数字，整数 例：150000</i>
+                  <!-- <i>格式为数字，整数 例：150000</i> -->
                 </div>
             </el-form-item>
-
             <el-form-item label="国际课程" prop="course">
               <div class="addFlexTwo">
                 <el-input v-model="form.course"></el-input>
-                <i>请分号分割 例:IPC;OMYC;PGA;</i>
               </div>
               <el-checkbox-group v-model="inputCheckboxCourse">
                 <el-checkbox label="IPC;" name="course">IPC</el-checkbox>
@@ -199,7 +159,6 @@
                 <el-checkbox label="PGA;" name="course">PGA</el-checkbox>
                 <el-checkbox label="AP;" name="course">AP</el-checkbox>
                 <el-checkbox label="IBPYP;" name="course">IBPYP</el-checkbox>
-                <br/>
                 <el-checkbox label="IBMYP;" name="course">IBMYP</el-checkbox>
                 <el-checkbox label="IBDP;" name="course">IBDP</el-checkbox>
                 <el-checkbox label="A-LEVEL;" name="course">A-LEVEL</el-checkbox>
@@ -208,7 +167,6 @@
                 <el-checkbox label="蒙特梭利;" name="course">蒙特梭利</el-checkbox>
                 <el-checkbox label="美国课程;" name="course">美国课程</el-checkbox>
                 <el-checkbox label="澳大利亚课程;" name="course">澳大利亚课程</el-checkbox>
-                <br/>
                 <el-checkbox label="澳洲VCE;" name="course">澳洲VCE</el-checkbox>
                 <el-checkbox label="澳洲WACE;" name="course">澳洲WACE</el-checkbox>
                 <el-checkbox label="加拿大课程;" name="course">加拿大课程</el-checkbox>
@@ -221,21 +179,17 @@
             </el-form-item>
 
             <el-form-item label="认证&组织" prop="authentication">
-              <div class="addFlexTwo">
                 <el-input v-model="form.authentication"></el-input>
-                <i>请分号分割 例:CIE;Edexcel;OxfordAQA;</i>
-              </div>
               <el-checkbox-group v-model="inputCheckboxauthentication">
                 <el-checkbox label="CIE;" name="authentication">CIE</el-checkbox>
                 <el-checkbox label="Edexcel;" name="authentication">Edexcel</el-checkbox>
                 <el-checkbox label="OxfordAQA;" name="authentication">OxfordAQA</el-checkbox>
                 <el-checkbox label="IBO;" name="authentication">IBO</el-checkbox>
-                <br/>
                 <el-checkbox label="CollegeBoard;" name="authentication">CollegeBoard</el-checkbox>
                 <el-checkbox label="CLS;" name="authentication">CLS</el-checkbox>
+                <br/>
                 <el-checkbox label="WASC;" name="authentication">WASC</el-checkbox>
                 <el-checkbox label="NEASC;" name="authentication">NEASC</el-checkbox>
-                <br/>
                 <el-checkbox label="EARCOS;" name="authentication">EARCOS</el-checkbox>
                 <el-checkbox label="AdvancED;" name="authentication">AdvancED</el-checkbox>
                 <el-checkbox label="NCCT;" name="authentication">NCCT</el-checkbox>
@@ -244,58 +198,53 @@
                 <el-checkbox label="ROUND SQUARE;" name="authentication">ROUND SQUARE</el-checkbox>
                 <el-checkbox label="FOBISIA;" name="authentication">FOBISIA</el-checkbox>
                 <el-checkbox label="ISAC;" name="authentication">ISAC</el-checkbox>
-                <br/>
                 <el-checkbox label="THE DUKE OF EDINBURGH’S INTERNATIONAL AWARD;" name="authentication">THE DUKE OF EDINBURGH’S INTERNATIONAL AWARD</el-checkbox>
               </el-checkbox-group>
             </el-form-item>
           </div>
           <!-- 师资力量 -->
-          <div v-else-if="active == 2">
+          <div v-else-if="active == 2" class="third">
             <el-form-item label="学生总人数" prop="students" class="addFlex">
               <el-input v-model.number="form.students" ></el-input>
-              <i>格式为数字，整数</i>
+              <!-- <i>格式为数字，整数</i> -->
             </el-form-item>
             <el-form-item label="学生容量" prop="studentCapacity" class="addFlex">
               <el-input v-model.number="form.studentCapacity" ></el-input>
-              <i>格式为数字，整数</i>
+              <!-- <i>格式为数字，整数</i> -->
             </el-form-item>
             <el-form-item label="毕业班人数" prop="graduatedStuNum" class="addFlex">
               <el-input v-model.number="form.graduatedStuNum" ></el-input>
-              <i>格式为数字，整数</i>
+              <!-- <i>格式为数字，整数</i> -->
             </el-form-item>
             <el-form-item label="学生主要国籍" prop="stuDominantNationality" class="addFlex">
               <el-input v-model="form.stuDominantNationality" ></el-input>
-              <i>请分号分割 例：中国;美国;英国</i>
+              <!-- <i>请分号分割 例：中国;美国;英国</i> -->
             </el-form-item>
             <el-form-item label="员工数量" prop="staffNum" class="addFlex">
               <el-input v-model.number="form.staffNum" ></el-input>
-              <i>格式为数字，整数</i>
+              <!-- <i>格式为数字，整数</i> -->
             </el-form-item>
             <el-form-item label="教师数量" prop="teacherNum" class="addFlex">
               <el-input v-model.number="form.teacherNum" ></el-input>
-              <i>格式为数字，整数</i>
+              <!-- <i>格式为数字，整数</i> -->
             </el-form-item>
             <el-form-item label="外籍教师数量" prop="foreignTeacherNum" class="addFlex">
               <el-input v-model.number="form.foreignTeacherNum" ></el-input>
-              <i>格式为数字，整数</i>
+              <!-- <i>格式为数字，整数</i> -->
             </el-form-item>
             <el-form-item label="师生比" prop="teacherStuRatio">
               <el-input v-model="form.teacherStuRatio" ></el-input>
             </el-form-item>
-            <el-form-item label="占地面积(亩)" prop="coveredArea" class="addFlex">
-              <el-input v-model.number="form.coveredArea" ></el-input>
-              <i>格式为数字，整数</i>
-            </el-form-item>
           </div>
           <!-- 建设 -->
-          <div v-else-if="active == 3">
+          <div v-else-if="active == 3" class="four">
             <el-form-item label="占地面积(亩)" prop="coveredArea" class="addFlex">
               <el-input v-model.number="form.coveredArea" ></el-input>
-              <i>格式为数字，整数</i>
+              <!-- <i>格式为数字，整数</i> -->
             </el-form-item>
-            <el-form-item label="建筑面积(平方米)" prop="builtArea" class="addFlex">
+            <el-form-item label="建筑面积(㎡)" prop="builtArea" class="addFlex">
               <el-input v-model.number="form.builtArea" ></el-input>
-              <i>格式为数字，整数</i>
+              <!-- <i>格式为数字，整数</i> -->
             </el-form-item>
             <el-form-item label="硬件设施"  prop="hardware">
               <el-input type="textarea" placeholder="请输入内容" :rows="4" v-model="form.hardware"></el-input>
@@ -330,10 +279,12 @@
 
 <script>
 import {getSchoolAdd,getSchoolCheck_valid} from '@/api/api';
-import {provice} from '@/assets/Share/city.js'
 import store from '@/store/store.js';
-import { provinceAndCityData, regionData, provinceAndCityDataPlus, regionDataPlus, CodeToText, TextToCode } from 'element-china-area-data'
+import provinceCity  from '../../static/area.json'
 export default {
+    components:{
+        provinceCity
+    },
   data() {
     //验证成立时间
     var foundingTime = (rele,value,callback) =>{
@@ -348,7 +299,7 @@ export default {
           if(num.length == "4"){
             callback()
           }else{
-              callback(new Error("格式不正确,请输入四位数字  例：2019"));
+              callback(new Error("请输入成立时间 例：2019"));
           }
 
         }
@@ -398,19 +349,18 @@ export default {
       }
     }
     return {
+        loadingCity: false,
+        province: '',
+        city: '',
+        provinces: [],
+        cities: [],
       active:0,
       isEdit:1,
       i:0,
-      selectedOptions:"",
       inputCheckbox:[], //学制
       inputCheckboxCourse:[], //课程
       inputCheckboxauthentication:[], //认证组织
-      thisAreaCode:"", //省-市
-      provice:provice, //城市
-      citySelect:false,
       curshe:0,
-      options: provinceAndCityData,
-      selectedOptions: [],
       completeBtn:"下一步",//完成 下一步按钮切换
       formShow:true,
       fileName:"",
@@ -479,19 +429,20 @@ export default {
         schoolName:[ //学校名字 schoolCheckValid
           {validator: schoolName,required:true,trigger:'blur'},
         ],
-        schoolEnglishName:[ //学校英文名字
-
+        schoolProperties:[ 
+           {required:true,message:"请选择学校性质",trigger:'blur'},
         ],
-        schoolProperties:[ //学校性质
+        operationState:[ 
+           {required:true,message:"请选择运营状态",trigger:'blur'},
+        ],
+        province:[ //地址
+          {required:true,message:"请选择城市",trigger:'blur'}
         ],
         address:[ //地址
           {required:true,message:"地址不能为空",trigger:'blur'}
         ],
         foundingTime:[ //成立时间
           {validator: foundingTime,trigger: 'blur' }
-        ],
-        operationState:[//运营状态
-          // {required:true,message:"选项不能为空",trigger:'blur'}
         ],
         schoolSystem:[//学制
           {required:true,message:"选项不能为空",trigger:'blur'}
@@ -511,8 +462,6 @@ export default {
         website:[ //官网
           {validator: website,trigger: 'blur' }
         ],
-        telephone:[ //电话
-        ],
         interCourseFoundedTime:[ //国际学校成立时间
           {validator: foundingTime,trigger: 'blur' }
         ],
@@ -530,8 +479,6 @@ export default {
         ],
         graduatedStuNum:[//毕业班人数
           {required:true,validator: twoTuition,trigger: 'blur' }
-        ],
-        stuDominantNationality:[//学生主要国籍
         ],
         staffNum:[//员工数量
           {required:true,validator: twoTuition,trigger: 'blur' }
@@ -559,56 +506,42 @@ export default {
       },
     }
   },
+//   props: {
+//       provinceCode: {
+//         type: String,
+//         default: ''
+//       },
+//       cityCode: {
+//         type: String,
+//         default: ''
+//       }
+//     },
+   created() {
+      this.provinces = provinceCity.provinces
+    },
   methods: {
-    next(form) {
-      console.log(this.form)
-     // 输出
-     for(var i=0;i<this.$refs.uploada.uploadFiles.length;i++){
-        this.fileRaw=this.$refs.uploada.uploadFiles[i].raw
-        this.fileName=this.$refs.uploada.uploadFiles[i].name
-        let that = this;
-        let formData = new FormData();
-        formData.append("file",this.fileRaw,this.fileName);
-        formData.append("type", "nsi-pc/SchoolShow/");
-        that.axios({
-            url: "https://data.xinxueshuo.cn/nsi-1.0/CommonApi/upload.do",
-            method: "POST", //  这个地方注意
-            data: formData,
-            processData: false,
-            contentType: false
-        }).then(response => {
-            if (response.data.code == 0) {
-                that.bannerImgHttp=response.data.data.url
-                that.bannerArray.push(String(that.bannerImgHttp))
-                console.log(that.bannerArray)
-                if(this.bannerArray.length==1){
-                    this.form.schoolShowOne= this.bannerArray[0]
-                }else if(this.bannerArray.length==2){
-                    this.form.schoolShowOne= this.bannerArray[0]
-                    this.form.schoolShowTwo= this.bannerArray[1]
-                }else if(this.bannerArray.length==3){
-                    this.form.schoolShowOne= this.bannerArray[0]
-                    this.form.schoolShowTwo= this.bannerArray[1]
-                    this.form.schoolShowThree= this.bannerArray[2]
-                }else if(this.bannerArray.length==4){
-                    this.form.schoolShowOne= this.bannerArray[0]
-                    this.form.schoolShowTwo= this.bannerArray[1]
-                    this.form.schoolShowThree= this.bannerArray[2]
-                    this.form.schoolShowFour= this.bannerArray[3]
-                }else if(this.bannerArray.length==5){
-                    this.form.schoolShowOne= this.bannerArray[0]
-                    this.form.schoolShowTwo= this.bannerArray[1]
-                    this.form.schoolShowThree= this.bannerArray[2]
-                    this.form.schoolShowFour= this.bannerArray[3]
-                    this.form.schoolShowFive= this.bannerArray[4]
-                }
-                console.log( this.form.schoolShowOne)
-                console.log( this.form.schoolShowFour)
+      provinceChanged(value) {
+          console.log(value)
+        if (value !== '') {
+          this.loadingCity = true
+          for (var item of this.provinces) {
+            if (item.name === value) {
+              this.cities = item.cities
+              this.city = ''
+              this.loadingCity = false
+              break
+            } else {
+              continue
             }
-        });
-    }
-        
-    
+          }
+        } else {
+          this.cities = []
+          this.city = ''
+        }
+      },
+    next(form) {
+      this.form.town=this.city 
+      console.log(this.form)
       this.$refs[form].validate((valid) => {
         console.log(valid)
         if (valid) {
@@ -653,12 +586,12 @@ export default {
       }
     },
     //城市二级联动
-    handleChange (e,form,thisAreaCode) {
-      console.log(CodeToText[e[0]])
-      this.thisAreaCode = this.$refs['cascaderAddr'].currentLabels;
-      this.form.province = this.thisAreaCode[0];
-      this.form.town = this.thisAreaCode[1];
-    },
+    // handleChange (e,form,thisAreaCode) {
+    //   console.log(CodeToText[e[0]])
+    //   this.thisAreaCode = this.$refs['cascaderAddr'].currentLabels;
+    //   this.form.province = this.thisAreaCode[0];
+    //   this.form.town = this.thisAreaCode[1];
+    // },
     //提交成功后返回操作
     returnBtn(num){
       if(num == "1"){
@@ -693,6 +626,53 @@ export default {
             }
         });
     },
+    handleBannerChange(file,fileList){
+         // 输出
+     for(var i=0;i<this.$refs.uploada.uploadFiles.length;i++){
+        this.fileRaw=this.$refs.uploada.uploadFiles[i].raw
+        this.fileName=this.$refs.uploada.uploadFiles[i].name
+        let that = this;
+        let formData = new FormData();
+        formData.append("file",this.fileRaw,this.fileName);
+        formData.append("type", "nsi-pc/SchoolShow/");
+        that.axios({
+            url: "https://data.xinxueshuo.cn/nsi-1.0/CommonApi/upload.do",
+            method: "POST", //  这个地方注意
+            data: formData,
+            processData: false,
+            contentType: false
+        }).then(response => {
+            if (response.data.code == 0) {
+                that.bannerImgHttp=response.data.data.url
+                that.bannerArray.push(String(that.bannerImgHttp))
+                if(this.bannerArray.length==1){
+                    this.form.schoolShowOne= this.bannerArray[0]
+                }else if(this.bannerArray.length==2){
+                    this.form.schoolShowOne= this.bannerArray[0]
+                    this.form.schoolShowTwo= this.bannerArray[1]
+                }else if(this.bannerArray.length==3){
+                    this.form.schoolShowOne= this.bannerArray[0]
+                    this.form.schoolShowTwo= this.bannerArray[1]
+                    this.form.schoolShowThree= this.bannerArray[2]
+                }else if(this.bannerArray.length==4){
+                    this.form.schoolShowOne= this.bannerArray[0]
+                    this.form.schoolShowTwo= this.bannerArray[1]
+                    this.form.schoolShowThree= this.bannerArray[2]
+                    this.form.schoolShowFour= this.bannerArray[3]
+                }else if(this.bannerArray.length==5){
+                    this.form.schoolShowOne= this.bannerArray[0]
+                    this.form.schoolShowTwo= this.bannerArray[1]
+                    this.form.schoolShowThree= this.bannerArray[2]
+                    this.form.schoolShowFour= this.bannerArray[3]
+                    this.form.schoolShowFive= this.bannerArray[4]
+                }
+                // console.log( this.form.schoolShowOne)
+                // console.log( this.form.schoolShowFour)
+            }
+        });
+    }
+        
+    },
     beforeAvatarUpload(file) {
       console.log(file.size)
         const isJPG = file.type === 'image/jpeg'
@@ -721,6 +701,11 @@ export default {
     }
         
 },
+    mounted(){
+        this.province = this.provinceCode
+        this.provinceChanged(this.provinceCode)
+        this.city = this.cityCode
+    },
    watch: {
     //学制多选
     "inputCheckbox":function(val){
@@ -824,37 +809,106 @@ export default {
     .tuitionSchool{
       display: flex;
       /deep/.tuition{
-        line-height: 50px;
-        width: 26% !important;
+        // line-height: 50px;
+        // width: 26% !important;
+        .grade{
+            margin-top:10px;
+            margin-right:10px;
+        }
         span{
           display:inline-block;
-          width: 20%;
+          width: 50px;
         }
         .el-input{
           margin-left: 3px;
-          width: 60% !important;
+          width: 110px !important;
         }
       }
     }
     //表单样式
     form.el-form.demo-ruleForm{
       .el-checkbox-group{
-        margin-left: 100px;
+        // margin-left: 100px;
+        .el-checkbox{
+            margin-right:12px;
+        }
       }
       /deep/.el-form-item__error{
-        margin-left: 100px;
+        // margin-left: 100px;
       }
     }
     .addsteps{
-      width: 80%;
+      width: 70%;
       margin: 30px auto 0;
     }
     .addform{
       // border: 2px solid #337ab7;
-      padding-left: 10%;
-      margin: 30px auto 0;
+    //   padding-left: 10%;
+    //   margin: 30px auto 0;
+        
+        .el-form{
+            width: 80%;
+            margin: 30px auto;
+            .first{
+                .el-form-item {
+                    margin: 15px 40px;
+                    .el-cascader {
+                        width: 265px !important;
+                    }
+                    .el-select {
+                        width: 265px !important;
+                    }
+                    // .el-form-item__content {
+                        .el-input {
+                            width: 265px !important;
+                        }
+                    // }
+                }
+            }
+            .second{
+                .el-form-item {
+                    margin: 15px 40px;
+                    .el-select {
+                        width: 265px !important;
+                    }
+                    .el-form-item__content {
+                        .el-input {
+                            width: 265px !important;
+                        }
+                    }
+                }
+            }
+            .third{
+                .el-form-item {
+                    margin: 15px 40px;
+                    .el-form-item__content {
+                        .el-input {
+                            width: 265px !important;
+                        }
+                    }
+                }
+            }
+            .four{
+                .el-form-item {
+                    margin: 15px 40px;
+                    .el-textarea{
+                        width: 500px !important;
+                    }
+                    .el-form-item__content {
+                        .el-input {
+                            width: 265px !important;
+                        }
+                    }
+                }
+            }
+        }
+    
       .uploadBanner{
-          width:80%;
+          width:90%;
+          margin:30px auto;
+          li{
+              margin-right:20px !important;
+          }
           button{
               margin:10px 10px 0;
           }
@@ -863,7 +917,7 @@ export default {
         position: relative;
         font-size: 14px;
         display: inline-block;
-        width: 43%;
+        // width: 43%;
       }
       .upload-demo{
         margin-bottom:30px;
@@ -880,11 +934,11 @@ export default {
       width: 59%;
     }
     /deep/.el-form-item__label{
-      width: 200px !important;
+    //   width: 200px !important;
     }
     /deep/.TuitionBoxLabel{
       label{
-        width: 100px !important;
+        // width: 100px !important;
       }
     }
   }

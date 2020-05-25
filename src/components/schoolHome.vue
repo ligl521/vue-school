@@ -69,7 +69,7 @@
         <div class="Service-box">
           <div class="Service-content clearfix">
             <a href="javascript:;" class="Service-item">
-              <router-link tag="ul" to="./">
+              <router-link to="./school">
                 <div class="item-image">
                   <img src="../assets/icon-tag001.png" alt />
                 </div>
@@ -79,36 +79,44 @@
               </router-link>
             </a>
             <a href="javascript:;" class="Service-item">
-              <div class="item-image">
-                <img src="../assets/icon-tag002.png" alt />
-              </div>
-              <h3 class="item-title">教育机构库</h3>
-              <div class="item-text">提供国际教育类服务机构和服务提供商的详细信息</div>
-              <span class="item-link">立即进入</span>
+                <router-link to="./company">
+                    <div class="item-image">
+                        <img src="../assets/icon-tag002.png" alt />
+                    </div>
+                    <h3 class="item-title">教育机构库</h3>
+                    <div class="item-text">提供国际教育类服务机构和服务提供商的详细信息</div>
+                    <span class="item-link">立即进入</span>
+                </router-link>
             </a>
             <a href="javascript:;" class="Service-item">
-              <div class="item-image">
-                <img src="../assets/icon-tag003.png" alt />
-              </div>
-              <h3 class="item-title">教育人才库</h3>
-              <div class="item-text">可以上传个人简历进入国际教育人才储备库</div>
-              <span class="item-link">立即进入</span>
+                <router-link to="./talent">
+                    <div class="item-image">
+                        <img src="../assets/icon-tag003.png" alt />
+                    </div>
+                    <h3 class="item-title">教育人才库</h3>
+                    <div class="item-text">可以上传个人简历进入国际教育人才储备库</div>
+                    <span class="item-link">立即进入</span>
+                </router-link>
             </a>
             <a href="javascript:;" class="Service-item">
-              <div class="item-image">
-                <img src="../assets/icon-tag004.png" alt />
-              </div>
-              <h3 class="item-title">项目数据库</h3>
-              <div class="item-text">为国际学校和机构提供最权威的行业数据</div>
-              <span class="item-link">立即进入</span>
+                <router-link to="./project">
+                    <div class="item-image">
+                        <img src="../assets/icon-tag004.png" alt />
+                    </div>
+                    <h3 class="item-title">项目数据库</h3>
+                    <div class="item-text">为国际学校和机构提供最权威的行业数据</div>
+                    <span class="item-link">立即进入</span>
+                </router-link>
             </a>
             <a href="javascript:;" class="Service-item">
-              <div class="item-image">
-                <img src="../assets/icon-tag005.png" alt />
-              </div>
-              <h3 class="item-title">数据可视化</h3>
-              <div class="item-text">收集整理大量数据分析数据直观展示</div>
-              <span class="item-link">立即进入</span>
+                <router-link to="./visible">
+                    <div class="item-image">
+                        <img src="../assets/icon-tag005.png" alt />
+                    </div>
+                    <h3 class="item-title">数据可视化</h3>
+                    <div class="item-text">收集整理大量数据分析数据直观展示</div>
+                    <span class="item-link">立即进入</span>
+                </router-link>
             </a>
           </div>
         </div>
@@ -135,7 +143,7 @@
             </p>
             <ul>
               <li @click="toDetail(v.id)">{{v.schoolName | ellipsisName}}</li>
-              <li>课程：美国课程</li>
+              <li>{{v.course | isNull}}</li>
             </ul>
           </div>
         </div>
@@ -371,6 +379,13 @@ export default {
         return value.slice(0, 28) + "...";
       }
       return value;
+    },
+    isNull(msg){
+        if(msg=="" || msg=="无"){
+            return "暂无"
+        }else{
+            return msg
+        }
     }
   }
 };
