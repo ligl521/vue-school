@@ -557,7 +557,7 @@ export default {
                 if(this.ruleForm.training[i].trainName == ""){
                     this.ruleForm.training[i].trainName="0"
                     this.ruleForm.training[i].trainMajor="0"
-                    this.ruleForm.training[i].textarea="0"
+                    this.ruleForm.training[i].trainDate="0"
                 }else{
                     for (var j in this.ruleForm.training[i].trainDate){
                         this.ruleForm.training[i].trainDate[j]=this.formDataTime(this.ruleForm.training[i].trainDate[j])

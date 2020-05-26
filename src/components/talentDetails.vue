@@ -258,6 +258,7 @@ export default {
         width: 100px;
         height: 100px;
         border-radius: 50%;
+        box-shadow: 0 0 6px #000;
       }
     }
   }

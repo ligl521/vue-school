@@ -57,7 +57,7 @@
               <span>{{
                 item.expectedWork == ""||item.expectedWork=="0" ? "无" : item.expectedWork
               }}</span>
-              &nbsp;&nbsp;|&nbsp;&nbsp;<span>{{ item.expreience==""||item.expreience=="0"?"无": item.expreience}}</span>
+              &nbsp;&nbsp;|&nbsp;&nbsp;<span>工作年限：{{ item.expreience==""||item.expreience=="0"?"无": item.expreience}}</span>
               &nbsp;&nbsp;|&nbsp;&nbsp;<span>{{ item.highEducation==""||item.highEducation=="0"?"无": item.highEducation}}</span>
               &nbsp;&nbsp;|&nbsp;&nbsp;
               <span
@@ -238,7 +238,6 @@ export default {
           border-radius: 50px;
           box-shadow: 0 0 6px #000;
           padding: 4px;
-          border: 2px solid #f5f5f5;
         }
         p {
           display: block;
@@ -265,6 +264,7 @@ export default {
             font-size: 18px;
             color: rgb(33, 79, 136);
             cursor: pointer;
+            vertical-align: baseline;
           }
         }
       }
