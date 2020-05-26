@@ -13,20 +13,7 @@
           <el-step title="建设&投资"></el-step>
         </el-steps>
       </div>
-    <div class="uploadlogo">
-        <el-upload
-            class="avatar-uploader"
-            action="http://jsonplaceholder.typicode.com/posts/?id=2"
-            :show-file-list="false"
-            ref="uploadlogo"
-            :before-upload="beforeAvatarUpload"
-            :on-change="handleAvatarChange">
-            <img v-if="form.schoolLogo" :src="form.schoolLogo" class="avatar">
-            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-        </el-upload>
-        <el-button size="small" type="primary">上传学校logo图</el-button>
-        <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb(推荐尺寸200*200)</div>
-    </div>
+    
       <!-- form表单 -->
       <div class="addform">
         <el-form :model="form" ref="form" label-width="110px" class="demo-ruleForm" :rules="rules" :inline="true" >
@@ -101,7 +88,7 @@
             <el-form-item label="电话" prop="telephone">
               <el-input v-model="form.telephone" ></el-input>
             </el-form-item>
-            <div class="uploadBanner">
+            <!-- <div class="uploadBanner">
                 <el-upload
                     action="http://jsonplaceholder.typicode.com/posts/?id=1"
                     :limit='5'
@@ -120,7 +107,7 @@
                 </el-upload>
                 <el-button size="small" type="primary">上传学校banner图</el-button>
                 <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，最多5张且不超过2M(推荐尺寸1100*400)</div>
-            </div>
+            </div> -->
           </div>
           <!-- 课程信息 -->
           <div v-else-if="active == 1" class="second">
@@ -554,8 +541,10 @@ export default {
             getSchoolAdd(
               this.form
             ).then(res => {
+              console.log(res)
               if(res.code == "0"){
                 this.formShow = false;
+                this.$router.push({ path: "schoolUpload",query:{id:res.data}});
               }else{
                 this.active =  3;
                 this.$message({
@@ -585,13 +574,6 @@ export default {
         this.completeBtn = "下一步";
       }
     },
-    //城市二级联动
-    // handleChange (e,form,thisAreaCode) {
-    //   console.log(CodeToText[e[0]])
-    //   this.thisAreaCode = this.$refs['cascaderAddr'].currentLabels;
-    //   this.form.province = this.thisAreaCode[0];
-    //   this.form.town = this.thisAreaCode[1];
-    // },
     //提交成功后返回操作
     returnBtn(num){
       if(num == "1"){
@@ -606,26 +588,26 @@ export default {
     handleExceed(files, fileList) {
         this.$message.warning(`当前限制选择 5 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
       },
-    handleAvatarChange(file,fileList) {
-        let that = this;
-        this.logofileRaw=this.$refs.uploadlogo.uploadFiles[0].raw
-        this.logofileName=this.$refs.uploadlogo.uploadFiles[0].name
-        let formData = new FormData();
-        formData.append("file",this.logofileRaw,this.logofileName);
-        formData.append("type", "nsi-pc/SchoolLogo");
-        that.axios({
-            url: "https://data.xinxueshuo.cn/nsi-1.0/CommonApi/upload.do",
-            method: "POST", //  这个地方注意
-            data: formData,
-            processData: false,
-            contentType: false
-        }).then(response => {
-            if (response.data.code == 0) {
-                that.form.schoolLogo=response.data.data.url
-                console.log(that.form.schoolLogo)
-            }
-        });
-    },
+    // handleAvatarChange(file,fileList) {
+    //     let that = this;
+    //     this.logofileRaw=this.$refs.uploadlogo.uploadFiles[0].raw
+    //     this.logofileName=this.$refs.uploadlogo.uploadFiles[0].name
+    //     let formData = new FormData();
+    //     formData.append("file",this.logofileRaw,this.logofileName);
+    //     formData.append("type", "nsi-pc/SchoolLogo");
+    //     that.axios({
+    //         url: "https://data.xinxueshuo.cn/nsi-1.0/CommonApi/upload.do",
+    //         method: "POST", //  这个地方注意
+    //         data: formData,
+    //         processData: false,
+    //         contentType: false
+    //     }).then(response => {
+    //         if (response.data.code == 0) {
+    //             that.form.schoolLogo=response.data.data.url
+    //             console.log(that.form.schoolLogo)
+    //         }
+    //     });
+    // },
     handleBannerChange(file,fileList){
          // 输出
      for(var i=0;i<this.$refs.uploada.uploadFiles.length;i++){
@@ -947,30 +929,5 @@ export default {
       width: 1200px;
       // background: red;
     }
-  }
-</style>
-<style>
-  .avatar-uploader .el-upload {
-    border: 1px dashed #d9d9d9;
-    border-radius: 6px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-  }
-  .avatar-uploader .el-upload:hover {
-    border-color: #409EFF;
-  }
-  .avatar-uploader-icon {
-    font-size: 28px;
-    color: #8c939d;
-    width: 148px;
-    height: 148px;
-    line-height: 148px;
-    text-align: center;
-  }
-  .avatar {
-    width: 148px;
-    height: 148px;
-    display: block;
   }
 </style>
