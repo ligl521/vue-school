@@ -83,5 +83,7 @@ export const projectAdd = p => post('/project/add_project.do', p)
 export const timeChange = p => post('/manager/newTalent/udpate.do', p)
 //个人简历更新
 export const resumeUpdate = p => post('/newTalent/update.do', p)
+// 更新学校库
+export const schoolUpdate = p => post('/new/school/update.do', p)
 
 

@@ -169,7 +169,7 @@
         <h4>工作经历</h4>
         <div
           v-for="(domain, index) in ruleForm.work_experience_text"
-          :key="domain.key"
+          :key="index"
         >
           <el-form-item
             label="公司名称"
@@ -304,7 +304,7 @@
           <i class="el-icon-circle-plus-outline"></i>添加教育背景
         </p>
         <h4>培训经历</h4>
-        <div v-for="(train, index) in ruleForm.training" :key="train.key">
+        <div v-for="(train, index) in ruleForm.training" :key="index">
           <el-form-item
             label="培训名称"
           >

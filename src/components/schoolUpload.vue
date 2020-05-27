@@ -3,12 +3,12 @@
     <div class="uploadTitle">
       <h2>学校信息 提交成功</h2>
       <h4>
-        您还可以上传学校logo和banner图，让我们更了解这所学校
+        您还可以上传学校logo和环境图，让我们更了解这所学校
       </h4>
       <div class="uploadlogo">
         <el-upload
             class="avatar-uploader"
-            action="http://jsonplaceholder.typicode.com/posts/?id=2"
+            action="https://jsonplaceholder.typicode.com/posts/"
             :show-file-list="false"
             ref="uploadlogo"
             :before-upload="beforeAvatarUpload"
@@ -43,18 +43,6 @@
                 @imgLoad="imgLoad"
             ></vueCropper>
             </div>
-            <div
-            class="show-preview"
-            :style="{
-                overflow: 'hidden',
-                margin: '0 auto'
-            }"
-            >
-            <div :style="previews.div" class="preview">
-                <img :src="previews.url" :style="previews.img" />
-            </div>
-            <h4 style="margin-top: 20px">头像预览</h4>
-            </div>
         </div>
         <div class="footer-btn">
             <el-button class="ruleForm" type="primary" @click="down('blob')"
@@ -64,10 +52,7 @@
       </div>
       <div class="scope-btn">
            <div class="uploadBanner">
-               <label for="uploads">
-                    <!-- <el-button  type="primary">点击上传banner图</el-button> -->
-                    点击上传banner图
-               </label>
+               <label for="uploads">点击上传学校环境图</label>
                <p>只能上传jpg/png文件，最多5张且不超过2M(推荐尺寸1100*400)</p>
                 <input
                 type="file"
@@ -76,28 +61,11 @@
                 accept="image/png, image/jpeg, image/gif, image/jpg"
                 @change="uploadImg($event, 1)"
                 />
-                <img v-for="(item,index) in bannerBox" :key="index" :src="item.url" class="banner_img" />
-                <!-- <el-upload
-                    action="http://jsonplaceholder.typicode.com/posts/?id=1"
-                    list-type="picture-card"
-                    :limit='5'
-                    ref="uploada"
-                    :on-remove="handleRemove"
-                    :on-exceed="handleExceed"
-                    :on-change="changeBanner"
-                    :on-success="bannerSuccess"
-                    :before-upload="beforeBannerUpload"
-                >   
-                    <i class="el-icon-plus"></i>
-                </el-upload>
-                <div slot="file" >
-                        <img v-for="(item,index) in bannerBox" :key="index" :src="item.url" alt="" >
-                    </div>
-                <div slot="tip" class="el-upload__tip">学校banner图，只能上传jpg/png文件，最多5张且不超过2M(推荐尺寸1100*400)</div> -->
+                <img v-for="(item,index) in bannerBox" :key="index" :src="item.url" class="banner_img" v-if="index<5"/>
             </div>
       </div>
       <div class="submit">
-        <el-button  type="primary">提交</el-button>
+        <el-button  type="primary" @click="submit">提交</el-button>
       </div>
     </div>
     <schoolfooter />
@@ -105,6 +73,7 @@
 </template>
 <script>
 import schoolfooter from "./schoolFooter";
+import {schoolUpdate} from '@/api/api'
 export default {
   components: {
     schoolfooter
@@ -112,6 +81,11 @@ export default {
   data() {
     return {
         schoolLogo:"",
+        schoolShowOne:"",  //大图1
+        schoolShowTwo:"",  //大图2
+        schoolShowThird:"",  //大图3
+        schoolShowFour:"",  //大图4
+        schoolShowFive:"",  //大图5
         active: false,
         previews: {},
         option: {
@@ -124,11 +98,10 @@ export default {
             original: false,
             canMoveBox: true,
             autoCrop: true,
-            autoCropWidth: 200,
-            autoCropHeight: 200,
+            autoCropWidth: 1100,
+            autoCropHeight: 400,
             fixedBox: true
         },
-        fileList:[],
         schoolBanner:{},
         bannerBox:[],
     };
@@ -147,30 +120,15 @@ export default {
     realTime(data) {
       this.previews = data;
     },
-    // changeBanner(file,fileList){
-    //     console.log(file)
-    //   this.active = true;
-    //   this.option.img=file.url
-    //   this.fileName=file.name
-
-    // },
-    // bannerSuccess(response, file, fileList){
-    //     console.log(response)
-    //     console.log(file)
-    //     console.log(fileList)
-
-    //     this.active = true;
-    //   this.option.img=file.url
-    //   this.fileName=file.name
-    // },
-     uploadImg(e, num) {
+    uploadImg(e, num) {
       console.log(e)
       this.active = true;
       var _this = this;
       var file = e.target.files[0];
+      console.log(file.name)
       _this.fileName = file.name;
-      if (!/\.(gif|jpg|jpeg|png|bmp|GIF|JPG|PNG)$/.test(e.target.value)) {
-        alert("图片类型必须是.gif,jpeg,jpg,png,bmp中的一种");
+      if (!/\.(jpg|png|JPG|PNG)$/.test(e.target.value)) {
+        alert("图片类型必须是jpg,png中的一种");
         return false;
       }
       var reader = new FileReader();
@@ -212,6 +170,32 @@ export default {
                     that.schoolBanner=response.data.data
                     that.active=false
                     that.bannerBox.push((that.schoolBanner))
+                    if(that.bannerBox.length==1){
+                        that.schoolShowOne=that.bannerBox[0].url
+                    }else if(that.bannerBox.length==2){
+                        that.schoolShowOne=that.bannerBox[0].url
+                        that.schoolShowTwo=that.bannerBox[1].url
+                    }else if(that.bannerBox.length==3){
+                        that.schoolShowOne=that.bannerBox[0].url
+                        that.schoolShowTwo=that.bannerBox[1].url
+                        that.schoolShowThird=that.bannerBox[2].url
+                    }else if(that.bannerBox.length==4){
+                        that.schoolShowOne=that.bannerBox[0].url
+                        that.schoolShowTwo=that.bannerBox[1].url
+                        that.schoolShowThird=that.bannerBox[2].url
+                        that.schoolShowFour=that.bannerBox[3].url
+                    }else if(that.bannerBox.length==5){
+                         that.schoolShowOne=that.bannerBox[0].url
+                        that.schoolShowTwo=that.bannerBox[1].url
+                        that.schoolShowThird=that.bannerBox[2].url
+                        that.schoolShowFour=that.bannerBox[3].url
+                        that.schoolShowFive=that.bannerBox[4].url
+                    }else if(that.bannerBox.length>5){
+                        this.$message({
+                            message: '只能上传五张哦',
+                            type: 'warning'
+                        });
+                    }
                 });
                 console.log(that.schoolBanner)
                 console.log(that.bannerBox)
@@ -219,27 +203,6 @@ export default {
 
 
       }
-    },
-    handleRemove(file) {
-        console.log(file);
-    },
-    handleExceed(files, fileList) {
-        this.$message.warning(`当前限制选择 5 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
-    },
-    beforeBannerUpload(file) {
-        this.active = true;
-      this.option.img=file.url
-      this.fileName=file.name
-        const isJPG = file.type === 'image/jpeg'
-        const isPNG = file.type === 'image/png';
-        const isLt2M = file.size / 1024 / 1024 < 2;
-        if (!isJPG && !isPNG) {
-            this.$message.error('上传banner图片只能是JPG或者PNG格式!');
-        }
-        if (!isLt2M) {
-            this.$message.error('上传banner图片大小不能超过 2Mb!');
-        }
-            return ( isJPG || isPNG ) && isLt2M;
     },
     beforeAvatarUpload(file) {
         const isJPG = file.type === 'image/jpeg'
@@ -272,6 +235,23 @@ export default {
                 console.log(that.schoolLogo)
             }
         });
+    },
+    submit(){
+        let that=this
+        schoolUpdate({
+            id:this.$route.query.id,
+            schoolLogo:that.schoolLogo, //学校logo
+            schoolShowOne:that.schoolShowOne,  //大图1
+            schoolShowTwo:that.schoolShowTwo,  //大图2
+            schoolShowThird:that.schoolShowThird,  //大图3
+            schoolShowFour:that.schoolShowFour,  //大图4
+            schoolShowFive:that.schoolShowFive,  //大图5
+        }).then(res=>{
+            if(res.code==0){
+                alert("已提交成功、请等待审核")
+                this.$router.push({path: "school"});
+            }
+        })
     }
 
   },
@@ -282,12 +262,12 @@ export default {
 <style lang="less" scoped>
 .schoolUpload{
     background: #f5f5f5;
-    padding:40px 0 0;
+    padding:20px 0;
     .uploadTitle{
-        width: 900px;
+        width: 1200px;
         background-color: #fff;
         margin: 0 auto;
-        padding: 40px 90px;
+        padding: 20px 0px;
         h2 {
             text-align: center;
             margin: 20px 0;
@@ -301,7 +281,7 @@ export default {
         }
         .uploadlogo{
             display: flex;
-            width:450px;
+            width:500px;
             margin:0 auto;
             .avatar-uploader{
                 .el-upload {
@@ -351,8 +331,8 @@ export default {
             position: fixed;
             left: 50%;
             top: 20%;
-            width: 700px;
-            height: 450px;
+            width: 1200px;
+            height: 550px;
             z-index: 2222;
             transform: translateX(-50%);
             background-color: #fff;
@@ -384,10 +364,13 @@ export default {
         .cropper-content {
             text-align: center;
             .cropper {
-                margin: 46px 60px 0 0;
-                display: inline-block;
-                width: 240px;
-                height: 240px;
+                margin-top:20px;
+                width:1100px;
+                height:400px;
+                // margin: 46px 60px 0 0;
+                // display: inline-block;
+                // width: 240px;
+                // height: 240px;
             }
             .show-preview {
                 display: inline-block;
@@ -423,11 +406,11 @@ export default {
             }
         }
         .banner_img{
-            width:200px;
-            height:200px;
+            width:200px; 
+            height:120px;
             border:1px dashed #ccc;
             border-radius: 5px;
-            margin:20px;
+            margin:20px 10px;
             background:#ccc;
         }
     }
