@@ -5,16 +5,15 @@
       <div class="companyBox">
         <div class="companyGroup">
           <div class="searchBox">
-            <el-autocomplete
+            <el-input  style="width: 570px"
               placeholder="请输入内容"
               v-model="state"
               @keyup.enter.native="searchCompany"
-              :trigger-on-focus="false"
             >
               <el-button @click="searchCompany" slot="append"
                 ><i class="iconfont icon-sousuo"></i
               ></el-button>
-            </el-autocomplete>
+            </el-input>
           </div>
           <p class="homeBannerP"  >
             <span class="search">热门搜索：</span>
