@@ -68,7 +68,7 @@
                     </el-option>
             </el-select>
             </el-form-item>
-             <el-form-item label="成立时间" prop="foundingTime" id="addFlex">
+             <el-form-item label="成立时间(年)" prop="foundingTime" id="addFlex">
               <el-input v-model.number="form.foundingTime" ></el-input>
             </el-form-item>
             <el-form-item label="详细地址" prop="address" id="addFlex">
@@ -91,32 +91,33 @@
           </div>
           <!-- 课程信息 -->
           <div v-else-if="active == 1" class="second">
-            <el-form-item label="学费">
+            <el-form-item label="学费(年)">
                 <div class="tuitionSchool">
                   <div class="tuition">
-                    <div><span>幼儿园</span><el-input v-model="form.oneTuition"></el-input></div>
+                    <div class="grade"><span>幼儿园</span><el-input v-model="form.oneTuition"></el-input></div>
                     <div class="grade"><span>初中</span><el-input v-model="form.thirdTuition" ></el-input></div>
                   </div>
                   <div class="tuition">
-                    <div><span>小学</span><el-input v-model="form.twoTuition"></el-input></div>
+                    <div class="grade"><span>小学</span><el-input v-model="form.twoTuition"></el-input></div>
                     <div class="grade"><span>高中</span><el-input v-model="form.fourTuition" ></el-input></div>
                   </div>
                 </div>
+                <p class="tip">学费请填入数字，整数 例：150000</p>
+                
             </el-form-item>
             <el-form-item label="人数">
                 <div class="tuitionSchool">
                   <div class="tuition">
-                    <div><span>幼儿园</span><el-input  v-model="form.oneTuition"></el-input></div>
-                    <div class="grade"><span>初中</span><el-input  v-model="form.oneTuition"></el-input></div>
+                    <div class="grade"><span>幼儿园</span><el-input  v-model="form.studentNumOne"></el-input></div>
+                    <div class="grade"><span>初中</span><el-input  v-model="form.studentNumTwo"></el-input></div>
                   </div>
                   <div class="tuition">
-                    <div><span>小学</span><el-input v-model="form.oneTuition"></el-input></div>
-                    <div class="grade"><span>高中</span><el-input  v-model="form.oneTuition"></el-input></div>
+                    <div class="grade"><span>小学</span><el-input v-model="form.studentNumThird"></el-input></div>
+                    <div class="grade"><span>高中</span><el-input  v-model="form.studentNumFour"></el-input></div>
                   </div>
-                  <!-- <i>格式为数字，整数 例：150000</i> -->
                 </div>
             </el-form-item>
-            <el-form-item label="国际课程" prop="course">
+            <el-form-item label="国际课程" prop="course" class="internationCourse">
               <div class="addFlexTwo">
                 <el-input v-model="form.course"></el-input>
               </div>
@@ -145,7 +146,7 @@
               </el-checkbox-group>
             </el-form-item>
 
-            <el-form-item label="认证&组织" prop="authentication">
+            <el-form-item label="认证&组织" prop="authentication"  class="internationCourse">
                 <el-input v-model="form.authentication"></el-input>
               <el-checkbox-group v-model="inputCheckboxauthentication">
                 <el-checkbox label="CIE;" name="authentication">CIE</el-checkbox>
@@ -224,7 +225,7 @@
             </el-form-item>
           </div>
           <!-- 完成 -->
-          <div v-else-if="active == 4">wancheng</div>
+          <!-- <div v-else-if="active == 4">wancheng</div> -->
         </el-form>
 
       </div>
@@ -344,6 +345,10 @@ export default {
         twoTuition:"",  //小学学费
         thirdTuition:"",  //初中学费
         fourTuition:"", //高中学费
+        studentNumOne:"",//幼儿园人数
+        studentNumTwo:"",//小学人数
+        studentNumThird	:"",//初中人数
+        studentNumFour:"",//高中人数
         website:"",  //官网
         telephone:"",  //电话
         interCourseFoundedTime:"", //国际学校成立时间
@@ -638,14 +643,22 @@ export default {
         }
       }
     }
+    .tip{
+        color:#a9a9a9;
+        font-size: 12px;
+    }
     .tuitionSchool{
       display: flex;
+      
       /deep/.tuition{
         // line-height: 50px;
         // width: 26% !important;
         .grade{
             margin-top:10px;
             margin-right:10px;
+            &:first-of-type{
+                margin-top:0;
+            }
         }
         span{
           display:inline-block;
@@ -694,7 +707,7 @@ export default {
                 }
             }
             .second{
-                .el-form-item {
+                .internationCourse {
                     margin: 15px 40px;
                     .el-select {
                         width: 265px !important;
@@ -704,6 +717,8 @@ export default {
                             width: 265px !important;
                         }
                     }
+
+                    
                 }
             }
             .third{
@@ -758,10 +773,27 @@ export default {
         // width: 100px !important;
       }
     }
+    
   }
+ 
   @media screen and(min-width: 1200px){
     .schoolAdd{
       width: 1200px;
     }
+    
   }
 </style>
+<style>
+    .el-form-item.is-success .el-input__inner{
+        border:1px solid #ccc !important;
+        border-color:#ccc !important;
+    }
+    .el-form-item.is-success .el-textarea__inner{
+        border:1px solid #ccc !important;
+        border-color:#ccc !important;
+    }
+    .el-input.is-active .el-input__inner, .el-input__inner:focus{
+        border-color:#409EFF !important;
+    }
+</style>
+

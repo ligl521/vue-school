@@ -1,72 +1,74 @@
 <template>
-  <div class="schoolUpload">
-    <div class="uploadTitle">
-      <h2>学校信息 提交成功</h2>
-      <h4>
-        您还可以上传学校logo和环境图，让我们更了解这所学校
-      </h4>
-      <div class="uploadlogo">
-        <el-upload
-            class="avatar-uploader"
-            action="https://jsonplaceholder.typicode.com/posts/"
-            :show-file-list="false"
-            ref="uploadlogo"
-            :before-upload="beforeAvatarUpload"
-            :on-success="beforeUpload">
-            <img v-if="schoolLogo" :src="schoolLogo" class="avatar">
-            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-        </el-upload>
-        <div slot="tip" class="el-upload__tip upload-right">学校logo图，只能上传jpg/png文件，且不超过500kb(推荐尺寸200*200)</div>
-      </div>
-      <el-divider></el-divider>
-      <div id="cover" :class="active ? 'active' : 'hide'"></div>
-      <div :class="active ? 'show' : 'hide'">
-        <h3 class="show_title">头像裁剪</h3>
-        <i class="el-icon-close guanbi" @click="close"></i>
-        <div class="cropper-content">
-            <div class="cropper">
-            <vueCropper
-                ref="cropper"
-                :img="option.img"
-                :outputSize="option.size"
-                :outputType="option.outputType"
-                :info="true"
-                :full="option.full"
-                :canMove="option.canMove"
-                :canMoveBox="option.canMoveBox"
-                :original="option.original"
-                :autoCrop="option.autoCrop"
-                :autoCropWidth="option.autoCropWidth"
-                :autoCropHeight="option.autoCropHeight"
-                :fixedBox="option.fixedBox"
-                @realTime="realTime"
-                @imgLoad="imgLoad"
-            ></vueCropper>
+    <div>
+    <div class="schoolUpload">
+        <div class="uploadTitle">
+        <h2>学校信息 提交成功</h2>
+        <h4>
+            您还可以上传学校logo和环境图，让我们更了解这所学校
+        </h4>
+        <div class="uploadlogo">
+            <el-upload
+                class="avatar-uploader"
+                action="https://jsonplaceholder.typicode.com/posts/"
+                :show-file-list="false"
+                ref="uploadlogo"
+                :before-upload="beforeAvatarUpload"
+                :on-success="beforeUpload">
+                <img v-if="schoolLogo" :src="schoolLogo" class="avatar">
+                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            </el-upload>
+            <div slot="tip" class="el-upload__tip upload-right">学校logo图，只能上传jpg/png文件，且不超过500kb(推荐尺寸200*200)</div>
+        </div>
+        <el-divider></el-divider>
+        <div id="cover" :class="active ? 'active' : 'hide'"></div>
+        <div :class="active ? 'show' : 'hide'">
+            <h3 class="show_title">图片裁剪</h3>
+            <i class="el-icon-close guanbi" @click="close"></i>
+            <div class="cropper-content">
+                <div class="cropper">
+                <vueCropper
+                    ref="cropper"
+                    :img="option.img"
+                    :outputSize="option.size"
+                    :outputType="option.outputType"
+                    :info="true"
+                    :full="option.full"
+                    :canMove="option.canMove"
+                    :canMoveBox="option.canMoveBox"
+                    :original="option.original"
+                    :autoCrop="option.autoCrop"
+                    :autoCropWidth="option.autoCropWidth"
+                    :autoCropHeight="option.autoCropHeight"
+                    :fixedBox="option.fixedBox"
+                    @realTime="realTime"
+                    @imgLoad="imgLoad"
+                ></vueCropper>
+                </div>
+            </div>
+            <div class="footer-btn">
+                <el-button class="ruleForm" type="primary" @click="down('blob')"
+                >提交</el-button
+                >
             </div>
         </div>
-        <div class="footer-btn">
-            <el-button class="ruleForm" type="primary" @click="down('blob')"
-            >提交</el-button
-            >
+        <div class="scope-btn">
+            <div class="uploadBanner">
+                <label for="uploads">点击上传学校环境图</label>
+                <p>只能上传jpg/png文件，最多5张且不超过2M(推荐尺寸1100*400)</p>
+                    <input
+                    type="file"
+                    id="uploads"
+                    style="position:absolute; clip:rect(0 0 0 0);"
+                    accept="image/png, image/jpeg, image/gif, image/jpg"
+                    @change="uploadImg($event, 1)"
+                    />
+                    <img v-for="(item,index) in bannerBox" :key="index" :src="item.url" class="banner_img" v-if="index<5"/>
+                </div>
         </div>
-      </div>
-      <div class="scope-btn">
-           <div class="uploadBanner">
-               <label for="uploads">点击上传学校环境图</label>
-               <p>只能上传jpg/png文件，最多5张且不超过2M(推荐尺寸1100*400)</p>
-                <input
-                type="file"
-                id="uploads"
-                style="position:absolute; clip:rect(0 0 0 0);"
-                accept="image/png, image/jpeg, image/gif, image/jpg"
-                @change="uploadImg($event, 1)"
-                />
-                <img v-for="(item,index) in bannerBox" :key="index" :src="item.url" class="banner_img" v-if="index<5"/>
-            </div>
-      </div>
-      <div class="submit">
-        <el-button  type="primary" @click="submit">提交</el-button>
-      </div>
+        <div class="submit">
+            <el-button  type="primary" @click="submit">提交</el-button>
+        </div>
+        </div>
     </div>
     <schoolfooter />
   </div>
@@ -261,11 +263,12 @@ export default {
 
 <style lang="less" scoped>
 .schoolUpload{
+    padding:50px 0;
     background: #f5f5f5;
-    padding:20px 0;
     .uploadTitle{
         width: 1200px;
         background-color: #fff;
+        
         margin: 0 auto;
         padding: 20px 0px;
         h2 {
@@ -306,6 +309,7 @@ export default {
                     width: 148px;
                     height: 148px;
                     display: block;
+                    border: 1px solid #ccc;
                 }
             }
             .el-upload__tip{
@@ -331,7 +335,7 @@ export default {
             position: fixed;
             left: 50%;
             top: 20%;
-            width: 1200px;
+            width: 1140px;
             height: 550px;
             z-index: 2222;
             transform: translateX(-50%);
