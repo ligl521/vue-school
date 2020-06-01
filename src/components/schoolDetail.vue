@@ -134,10 +134,7 @@
                 <el-col :span="12">
                   <div class="grid-content bg-purple">
                     <p class="fee">
-                      学费：<span>{{ schoolDetail.oneTuition | isZero }}</span
-                      ><span>{{ schoolDetail.twoTuition | isZero }}</span
-                      ><span>{{ schoolDetail.thirdTuition | isZero }}</span
-                      ><span>{{ schoolDetail.fourTuition | isZero }}</span>
+                      学费：<span v-for="(feeNum,index) in feeArray" :key="index" v-if="index<gradeSplit.length-1">{{ feeNum.fee | isZero }}</span>
                     </p>
                   </div>
                 </el-col>
@@ -177,7 +174,7 @@
                     <p>
                       地址：<span>{{ schoolDetail.province | isNull }}</span
                       ><span>{{ schoolDetail.town | isNull }}</span
-                      ><span>{{ schoolDetail.address | isNull }}</span>
+                      ><span style="line-height:22px">{{ schoolDetail.address | isNull }}</span>
                     </p>
                   </div>
                 </el-col>
@@ -571,6 +568,12 @@ export default {
       activityBannerH: "",
       approveSplit: [], // 分割
       gradeSplit: [],
+      feeArray:[
+        {fee:""},
+        {fee:""},
+        {fee:""},
+        {fee:""},
+      ],
       courseSplit: [],
       countrySplit: [],
       Isfeature: true, // 办学特色
@@ -696,6 +699,10 @@ export default {
         that.foreignTeacherNum = that.schoolDetail.foreignTeacherNum;
         that.nationalityOfStudents = that.schoolDetail.nationalityOfStudents;
         that.teacherStuRatio = parseInt(that.schoolDetail.teacherStuRatio);
+        that.feeArray[0].fee=that.schoolDetail.oneTuition
+        that.feeArray[1].fee=that.schoolDetail.twoTuition
+        that.feeArray[2].fee=that.schoolDetail.thirdTuition
+        that.feeArray[3].fee=that.schoolDetail.fourTuition
         // 师资力量
         if (
           (that.schoolDetail.students == 0) &
@@ -777,6 +784,7 @@ export default {
         } else {
           that.gradeSplit = grade.split(";");
         }
+
         // 课程分割
         var course = res.data.course;
         if (course.indexOf("；") != -1) {
@@ -1038,6 +1046,8 @@ export default {
             toWebsite(web){
                 if(web.substr(0, 7).toLowerCase() == "http://"){
                     window.open(web,"_blank")
+                }else if(web=='0'){
+                    return false
                 }else{
                     window.open("http://"+web,"_blank")
                 }
@@ -1128,11 +1138,14 @@ export default {
     },
     // 点击跳转到学校网站 判断是否带有http
     toWebsite(web) {
-      if (web.substr(0, 7).toLowerCase() == "http://") {
-        window.open(web, "_blank");
-      } else {
-        window.open("http://" + web, "_blank");
-      }
+        console.log(web)
+       if(web.substr(0, 7).toLowerCase() == "http://"){
+            window.open(web,"_blank")
+        }else if(web=='0'){
+            return false
+        }else{
+            window.open("http://"+web,"_blank")
+        }
     },
     // 点击展开更多
     lookMore() {
@@ -1383,6 +1396,7 @@ export default {
 .basic .el-row p span {
   font-weight: 600;
   margin-right: 10px;
+  
 }
 
 .basic .grade span,

@@ -1,5 +1,11 @@
 <template>
   <div id="heads" class="heads hidden-xs-only">
+    <div class="oldVersion" v-show="showOldVersion">
+        <p>
+            <span  @click="toOldVersion">您现在访问的是新版国际学校四库全书，如需访问旧版，<span style="text-decoration: underline;">请点击此处</span></span> 
+            <span class="closeOldVersion"  @click="closeOldVersion">×</span>
+        </p>
+    </div>
     <el-menu
       mode="horizontal"
       :default-active="$route.path"
@@ -242,6 +248,7 @@ import {
 export default {
   data() {
     return {
+      showOldVersion:true,
       loading:true,
       dialogVisible: false, //登录的弹框
       dialogVisible1: false, //扫码未绑定的弹框
@@ -323,7 +330,7 @@ export default {
       this.userTurename = decodeURI(this.getCookie("User_TureName")); //名字
       this.WechatLogin = true;
       this.headimgurl = false;
-      if (this.getCookie("UserImg") == null) {
+      if (this.getCookie("UserImg") == null || this.getCookie("UserImg") == '0') {
         //用户头像
         this.imgurl = require("../assets/tx.png");
       } else {
@@ -333,6 +340,12 @@ export default {
     console.log(this.userTurename)
   },
   methods: {
+    toOldVersion(){
+        window.open("http://data.xinxueshuo.cn/nsi/other/index.html","_blank")
+    },
+    closeOldVersion(){
+        this.showOldVersion=false
+    },
     sendPW() {
       forgetPwd({
         UserMail: this.ruleFormCode.inputMail
@@ -626,6 +639,25 @@ export default {
 };
 </script>
 <style scoped>
+.oldVersion{
+    text-align: center;
+    padding:10px 0;
+    background-color: #0073ff;
+    color: #fff;
+}
+.oldVersion span:first-of-type{
+    cursor: pointer;
+}
+.oldVersion .closeOldVersion{
+    float:right;
+    margin-right:20px;
+    cursor: pointer;
+    border: 1px solid #fff;
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+    line-height: 12px;
+}
 .forgetPwd .el-tab-pane .el-form {
   margin-top: 20px;
 }

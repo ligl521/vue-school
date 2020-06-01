@@ -21,13 +21,13 @@
                 <p @click="enterAdd">马上加入</p>
             </div>
         </div>
-        <div class="companyList" v-for="(item,index) in list" :key="index" v-loading="loading">
+        <div class="companyList" v-for="(item,index) in list" :key="index" v-loading="loading" @click="enterCompanyDeatil(item.id)">
             <div class="companyLogo">
                 <img :src='item.institutionLogo==0 ||item.institutionLogo==null? "https://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png": item.institutionLogo' >
             </div>
             <div class="companyContent">
                 <div class="contentLeft">
-                    <p @click="enterCompanyDeatil(item.id)">{{item.name}}</p>
+                    <p>{{item.name}}</p>
                     <p>标签：<span v-for="(everylabel,index) of item.label" :key="index" class="label">{{everylabel | isZero}}</span></p>
                     <p>类型：{{item.type}}</p>
                 </div>

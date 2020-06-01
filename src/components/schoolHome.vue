@@ -53,7 +53,7 @@
       </ul>
       <p class="homeBannerP">
         <a href="https://www.xinxueshuo.cn/data/dist/index.html#/schoolDetail?id=100139" target="_blank">北京京西学校</a>
-        <a href="https://www.xinxueshuo.cn/data/dist/index.html#/schoolDetail?id=101388" target="_blank">北京乐成国际学校</a>
+        <a href="https://www.xinxueshuo.cn/data/dist/index.html#/schoolDetail?id=100048" target="_blank">北京乐成国际学校</a>
         <a href="https://www.xinxueshuo.cn/data/dist/index.html#/schoolDetail?id=100047" target="_blank">北京BISS国际学校</a>
         <a href="https://www.xinxueshuo.cn/data/dist/index.html#/schoolDetail?id=100053" target="_blank">海嘉国际双语学校</a>
         <br />
@@ -186,7 +186,7 @@
               <li>
                 <a :href="v.articleUrl" target="_blank">{{v.title | ellschoolHomeTitle}}</a>
               </li>
-              <li>{{v.summary}}</li>
+              <li>{{v.summary }}</li>
             </ul>
           </div>
         </div>
@@ -380,9 +380,12 @@ export default {
       }
       return value;
     },
+    // 课程
     isNull(msg){
         if(msg=="" || msg=="无"){
             return "暂无"
+        }else if(msg.length>15){
+            return msg.slice(0, 12) + "...";
         }else{
             return msg
         }
