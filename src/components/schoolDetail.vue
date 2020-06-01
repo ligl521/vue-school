@@ -1046,6 +1046,8 @@ export default {
             toWebsite(web){
                 if(web.substr(0, 7).toLowerCase() == "http://"){
                     window.open(web,"_blank")
+                }else if(web=='0'){
+                    return false
                 }else{
                     window.open("http://"+web,"_blank")
                 }
@@ -1136,11 +1138,14 @@ export default {
     },
     // 点击跳转到学校网站 判断是否带有http
     toWebsite(web) {
-      if (web.substr(0, 7).toLowerCase() == "http://") {
-        window.open(web, "_blank");
-      } else {
-        window.open("http://" + web, "_blank");
-      }
+        console.log(web)
+       if(web.substr(0, 7).toLowerCase() == "http://"){
+            window.open(web,"_blank")
+        }else if(web=='0'){
+            return false
+        }else{
+            window.open("http://"+web,"_blank")
+        }
     },
     // 点击展开更多
     lookMore() {
