@@ -148,7 +148,7 @@
                     <p>
                       网址：<span @click="toWebsite(schoolDetail.website)">{{
                         schoolDetail.website | isZero
-                      }}</span>
+                      }} <img :class="schoolDetail.website ==0? 'hide' : 'lianjie'"  src="../assets/lianjie.png" alt=""></span>
                     </p>
                   </div>
                 </el-col>
@@ -1683,6 +1683,12 @@ export default {
   margin-top: 5px;
   text-decoration: underline;
   color: #214f89;
+}
+.lianjie{
+  display: inline-block;
+  width: 16px;
+  margin-left: 6px;
+  vertical-align: top;
 }
 </style>
 <style>
