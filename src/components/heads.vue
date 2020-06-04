@@ -323,7 +323,7 @@ export default {
       this.userTurename = decodeURI(this.getCookie("User_TureName")); //名字
       this.WechatLogin = true;
       this.headimgurl = false;
-      if (this.getCookie("UserImg") == null) {
+      if (this.getCookie("UserImg") == null || this.getCookie("UserImg") == '0') {
         //用户头像
         this.imgurl = require("../assets/tx.png");
       } else {

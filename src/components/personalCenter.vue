@@ -468,8 +468,8 @@ export default {
             Content:that.checkedBox.join('/')+';'+that.textarea,
             Contact:that.input,
         }).then(res=>{
-            console.log(res)
             alert(res.msg)
+            window.history.go(-1);
         })
     },
     checkPersonnel(){
