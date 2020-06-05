@@ -122,7 +122,7 @@
                     <p>
                       网址：<span @click="toWebsite(schoolDetail.website)">{{
                         schoolDetail.website | isZero
-                      }}</span>
+                      }} <img :class="schoolDetail.website ==0? 'hide' : 'lianjie'"  src="../assets/lianjie.png" alt=""></span>
                     </p>
                   </div>
                 </el-col>
@@ -1035,6 +1035,8 @@ export default {
             toWebsite(web){
                 if(web.substr(0, 7).toLowerCase() == "http://"){
                     window.open(web,"_blank")
+                }else if(web=='0'){
+                    return false
                 }else{
                     window.open("http://"+web,"_blank")
                 }
@@ -1098,11 +1100,14 @@ export default {
     },
     // 点击跳转到学校网站 判断是否带有http
     toWebsite(web) {
-      if (web.substr(0, 7).toLowerCase() == "http://") {
-        window.open(web, "_blank");
-      } else {
-        window.open("http://" + web, "_blank");
-      }
+        console.log(web)
+       if(web.substr(0, 7).toLowerCase() == "http://"){
+            window.open(web,"_blank")
+        }else if(web=='0'){
+            return false
+        }else{
+            window.open("http://"+web,"_blank")
+        }
     },
     // 点击展开更多
     lookMore() {
@@ -1659,6 +1664,12 @@ export default {
   margin-top: 5px;
   text-decoration: underline;
   color: #214f89;
+}
+.lianjie{
+  display: inline-block;
+  width: 16px;
+  margin-left: 6px;
+  vertical-align: top;
 }
 </style>
 <style>
