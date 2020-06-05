@@ -7,33 +7,10 @@
           <div class="swiper-wrapper">
             <div
               class="swiper-slide"
-              :class="schoolDetail.schoolShowOne=='0'||schoolDetail.schoolShowOne==null ? 'hide':'show' "
+              v-for="(item,index) in showBanner" :key="index"
+              :class="item.banner==null||item.banner=='0'||item.banner=='' ? 'hide' : 'show'"
             >
-              <img :src="schoolDetail.schoolShowOne" />
-            </div>
-            <div
-              class="swiper-slide"
-              :class="schoolDetail.schoolShowTwo ? 'show' : 'hide'"
-            >
-              <img :src="schoolDetail.schoolShowTwo" />
-            </div>
-            <div
-              class="swiper-slide"
-              :class="schoolDetail.schoolShowThird ? 'show' : 'hide'"
-            >
-              <img :src="schoolDetail.schoolShowThird" />
-            </div>
-            <div
-              class="swiper-slide"
-              :class="schoolDetail.schoolShowFour ? 'show' : 'hide'"
-            >
-              <img :src="schoolDetail.schoolShowFour" />
-            </div>
-            <div
-              class="swiper-slide"
-              :class="schoolDetail.schoolShowFive ? 'show' : 'hide'"
-            >
-              <img :src="schoolDetail.schoolShowFive" />
+              <img :src="item.banner" />
             </div>
           </div>
           <!-- 如果需要分页器 -->
@@ -547,6 +524,13 @@ export default {
     };
     return {
       visible: false,
+      showBanner:[
+        {banner:""},
+        {banner:''},
+        {banner:''},
+        {banner:''},
+        {banner:''},
+      ],
       formInline: {
         inputName: "",
         inputGrade: "",
@@ -703,6 +687,11 @@ export default {
         that.feeArray[1].fee=that.schoolDetail.twoTuition
         that.feeArray[2].fee=that.schoolDetail.thirdTuition
         that.feeArray[3].fee=that.schoolDetail.fourTuition
+        that.showBanner[0].banner = that.schoolDetail.schoolShowOne
+        that.showBanner[1].banner = that.schoolDetail.schoolShowTwo
+        that.showBanner[2].banner = that.schoolDetail.schoolShowThird
+        that.showBanner[3].banner = that.schoolDetail.schoolShowFour
+        that.showBanner[4].banner = that.schoolDetail.schoolShowFive
         // 师资力量
         if (
           (that.schoolDetail.students == 0) &
@@ -1098,34 +1087,7 @@ export default {
                 if ((arr = document.cookie.match(reg))) return unescape(arr[2]);
                 else return null;
             },
-            // 刷新数据
-             refresh() {
-                this.$alert('请求新学说更新此学校数据？', '数据更新申请', {
-                confirmButtonText: '确定',
-                callback: action => {
-                    var schoolId = this.$route.query.id
-                    refreshUpdate({
-                        schoolId:schoolId,
-                        schoolName:this.schoolName,
-                        userMail:this.getCookie("username"),
-                    }).then(res=>{
-                        if(res.code==0){
-                            this.$message({
-                                type: 'success',
-                                message: `提交成功，数据会尽快更新！`
-                            });
-                        }else{
-                            this.$message({
-                                type: 'error',
-                                message: `提交失败，请重新提交！`
-                            });
-                        }
-                        
-                    })
-                    
-                }
-                });
-            },
+            
         },
         mounted() {
             // 判断pc/phone
@@ -1195,29 +1157,34 @@ export default {
     },
     // 刷新数据
     refresh() {
-      this.$alert("请求新学说更新此学校数据？", "数据更新申请", {
-        confirmButtonText: "确定",
-        callback: action => {
-          var schoolId = this.$route.query.id;
-          refreshUpdate({
-            schoolId: schoolId,
-            schoolName: this.schoolName,
-            userMail: this.getCookie("username")
-          }).then(res => {
-            if (res.code == 0) {
-              this.$message({
-                type: "success",
-                message: `提交成功，数据会尽快更新！`
-              });
-            } else {
-              this.$message({
-                type: "error",
-                message: `提交失败，请重新提交！`
-              });
-            }
-          });
-        }
-      });
+        this.$confirm('请求新学说更新此学校数据？', '数据更新申请', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消'
+        }).then(() => {
+            var schoolId = this.$route.query.id
+            refreshUpdate({
+                schoolId:schoolId,
+                schoolName:this.schoolName,
+                userMail:this.getCookie("username"),
+            }).then(res=>{
+                if(res.code==0){
+                    this.$message({
+                        type: 'success',
+                        message: `提交成功，数据会尽快更新！`
+                    });
+                }else{
+                    this.$message({
+                        type: 'error',
+                        message: `提交失败，请重新提交！`
+                    });
+                }
+            })
+        }).catch(() =>{
+            this.$message({
+                type: 'info',
+                message: `取消数据更新申请！`
+            });
+        });
     },
     feedback() {
       this.$router.push({ name: "personalCenter", query: { id: "2" } });

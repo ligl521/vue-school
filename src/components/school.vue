@@ -47,7 +47,7 @@
             <div class="line"></div>
             <div class="grade">
                 <ul class="clearfix">
-                    <li>课程认证：</li>
+                    <li>课&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;程：</li>
                     <li  v-for="(everyApprove,index) in approveSplit" :key="index" @click="clickApprove(everyApprove,index)" :class="approveClass==index?'clickStyle':''">{{everyApprove}}</li>
                 </ul>
             </div>
@@ -182,7 +182,7 @@ export default {
       approveSplit:[],
       searchApprove:'',
       approveClass:0,
-      approveList:{approve: "不限;IPC;IBPYP;IBDP;AP;A-LEVEL;其他"},
+      approveList:{approve: "不限;IPC;IBPYP;IBDP;AP;A-LEVEL;美国课程;双语课程;加拿大课程;其他"},
       loading: false, //默认是false 可以滚动哦！
       finish:false,
       isLoading:true,
@@ -243,6 +243,8 @@ export default {
     },
     clickArea(value,index){
         this.areaClass=index
+        this.pageNum=1
+        this.currentPage=1
         if(value=='不限'){
             this.searchArea=''
         }else{
@@ -252,6 +254,8 @@ export default {
     },
     clickGrade(value,index){
         this.gradeClass=index
+        this.pageNum=1
+        this.currentPage=1
         if(value=='不限'){
             this.searchGrade=''
         }else{
@@ -261,6 +265,8 @@ export default {
     },
     clickSys(value,index){
         this.sysClass=index
+        this.pageNum=1
+        this.currentPage=1
         if(value=='不限'){
             this.searchSys=''
         }else{
@@ -270,6 +276,8 @@ export default {
     },
     clickApprove(value,index){
         this.approveClass=index
+        this.pageNum=1
+        this.currentPage=1
         if(value=='不限'){
             this.searchApprove=''
         }else{
@@ -288,6 +296,7 @@ export default {
             area:this.searchArea,
             system:this.searchGrade,
             properties:this.searchSys,
+            course:this.searchApprove,
             pageNum:this.pageNum,
             pageSize:this.pageSize,
         }).then(respons=>{
@@ -402,8 +411,6 @@ export default {
             }
             var cardArr3 = cardArr2.slice(0,cardArr2.length-1);
             respons.data.list[i].authentication = cardArr3;
-            console.log(cardArr2)
-            console.log(cardArr3)
             // if(cardArr3.length>5){
             //   cardArr3.length=5
             // }
@@ -424,8 +431,11 @@ export default {
     //分页
     handleCurrentChange(val) {
       this.pageNum = val;
-      this.advancedSearch(sessionStorage.getItem("iptVal"))
-      this.schoolList(sessionStorage.getItem("iptVal"));
+      if(this.areaClass!=0||this.gradeClass!=0||this.approveClass!=0||this.sysClass!=0){
+        this.advancedSearch(sessionStorage.getItem("iptVal"))
+      }else{
+        this.schoolList(sessionStorage.getItem("iptVal"));
+      }
       // window.scrollTo(0,0)
     },
     //切换学校列表
@@ -620,7 +630,9 @@ export default {
             }
         }
         .grade ul li:first-of-type{
-            height:0
+            height:0;
+            // width:100px;
+            // text-align: right;
         }
     }
 }
