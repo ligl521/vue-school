@@ -101,7 +101,7 @@ export default {
       }).then(res=>{
         console.log(res.data)
         this.projectList=res.data.list
-        this.searchCount=res.count
+        this.searchCount=res.data.total
       })
     },
     toProjectDetail(id){

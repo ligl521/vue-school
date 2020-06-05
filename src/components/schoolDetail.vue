@@ -8,7 +8,7 @@
             <div
               class="swiper-slide"
               v-for="(item,index) in showBanner" :key="index"
-              :class="item.banner ? 'show' : 'hide'"
+              :class="item.banner==null||item.banner=='0'||item.banner=='' ? 'hide' : 'show'"
             >
               <img :src="item.banner" />
             </div>

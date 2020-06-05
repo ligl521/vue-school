@@ -375,8 +375,8 @@ export default {
     //行业动态过滤
     ellschoolHomeTitle(value) {
       if (!value) return "";
-      if (value.length > 28) {
-        return value.slice(0, 28) + "...";
+      if (value.length > 8) {
+        return value.slice(0, 8) + "...";
       }
       return value;
     },
@@ -384,8 +384,8 @@ export default {
     isNull(msg){
         if(msg=="" || msg=="无"){
             return "暂无"
-        }else if(msg.length>15){
-            return msg.slice(0, 12) + "...";
+        }else if(msg.length>10){
+            return msg.slice(0, 10) + "...";
         }else{
             return msg
         }
