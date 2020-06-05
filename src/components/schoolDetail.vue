@@ -7,7 +7,7 @@
           <div class="swiper-wrapper">
             <div
               class="swiper-slide"
-              :class="schoolDetail.schoolShowOne='0'||schoolDetail.schoolShowOne==null ? 'hide':'show' "
+              :class="schoolDetail.schoolShowOne=='0'||schoolDetail.schoolShowOne==null ? 'hide':'show' "
             >
               <img :src="schoolDetail.schoolShowOne" />
             </div>

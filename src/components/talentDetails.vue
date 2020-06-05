@@ -1,5 +1,9 @@
 <template>
   <div style="background: #f5f5f5;">
+    <el-breadcrumb separator-class="el-icon-arrow-right">
+        <el-breadcrumb-item :to="{ path: '/' }" ><a href="/">首页</a></el-breadcrumb-item>
+        <el-breadcrumb-item :to="{ path: 'talent' }" ><a class="breadcrumb_a" href="javascript:;">教育人才库</a></el-breadcrumb-item>
+    </el-breadcrumb>
     <div class="talentDetails">
       <div class="top">
         <div class="top_left">
@@ -220,7 +224,18 @@ export default {
     vertical-align: text-bottom;
   }
 }
-
+.el-breadcrumb{
+    margin:0 auto;
+    font-size:16px;
+    width: 1000px;
+    padding: 54px 20px 20px 0;
+}
+.breadcrumb_a{
+   cursor:pointer !important;
+}
+.breadcrumb_a:hover{
+    color:#337ab7 !important;
+}
 .talentDetails {
   width: 1000px;
   background-color: #fff;

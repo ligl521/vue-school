@@ -1,5 +1,5 @@
 <template>
-  <div style="background: #f5f5f5;">
+  <div style="background: #f5f5f5;width: 100%" v-loading="loading">
     <div class="schoolTalent">
       <!-- 搜索栏 -->
       <div class="companyBox">
@@ -81,7 +81,7 @@
                {{workExperience.jobType == ""||workExperience.jobType=="0" ? "无" : workExperience.jobType}}
               </span>
               <br>
-              毕业院校：<span v-for="(education,index) in item.education" v-if="index<2" :key="index">
+              毕业院校：<span v-for="(education,index) in item.education" v-if="index<2" :key="'list-'+index">
                <br>{{education.schoolName == "" ||education.schoolName=="0" ? "无" : education.schoolName }} 
                {{education.schoolMajor== "" ||education.schoolMajor=="0" ? "无" : education.schoolMajor}}
               </span>
@@ -94,6 +94,7 @@
       </div>
       <!-- 页数 -->
       <el-pagination
+        :current-page.sync="currentPage"
         @current-change="handleCurrentChange"
         layout="total, prev, pager, next, jumper"
         :total="list_count"
@@ -115,16 +116,43 @@ export default {
       timeout: null,
       list_arr: [], //渲染数组
       list_count: 0, //总条数只能是数字
+      currentPage: 1,
+      loading: false
     };
   },
   created() {
-    this.list_num();
+    this.list_num(this.getExpire("pageNum")==null?'1':this.getExpire("pageNum"));
+    this.currentPage = this.getExpire("pageNum")==null?'1':this.getExpire("pageNum")
   },
   methods: {
+    //设置缓存
+    setExpire(key,value, expire){
+        let obj = {
+            data: value,
+            time: Date.now(),
+            expire: expire
+        };
+        localStorage.setItem(key, JSON.stringify(obj));
+    },
+    //获取本地缓存
+    getExpire(key){
+        let val = localStorage.getItem(key);
+        if (!val) {
+            return val;
+        }
+        val = JSON.parse(val);
+        if (Date.now() - val.time > val.expire) {
+            localStorage.removeItem(key);
+            return null;
+        }
+        return val.data;
+    },
     handleCurrentChange(val) {
+      this.setExpire('pageNum',val,"1800000") 
       this.list_num(val);
     },
     list_num(num,name) {
+      this.loading = true
       talentlist({
         pageNum: num,
         pageSize: "10",
@@ -137,7 +165,8 @@ export default {
            res.data.list[i].tag = JSON.parse(res.data.list[i].tag);
            this.list_arr = res.data.list;
         }
-        console.log(res.data.list)
+        this.loading = false
+        window.scrollTo(0,0);  
       });
     },
     details(e) {
@@ -403,5 +432,11 @@ export default {
 .companyGroup .el-input-group__append {
   border: 0;
   background: #214f89;
+}
+.el-loading-spinner{
+    top: 75% !important;
+    width: 100%;
+    text-align: center;
+    position: absolute;
 }
 </style>
