@@ -338,13 +338,17 @@ export default {
       }
     }
     console.log(this.userTurename)
+     if(this.getCookie("closeOldVersion")=='close'){
+        this.showOldVersion=false
+    }
   },
   methods: {
     toOldVersion(){
         window.open("http://data.xinxueshuo.cn/nsi/other/index.html","_blank")
     },
     closeOldVersion(){
-        this.showOldVersion=false
+         this.showOldVersion=false
+        this.setCookie("closeOldVersion",'close', 7);
     },
     sendPW() {
       forgetPwd({
