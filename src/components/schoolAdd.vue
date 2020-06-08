@@ -68,11 +68,11 @@
                     </el-option>
             </el-select>
             </el-form-item>
-             <el-form-item label="成立时间(年)" prop="foundingTime" id="addFlex">
-              <el-input v-model.number="form.foundingTime" ></el-input>
-            </el-form-item>
-            <el-form-item label="详细地址" prop="address" id="addFlex">
+             <el-form-item label="地址(街道)" prop="address" id="addFlex">
               <el-input v-model="form.address" ></el-input>
+            </el-form-item>
+            <el-form-item label="成立时间(年)" prop="foundingTime" id="addFlex">
+              <el-input v-model.number="form.foundingTime" ></el-input>
             </el-form-item>
             <el-form-item label="学制" prop="schoolSystem" >
               <el-checkbox-group v-model="inputCheckbox">
@@ -91,31 +91,26 @@
           </div>
           <!-- 课程信息 -->
           <div v-else-if="active == 1" class="second">
-            <el-form-item label="学费(年)">
+            <el-form-item label="人数" style="margin: 15px 40px;">
+                <div class="tuitionSchool">
+                  <div class="tuition">
+                    <div class="grade"><span>幼儿园</span><el-input  v-model="form.studentNumOne"></el-input></div>
+                    <div class="grade"><span>小学</span><el-input v-model="form.studentNumThird"></el-input></div>
+                    <div class="grade"><span>初中</span><el-input  v-model="form.studentNumTwo"></el-input></div>
+                    <div class="grade"><span>高中</span><el-input  v-model="form.studentNumFour"></el-input></div>
+                  </div>
+                </div>
+            </el-form-item>
+            <el-form-item label="学费(年)" style="margin: 15px 40px;">
                 <div class="tuitionSchool">
                   <div class="tuition">
                     <div class="grade"><span>幼儿园</span><el-input v-model="form.oneTuition"></el-input></div>
-                    <div class="grade"><span>初中</span><el-input v-model="form.thirdTuition" ></el-input></div>
-                  </div>
-                  <div class="tuition">
                     <div class="grade"><span>小学</span><el-input v-model="form.twoTuition"></el-input></div>
+                    <div class="grade"><span>初中</span><el-input v-model="form.thirdTuition" ></el-input></div>
                     <div class="grade"><span>高中</span><el-input v-model="form.fourTuition" ></el-input></div>
                   </div>
                 </div>
                 <p class="tip">学费请填入数字，整数 例：150000</p>
-                
-            </el-form-item>
-            <el-form-item label="人数">
-                <div class="tuitionSchool">
-                  <div class="tuition">
-                    <div class="grade"><span>幼儿园</span><el-input  v-model="form.studentNumOne"></el-input></div>
-                    <div class="grade"><span>初中</span><el-input  v-model="form.studentNumTwo"></el-input></div>
-                  </div>
-                  <div class="tuition">
-                    <div class="grade"><span>小学</span><el-input v-model="form.studentNumThird"></el-input></div>
-                    <div class="grade"><span>高中</span><el-input  v-model="form.studentNumFour"></el-input></div>
-                  </div>
-                </div>
             </el-form-item>
             <el-form-item label="国际课程" prop="course" class="internationCourse">
               <div class="addFlexTwo">
@@ -214,6 +209,9 @@
               <el-input v-model.number="form.builtArea" ></el-input>
               <!-- <i>格式为数字，整数</i> -->
             </el-form-item>
+            <el-form-item label="学校简介"  prop="schoolDesc">
+              <el-input type="textarea" placeholder="请输入内容" :rows="4" v-model="form.schoolDesc"></el-input>
+            </el-form-item>
             <el-form-item label="硬件设施"  prop="hardware">
               <el-input type="textarea" placeholder="请输入内容" :rows="4" v-model="form.hardware"></el-input>
             </el-form-item>
@@ -230,7 +228,7 @@
 
       </div>
       <div class="nextButton">
-          <el-button style="margin-top: 12px;" @click="Previous ">上一步</el-button>
+          <el-button :class="active==0?'disabled':''" style="margin-top: 12px;" @click="Previous">上一步</el-button>
           <el-button style="margin-top: 12px;" @click="next('form')">{{completeBtn}}</el-button>
       </div>
     </div>
@@ -317,11 +315,11 @@ export default {
       }
     }
     return {
-        loadingCity: false,
-        province: '',
-        city: '',
-        provinces: [],
-        cities: [],
+      loadingCity: false,
+      province: '',
+      city: '',
+      provinces: [],
+      cities: [],
       active:0,
       isEdit:1,
       i:0,
@@ -374,7 +372,7 @@ export default {
         schoolShowThird:"",  //大图3
         schoolShowFour:"",  //大图4
         schoolShowFive:"",  //大图5
-        schoolDesc:"",  //学校剪辑
+        schoolDesc:"",  //学校简介
         accommodation:"",  //住宿情况
         studentEnrollment:"", //招生情况
         studeAbroadCountries:"",  //留学生留学国家
@@ -438,31 +436,31 @@ export default {
           // {required:true,message:"选项不能为空",trigger:'blur'}
         ],
         students:[ //学生总人数
-          {required:true,validator: twoTuition,trigger: 'blur' }
+           { required: true, message: "学生总人数不能为空", trigger: "blur" }
         ],
-        studentCapacity:[//学生容量
-          {required:true,validator: twoTuition,trigger: 'blur' }
-        ],
-        graduatedStuNum:[//毕业班人数
-          {required:true,validator: twoTuition,trigger: 'blur' }
-        ],
-        staffNum:[//员工数量
-          {required:true,validator: twoTuition,trigger: 'blur' }
-        ],
-        teacherNum:[//教师数量
-          {required:true,validator: twoTuition,trigger: 'blur' }
-        ],
-        foreignTeacherNum:[//外籍教师数量
-          {required:true,validator: twoTuition,trigger: 'blur' }
-        ],
+        // studentCapacity:[//学生容量
+        //   {required:true,validator: twoTuition,trigger: 'blur' }
+        // ],
+        // graduatedStuNum:[//毕业班人数
+        //   {required:true,validator: twoTuition,trigger: 'blur' }
+        // ],
+        // staffNum:[//员工数量
+        //   {required:true,validator: twoTuition,trigger: 'blur' }
+        // ],
+        // teacherNum:[//教师数量
+        //   {required:true,validator: twoTuition,trigger: 'blur' }
+        // ],
+        // foreignTeacherNum:[//外籍教师数量
+        //   {required:true,validator: twoTuition,trigger: 'blur' }
+        // ],
         teacherStuRatio:[//师生比
         ],
-        coveredArea:[//占地面积
-          {required:true,validator: twoTuition,trigger: 'blur' }
-        ],
-        builtArea:[//建筑面积
-          {required:true,validator: twoTuition,trigger: 'blur' }
-        ],
+        // coveredArea:[//占地面积
+        //   {required:true,validator: twoTuition,trigger: 'blur' }
+        // ],
+        // builtArea:[//建筑面积
+        //   {required:true,validator: twoTuition,trigger: 'blur' }
+        // ],
         hardware:[ //硬件设施
           // {required:true,message:"硬件不能为空",trigger:'blur'},
         ],
@@ -591,10 +589,18 @@ export default {
 </script>
 
 <style lang="less" scoped>
+  //禁止点击
+  .disabled {
+    color: #c0c4cc;
+    cursor: not-allowed;
+    background-image: none;
+    background-color: #fff;
+    border-color: #ebeef5;
+  }
   .schoolAdd{
     min-width:1200px;
     width: 80%;
-    margin: 0 auto;
+    margin: 120px auto 0;
     border: 1px solid #ccc;
     .schAd{
       padding-top: 30px;
@@ -654,18 +660,16 @@ export default {
         // line-height: 50px;
         // width: 26% !important;
         .grade{
-            margin-top:10px;
+            display:inline-block;
             margin-right:10px;
-            &:first-of-type{
-                margin-top:0;
-            }
         }
         span{
           display:inline-block;
           width: 50px;
+          text-align:right;
         }
         .el-input{
-          margin-left: 3px;
+          margin-left: 10px;
           width: 110px !important;
         }
       }
@@ -735,7 +739,7 @@ export default {
                 .el-form-item {
                     margin: 15px 40px;
                     .el-textarea{
-                        width: 500px !important;
+                        width: 265px !important;
                     }
                     .el-form-item__content {
                         .el-input {
