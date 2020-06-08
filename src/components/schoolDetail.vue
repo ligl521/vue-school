@@ -809,7 +809,7 @@ export default {
     // 点击进入同城学校
     enterCitySchool(id) {
       window.open(
-        "https://data.xinxueshuo.cn/data/dist/index.html#/schoolDetail?id=" +
+        "https://www.xinxueshuo.cn/data/dist/index.html#/schoolDetail?id=" +
           id,
         "_blank"
       );

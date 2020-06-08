@@ -102,8 +102,10 @@
         </el-form-item>
         <el-form-item label="最高学历" :required="true" prop="high_education">
           <el-select class="input_css" v-model="ruleForm.high_education">
+            <el-option label="大专" value="大专"></el-option>
             <el-option label="本科" value="本科"></el-option>
             <el-option label="硕士" value="硕士"></el-option>
+            <el-option label="博士" value="博士"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="工作年限" :required="true" prop="expreience">

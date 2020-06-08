@@ -9,11 +9,11 @@
         <div class="uploadlogo">
             <el-upload
                 class="avatar-uploader"
-                action="https://jsonplaceholder.typicode.com/posts/"
+                action="#"
                 :show-file-list="false"
                 ref="uploadlogo"
                 :before-upload="beforeAvatarUpload"
-                :on-success="beforeUpload">
+                :http-request="beforeUpload">
                 <img v-if="schoolLogo" :src="schoolLogo" class="avatar">
                 <i v-else class="el-icon-plus avatar-uploader-icon"></i>
             </el-upload>
