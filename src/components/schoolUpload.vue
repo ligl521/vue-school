@@ -17,7 +17,7 @@
                 <img v-if="schoolLogo" :src="schoolLogo" class="avatar">
                 <i v-else class="el-icon-plus avatar-uploader-icon"></i>
             </el-upload>
-            <div slot="tip" class="el-upload__tip upload-right">学校logo图，只能上传jpg/png文件，且不超过500kb(推荐尺寸200*200)</div>
+            <div slot="tip" class="el-upload__tip upload-right">学校logo图，尺寸200*200px，jpg/png格式，小于500kb</div>
         </div>
         <el-divider></el-divider>
         <div id="cover" :class="active ? 'active' : 'hide'"></div>
@@ -52,8 +52,8 @@
             </div>
         </div>
         <div class="scope-btn">
+            <h2>学校环境图</h2>
             <div class="uploadBanner">
-                <label for="uploads">点击上传学校环境图</label>
                 <p>只能上传jpg/png文件，最多5张且不超过2M(推荐尺寸1100*400)</p>
                     <input
                     type="file"
@@ -63,6 +63,7 @@
                     @change="uploadImg($event, 1)"
                     />
                     <img v-for="(item,index) in bannerBox" :key="index" :src="item.url" class="banner_img" v-if="index<5"/>
+                    <label :class="bannerBox.length == 5?'hide':'bannerBoxCss'" for="uploads"><i class="el-icon-plus avatar-uploader-icon"></i></label>
                 </div>
         </div>
         <div class="submit">
@@ -216,7 +217,23 @@ export default {
         if (!isLt2M) {
             this.$message.error('上传logo图片大小不能超过 500kb!');
         }
-            return ( isJPG || isPNG ) && isLt2M;
+        const isSize = new Promise(function(resolve, reject) {
+            let width = 200;
+            let height = 200;
+            let _URL = window.URL || window.webkitURL;        
+            let img = new Image();
+            img.onload = function() {
+                let valid = img.width == width && img.height == height;
+                valid ? resolve() : reject();
+            }
+            img.src = _URL.createObjectURL(file);
+        }).then(() => {
+            return file;
+        }, () => {
+            this.$message.error('上传logo的尺寸必须等于200*200!');
+            return Promise.reject();
+        });
+        return ( isJPG || isPNG ) && isLt2M &&  isSize;
     },
     beforeUpload(){
         let that = this;
@@ -224,7 +241,7 @@ export default {
         this.logofileName=this.$refs.uploadlogo.uploadFiles[0].name
         let formData = new FormData();
         formData.append("file",this.logofileRaw,this.logofileName);
-        formData.append("type", "nsi-pc/SchoolLogo");
+        formData.append("type", "nsi-pc/SchoolLogo/");
         that.axios({
             url: "https://data.xinxueshuo.cn/nsi-1.0/CommonApi/upload.do",
             method: "POST", //  这个地方注意
@@ -399,23 +416,29 @@ export default {
         .uploadBanner{
             text-align: center;
             label{
-                display:inherit;
+                display: inline-block;
+                text-align: center;
+                margin: 20px 10px;
                 width: 150px;
                 padding: 10px;
+                line-height: 100px;
+                font-size: 28px;
+                color: #8c939d;
+                border: 1px solid #d9d9d9;
                 border-radius: 5px;
-                margin: 20px auto;
-                background:#67c23a;
-                color:#fff;
+                background: #fff;
                 cursor: pointer;
+                vertical-align: middle;
             }
         }
         .banner_img{
             width:200px; 
             height:120px;
-            border:1px dashed #ccc;
+            border:1px solid #d9d9d9;
             border-radius: 5px;
             margin:20px 10px;
             background:#ccc;
+            vertical-align: middle;
         }
     }
 }
