@@ -202,7 +202,7 @@ export default {
         0,
         this.ruleForm.companyLabel.length
       );
-      this.labelJoin = this.labelSplice.join(",");
+      this.labelJoin = this.labelSplice.join(";");
       this.$refs[formName].validate(valid => {
         if (valid) {
           companyAdd({
