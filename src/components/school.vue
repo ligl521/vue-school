@@ -212,15 +212,8 @@ export default {
         }
     },
     enterSchoolDetail(id){
-        if(this.getCookie("username") == null){
-            this.$message({
-                message: '您还没有登录，登陆后即可查看！',
-                type: 'warning'
-            });
-        }else{
-            let routeData= this.$router.resolve({path: '/schoolDetail',query:{id:id}})
-            window.open(routeData.href, '_blank');
-        }
+        var that=this;
+        this.commonSchoolDetail.enterDetail(id,that)
     },
     querySearch(queryString, cb) {
       let that = this;

@@ -69,7 +69,7 @@
             <!-- <el-button type="primary"> -->
               <i class="el-icon-refresh" @click="refresh"></i>
             <!-- </el-button> -->
-            <span>{{ dateTime }}前更新</span>
+            <span>{{ dateTime }}更新</span>
           </div>
           <div class="schoolTranslateBox">
             <h1 class="schoolTranslateH1" style="margin: 0 50px 20px;">
@@ -435,7 +435,7 @@
             <h1 class="schoolTranslateH1">更多信息</h1>
             <div class="analyzeContent">{{ schoolDetail.remark |isZero }}</div>
           </div>
-          <div class="analyze">
+          <!-- <div class="analyze">
             <h1 class="schoolTranslateH1">相关机构</h1>
             <ul class="schoolTranslateH1_ul">
               <el-popover
@@ -476,7 +476,7 @@
                 >
               </el-popover>
             </ul>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -664,13 +664,14 @@ export default {
         that.schoolName = res.data.schoolName;
         // 更新时间
         if(new Date(this.schoolDetail.createTime).getYear()!=new Date().getYear()){
-          that.dateTime = new Date().getYear() - new Date(this.schoolDetail.createTime).getYear()+"年";
+          that.dateTime = new Date().getYear() - new Date(this.schoolDetail.createTime).getYear()+"年前";
         }else if(new Date(this.schoolDetail.createTime).getMonth()!=new Date().getMonth()){
-          that.dateTime = new Date().getMonth() - new Date(this.schoolDetail.createTime).getMonth()+"个月";
+          that.dateTime = new Date().getMonth() - new Date(this.schoolDetail.createTime).getMonth()+"个月前";
+        }else if(new Date(this.schoolDetail.createTime).getDay()!=new Date().getDay()){
+          that.dateTime = new Date().getDate() - new Date(this.schoolDetail.createTime).getDate()+"天前";
         }else{
-          that.dateTime = new Date().getDate() - new Date(this.schoolDetail.createTime).getDate()+"天";
+            that.dateTime = "今天";
         }
-        console.log(that.dateTime);
         // 父传子
         that.asyncObject = res;
         that.flag = true;

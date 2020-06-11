@@ -49,6 +49,9 @@ Vue.config.productionTip = false
 router.afterEach((to,from,next)=>{
 　window,scrollTo(0,0)
 })
+
+import commonSchoolDetail from './assets/js/commonSchoolDetail'
+Vue.prototype.commonSchoolDetail=commonSchoolDetail
 /* eslint-disable no-new */
 new Vue({
     el: '#app',
