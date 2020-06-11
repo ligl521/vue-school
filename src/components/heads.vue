@@ -497,7 +497,7 @@ export default {
             that.setCookie("User_TureName", response.data.userTurename, 7); //用户真实名字
             that.setCookie("UserId", response.data.id, 7); //用户ID
             that.setCookie("UserImg", response.data.userPortrait, 7);
-            that.imgurl = response.data.userPortrait
+            that.imgurl = response.data.userPortrait == 0?require("../assets/tx.png"):response.data.userPortrait
             that.dialogVisible = false;
             that.WechatLogin = true;
             that.headimgurl = false;
