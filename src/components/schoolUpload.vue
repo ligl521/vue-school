@@ -6,17 +6,62 @@
         <h4>
             您还可以上传学校logo和环境图，让我们更了解这所学校
         </h4>
-        <div class="uploadlogo">
-            <el-upload
-                class="avatar-uploader"
-                action="#"
-                :show-file-list="false"
-                ref="uploadlogo"
-                :before-upload="beforeAvatarUpload"
-                :http-request="beforeUpload">
-                <img v-if="schoolLogo" :src="schoolLogo" class="avatar">
-                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-            </el-upload>
+         <div id="cover1" :class="active1 ? 'active1' : 'hide1'"></div>
+    <div :class="active1 ? 'show1' : 'hide1'">
+      <h3 class="show_title1">头像裁剪</h3>
+      <i class="el-icon-close guanbi1" @click="close1"></i>
+      <div class="cropper-content1">
+        <div class="cropper1">
+          <vueCropper
+            ref="cropper1"
+            :img="option1.img"
+            :outputSize="option1.size"
+            :outputType="option1.outputType"
+            :info="true"
+            :full="option1.full"
+            :canMove="option1.canMove"
+            :canMoveBox="option1.canMoveBox"
+            :original="option1.original"
+            :autoCrop="option1.autoCrop"
+            :autoCropWidth="option1.autoCropWidth"
+            :autoCropHeight="option1.autoCropHeight"
+            :fixedBox="option1.fixedBox"
+            @realTime="realTime1"
+            @imgLoad="imgLoad1"
+          ></vueCropper>
+        </div>
+        <div
+          class="show-preview1"
+          :style="{
+            overflow: 'hidden',
+            margin: '0 auto'
+          }"
+        >
+          <div :style="previews1.div" class="preview1">
+            <img :src="previews1.url" :style="previews1.img" />
+          </div>
+          <h4 style="margin-top: 20px">头像预览</h4>
+        </div>
+      </div>
+      <div class="footer-btn1">
+        <el-button class="ruleForm" type="primary" @click="down1('blob')"
+          >提交</el-button
+        >
+      </div>
+    </div>
+        <div class="uploadlogo personnel">
+            <div class="scope-btn">
+                <label class="label_btn" for="uploads1">
+                    <img :src="imageUrl" class="personnel_img" />
+                </label>
+                <input
+                type="file"
+                id="uploads1"
+                style="position:absolute; clip:rect(0 0 0 0);"
+                accept="image/png, image/jpeg, image/gif, image/jpg"
+                @change="uploadImg1($event, 1)"
+                />
+            </div>
             <div slot="tip" class="el-upload__tip upload-right">学校logo图，尺寸200*200px，jpg/png格式，小于500kb</div>
         </div>
         <el-divider></el-divider>
@@ -105,6 +150,24 @@ export default {
             autoCropHeight: 400,
             fixedBox: true
         },
+        previews1: {},
+        active1: false,
+        option1: {
+            img:
+            "http:img1.vued.vanthink.cn/vued751d13a9cb5376b89cb6719e86f591f3.png",
+            size: 1,
+            full: false, // 输出原图比例截图 props名full
+            outputType: "png",
+            canMove: true,
+            original: false,
+            canMoveBox: true,
+            autoCrop: true,
+            autoCropWidth: 200,
+            autoCropHeight: 200,
+            fixedBox: true
+        },
+        fileName1: "", //本机文件地址
+        imageUrl:require("../assets/jia.png"), //头像
         schoolBanner:{},
         bannerBox:[],
     };
@@ -124,7 +187,7 @@ export default {
       this.previews = data;
     },
     uploadImg(e, num) {
-      console.log(e)
+      console.log(11111)
       this.active = true;
       var _this = this;
       var file = e.target.files[0];
@@ -271,8 +334,82 @@ export default {
                 this.$router.push({path: "school"});
             }
         })
+    },
+    //logo
+     // 实时预览函数
+    realTime1(data) {
+      this.previews1 = data;
+    },
+    down1(type) {
+      console.log("finish");
+      let _this = this;
+      let formData1 = new FormData();
+      // 输出
+      if (type === "blob") {
+        this.$refs.cropper1.getCropBlob(data1 => {
+          console.log(data1);
+          let img1 = window.URL.createObjectURL(data1);
+          this.model = true;
+          this.modelSrc = img1;
+          formData1.append("file", data1, this.fileName1);
+          formData1.append("type", "nsi-pc/ResumePortrait/");
+          _this
+            .axios({
+              url: "https://data.xinxueshuo.cn/nsi-1.0/CommonApi/upload.do",
+              method: "POST", //  这个地方注意
+              data: formData1,
+              processData: false,
+              contentType: false
+            })
+            .then(response => {
+              console.log("upload_success_response:", response);
+              if (response.data.code == 0) {
+                this.close1()
+                this.imageUrl = response.data.data.url;
+              }
+            });
+        });
+      } else {
+        this.$refs.cropper1.getCropData(data => {
+          this.model = true;
+          this.modelSrc = data;
+        });
+      }
+    },
+    uploadImg1(e, num) {
+      console.log(e)
+      this.active1 = true;
+      var _this = this;
+      var file1 = e.target.files[0];
+      _this.fileName1 = file1.name;
+      if (!/\.(gif|jpg|jpeg|png|bmp|GIF|JPG|PNG)$/.test(e.target.value)) {
+        alert("图片类型必须是.gif,jpeg,jpg,png,bmp中的一种");
+        return false;
+      }
+      var reader1 = new FileReader();
+      reader1.onload = e => {
+        let data1;
+        if (typeof e.target.result === "object") {
+          // 把Array Buffer转化为blob 如果是base64不需要
+          data1 = window.URL.createObjectURL(new Blob([e.target.result]));
+        } else {
+          data1 = e.target.result;
+        }
+        if (num === 1) {
+          _this.option1.img = data1;
+        } else if (num === 2) {
+          _this.example2.img = data1;
+        }
+      };
+      reader1.readAsArrayBuffer(file1);
+    },
+    imgLoad1(msg) {
+      console.log(msg);
+    },
+    //关闭按钮
+    close1() {
+      this.active1 = false;
     }
-
   },
   
 };
@@ -441,5 +578,121 @@ export default {
             vertical-align: middle;
         }
     }
+}
+.personnel {
+  width: 1000px;
+  background-color: #fff;
+  margin: 0 auto;
+  padding: 20px 20px 60px;
+  .scope-btn {
+    width: 200px;
+    margin: 0 auto;
+    position: relative;
+    .label_btn {
+        display: inline-block;
+        text-align: center;
+        width: 200px;
+        height: 200px;
+        color: #8c939d;
+        font-size: 28px;
+        border-radius: 5px;
+        background: #fff;
+        cursor: pointer;
+    }
+    .personnel_img {
+      width: 200px;
+      height: 200px;
+      border:1px solid #d9d9d9;
+      overflow: hidden;
+    }
+  }
+  h4 {
+    margin: 0 80px 20px;
+  }
+  p {
+    margin: 0 100px;
+    cursor: pointer;
+    font-size: 20px;
+    color: rgb(33, 79, 137);
+  }
+  .addcss {
+    margin: 0 100px;
+    width: 160px;
+    cursor: pointer;
+    font-size: 20px;
+    color: rgb(33, 79, 137);
+    position: relative;
+    top: -80px;
+    left: 0;
+  }
+  .remove {
+    margin: 0 auto;
+    text-align: center;
+  }
+}
+.hide1 {
+  display: none;
+}
+.active1 {
+  display: inline-block;
+}
+.show1 {
+  position: fixed;
+  left: 50%;
+  top: 20%;
+  width: 700px;
+  height: 450px;
+  z-index: 2222;
+  transform: translateX(-50%);
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 4px;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+}
+
+#cover1 {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  background: rgba(0, 0, 0);
+  width: 100%; /*宽度设置为100%，这样才能使隐藏背景层覆盖原页面*/
+  height: 100%;
+  filter: alpha(opacity=60); /*设置透明度为60%*/
+  opacity: 0.5; /*非IE浏览器下设置透明度为60%*/
+  z-index: 999;
+}
+.show_title1 {
+  text-align: center;
+}
+.guanbi1 {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  font-size: 26px;
+  cursor: pointer;
+}
+.cropper-content1 {
+  text-align: center;
+  .cropper1 {
+    margin: 46px 60px 0 0;
+    display: inline-block;
+    width: 240px;
+    height: 240px;
+  }
+  .show-preview1 {
+    display: inline-block;
+    .preview1 {
+      overflow: hidden;
+      border-radius: 50%;
+      border: 1px solid #cccccc;
+      background: #cccccc;
+    }
+  }
+}
+.footer-btn1 {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 </style>
