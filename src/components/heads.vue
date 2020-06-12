@@ -558,7 +558,7 @@ export default {
           .catch(function(error) {
             console.log(error);
           });
-      }, 3000);
+      }, 2000);
     },
     //用户校验身份
     user_cx() {

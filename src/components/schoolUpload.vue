@@ -50,7 +50,7 @@
                         accept="image/png, image/jpeg, image/gif, image/jpg"
                         @change="uploadImg1($event, 1)"
                         />
-                        <img :src="imageUrl" :class="imageUrl == ''?'imageUrlHide':'personnel_img'"/>
+                        <img :src="schoolLogo" :class="schoolLogo == ''?'imageUrlHide':'personnel_img'"/>
                         
                     </div>
                     <div slot="tip" class="el-upload__tip upload-right">学校logo图，尺寸200*200px，jpg/png格式，小于500kb
@@ -121,7 +121,7 @@ export default {
   },
   data() {
     return {
-        schoolLogo:"",
+        schoolLogo:"",//头像
         schoolShowOne:"",  //大图1
         schoolShowTwo:"",  //大图2
         schoolShowThird:"",  //大图3
@@ -160,7 +160,6 @@ export default {
             fixedBox: true
         },
         fileName1: "", //本机文件地址
-        imageUrl:"", //头像
         schoolBanner:{},
         bannerBox:[],
     };
@@ -261,54 +260,6 @@ export default {
           })
       }
     },
-    beforeAvatarUpload(file) {
-        const isJPG = file.type === 'image/jpeg'
-        const isPNG = file.type === 'image/png';
-        const isLt2M = file.size / 1024 / 1024 < 2;
-        if (!isJPG && !isPNG) {
-            this.$message.error('上传logo图片只能是JPG或者PNG格式!');
-        }
-        if (!isLt2M) {
-            this.$message.error('上传logo图片大小不能超过 500kb!');
-        }
-        const isSize = new Promise(function(resolve, reject) {
-            let width = 200;
-            let height = 200;
-            let _URL = window.URL || window.webkitURL;        
-            let img = new Image();
-            img.onload = function() {
-                let valid = img.width == width && img.height == height;
-                valid ? resolve() : reject();
-            }
-            img.src = _URL.createObjectURL(file);
-        }).then(() => {
-            return file;
-        }, () => {
-            this.$message.error('上传logo的尺寸必须等于200*200!');
-            return Promise.reject();
-        });
-        return ( isJPG || isPNG ) && isLt2M &&  isSize;
-    },
-    beforeUpload(){
-        let that = this;
-        this.logofileRaw=this.$refs.uploadlogo.uploadFiles[0].raw
-        this.logofileName=this.$refs.uploadlogo.uploadFiles[0].name
-        let formData = new FormData();
-        formData.append("file",this.logofileRaw,this.logofileName);
-        formData.append("type", "nsi-pc/SchoolLogo/");
-        that.axios({
-            url: "https://data.xinxueshuo.cn/nsi-1.0/CommonApi/upload.do",
-            method: "POST", //  这个地方注意
-            data: formData,
-            processData: false,
-            contentType: false
-        }).then(response => {
-            if (response.data.code == 0) {
-                that.schoolLogo=response.data.data.url
-                console.log(that.schoolLogo)
-            }
-        });
-    },
     submit(){
         let that=this
         schoolUpdate({
@@ -356,7 +307,7 @@ export default {
               console.log("upload_success_response:", response);
               if (response.data.code == 0) {
                 this.close1()
-                this.imageUrl = response.data.data.url;
+                this.schoolLogo = response.data.data.url;
               }
             });
         });

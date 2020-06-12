@@ -9,7 +9,7 @@ export default {
     enterDetail(id,farther_that){
         var that=this
         if(that.getCookie("username") == null){
-            that.$message({
+            farther_that.$message({
                 message: '您还没有登录，登陆后即可查看！',
                 type: 'warning'
             });
