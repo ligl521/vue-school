@@ -89,7 +89,8 @@
                 <el-col :span="12">
                   <div class="grid-content bg-purple">
                     <p class="grade">
-                      学制：<span
+                      学制：
+                      <span
                         v-for="everyGrade of gradeSplit"
                         :key="everyGrade"
                         >{{ everyGrade }}</span
@@ -111,7 +112,10 @@
                 <el-col :span="12">
                   <div class="grid-content bg-purple">
                     <p class="fee">
-                      学费：<span v-for="(feeNum,index) in feeArray" :key="index" v-if="index<gradeSplit.length-1">{{ feeNum.fee | isZero }}</span>
+                      学费：<span>{{oneTuition|isZero}}</span>
+                            <span>{{twoTuition|isZero}}</span>
+                            <span>{{thirdTuition|isZero}}</span>
+                            <span>{{fourTuition|isZero}}</span>
                     </p>
                   </div>
                 </el-col>
@@ -552,12 +556,10 @@ export default {
       activityBannerH: "",
       approveSplit: [], // 分割
       gradeSplit: [],
-      feeArray:[
-        {fee:""},
-        {fee:""},
-        {fee:""},
-        {fee:""},
-      ],
+      oneTuition:'',
+      twoTuition:'',
+      thirdTuition:'',
+      fourTuition:'',
       courseSplit: [],
       countrySplit: [],
       Isfeature: true, // 办学特色
@@ -684,10 +686,10 @@ export default {
         that.foreignTeacherNum = that.schoolDetail.foreignTeacherNum;
         that.nationalityOfStudents = that.schoolDetail.nationalityOfStudents;
         that.teacherStuRatio = parseInt(that.schoolDetail.teacherStuRatio);
-        that.feeArray[0].fee=that.schoolDetail.oneTuition
-        that.feeArray[1].fee=that.schoolDetail.twoTuition
-        that.feeArray[2].fee=that.schoolDetail.thirdTuition
-        that.feeArray[3].fee=that.schoolDetail.fourTuition
+        that.oneTuition=that.schoolDetail.oneTuition
+        that.twoTuition=that.schoolDetail.twoTuition
+        that.thirdTuition=that.schoolDetail.thirdTuition
+        that.fourTuition=that.schoolDetail.fourTuition
         that.showBanner[0].banner = that.schoolDetail.schoolShowOne
         that.showBanner[1].banner = that.schoolDetail.schoolShowTwo
         that.showBanner[2].banner = that.schoolDetail.schoolShowThird
@@ -768,12 +770,38 @@ export default {
           that.approveSplit.length - 1
         );
         // 年级分割
-        var grade = res.data.schoolSystem;
-        if (grade.indexOf("；") != -1) {
-          that.gradeSplit = grade.split("；");
-        } else {
-          that.gradeSplit = grade.split(";");
+        var grade = res.data.schoolSystem.split(";");
+        console.log(res.data.schoolSystem.split(";"))
+        var  a =  grade.filter(function (s) {
+            return s && s.trim(); // 注：IE9(不包含IE9)以下的版本没有trim()方法
+        });
+        console.log(a)
+        if($.inArray('幼儿园',a) >= 0){
+          that.gradeSplit.push("幼儿园") 
+        }else{
+          that.gradeSplit.push("幼儿园") 
         }
+       if($.inArray('小学',a) >= 0){
+         that.gradeSplit.push("小学")
+        }else{
+          that.gradeSplit.push("小学") 
+        }
+        if($.inArray('初中',a) >= 0){
+          that.gradeSplit.push("初中")
+        }else{
+          that.gradeSplit.push("初中") 
+        }
+        if($.inArray('高中',a) >= 0){
+          that.gradeSplit.push("高中")
+        }else{
+          that.gradeSplit.push("高中") 
+        }
+        // if (grade.indexOf("；") != -1) {
+        //   that.gradeSplit = grade.split("；");
+        // } else {
+        //   that.gradeSplit = grade.split(";");
+        // }
+        console.log(that.gradeSplit)
 
         // 课程分割
         var course = res.data.course;
