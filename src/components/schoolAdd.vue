@@ -125,7 +125,7 @@
                 <el-checkbox label="IBMYP;" name="course">IBMYP</el-checkbox>
                 <el-checkbox label="IBDP;" name="course">IBDP</el-checkbox>
                 <el-checkbox label="A-LEVEL;" name="course">A-LEVEL</el-checkbox>
-                <el-checkbox label="IFCSE;" name="course">IFCSE</el-checkbox>
+                <el-checkbox label="IGCSE;" name="course">IGCSE</el-checkbox>
                 <br/>
                 <el-checkbox label="蒙特梭利;" name="course">蒙特梭利</el-checkbox>
                 <el-checkbox label="美国课程;" name="course">美国课程</el-checkbox>
@@ -258,14 +258,14 @@ export default {
         callback()
       }else{
         if(!/^\d+$/.test(value)){
-          callback(new Error("格式不正确,请输入四位数字  例：2019"));
+          callback(new Error("格式不正确,请输入四位数字  例：2020"));
         }else{
           let num = value;
           num = num.toString();
           if(num.length == "4"){
             callback()
           }else{
-              callback(new Error("请输入成立时间 例：2019"));
+              callback(new Error("请输入成立时间 例：2020"));
           }
 
         }
@@ -386,7 +386,7 @@ export default {
         teachingForm:"",  //授课形式
         companyAnalysis:"",  //新学说分析
         verifySign:"",  //0：审核中 1：审核通过
-        yearOfData:2019, //数据年份
+        yearOfData:2020, //数据年份
       },
       //表单验证
       rules:{
