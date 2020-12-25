@@ -221,6 +221,15 @@
             <el-form-item label="备注" prop="remark">
               <el-input type="textarea" placeholder="请输入内容" :rows="4" v-model="form.remark"></el-input>
             </el-form-item>
+            <el-form-item label="提交人姓名" prop="submitName">
+              <el-input  :rows="4" v-model="form.submitName"></el-input>
+            </el-form-item>
+            <el-form-item label="公司名称" prop="company">
+              <el-input  :rows="4" v-model="form.company"></el-input>
+            </el-form-item>
+            <el-form-item label="手机号" prop="telphone">
+              <el-input  :rows="4" v-model="form.telphone"></el-input>
+            </el-form-item>
           </div>
           <!-- 完成 -->
           <!-- <div v-else-if="active == 4">wancheng</div> -->
@@ -365,7 +374,6 @@ export default {
         hardware:"",  //硬件设施
         investment:"", //投资信息
         remark:"",  //备注
-        submitter:localStorage["userName"], //提交人
         schoolLogo:"", //学校logo
         schoolShowOne:"",  //大图1
         schoolShowTwo:"",  //大图2
@@ -386,7 +394,10 @@ export default {
         teachingForm:"",  //授课形式
         companyAnalysis:"",  //新学说分析
         verifySign:"",  //0：审核中 1：审核通过
-        yearOfData:2019, //数据年份
+        submitName:"", //提交人姓名
+        company:"",//公司名称
+        telphone:"",//手机号
+        yearOfData:2020, //数据年份
       },
       //表单验证
       rules:{
@@ -437,6 +448,15 @@ export default {
         ],
         students:[ //学生总人数
            { required: true, message: "学生总人数不能为空", trigger: "blur" }
+        ],
+        submitName:[ //学生总人数
+           { required: true, message: "姓名不能为空", trigger: "blur" }
+        ],
+        company:[ //学生总人数
+           { required: true, message: "公司不能为空", trigger: "blur" }
+        ],
+        telphone:[ //学生总人数
+           { required: true, message: "手机号不能为空", trigger: "blur" }
         ],
         // studentCapacity:[//学生容量
         //   {required:true,validator: twoTuition,trigger: 'blur' }

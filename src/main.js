@@ -36,7 +36,7 @@ Vue.prototype.bus = new Vue();
 //环境地址
 Vue.prototype.axios = axios
     //测试环境
-    //  axios.defaults.baseURL = "http://192.168.0.22:8080/nsi-1.0"
+    // axios.defaults.baseURL = "http://192.168.0.22:8080/nsi-1.0"
     // axios.defaults.baseURL = "http://192.168.0.103:8080/nsi-1.0"
     // axios.defaults.baseURL = "http://192.168.0.102:8080/nsi-1.0"
     // axios.defaults.baseURL = "http://high.natapp1.cc/nsi-1.0"
