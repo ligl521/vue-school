@@ -32,7 +32,7 @@
                                 <div :style="previews1.div" class="preview1">
                                     <img :src="previews1.url" :style="previews1.img" />
                                 </div>
-                                <h4 style="margin-top: 20px">logo预览</h4>
+                                <h4>logo预览</h4>
                             </div>
                     </div>
                     <div class="footer-btn1">
@@ -371,10 +371,10 @@ export default {
         color: #214f89;
     }
     h4 {
-        font-size: 22px;
+        font-size: 20px;
         text-align: center;
         color: #bdbdbd;
-        margin: 20px 0;
+        margin: 15px 0;
     }
     .uploadlogo{
         display: flex;

@@ -14,8 +14,8 @@ export default {
                 type: 'warning'
             });
         }else{
-            // window.open('https://www.xinxueshuo.cn/data/school/'+id+'.html', '_blank')
-            farther_that.$router.push({path: '/schoolDetail', query: {id:id}});
+            window.open('https://www.xinxueshuo.cn/data/school/'+id+'.html', '_blank')
+            // farther_that.$router.push({path: '/schoolDetail', query: {id:id}});
         }
     },
 }
