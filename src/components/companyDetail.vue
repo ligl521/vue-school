@@ -3,7 +3,7 @@
         <div class="detailBox">
           <div class="detailTop">
               <div class="companyLeft">
-                  <img :src="detail.institutionLogo?detail.institutionLogo:'http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png'" alt="" width="170">
+                  <img :src="(detail.institutionLogo == '' || detail.institutionLogo == '0'|| detail.institutionLogo == null)? 'http://data.xinxueshuo.cn/nsi/assets/img/schoolNoPic.png':detail.institutionLogo" alt="" width="170">
               </div>
               <div class="conpanyRight">
                   <p>{{detail.name}}</p>
@@ -93,6 +93,7 @@ export default {
                 institutionId:companyId,
             }).then(res=>{
                 that.detail=res.data
+                console.log(that.detail.institutionLogo)
                 that.introduction= that.detail.introduction
                 if(that.detail.introduction=="0"){
                     that.introduction=false
